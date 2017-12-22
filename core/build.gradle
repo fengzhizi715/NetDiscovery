@@ -12,8 +12,13 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
+    compile "io.reactivex.rxjava2:rxjava:2.1.7"
+    
     compile 'io.vertx:vertx-core:3.5.0'
     compile 'io.vertx:vertx-web-client:3.5.0'
 
+    compile 'tony-common:tony-common-utils:1.2.3'
+
     compile 'org.projectlombok:lombok:1.16.18'
+
 }
