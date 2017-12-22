@@ -10,9 +10,20 @@ import java.util.Set;
  */
 public class Spider {
 
+    public final static int SPIDER_STAT_INIT = 0;
+    public final static int SPIDER_STAT_RUNNING = 1;
+    public final static int SPIDER_STAT_STOPPED = 2;
+
+    private String name;
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
 
-    public Spider addPipeline(Pipeline pipeline) {
+    public Spider name(String name) {
+
+        this.name = name;
+        return this;
+    }
+
+    public Spider pipeline(Pipeline pipeline) {
 
         this.pipelines.add(pipeline);
         return this;
