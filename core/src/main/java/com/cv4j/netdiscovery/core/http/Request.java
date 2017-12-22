@@ -15,7 +15,11 @@ public class Request {
 
     private String method;
 
+    @Getter
     private Map<String,String> header = new NoEmptyHashMap<>();
+
+    @Getter
+    private Map<String, String> cookies = new NoEmptyHashMap<>();
 
     public Request(String url) {
 
@@ -25,6 +29,11 @@ public class Request {
     public Request header(String name,String value) {
 
         header.put(name,value);
+        return this;
+    }
+
+    public Request addCookie(String name, String value) {
+        cookies.put(name, value);
         return this;
     }
 }
