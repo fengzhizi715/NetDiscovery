@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core;
+package com.cv4j.netdiscovery.core.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,12 +11,8 @@ public class ResultItems {
     private Map<String, Object> fields = new LinkedHashMap<String, Object>();
 
     public <T> T get(String key) {
-        Object o = fields.get(key);
 
-        if (o == null) {
-            return null;
-        }
-        return (T) fields.get(key);
+        return fields.get(key) != null ? (T) fields.get(key) : null;
     }
 
     public Map<String, Object> getAll() {

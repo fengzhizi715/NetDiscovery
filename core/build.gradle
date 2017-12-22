@@ -14,4 +14,6 @@ dependencies {
 
     compile 'io.vertx:vertx-core:3.5.0'
     compile 'io.vertx:vertx-web-client:3.5.0'
+
+    compile 'org.projectlombok:lombok:1.16.18'
 }
