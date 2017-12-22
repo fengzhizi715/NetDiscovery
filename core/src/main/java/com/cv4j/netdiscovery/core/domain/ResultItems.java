@@ -1,5 +1,9 @@
 package com.cv4j.netdiscovery.core.domain;
 
+import com.cv4j.netdiscovery.core.http.Request;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,6 +13,10 @@ import java.util.Map;
 public class ResultItems {
 
     private Map<String, Object> fields = new LinkedHashMap<String, Object>();
+
+    @Getter
+    @Setter
+    private Request request;
 
     public <T> T get(String key) {
 

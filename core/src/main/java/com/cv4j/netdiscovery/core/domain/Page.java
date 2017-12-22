@@ -21,12 +21,14 @@ public class Page {
     private String html;//response content
 
     @Getter
-    @Setter
     private Request request;
 
     private ResultItems resultItems = new ResultItems();
 
-    
+    public void setRequest(Request request) {
+        this.request = request;
+        this.resultItems.setRequest(request);
+    }
 
     @Override
     public boolean equals(Object o) {
