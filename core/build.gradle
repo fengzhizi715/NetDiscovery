@@ -11,4 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile 'io.vertx:vertx-core:3.5.0'
+    compile 'io.vertx:vertx-web-client:3.5.0'
 }
