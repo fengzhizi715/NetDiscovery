@@ -10,9 +10,9 @@ import java.util.Set;
  */
 public class Spider {
 
-    public final static int SPIDER_STAT_INIT = 0;
-    public final static int SPIDER_STAT_RUNNING = 1;
-    public final static int SPIDER_STAT_STOPPED = 2;
+    public final static int SPIDER_STATUS_INIT = 0;
+    public final static int SPIDER_STATUS_RUNNING = 1;
+    public final static int SPIDER_STATUS_STOPPED = 2;
 
     private String name;
     private Set<Pipeline> pipelines = new LinkedHashSet<>();

@@ -1,20 +1,32 @@
 package com.cv4j.netdiscovery.core.domain;
 
 import lombok.*;
+import com.cv4j.netdiscovery.core.http.Request;
 
 /**
  * Created by tony on 2017/12/23.
  */
-@Getter
-@Setter
-@NoArgsConstructor
 public class Page {
 
+    @Getter
+    @Setter
     private String url;
 
+    @Getter
+    @Setter
     private int statusCode;//响应状态码
 
+    @Getter
+    @Setter
     private String html;//response content
+
+    @Getter
+    @Setter
+    private Request request;
+
+    private ResultItems resultItems = new ResultItems();
+
+    
 
     @Override
     public boolean equals(Object o) {
