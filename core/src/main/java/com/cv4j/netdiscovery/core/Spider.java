@@ -10,11 +10,17 @@ import java.util.List;
  */
 public class Spider {
 
-    private List<Pipeline> pipelineList = new ArrayList<>();
+    private List<Pipeline> pipelines = new ArrayList<>();
 
     public Spider addPipeline(Pipeline pipeline) {
 
-        pipelineList.add(pipeline);
+        this.pipelines.add(pipeline);
+        return this;
+    }
+
+    public Spider clearPipeline() {
+
+        this.pipelines.clear();
         return this;
     }
 }
