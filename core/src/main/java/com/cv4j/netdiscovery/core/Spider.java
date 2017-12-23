@@ -52,4 +52,9 @@ public class Spider {
         this.request = request;
         return this;
     }
+
+    public void run() {
+
+
+    }
 }

@@ -8,22 +8,29 @@ import java.util.Map;
 /**
  * Created by tony on 2017/12/23.
  */
+@Getter
 public class Request {
 
-    @Getter
+
     private String url;
 
     private String method;
 
-    @Getter
+    private String userAgent;
+
     private Map<String,String> header = new NoEmptyHashMap<>();
 
-    @Getter
     private Map<String, String> cookies = new NoEmptyHashMap<>();
 
     public Request(String url) {
 
         this.url = url;
+    }
+
+    public Request ua(String userAgent) {
+
+        this.userAgent = userAgent;
+        return this;
     }
 
     public Request header(String name,String value) {
