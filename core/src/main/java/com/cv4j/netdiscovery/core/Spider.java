@@ -3,7 +3,6 @@ package com.cv4j.netdiscovery.core;
 import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
