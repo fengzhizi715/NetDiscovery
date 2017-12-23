@@ -2,8 +2,10 @@ package com.cv4j.netdiscovery.core.http;
 
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.safframework.tony.common.utils.Preconditions;
+import io.reactivex.Single;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
+
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
@@ -59,6 +61,7 @@ public class VertxClient {
                             Page page = new Page();
                             page.setHtml(html);
                             page.setRequest(request);
+                            page.setUrl(request.getUrl());
                             page.setStatusCode(response.statusCode());
                         } else {
 
@@ -80,6 +83,7 @@ public class VertxClient {
                             Page page = new Page();
                             page.setHtml(html);
                             page.setRequest(request);
+                            page.setUrl(request.getUrl());
                             page.setStatusCode(response.statusCode());
                         } else {
 
