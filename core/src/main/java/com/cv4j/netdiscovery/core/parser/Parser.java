@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.parse;
+package com.cv4j.netdiscovery.core.parser;
 
 /**
  * Created by tony on 2017/12/22.

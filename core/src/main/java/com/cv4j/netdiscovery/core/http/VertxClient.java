@@ -1,14 +1,14 @@
 package com.cv4j.netdiscovery.core.http;
 
-import com.cv4j.netdiscovery.core.domain.Page;
 import com.safframework.tony.common.utils.Preconditions;
-import io.reactivex.Single;
-import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
+import io.reactivex.*;
 
-import io.vertx.ext.web.client.HttpResponse;
-import io.vertx.ext.web.client.WebClient;
+import io.vertx.core.Vertx;
+
 import io.vertx.ext.web.client.WebClientOptions;
+import io.vertx.reactivex.ext.web.client.HttpResponse;
+import io.vertx.reactivex.ext.web.client.WebClient;
+import io.vertx.reactivex.ext.web.codec.BodyCodec;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,13 +19,13 @@ import java.net.URL;
 public class VertxClient {
 
     private WebClient webClient;
-    private Vertx vertx;
+    private io.vertx.reactivex.core.Vertx vertx;
     private Request request;
     private URL url;
 
     public VertxClient(Request request) {
 
-        vertx = Vertx.vertx();
+        vertx = new io.vertx.reactivex.core.Vertx(Vertx.vertx());
         this.request = request;
 
         WebClientOptions options = new WebClientOptions();
@@ -45,54 +45,23 @@ public class VertxClient {
         webClient = WebClient.create(vertx, options);
     }
 
-    public void get() {
+    public Single<HttpResponse<String>> get() {
 
         if ("http".equals(url.getProtocol())) {
 
-            webClient.get(url.getHost(),url.getPath())
-                    .send(ar->{
+            return webClient.get(url.getHost(),url.getPath())
+                    .as(BodyCodec.string())
+                    .rxSend();
 
-                        if (ar.succeeded()) {
-
-                            HttpResponse<Buffer> response = ar.result();
-
-                            String html = response.bodyAsString();
-
-                            Page page = new Page();
-                            page.setHtml(html);
-                            page.setRequest(request);
-                            page.setUrl(request.getUrl());
-                            page.setStatusCode(response.statusCode());
-                        } else {
-
-                            System.out.println("Something went wrong " + ar.cause().getMessage());
-                        }
-                    });
         } else if ("https".equals(url.getProtocol())){
 
-            webClient.get(443, url.getHost(), url.getPath())
+            return webClient.get(443, url.getHost(), url.getPath())
                     .ssl(true)
-                    .send(ar->{
-
-                        if (ar.succeeded()) {
-
-                            HttpResponse<Buffer> response = ar.result();
-
-                            String html = response.bodyAsString();
-
-                            Page page = new Page();
-                            page.setHtml(html);
-                            page.setRequest(request);
-                            page.setUrl(request.getUrl());
-                            page.setStatusCode(response.statusCode());
-                        } else {
-
-                            System.out.println("Something went wrong " + ar.cause().getMessage());
-                        }
-                    });
+                    .as(BodyCodec.string())
+                    .rxSend();
         }
 
-
+        return null;
     }
 
 
