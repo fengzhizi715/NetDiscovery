@@ -22,6 +22,8 @@ dependencies {
 
     compile 'tony-common:tony-common-utils:1.2.3'
 
+    compile 'ch.qos.logback:logback-classic:1.1.7'
+    compile 'ch.qos.logback:logback-core:1.1.7'
+    compile 'ch.qos.logback:logback-access:1.1.7'
     compile 'org.projectlombok:lombok:1.16.18'
-
 }

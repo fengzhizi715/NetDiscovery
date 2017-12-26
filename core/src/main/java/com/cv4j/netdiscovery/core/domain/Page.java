@@ -23,6 +23,7 @@ public class Page {
     @Getter
     private Request request;
 
+    @Getter
     private ResultItems resultItems = new ResultItems();
 
     public void setRequest(Request request) {

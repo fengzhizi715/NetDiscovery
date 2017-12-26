@@ -3,15 +3,16 @@ package com.cv4j.netdiscovery.core;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.http.VertxClient;
+import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import com.safframework.tony.common.utils.Preconditions;
 import com.safframework.tony.common.utils.StringUtils;
-import io.reactivex.Scheduler;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -19,6 +20,7 @@ import java.util.Set;
 /**
  * Created by tony on 2017/12/22.
  */
+@Slf4j
 public class Spider {
 
     public final static int SPIDER_STATUS_INIT = 0;
@@ -26,10 +28,11 @@ public class Spider {
     public final static int SPIDER_STATUS_STOPPED = 2;
 
     @Getter
-    @Setter
     private String name;// 爬虫的名字
 
     private Request request;
+
+    private Parser parser;
 
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
 
@@ -44,6 +47,18 @@ public class Spider {
         return this;
     }
 
+    public Spider request(Request request) {
+
+        this.request = request;
+        return this;
+    }
+
+    public Spider parser(Parser parser) {
+
+        this.parser = parser;
+        return this;
+    }
+
     public Spider pipeline(Pipeline pipeline) {
 
         this.pipelines.add(pipeline);
@@ -53,12 +68,6 @@ public class Spider {
     public Spider clearPipeline() {
 
         this.pipelines.clear();
-        return this;
-    }
-
-    public Spider request(Request request) {
-
-        this.request = request;
         return this;
     }
 
@@ -90,13 +99,24 @@ public class Spider {
                         @Override
                         public void accept(Page page) throws Exception {
 
-                            System.out.println(page.getHtml());
+                            if (parser!=null) {
+
+                                parser.process(page);
+                            }
+
+                            if (Preconditions.isNotBlank(pipelines)){
+
+                                for (Pipeline pipeline:pipelines) {
+
+                                    pipeline.process(page.getResultItems());
+                                }
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
 
-                            System.out.println(throwable.getMessage());
+                            log.error(throwable.getMessage());
                         }
                     });
         }
