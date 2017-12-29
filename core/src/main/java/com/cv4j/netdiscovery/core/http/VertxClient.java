@@ -1,10 +1,8 @@
 package com.cv4j.netdiscovery.core.http;
 
+import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
-import io.reactivex.*;
-
-import io.vertx.core.Vertx;
-
+import io.reactivex.Single;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
@@ -25,7 +23,7 @@ public class VertxClient {
 
     public VertxClient(Request request) {
 
-        vertx = new io.vertx.reactivex.core.Vertx(Vertx.vertx());
+        vertx = VertxUtils.vertx;
         this.request = request;
 
         WebClientOptions options = new WebClientOptions();
@@ -47,22 +45,27 @@ public class VertxClient {
 
     public Single<HttpResponse<String>> get() {
 
+        Single<HttpResponse<String>> result = null;
+
         if ("http".equals(url.getProtocol())) {
 
-            return webClient.get(url.getHost(),url.getPath())
+            result = webClient.get(url.getHost(),url.getPath())
                     .as(BodyCodec.string())
                     .rxSend();
 
         } else if ("https".equals(url.getProtocol())){
 
-            return webClient.get(443, url.getHost(), url.getPath())
+            result = webClient.get(443, url.getHost(), url.getPath())
                     .ssl(true)
                     .as(BodyCodec.string())
                     .rxSend();
         }
 
-        return null;
+        return result;
     }
 
+    public void close() {
 
+        webClient.close();
+    }
 }

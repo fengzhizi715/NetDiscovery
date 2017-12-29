@@ -11,7 +11,6 @@ import java.util.Map;
 @Getter
 public class Request {
 
-
     private String url;
 
     private String method;
@@ -40,6 +39,7 @@ public class Request {
     }
 
     public Request addCookie(String name, String value) {
+
         cookies.put(name, value);
         return this;
     }

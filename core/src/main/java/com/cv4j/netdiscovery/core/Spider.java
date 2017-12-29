@@ -6,7 +6,7 @@ import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.safframework.tony.common.utils.Preconditions;
-import com.safframework.tony.common.utils.StringUtils;
+
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -77,6 +77,7 @@ public class Spider {
 
             VertxClient client = new VertxClient(request);
             client.get()
+                    .observeOn(Schedulers.io())
                     .map(new Function<HttpResponse<String>, Page>() {
 
                         @Override
@@ -93,16 +94,22 @@ public class Spider {
                             return page;
                         }
                     })
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<Page>() {
+                    .map(new Function<Page, Page>() {
 
                         @Override
-                        public void accept(Page page) throws Exception {
-
+                        public Page apply(Page page) throws Exception {
                             if (parser!=null) {
 
                                 parser.process(page);
                             }
+
+                            return page;
+                        }
+                    })
+                    .map(new Function<Page, Page>() {
+
+                        @Override
+                        public Page apply(Page page) throws Exception {
 
                             if (Preconditions.isNotBlank(pipelines)){
 
@@ -111,6 +118,15 @@ public class Spider {
                                     pipeline.process(page.getResultItems());
                                 }
                             }
+
+                            return page;
+                        }
+                    })
+                    .subscribe(new Consumer<Page>() {
+
+                        @Override
+                        public void accept(Page page) throws Exception {
+
                         }
                     }, new Consumer<Throwable>() {
                         @Override
