@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by tony on 2017/12/22.
@@ -25,6 +26,8 @@ public class Spider {
     public final static int SPIDER_STATUS_INIT = 0;
     public final static int SPIDER_STATUS_RUNNING = 1;
     public final static int SPIDER_STATUS_STOPPED = 2;
+
+    protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
     @Getter
     private String name;// 爬虫的名字
@@ -105,6 +108,7 @@ public class Spider {
 
                         @Override
                         public Page apply(Page page) throws Exception {
+
                             if (parser!=null) {
 
                                 parser.process(page);
