@@ -6,7 +6,6 @@ import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.safframework.tony.common.utils.Preconditions;
-
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -30,6 +29,8 @@ public class Spider {
     @Getter
     private String name;// 爬虫的名字
 
+    private String url;
+
     private Request request;
 
     private Parser parser;
@@ -44,6 +45,12 @@ public class Spider {
     public Spider name(String name) {
 
         this.name = name;
+        return this;
+    }
+
+    public Spider url(String url) {
+
+        this.request = new Request(url);
         return this;
     }
 
@@ -140,8 +147,6 @@ public class Spider {
 
     public static void main(String[] args) {
 
-        Spider spider = Spider.create();
-        spider.request(new Request("http://www.163.com/"));
-        spider.run();
+        Spider.create().url("http://www.163.com/").run();
     }
 }

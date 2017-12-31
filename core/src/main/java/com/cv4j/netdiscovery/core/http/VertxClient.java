@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.http;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Single;
+import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
@@ -38,6 +39,14 @@ public class VertxClient {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (Preconditions.isNotBlank(request.getProxy())) {
+
+            ProxyOptions proxyOptions = new ProxyOptions();
+            proxyOptions.setHost(request.getProxy().getIp());
+            proxyOptions.setPort(request.getProxy().getPort());
+            options.setProxyOptions(proxyOptions);
         }
 
         webClient = WebClient.create(vertx, options);
