@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.http;
 
+import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import lombok.Getter;
 
@@ -17,6 +18,8 @@ public class Request {
 
     private String userAgent;
 
+    private Proxy proxy;
+
     private Map<String,String> header = new NoEmptyHashMap<>();
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
@@ -29,6 +32,12 @@ public class Request {
     public Request ua(String userAgent) {
 
         this.userAgent = userAgent;
+        return this;
+    }
+
+    public Request proxy(Proxy proxy) {
+
+        this.proxy = proxy;
         return this;
     }
 

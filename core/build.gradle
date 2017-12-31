@@ -14,14 +14,14 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    compile "io.reactivex.rxjava2:rxjava:2.1.7"
+    compile "io.reactivex.rxjava2:rxjava:2.1.8"
 
     compile 'io.vertx:vertx-core:3.5.0'
     compile 'io.vertx:vertx-web-client:3.5.0'
     compile 'io.vertx:vertx-rx-java2:3.5.0'
 
-    compile 'com.cv4j.proxy:proxypool:1.0.1'
-    compile 'tony-common:tony-common-utils:1.2.3'
+    compile 'com.cv4j.proxy:proxypool:1.1.1'
+    compile 'tony-common:tony-common-utils:1.2.4'
 
     compile 'ch.qos.logback:logback-classic:1.1.7'
     compile 'ch.qos.logback:logback-core:1.1.7'
