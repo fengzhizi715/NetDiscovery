@@ -99,13 +99,15 @@ public class Spider {
 
     public void run() {
 
+        VertxClient client = null;
+
         while (true) {
 
             Request request = queue.poll(name);
 
             if (request!=null) {
 
-                VertxClient client = new VertxClient(request);
+                client = new VertxClient(request);
                 client.get()
                         .observeOn(Schedulers.io())
                         .map(new Function<HttpResponse<String>, Page>() {
