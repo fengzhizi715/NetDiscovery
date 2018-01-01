@@ -5,6 +5,8 @@ import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import com.cv4j.netdiscovery.core.queue.DefaultQueue;
+import com.cv4j.netdiscovery.core.queue.Queue;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -39,6 +41,12 @@ public class Spider {
     private Parser parser;
 
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
+
+    private Queue queue;
+
+    private Spider() {
+        queue = new DefaultQueue();
+    }
 
     public static Spider create() {
 

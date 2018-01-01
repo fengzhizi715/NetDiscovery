@@ -1,11 +1,11 @@
-package com.cv4j.netdiscovery.core.scheduler;
+package com.cv4j.netdiscovery.core.queue;
 
 import com.cv4j.netdiscovery.core.http.Request;
 
 /**
- * Created by tony on 2017/12/31.
+ * Created by tony on 2018/1/1.
  */
-public interface Scheduler {
+public interface Queue {
 
     /**
      * add a url to fetch
