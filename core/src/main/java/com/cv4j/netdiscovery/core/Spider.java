@@ -44,9 +44,18 @@ public class Spider {
         queue = new DefaultQueue();
     }
 
+    private Spider(Queue queue) {
+        this.queue = queue;
+    }
+
     public static Spider create() {
 
         return new Spider();
+    }
+
+    public static Spider create(Queue queue) {
+
+        return new Spider(queue);
     }
 
     public Spider name(String name) {
