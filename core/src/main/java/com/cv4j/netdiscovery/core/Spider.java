@@ -32,7 +32,7 @@ public class Spider {
     protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
     @Getter
-    private String name;// 爬虫的名字
+    private String name = "spider";// 爬虫的名字
 
     private Parser parser;
 
@@ -66,13 +66,13 @@ public class Spider {
 
     public Spider url(String url) {
 
-        queue.push(new Request(url));
+        queue.push(new Request(url),name);
         return this;
     }
 
     public Spider request(Request request) {
 
-        queue.push(request);
+        queue.push(request,name);
         return this;
     }
 
@@ -96,7 +96,7 @@ public class Spider {
 
     public void run() {
 
-        Request request = queue.poll();
+        Request request = queue.poll(name);
 
         if (request!=null) {
 
@@ -166,6 +166,8 @@ public class Spider {
 
     public static void main(String[] args) {
 
-        Spider.create().url("http://www.163.com/").run();
+        Spider.create()
+                .url("http://www.163.com/")
+                .run();
     }
 }

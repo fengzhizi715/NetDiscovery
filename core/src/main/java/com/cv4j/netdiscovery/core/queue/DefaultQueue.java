@@ -14,13 +14,14 @@ public class DefaultQueue implements Queue {
     private ConcurrentLinkedQueue<Request> queue = new ConcurrentLinkedQueue<>();
 
     @Override
-    public void push(Request request) {
+    public void push(Request request,String spiderName) {
+
         queue.offer(request);
     }
 
     @Override
-    public Request poll() {
-        Request request = queue.poll();
-        return request;
+    public Request poll(String spiderName) {
+
+        return queue.poll();
     }
 }
