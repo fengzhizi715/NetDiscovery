@@ -34,10 +34,6 @@ public class Spider {
     @Getter
     private String name;// 爬虫的名字
 
-    private String url;
-
-    private Request request;
-
     private Parser parser;
 
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
@@ -61,13 +57,13 @@ public class Spider {
 
     public Spider url(String url) {
 
-        this.request = new Request(url);
+        queue.push(new Request(url));
         return this;
     }
 
     public Spider request(Request request) {
 
-        this.request = request;
+        queue.push(request);
         return this;
     }
 
@@ -90,6 +86,8 @@ public class Spider {
     }
 
     public void run() {
+
+        Request request = queue.poll();
 
         if (request!=null) {
 
