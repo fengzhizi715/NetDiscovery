@@ -63,30 +63,35 @@ public class Spider {
 
     public Spider name(String name) {
 
+        checkIfRunning();
         this.name = name;
         return this;
     }
 
     public Spider url(String url) {
 
+        checkIfRunning();
         queue.push(new Request(url),name);
         return this;
     }
 
     public Spider request(Request request) {
 
+        checkIfRunning();
         queue.push(request,name);
         return this;
     }
 
     public Spider parser(Parser parser) {
 
+        checkIfRunning();
         this.parser = parser;
         return this;
     }
 
     public Spider pipeline(Pipeline pipeline) {
 
+        checkIfRunning();
         this.pipelines.add(pipeline);
         return this;
     }
@@ -101,9 +106,11 @@ public class Spider {
 
         VertxClient client = null;
 
+        stat.compareAndSet(stat.get(),SPIDER_STATUS_RUNNING);
+
         while (true) {
 
-            Request request = queue.poll(name);
+            final Request request = queue.poll(name);
 
             if (request!=null) {
 
@@ -171,8 +178,16 @@ public class Spider {
                         });
             } else {
 
+                stat.set(SPIDER_STATUS_STOPPED);
                 break;
             }
+        }
+    }
+
+    protected void checkIfRunning() {
+
+        if (stat.get() == SPIDER_STATUS_RUNNING) {
+            throw new IllegalStateException("Spider is already running!");
         }
     }
 
