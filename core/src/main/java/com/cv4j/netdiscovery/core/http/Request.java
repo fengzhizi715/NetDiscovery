@@ -20,6 +20,8 @@ public class Request {
 
     private Proxy proxy;
 
+    private String spiderName;
+
     private Map<String,String> header = new NoEmptyHashMap<>();
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
@@ -27,6 +29,12 @@ public class Request {
     public Request(String url) {
 
         this.url = url;
+    }
+
+    public Request(String url,String spiderName) {
+
+        this.url = url;
+        this.spiderName = spiderName;
     }
 
     public Request ua(String userAgent) {
@@ -38,6 +46,12 @@ public class Request {
     public Request proxy(Proxy proxy) {
 
         this.proxy = proxy;
+        return this;
+    }
+
+    public Request spiderName(String spiderName) {
+
+        this.spiderName = spiderName;
         return this;
     }
 

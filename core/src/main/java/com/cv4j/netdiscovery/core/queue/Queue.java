@@ -12,11 +12,11 @@ public interface Queue {
      *
      * @param request request
      */
-    void push(Request request,String spiderName);
+    void push(Request request);
 
     /**
      * get an url to crawl
-     *
+     * @param spiderName
      * @return the url to spider
      */
     Request poll(String spiderName);

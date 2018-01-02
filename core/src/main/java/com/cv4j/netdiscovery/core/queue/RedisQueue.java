@@ -31,11 +31,11 @@ public class RedisQueue implements Queue{
     }
 
     @Override
-    public void push(Request request,String spiderName) {
+    public void push(Request request) {
 
         Jedis jedis = pool.getResource();
         try {
-            jedis.rpush(getQueueKey(spiderName), request.getUrl());
+            jedis.rpush(getQueueKey(request.getSpiderName()), request.getUrl());
             String field = DigestUtils.shaHex(request.getUrl());
             String value = JSON.toJSONString(request);
             jedis.hset((ITEM_PREFIX + request.getUrl()), field, value);

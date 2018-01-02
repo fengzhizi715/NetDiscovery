@@ -71,14 +71,15 @@ public class Spider {
     public Spider url(String url) {
 
         checkIfRunning();
-        queue.push(new Request(url),name);
+        queue.push(new Request(url,name));
         return this;
     }
 
     public Spider request(Request request) {
 
         checkIfRunning();
-        queue.push(request,name);
+        request.spiderName(name);
+        queue.push(request);
         return this;
     }
 
@@ -193,9 +194,9 @@ public class Spider {
 
     public static void main(String[] args) {
 
-        JedisPool pool = new JedisPool("127.0.0.1",6379);
+//        JedisPool pool = new JedisPool("127.0.0.1",6379);
 
-        Spider.create(new RedisQueue(pool))
+        Spider.create()
                 .request(new Request("http://www.163.com/"))
                 .request(new Request("https://www.baidu.com/"))
                 .run();
