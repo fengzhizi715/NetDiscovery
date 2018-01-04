@@ -18,11 +18,15 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Spider可以单独使用，每个Spider处理一种Parser，不同的Parser需要不同的Spider
+ *
  * Created by tony on 2017/12/22.
  */
 @Slf4j
@@ -75,11 +79,42 @@ public class Spider {
         return this;
     }
 
+    public Spider url(String... urls) {
+
+        checkIfRunning();
+
+        if (Preconditions.isNotBlank(urls)) {
+
+            List<String> urlList = Arrays.asList(urls);
+
+            urlList.stream().forEach(url -> queue.push(new Request(url, name)));
+        }
+
+        return this;
+    }
+
     public Spider request(Request request) {
 
         checkIfRunning();
         request.spiderName(name);
         queue.push(request);
+        return this;
+    }
+
+    public Spider request(Request... requests) {
+
+        checkIfRunning();
+
+        if (Preconditions.isNotBlank(requests)) {
+
+            List<Request> requestList = Arrays.asList(requests);
+
+            requestList.stream().forEach(request -> {
+                request.spiderName(name);
+                queue.push(request);
+            });
+        }
+
         return this;
     }
 
@@ -105,11 +140,11 @@ public class Spider {
 
     public void run() {
 
+        checkRunningStat();
+
         VertxClient client = null;
 
-        stat.compareAndSet(stat.get(),SPIDER_STATUS_RUNNING);
-
-        while (true) {
+        while (true && stat.get() == SPIDER_STATUS_RUNNING) {
 
             final Request request = queue.poll(name);
 
@@ -154,10 +189,8 @@ public class Spider {
 
                                 if (Preconditions.isNotBlank(pipelines)){
 
-                                    for (Pipeline pipeline:pipelines) {
-
-                                        pipeline.process(page.getResultItems());
-                                    }
+                                    pipelines.stream()
+                                            .forEach(pipeline->pipeline.process(page.getResultItems()));
                                 }
 
                                 return page;
@@ -168,7 +201,7 @@ public class Spider {
                             @Override
                             public void accept(Page page) throws Exception {
 
-                                log.info(StringUtils.printObject(page));
+//                                log.info(StringUtils.printObject(page));
                             }
                         }, new Consumer<Throwable>() {
                             @Override
@@ -179,7 +212,8 @@ public class Spider {
                         });
             } else {
 
-                stat.set(SPIDER_STATUS_STOPPED);
+                client.close();
+                stop();
                 break;
             }
         }
@@ -192,12 +226,36 @@ public class Spider {
         }
     }
 
+    private void checkRunningStat() {
+        while (true) {
+
+            int statNow = stat.get();
+            if (statNow == SPIDER_STATUS_RUNNING) {
+                throw new IllegalStateException("Spider is already running!");
+            }
+
+            if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
+                break;
+            }
+        }
+    }
+
+    public void stop() {
+        if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) {
+            log.info("Spider " + name + " stop success!");
+        } else {
+            log.info("Spider " + name + " stop fail!");
+        }
+    }
+
     public static void main(String[] args) {
 
-//        JedisPool pool = new JedisPool("127.0.0.1",6379);
+        JedisPool pool = new JedisPool("127.0.0.1",6379);
 
-        Spider.create()
+        Spider.create(new RedisQueue(pool))
+                .name("tony")
                 .request(new Request("http://www.163.com/"))
+                .request(new Request("https://www.baidu.com/"))
                 .request(new Request("https://www.baidu.com/"))
                 .run();
     }

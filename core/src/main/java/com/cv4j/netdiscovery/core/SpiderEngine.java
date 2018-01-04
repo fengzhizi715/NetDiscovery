@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core;
 
+import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.domain.Proxy;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,9 +14,9 @@ public class SpiderEngine {
 
     private List<Proxy> proxyList;
 
-    private List<String> uaList;
-
     private List<Spider> spiders;
+
+    private Queue queue;
 
     private SpiderEngine() {
     }
@@ -23,5 +24,11 @@ public class SpiderEngine {
     public static SpiderEngine create() {
 
         return new SpiderEngine();
+    }
+
+    public SpiderEngine queue(Queue queue) {
+
+        this.queue = queue;
+        return this;
     }
 }

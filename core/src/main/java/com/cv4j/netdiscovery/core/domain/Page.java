@@ -31,6 +31,10 @@ public class Page {
         this.resultItems.setRequest(request);
     }
 
+    public void putField(String key, Object field) {
+        resultItems.put(key, field);
+    }
+
     @Override
     public boolean equals(Object o) {
 

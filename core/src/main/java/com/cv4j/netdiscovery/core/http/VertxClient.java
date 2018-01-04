@@ -24,7 +24,7 @@ public class VertxClient {
 
     public VertxClient(Request request) {
 
-        vertx = VertxUtils.vertx;
+        this.vertx = VertxUtils.vertx;
         this.request = request;
 
         WebClientOptions options = new WebClientOptions();

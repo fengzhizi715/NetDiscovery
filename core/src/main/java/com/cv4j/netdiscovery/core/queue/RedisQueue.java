@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.queue;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
 import org.apache.commons.codec.digest.DigestUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -10,7 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by tony on 2018/1/1.
  */
-public class RedisQueue implements Queue{
+public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
     private static final String QUEUE_PREFIX = "queue_";
 
@@ -28,10 +29,22 @@ public class RedisQueue implements Queue{
     public RedisQueue(JedisPool pool) {
 
         this.pool = pool;
+        setFilter(this);
     }
 
     @Override
-    public void push(Request request) {
+    public boolean isDuplicate(Request request) {
+
+        Jedis jedis = pool.getResource();
+        try {
+            return jedis.sadd(getSetKey(request), request.getUrl()) == 0;
+        } finally {
+            pool.returnResource(jedis);
+        }
+    }
+
+    @Override
+    protected void pushWhenNoDuplicate(Request request) {
 
         Jedis jedis = pool.getResource();
         try {
@@ -42,6 +55,7 @@ public class RedisQueue implements Queue{
         } finally {
             jedis.close();
         }
+
     }
 
     @Override
@@ -72,4 +86,9 @@ public class RedisQueue implements Queue{
     protected String getQueueKey(String spiderName) {
         return QUEUE_PREFIX + spiderName;
     }
+
+    protected String getSetKey(Request request) {
+        return SET_PREFIX + request.getSpiderName();
+    }
+
 }

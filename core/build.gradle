@@ -29,4 +29,5 @@ dependencies {
     compile 'org.projectlombok:lombok:1.16.18'
 
     compile 'redis.clients:jedis:2.9.0'
+    compile 'com.google.guava:guava:23.6-jre'
 }
