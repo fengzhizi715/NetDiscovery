@@ -85,9 +85,9 @@ public class Spider {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            List<String> urlList = Arrays.asList(urls);
-
-            urlList.stream().forEach(url -> queue.push(new Request(url, name)));
+            Arrays.asList(urls)
+                    .stream()
+                    .forEach(url -> queue.push(new Request(url, name)));
         }
 
         return this;
@@ -96,8 +96,8 @@ public class Spider {
     public Spider request(Request request) {
 
         checkIfRunning();
-        request.spiderName(name);
-        queue.push(request);
+
+        queue.push(request.spiderName(name));
         return this;
     }
 
@@ -107,9 +107,9 @@ public class Spider {
 
         if (Preconditions.isNotBlank(requests)) {
 
-            List<Request> requestList = Arrays.asList(requests);
-
-            requestList.stream().forEach(request -> queue.push(request.spiderName(name)));
+            Arrays.asList(requests)
+                    .stream()
+                    .forEach(request -> queue.push(request.spiderName(name)));
         }
 
         return this;
@@ -141,7 +141,7 @@ public class Spider {
 
         VertxClient client = null;
 
-        while (true && stat.get() == SPIDER_STATUS_RUNNING) {
+        while (true && getSpiderStatus() == SPIDER_STATUS_RUNNING) {
 
             final Request request = queue.poll(name);
 
@@ -209,16 +209,16 @@ public class Spider {
                         });
             } else {
 
-                client.close();
-                stop();
+                client.close(); // 关闭网络框架
+                stop();         // 爬虫停止
                 break;
             }
         }
     }
 
-    protected void checkIfRunning() {
+    private void checkIfRunning() {
 
-        if (stat.get() == SPIDER_STATUS_RUNNING) {
+        if (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
             throw new IllegalStateException("Spider is already running!");
         }
     }
@@ -226,7 +226,7 @@ public class Spider {
     private void checkRunningStat() {
         while (true) {
 
-            int statNow = stat.get();
+            int statNow = getSpiderStatus();
             if (statNow == SPIDER_STATUS_RUNNING) {
                 throw new IllegalStateException("Spider is already running!");
             }
@@ -237,7 +237,13 @@ public class Spider {
         }
     }
 
+    public int getSpiderStatus() {
+
+        return stat.get();
+    }
+
     public void stop() {
+
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) {
             log.info("Spider " + name + " stop success!");
         } else {
