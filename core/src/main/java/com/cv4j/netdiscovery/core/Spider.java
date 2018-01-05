@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Spider可以单独使用，每个Spider处理一种Parser，不同的Parser需要不同的Spider
- *
+ * <p>
  * Created by tony on 2017/12/22.
  */
 @Slf4j
@@ -75,7 +75,7 @@ public class Spider {
     public Spider url(String url) {
 
         checkIfRunning();
-        queue.push(new Request(url,name));
+        queue.push(new Request(url, name));
         return this;
     }
 
@@ -109,10 +109,7 @@ public class Spider {
 
             List<Request> requestList = Arrays.asList(requests);
 
-            requestList.stream().forEach(request -> {
-                request.spiderName(name);
-                queue.push(request);
-            });
+            requestList.stream().forEach(request -> queue.push(request.spiderName(name)));
         }
 
         return this;
@@ -148,7 +145,7 @@ public class Spider {
 
             final Request request = queue.poll(name);
 
-            if (request!=null) {
+            if (request != null) {
 
                 client = new VertxClient(request);
                 client.get()
@@ -174,7 +171,7 @@ public class Spider {
                             @Override
                             public Page apply(Page page) throws Exception {
 
-                                if (parser!=null) {
+                                if (parser != null) {
 
                                     parser.process(page);
                                 }
@@ -187,10 +184,10 @@ public class Spider {
                             @Override
                             public Page apply(Page page) throws Exception {
 
-                                if (Preconditions.isNotBlank(pipelines)){
+                                if (Preconditions.isNotBlank(pipelines)) {
 
                                     pipelines.stream()
-                                            .forEach(pipeline->pipeline.process(page.getResultItems()));
+                                            .forEach(pipeline -> pipeline.process(page.getResultItems()));
                                 }
 
                                 return page;
@@ -250,7 +247,7 @@ public class Spider {
 
     public static void main(String[] args) {
 
-        JedisPool pool = new JedisPool("127.0.0.1",6379);
+        JedisPool pool = new JedisPool("127.0.0.1", 6379);
 
         Spider.create(new RedisQueue(pool))
                 .name("tony")
