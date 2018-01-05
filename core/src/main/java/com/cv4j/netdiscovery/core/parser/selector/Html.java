@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.parser.selector;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,9 +16,8 @@ import java.util.List;
  * @author code4crafter@gmail.com <br>
  * @author tony
  */
+@Slf4j
 public class Html extends HtmlNode {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * Disable jsoup html entity escape. It can be set just before any Html instance is created.
@@ -35,7 +35,7 @@ public class Html extends HtmlNode {
             this.document = Jsoup.parse(text, url);
         } catch (Exception e) {
             this.document = null;
-            logger.warn("parse document error ", e);
+            log.warn("parse document error ", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class Html extends HtmlNode {
             this.document = Jsoup.parse(text);
         } catch (Exception e) {
             this.document = null;
-            logger.warn("parse document error ", e);
+            log.warn("parse document error ", e);
         }
     }
 
