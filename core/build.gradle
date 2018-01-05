@@ -30,4 +30,6 @@ dependencies {
 
     compile 'redis.clients:jedis:2.9.0'
     compile 'com.google.guava:guava:23.6-jre'
+    compile 'us.codecraft:xsoup:0.3.1'
+    compile 'org.jsoup:jsoup:1.10.3'
 }

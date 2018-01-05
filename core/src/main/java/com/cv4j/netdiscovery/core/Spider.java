@@ -9,7 +9,6 @@ import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.queue.RedisQueue;
 import com.safframework.tony.common.utils.Preconditions;
-import com.safframework.tony.common.utils.StringUtils;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -20,7 +19,6 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
