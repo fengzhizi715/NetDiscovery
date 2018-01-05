@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.domain;
 
+import com.cv4j.netdiscovery.core.parser.selector.Html;
 import lombok.*;
 import com.cv4j.netdiscovery.core.http.Request;
 
@@ -18,7 +19,7 @@ public class Page {
 
     @Getter
     @Setter
-    private String html;//response content
+    private Html html;//response content
 
     @Getter
     private Request request;

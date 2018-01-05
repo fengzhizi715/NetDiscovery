@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
+import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
@@ -156,7 +157,7 @@ public class Spider {
                                 String html = stringHttpResponse.body();
 
                                 Page page = new Page();
-                                page.setHtml(html);
+                                page.setHtml(new Html(html));
                                 page.setRequest(request);
                                 page.setUrl(request.getUrl());
                                 page.setStatusCode(stringHttpResponse.statusCode());
