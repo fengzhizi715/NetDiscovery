@@ -9,6 +9,9 @@ import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.queue.RedisQueue;
+import com.cv4j.netdiscovery.core.utils.Utils;
+import com.cv4j.proxy.ProxyPool;
+import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -45,6 +48,8 @@ public class Spider {
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
 
     private Queue queue;
+
+    private boolean useProxy = false;
 
     private Spider() {
         queue = new DefaultQueue();
@@ -119,6 +124,12 @@ public class Spider {
         return this;
     }
 
+    public Spider useProxy(boolean useProxy) {
+
+        this.useProxy = useProxy;
+        return this;
+    }
+
     public void run() {
 
         checkRunningStat();
@@ -130,6 +141,15 @@ public class Spider {
             final Request request = queue.poll(name);
 
             if (request != null) {
+
+                if (useProxy) {
+
+                    Proxy proxy = ProxyPool.getProxy();
+
+                    if (proxy!=null && Utils.checkProxy(proxy)) {
+                        request.proxy(proxy);
+                    }
+                }
 
                 client = new VertxClient(request);
                 client.get()
