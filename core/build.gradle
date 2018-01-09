@@ -20,7 +20,7 @@ dependencies {
     compile 'io.vertx:vertx-web-client:3.5.0'
     compile 'io.vertx:vertx-rx-java2:3.5.0'
 
-    compile 'com.cv4j.proxy:proxypool:1.1.1'
+    compile 'com.cv4j.proxy:proxypool:1.1.3'
     compile 'tony-common:tony-common-utils:1.2.4'
 
     compile 'ch.qos.logback:logback-classic:1.1.7'

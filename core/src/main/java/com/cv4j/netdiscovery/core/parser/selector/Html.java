@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.parser.selector;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,6 +29,7 @@ public class Html extends HtmlNode {
     /**
      * Store parsed document for better performance when only one text exist.
      */
+    @Getter
     private Document document;
 
     public Html(String text, String url) {
@@ -50,10 +52,6 @@ public class Html extends HtmlNode {
 
     public Html(Document document) {
         this.document = document;
-    }
-
-    public Document getDocument() {
-        return document;
     }
 
     @Override

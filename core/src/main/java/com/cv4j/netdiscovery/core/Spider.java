@@ -38,7 +38,7 @@ public class Spider {
     protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
     @Getter
-    private String name = "spider";// 爬虫的名字
+    private String name = "spider";// 爬虫的名字，默认使用spider
 
     private Parser parser;
 
@@ -71,13 +71,6 @@ public class Spider {
         return this;
     }
 
-    public Spider url(String url) {
-
-        checkIfRunning();
-        queue.push(new Request(url, name));
-        return this;
-    }
-
     public Spider url(String... urls) {
 
         checkIfRunning();
@@ -89,14 +82,6 @@ public class Spider {
                     .forEach(url -> queue.push(new Request(url, name)));
         }
 
-        return this;
-    }
-
-    public Spider request(Request request) {
-
-        checkIfRunning();
-
-        queue.push(request.spiderName(name));
         return this;
     }
 
