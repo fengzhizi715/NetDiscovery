@@ -13,6 +13,7 @@ import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
+import com.safframework.tony.common.utils.StringUtils;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -136,88 +137,94 @@ public class Spider {
 
         VertxClient client = null;
 
-        while (true && getSpiderStatus() == SPIDER_STATUS_RUNNING) {
+        try {
+            while (true && getSpiderStatus() == SPIDER_STATUS_RUNNING) {
 
-            final Request request = queue.poll(name);
+                final Request request = queue.poll(name);
 
-            if (request != null) {
+                if (request != null) {
 
-                if (useProxy) {
+                    if (useProxy) {
 
-                    Proxy proxy = ProxyPool.getProxy();
+                        Proxy proxy = ProxyPool.getProxy();
 
-                    if (proxy!=null && Utils.checkProxy(proxy)) {
-                        request.proxy(proxy);
+                        if (proxy!=null && Utils.checkProxy(proxy)) {
+                            request.proxy(proxy);
+                        }
                     }
-                }
 
-                client = new VertxClient(request);
-                client.get()
-                        .observeOn(Schedulers.io())
-                        .map(new Function<HttpResponse<String>, Page>() {
+                    client = new VertxClient(request);
+                    client.request()
+                            .observeOn(Schedulers.io())
+                            .map(new Function<HttpResponse<String>, Page>() {
 
-                            @Override
-                            public Page apply(HttpResponse<String> stringHttpResponse) throws Exception {
+                                @Override
+                                public Page apply(HttpResponse<String> stringHttpResponse) throws Exception {
 
-                                String html = stringHttpResponse.body();
+                                    String html = stringHttpResponse.body();
 
-                                Page page = new Page();
-                                page.setHtml(new Html(html));
-                                page.setRequest(request);
-                                page.setUrl(request.getUrl());
-                                page.setStatusCode(stringHttpResponse.statusCode());
+                                    Page page = new Page();
+                                    page.setHtml(new Html(html));
+                                    page.setRequest(request);
+                                    page.setUrl(request.getUrl());
+                                    page.setStatusCode(stringHttpResponse.statusCode());
 
-                                return page;
-                            }
-                        })
-                        .map(new Function<Page, Page>() {
-
-                            @Override
-                            public Page apply(Page page) throws Exception {
-
-                                if (parser != null) {
-
-                                    parser.process(page);
+                                    return page;
                                 }
+                            })
+                            .map(new Function<Page, Page>() {
 
-                                return page;
-                            }
-                        })
-                        .map(new Function<Page, Page>() {
+                                @Override
+                                public Page apply(Page page) throws Exception {
 
-                            @Override
-                            public Page apply(Page page) throws Exception {
+                                    if (parser != null) {
 
-                                if (Preconditions.isNotBlank(pipelines)) {
+                                        parser.process(page);
+                                    }
 
-                                    pipelines.stream()
-                                            .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                    return page;
                                 }
+                            })
+                            .map(new Function<Page, Page>() {
 
-                                return page;
-                            }
-                        })
-                        .subscribe(new Consumer<Page>() {
+                                @Override
+                                public Page apply(Page page) throws Exception {
 
-                            @Override
-                            public void accept(Page page) throws Exception {
+                                    if (Preconditions.isNotBlank(pipelines)) {
+
+                                        pipelines.stream()
+                                                .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                    }
+
+                                    return page;
+                                }
+                            })
+                            .subscribe(new Consumer<Page>() {
+
+                                @Override
+                                public void accept(Page page) throws Exception {
 
 //                                log.info(StringUtils.printObject(page));
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
 
-                                log.error(throwable.getMessage());
-                            }
-                        });
-            } else {
+                                    log.error(throwable.getMessage());
+                                }
+                            });
+                } else {
+                    break;
+                }
+            }
+        } finally {
 
+            if (client!=null) {
                 client.close(); // 关闭网络框架
                 stop();         // 爬虫停止
-                break;
             }
         }
+
     }
 
     private void checkIfRunning() {
@@ -259,7 +266,7 @@ public class Spider {
 
         JedisPool pool = new JedisPool("127.0.0.1", 6379);
 
-        Spider.create(new RedisQueue(pool))
+        Spider.create()
                 .name("tony")
                 .request(new Request("http://www.163.com/"))
                 .request(new Request("https://www.baidu.com/"))

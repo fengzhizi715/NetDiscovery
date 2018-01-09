@@ -19,13 +19,11 @@ public class VertxClient {
 
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
-    private Request request;
     private URL url;
 
     public VertxClient(Request request) {
 
         this.vertx = VertxUtils.vertx;
-        this.request = request;
 
         WebClientOptions options = new WebClientOptions();
 
@@ -52,7 +50,7 @@ public class VertxClient {
         webClient = WebClient.create(vertx, options);
     }
 
-    public Single<HttpResponse<String>> get() {
+    public Single<HttpResponse<String>> request() {
 
         Single<HttpResponse<String>> result = null;
 
