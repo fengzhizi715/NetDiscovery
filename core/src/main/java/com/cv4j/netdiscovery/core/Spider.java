@@ -57,24 +57,22 @@ public class Spider {
         queue = new DefaultQueue();
     }
 
-    private Spider(Queue queue) {
-        this.queue = queue;
-    }
-
     public static Spider create() {
 
         return new Spider();
-    }
-
-    public static Spider create(Queue queue) {
-
-        return new Spider(queue);
     }
 
     public Spider name(String name) {
 
         checkIfRunning();
         this.name = name;
+        return this;
+    }
+
+    public Spider queue(Queue queue) {
+
+        checkIfRunning();
+        this.queue = queue;
         return this;
     }
 
@@ -269,17 +267,5 @@ public class Spider {
         } else {
             log.info(String.format("Spider %s stop fail!",name));
         }
-    }
-
-    public static void main(String[] args) {
-
-        JedisPool pool = new JedisPool("127.0.0.1", 6379);
-
-        Spider.create()
-                .name("tony")
-                .request(new Request("http://www.163.com/"))
-                .request(new Request("https://www.baidu.com/"))
-                .request(new Request("https://www.baidu.com/"))
-                .run();
     }
 }
