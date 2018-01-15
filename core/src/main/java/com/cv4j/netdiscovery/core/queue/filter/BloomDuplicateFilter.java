@@ -51,4 +51,9 @@ public class BloomDuplicateFilter implements DuplicateFilter {
         }
         return isDuplicate;
     }
+
+    @Override
+    public int getTotalRequestsCount() {
+        return counter.get();
+    }
 }

@@ -95,6 +95,22 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
         }
     }
 
+    @Override
+    public int getTotalRequests(String spiderName) {
+        Jedis jedis = pool.getResource();
+        try {
+            Long size = jedis.scard(getSetKey(spiderName));
+            return size.intValue();
+        } finally {
+            pool.returnResource(jedis);
+        }
+    }
+
+    @Override
+    public int getTotalRequestsCount() {
+        return 0;
+    }
+
     protected String getQueueKey(String spiderName) {
         return QUEUE_PREFIX + spiderName;
     }
@@ -103,4 +119,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
         return SET_PREFIX + request.getSpiderName();
     }
 
+    protected String getSetKey(String spiderName) {
+        return SET_PREFIX + spiderName;
+    }
 }

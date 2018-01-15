@@ -18,4 +18,9 @@ public class HashSetDuplicateFilter implements DuplicateFilter {
 
         return !urls.add(request.getUrl());
     }
+
+    @Override
+    public int getTotalRequestsCount() {
+        return urls.size();
+    }
 }

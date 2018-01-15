@@ -23,7 +23,15 @@ public interface Queue {
 
     /**
      *
+     * @param spiderName
      * @return
      */
     int getLeftRequests(String spiderName);
+
+    /**
+     *
+     * @param spiderName
+     * @return
+     */
+    int getTotalRequests(String spiderName);
 }

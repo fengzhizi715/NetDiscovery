@@ -15,4 +15,10 @@ public interface DuplicateFilter {
      * @return true if is duplicate
      */
     boolean isDuplicate(Request request);
+
+    /**
+     * Get TotalRequestsCount for monitor.
+     * @return number of total request
+     */
+    int getTotalRequestsCount();
 }
