@@ -50,7 +50,7 @@ public class Spider {
 
     private Queue queue;
 
-    private boolean useProxy = false;
+    private boolean autoProxy = false;
 
     private Spider() {
         queue = new DefaultQueue();
@@ -125,9 +125,14 @@ public class Spider {
         return this;
     }
 
-    public Spider useProxy(boolean useProxy) {
+    /**
+     * 是否自动获取代理，如果是的话可以从代理池组件中获取代理
+     * @param autoProxy
+     * @return
+     */
+    public Spider autoProxy(boolean autoProxy) {
 
-        this.useProxy = useProxy;
+        this.autoProxy = autoProxy;
         return this;
     }
 
@@ -144,11 +149,11 @@ public class Spider {
 
                 if (request != null) {
 
-                    if (useProxy) {
+                    if (autoProxy) {
 
                         Proxy proxy = ProxyPool.getProxy();
 
-                        if (proxy!=null && Utils.checkProxy(proxy)) {
+                        if (proxy!=null && request.getProxy() == null && Utils.checkProxy(proxy)) {
                             request.proxy(proxy);
                         }
                     }
@@ -204,7 +209,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-//                                log.info(StringUtils.printObject(page));
+                                    log.info(page.getUrl());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override

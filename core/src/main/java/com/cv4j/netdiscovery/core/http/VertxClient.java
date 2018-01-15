@@ -89,7 +89,7 @@ public class VertxClient {
                     request.putHeader(entry.getKey(),entry.getValue());
                 }
             }
-            
+
             result = request.as(BodyCodec.string())
                     .rxSend();
         }
