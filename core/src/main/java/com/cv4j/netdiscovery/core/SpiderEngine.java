@@ -95,8 +95,7 @@ public class SpiderEngine {
 
         SpiderEngine engine = new SpiderEngine();
 
-        Spider spider = Spider.create()
-                .queue(new RedisQueue(pool))
+        Spider spider = Spider.create(new RedisQueue(pool))
                 .name("tony")
                 .request(new Request("http://www.163.com/"))
                 .request(new Request("https://www.baidu.com/"))
