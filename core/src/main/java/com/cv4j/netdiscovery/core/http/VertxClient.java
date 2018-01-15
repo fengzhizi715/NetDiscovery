@@ -31,6 +31,7 @@ public class VertxClient {
         this.vertx = VertxUtils.vertx;
 
         WebClientOptions options = new WebClientOptions();
+        options.setKeepAlive(true).setReuseAddress(true);
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
