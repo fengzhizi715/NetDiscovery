@@ -12,4 +12,5 @@ public class SpiderEntity {
     private int spiderStatus;
     private int leftRequestSize;
     private int totalRequestSize;
+    private String queueType;
 }

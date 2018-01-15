@@ -82,6 +82,7 @@ public class SpiderEngine {
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
+                    entity.setQueueType(spider.getQueue().type());
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(entity));

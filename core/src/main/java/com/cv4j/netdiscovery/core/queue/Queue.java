@@ -34,4 +34,7 @@ public interface Queue {
      * @return
      */
     int getTotalRequests(String spiderName);
+
+
+    String type();
 }

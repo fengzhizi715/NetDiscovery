@@ -68,7 +68,11 @@ public class Spider {
 
     public static Spider create(Queue queue) {
 
-        return new Spider(queue);
+        if (queue!=null) {
+            return new Spider(queue);
+        } else {
+            return new Spider();
+        }
     }
 
     public Spider name(String name) {
