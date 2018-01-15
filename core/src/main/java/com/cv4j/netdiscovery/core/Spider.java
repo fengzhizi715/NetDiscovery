@@ -121,6 +121,7 @@ public class Spider {
 
     public Spider clearPipeline() {
 
+        checkIfRunning();
         this.pipelines.clear();
         return this;
     }
@@ -132,6 +133,7 @@ public class Spider {
      */
     public Spider autoProxy(boolean autoProxy) {
 
+        checkIfRunning();
         this.autoProxy = autoProxy;
         return this;
     }
@@ -255,7 +257,7 @@ public class Spider {
         return stat.get();
     }
 
-    public void stopSpider(VertxClient client) {
+    private void stopSpider(VertxClient client) {
 
         if (client!=null) {
             client.close(); // 关闭VertxClient
