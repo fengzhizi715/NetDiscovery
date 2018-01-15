@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Spider可以单独使用，每个Spider处理一种Parser，不同的Parser需要不同的Spider
+ * Spider可以单独使用，每个Spider只能处理一种Parser，不同的Parser需要不同的Spider
  * <p>
  * Created by tony on 2017/12/22.
  */
@@ -234,7 +234,7 @@ public class Spider {
     private void checkIfRunning() {
 
         if (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
-            throw new IllegalStateException("Spider is already running!");
+            throw new IllegalStateException(String.format("Spider %s is already running!",name));
         }
     }
 
@@ -243,7 +243,7 @@ public class Spider {
 
             int statNow = getSpiderStatus();
             if (statNow == SPIDER_STATUS_RUNNING) {
-                throw new IllegalStateException("Spider is already running!");
+                throw new IllegalStateException(String.format("Spider %s is already running!",name));
             }
 
             if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
@@ -264,9 +264,9 @@ public class Spider {
         }
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info("Spider " + name + " stop success!");
+            log.info(String.format("Spider %s stop success!",name));
         } else {
-            log.info("Spider " + name + " stop fail!");
+            log.info(String.format("Spider %s stop fail!",name));
         }
     }
 
