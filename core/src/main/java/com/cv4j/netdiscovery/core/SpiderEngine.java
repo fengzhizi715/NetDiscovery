@@ -12,6 +12,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.JedisPool;
 
@@ -26,12 +27,25 @@ public class SpiderEngine {
 
     private List<Spider> spiders = new ArrayList<>();
 
+    @Getter
+    private Queue queue;
+
     private SpiderEngine() {
+    }
+
+    private SpiderEngine(Queue queue) {
+
+        this.queue = queue;
     }
 
     public static SpiderEngine create() {
 
         return new SpiderEngine();
+    }
+
+    public static SpiderEngine create(Queue queue) {
+
+        return new SpiderEngine(queue);
     }
 
     public SpiderEngine proxyList(List<Proxy> proxies) {
@@ -93,9 +107,9 @@ public class SpiderEngine {
 
         JedisPool pool = new JedisPool("127.0.0.1", 6379);
 
-        SpiderEngine engine = new SpiderEngine();
+        SpiderEngine engine = new SpiderEngine(new RedisQueue(pool));
 
-        Spider spider = Spider.create(new RedisQueue(pool))
+        Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
                 .request(new Request("http://www.163.com/"))
                 .request(new Request("https://www.baidu.com/"))
