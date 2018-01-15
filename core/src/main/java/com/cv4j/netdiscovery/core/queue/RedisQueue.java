@@ -83,6 +83,18 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
         }
     }
 
+    @Override
+    public int getLeftRequests(String spiderName) {
+
+        Jedis jedis = pool.getResource();
+        try {
+            Long size = jedis.llen(getQueueKey(spiderName));
+            return size.intValue();
+        } finally {
+            pool.returnResource(jedis);
+        }
+    }
+
     protected String getQueueKey(String spiderName) {
         return QUEUE_PREFIX + spiderName;
     }

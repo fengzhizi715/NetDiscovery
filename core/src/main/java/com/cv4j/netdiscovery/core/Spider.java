@@ -48,6 +48,7 @@ public class Spider {
 
     private Set<Pipeline> pipelines = new LinkedHashSet<>();
 
+    @Getter
     private Queue queue;
 
     private boolean autoProxy = false;

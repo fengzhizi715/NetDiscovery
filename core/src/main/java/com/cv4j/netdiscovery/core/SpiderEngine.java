@@ -1,5 +1,7 @@
 package com.cv4j.netdiscovery.core;
 
+import com.alibaba.fastjson.JSON;
+import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -12,9 +14,7 @@ import io.vertx.ext.web.Router;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by tony on 2018/1/2.
@@ -54,7 +54,7 @@ public class SpiderEngine {
         return this;
     }
 
-    public void monitor(int port) {
+    public void httpd(int port) {
 
         HttpServer server = Vertx.vertx().createHttpServer();
 
@@ -69,11 +69,13 @@ public class SpiderEngine {
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "application/json");
 
-                    Map<String,Object> map = new HashMap<>();
-                    map.put(spider.getName(),spider.getSpiderStatus());
+                    SpiderEntity entity = new SpiderEntity();
+                    entity.setSpiderName(spider.getName());
+                    entity.setSpiderStatus(spider.getSpiderStatus());
+                    entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
 
                     // 写入响应并结束处理
-                    response.end(map.toString());
+                    response.end(JSON.toJSONString(entity));
                 });
             }
         }
@@ -102,7 +104,7 @@ public class SpiderEngine {
         engine.addSpider(spider);
         engine.run();
 
-        engine.monitor(8080);
+        engine.httpd(8080);
     }
 
 }

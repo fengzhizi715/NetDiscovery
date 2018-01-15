@@ -24,4 +24,10 @@ public class DefaultQueue extends AbstractQueue {
 
         return queue.poll();
     }
+
+    @Override
+    public int getLeftRequests(String spiderName) {
+
+        return queue.size();
+    }
 }

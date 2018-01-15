@@ -20,4 +20,10 @@ public interface Queue {
      * @return the url to spider
      */
     Request poll(String spiderName);
+
+    /**
+     *
+     * @return
+     */
+    int getLeftRequests(String spiderName);
 }
