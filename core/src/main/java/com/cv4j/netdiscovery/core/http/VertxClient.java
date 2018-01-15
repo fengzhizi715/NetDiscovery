@@ -1,16 +1,20 @@
 package com.cv4j.netdiscovery.core.http;
 
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
+import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Single;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
+import io.vertx.reactivex.core.buffer.Buffer;
+import io.vertx.reactivex.ext.web.client.HttpRequest;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
 import io.vertx.reactivex.ext.web.codec.BodyCodec;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * Created by tony on 2017/12/23.
@@ -20,6 +24,7 @@ public class VertxClient {
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
     private URL url;
+    private Map<String,String> header;
 
     public VertxClient(Request request) {
 
@@ -47,6 +52,11 @@ public class VertxClient {
             options.setProxyOptions(proxyOptions);
         }
 
+        if (Preconditions.isNotBlank(request.getHeader())) {
+
+            header = request.getHeader();
+        }
+
         webClient = WebClient.create(vertx, options);
     }
 
@@ -56,15 +66,31 @@ public class VertxClient {
 
         if ("http".equals(url.getProtocol())) {
 
-            result = webClient.get(url.getHost(),url.getPath())
-                    .as(BodyCodec.string())
+            HttpRequest<Buffer> request = webClient.get(url.getHost(),url.getPath());
+
+            if (Preconditions.isNotBlank(header)) {
+
+                for (Map.Entry<String, String> entry:header.entrySet()) {
+                    request.putHeader(entry.getKey(),entry.getValue());
+                }
+            }
+
+            result = request.as(BodyCodec.string())
                     .rxSend();
 
         } else if ("https".equals(url.getProtocol())){
 
-            result = webClient.get(443, url.getHost(), url.getPath())
-                    .ssl(true)
-                    .as(BodyCodec.string())
+            HttpRequest<Buffer> request = webClient.get(443, url.getHost(), url.getPath())
+                    .ssl(true);
+
+            if (Preconditions.isNotBlank(header)) {
+
+                for (Map.Entry<String, String> entry:header.entrySet()) {
+                    request.putHeader(entry.getKey(),entry.getValue());
+                }
+            }
+            
+            result = request.as(BodyCodec.string())
                     .rxSend();
         }
 
