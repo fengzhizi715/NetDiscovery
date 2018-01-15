@@ -219,10 +219,7 @@ public class Spider {
             }
         } finally {
 
-            if (client!=null) {
-                client.close(); // 关闭网络框架
-                stop();         // 爬虫停止
-            }
+            stopSpider(client); // 爬虫停止
         }
 
     }
@@ -253,7 +250,11 @@ public class Spider {
         return stat.get();
     }
 
-    public void stop() {
+    public void stopSpider(VertxClient client) {
+
+        if (client!=null) {
+            client.close(); // 关闭网络框架
+        }
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) {
             log.info("Spider " + name + " stop success!");
