@@ -253,10 +253,10 @@ public class Spider {
     public void stopSpider(VertxClient client) {
 
         if (client!=null) {
-            client.close(); // 关闭网络框架
+            client.close(); // 关闭VertxClient
         }
 
-        if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) {
+        if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info("Spider " + name + " stop success!");
         } else {
             log.info("Spider " + name + " stop fail!");

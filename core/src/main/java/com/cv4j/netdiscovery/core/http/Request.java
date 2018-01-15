@@ -14,8 +14,6 @@ public class Request {
 
     private String url;
 
-    private String method;
-
     private String userAgent;
 
     private Proxy proxy;

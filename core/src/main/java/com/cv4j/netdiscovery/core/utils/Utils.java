@@ -2,11 +2,9 @@ package com.cv4j.netdiscovery.core.utils;
 
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
-import org.apache.http.HttpHost;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
 import java.net.Socket;
 
 /**
