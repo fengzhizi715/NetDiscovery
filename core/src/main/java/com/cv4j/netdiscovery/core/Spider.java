@@ -8,19 +8,16 @@ import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
-import com.cv4j.netdiscovery.core.queue.RedisQueue;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
-import com.safframework.tony.common.utils.StringUtils;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.reactivex.ext.web.client.HttpResponse;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.JedisPool;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -68,11 +65,7 @@ public class Spider {
 
     public static Spider create(Queue queue) {
 
-        if (queue!=null) {
-            return new Spider(queue);
-        } else {
-            return new Spider();
-        }
+        return queue!=null?new Spider(queue):new Spider();
     }
 
     public Spider name(String name) {

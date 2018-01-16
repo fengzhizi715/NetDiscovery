@@ -62,6 +62,11 @@ public class SpiderEngine {
         return this;
     }
 
+    public Spider createSpider(String name) {
+
+        return Spider.create(this.getQueue()).name(name);
+    }
+
     public void httpd(int port) {
 
         HttpServer server = Vertx.vertx().createHttpServer();
