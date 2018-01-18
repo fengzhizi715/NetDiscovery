@@ -54,6 +54,11 @@ public class SpiderEngine {
         return this;
     }
 
+    /**
+     * 添加爬虫到SpiderEngine，由SpiderEngine来管理
+     * @param spider
+     * @return
+     */
     public SpiderEngine addSpider(Spider spider) {
 
         if (spider!=null) {
@@ -62,11 +67,20 @@ public class SpiderEngine {
         return this;
     }
 
+    /**
+     * 在SpiderEngine中创建一个爬虫
+     * @param name
+     * @return Spider
+     */
     public Spider createSpider(String name) {
 
         return Spider.create(this.getQueue()).name(name);
     }
 
+    /**
+     * 对各个爬虫的状态进行监测，并返回json格式
+     * @param port
+     */
     public void httpd(int port) {
 
         HttpServer server = Vertx.vertx().createHttpServer();
