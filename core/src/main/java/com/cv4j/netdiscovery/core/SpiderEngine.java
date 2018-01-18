@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core;
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.queue.RedisQueue;
 import com.cv4j.proxy.ProxyPool;
@@ -31,6 +32,8 @@ public class SpiderEngine {
     private Queue queue;
 
     private SpiderEngine() {
+
+        this.queue = new DefaultQueue();
     }
 
     private SpiderEngine(Queue queue) {
