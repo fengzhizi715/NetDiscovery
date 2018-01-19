@@ -12,6 +12,7 @@ import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
+import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -49,6 +51,8 @@ public class Spider {
     private Queue queue;
 
     private boolean autoProxy = false;
+
+    private long initialDelay = 0;
 
     private Spider() {
         queue = new DefaultQueue();
@@ -103,6 +107,36 @@ public class Spider {
         return this;
     }
 
+    /**
+     * 用于重复提交的request
+     * @param period
+     * @param url
+     * @return
+     */
+    public Spider repeatRequest(long period, String url) {
+
+        checkIfRunning();
+
+        initialDelay = period;
+
+        Flowable.interval(period, TimeUnit.MILLISECONDS)
+                .onBackpressureBuffer()
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+
+                        log.info("aLong="+aLong);
+                        Request request = new Request(url);
+                        request.checkDuplicate(false);
+                        request.spiderName(name);
+                        request.sleep(period);
+                        queue.push(request);
+                    }
+                });
+
+        return this;
+    }
+
     public Spider parser(Parser parser) {
 
         checkIfRunning();
@@ -140,6 +174,15 @@ public class Spider {
 
         checkRunningStat();
 
+        if (initialDelay > 0) {
+
+            try {
+                Thread.sleep(initialDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         VertxClient client = null;
 
         try {
@@ -148,6 +191,15 @@ public class Spider {
                 final Request request = queue.poll(name);
 
                 if (request != null) {
+
+                    if (request.getSleepTime()>0) {
+
+                        try {
+                            Thread.sleep(request.getSleepTime());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     if (autoProxy) {
 
@@ -238,6 +290,7 @@ public class Spider {
     }
 
     private void checkRunningStat() {
+
         while (true) {
 
             int statNow = getSpiderStatus();

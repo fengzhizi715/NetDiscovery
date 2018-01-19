@@ -22,6 +22,8 @@ public class Request {
 
     private boolean checkDuplicate = true;
 
+    private long sleepTime = 0;// 每次请求url时先sleep一段时间
+
     private Map<String,String> header = new NoEmptyHashMap<>();
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
@@ -60,6 +62,19 @@ public class Request {
         this.checkDuplicate = checkDuplicate;
         return this;
     }
+
+    /**
+     * @param sleepTime 每次请求url时先sleep一段时间，单位是milliseconds
+     * @return
+     */
+    public Request sleep(long sleepTime) {
+
+        if (sleepTime > 0) {
+            this.sleepTime = sleepTime;
+        }
+        return this;
+    }
+
 
     public Request header(String name,String value) {
 

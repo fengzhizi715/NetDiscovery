@@ -93,7 +93,8 @@ public class SpiderEngine {
     }
 
     /**
-     * 对各个爬虫的状态进行监测，并返回json格式
+     * 对各个爬虫的状态进行监测，并返回json格式。
+     * 如果要使用此方法，须放在run()之前
      * @param port
      */
     public void httpd(int port) {
@@ -130,6 +131,9 @@ public class SpiderEngine {
         server.requestHandler(router::accept).listen(port);
     }
 
+    /**
+     * 启动SpiderEngine中所有的spider
+     */
     public void run() {
 
         if (Preconditions.isNotBlank(spiders)) {
@@ -143,6 +147,10 @@ public class SpiderEngine {
         }
     }
 
+    /**
+     * 停止某个爬虫程序
+     * @param name
+     */
     public void stopSpider(String name) {
 
         Spider spider = spiders.get(name);
@@ -153,6 +161,9 @@ public class SpiderEngine {
         }
     }
 
+    /**
+     * 停止所有的爬虫程序
+     */
     public void stopSpiders() {
 
         if (Preconditions.isNotBlank(spiders)) {
@@ -174,14 +185,11 @@ public class SpiderEngine {
 
         Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
-                .request(new Request("http://www.163.com/"))
-                .request(new Request("https://www.baidu.com/").checkDuplicate(false))
-                .request(new Request("https://www.baidu.com/").checkDuplicate(false));
+                .repeatRequest(10000,"http://www.baidu.com");
 
         engine.addSpider(spider);
-        engine.run();
-
         engine.httpd(8080);
+        engine.run();
     }
 
 }
