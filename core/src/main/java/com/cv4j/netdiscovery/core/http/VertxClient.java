@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.core.http;
 
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
-import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Single;
 import io.vertx.core.net.ProxyOptions;

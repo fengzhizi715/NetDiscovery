@@ -125,7 +125,6 @@ public class Spider {
                     @Override
                     public void accept(Long aLong) throws Exception {
 
-                        log.info("aLong="+aLong);
                         Request request = new Request(url);
                         request.checkDuplicate(false);
                         request.spiderName(name);

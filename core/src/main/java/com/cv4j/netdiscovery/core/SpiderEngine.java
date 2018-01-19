@@ -2,10 +2,8 @@ package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
-import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
-import com.cv4j.netdiscovery.core.queue.RedisQueue;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
