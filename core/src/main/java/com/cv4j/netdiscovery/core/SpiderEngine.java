@@ -8,6 +8,7 @@ import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.queue.RedisQueue;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -17,8 +18,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.JedisPool;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * Created by tony on 2018/1/2.
@@ -26,7 +28,7 @@ import java.util.List;
 @Slf4j
 public class SpiderEngine {
 
-    private List<Spider> spiders = new ArrayList<>();
+    private Map<String,Spider> spiders = new NoEmptyHashMap<>();
 
     @Getter
     private Queue queue;
@@ -65,7 +67,7 @@ public class SpiderEngine {
     public SpiderEngine addSpider(Spider spider) {
 
         if (spider!=null) {
-            spiders.add(spider);
+            spiders.put(spider.getName(),spider);
         }
         return this;
     }
@@ -77,7 +79,9 @@ public class SpiderEngine {
      */
     public Spider createSpider(String name) {
 
-        return Spider.create(this.getQueue()).name(name);
+        Spider spider = Spider.create(this.getQueue()).name(name);
+        spiders.put(name,spider);
+        return spider;
     }
 
     /**
@@ -92,7 +96,12 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            for (Spider spider:spiders) {
+            Spider spider;
+
+            for (Map.Entry<String,Spider> entry:spiders.entrySet()) {
+
+                spider = entry.getValue();
+
                 router.route("/netdiscovery/spider/"+spider.getName()).handler(routingContext -> {
 
                     // 所有的请求都会调用这个处理器处理
@@ -119,9 +128,11 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.stream().forEach(spider -> {
-
-                spider.run();
+            spiders.forEach(new BiConsumer<String, Spider>() {
+                @Override
+                public void accept(String s, Spider spider) {
+                    spider.run();
+                }
             });
         }
     }
