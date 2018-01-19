@@ -35,12 +35,26 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
     @Override
     public boolean isDuplicate(Request request) {
 
-        Jedis jedis = pool.getResource();
-        try {
-            return jedis.sadd(getSetKey(request), request.getUrl()) == 0;
-        } finally {
-            pool.returnResource(jedis);
+        if (request.isCheckDuplicate()) {
+
+            Jedis jedis = pool.getResource();
+            try {
+                return jedis.sadd(getSetKey(request), request.getUrl()) == 0;
+            } finally {
+                pool.returnResource(jedis);
+            }
+        } else {
+
+            Jedis jedis = pool.getResource();
+            try {
+                jedis.sadd(getSetKey(request), request.getUrl());
+            } finally {
+                pool.returnResource(jedis);
+            }
+            
+            return false;
         }
+
     }
 
     @Override

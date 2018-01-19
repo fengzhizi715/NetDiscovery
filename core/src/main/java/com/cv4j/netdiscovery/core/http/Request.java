@@ -20,6 +20,8 @@ public class Request {
 
     private String spiderName;
 
+    private boolean checkDuplicate = true;
+
     private Map<String,String> header = new NoEmptyHashMap<>();
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
@@ -50,6 +52,12 @@ public class Request {
     public Request spiderName(String spiderName) {
 
         this.spiderName = spiderName;
+        return this;
+    }
+
+    public Request checkDuplicate(boolean checkDuplicate) {
+
+        this.checkDuplicate = checkDuplicate;
         return this;
     }
 

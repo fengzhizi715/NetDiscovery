@@ -104,11 +104,9 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            Spider spider;
-
             for (Map.Entry<String,Spider> entry:spiders.entrySet()) {
 
-                spider = entry.getValue();
+                final Spider spider = entry.getValue();
 
                 router.route("/netdiscovery/spider/"+spider.getName()).handler(routingContext -> {
 
@@ -153,9 +151,9 @@ public class SpiderEngine {
 
         Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
-                .request(new Request("http://www.163.com/"))
-                .request(new Request("https://www.baidu.com/"))
-                .request(new Request("https://www.baidu.com/"));
+                .request(new Request("http://www.126.com/"))
+                .request(new Request("https://www.baidu.com/").checkDuplicate(false))
+                .request(new Request("https://www.baidu.com/").checkDuplicate(false));
 
         engine.addSpider(spider);
         engine.run();
