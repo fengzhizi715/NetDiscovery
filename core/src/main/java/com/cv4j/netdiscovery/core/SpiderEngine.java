@@ -143,6 +143,29 @@ public class SpiderEngine {
         }
     }
 
+    public void stopSpider(String name) {
+
+        Spider spider = spiders.get(name);
+
+        if (spider!=null) {
+
+            spider.stopSpider();
+        }
+    }
+
+    public void stopSpiders() {
+
+        if (Preconditions.isNotBlank(spiders)) {
+
+            spiders.forEach(new BiConsumer<String, Spider>() {
+                @Override
+                public void accept(String s, Spider spider) {
+                    spider.stopSpider();
+                }
+            });
+        }
+    }
+
     public static void main(String[] args) {
 
         JedisPool pool = new JedisPool("127.0.0.1", 6379);
