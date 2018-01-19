@@ -67,7 +67,10 @@ public class SpiderEngine {
     public SpiderEngine addSpider(Spider spider) {
 
         if (spider!=null) {
-            spiders.put(spider.getName(),spider);
+
+            if (!spiders.containsKey(spider.getName())) {
+                spiders.put(spider.getName(),spider);
+            }
         }
         return this;
     }
@@ -79,9 +82,14 @@ public class SpiderEngine {
      */
     public Spider createSpider(String name) {
 
-        Spider spider = Spider.create(this.getQueue()).name(name);
-        spiders.put(name,spider);
-        return spider;
+        if (!spiders.containsKey(name)) {
+
+            Spider spider = Spider.create(this.getQueue()).name(name);
+            spiders.put(name,spider);
+            return spider;
+        }
+
+        return null;
     }
 
     /**
