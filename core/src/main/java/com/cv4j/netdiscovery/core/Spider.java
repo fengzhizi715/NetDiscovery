@@ -262,6 +262,11 @@ public class Spider {
             client.close(); // 关闭VertxClient
         }
 
+        stopSpider();
+    }
+
+    public void stopSpider() {
+
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info(String.format("Spider %s stop success!",name));
         } else {

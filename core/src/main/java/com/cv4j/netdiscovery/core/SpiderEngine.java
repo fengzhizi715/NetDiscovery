@@ -147,11 +147,11 @@ public class SpiderEngine {
 
         JedisPool pool = new JedisPool("127.0.0.1", 6379);
 
-        SpiderEngine engine = new SpiderEngine(new RedisQueue(pool));
+        SpiderEngine engine = new SpiderEngine();
 
         Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
-                .request(new Request("http://www.126.com/"))
+                .request(new Request("http://www.163.com/"))
                 .request(new Request("https://www.baidu.com/").checkDuplicate(false))
                 .request(new Request("https://www.baidu.com/").checkDuplicate(false));
 

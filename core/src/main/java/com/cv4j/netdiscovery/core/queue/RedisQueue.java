@@ -51,7 +51,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             } finally {
                 pool.returnResource(jedis);
             }
-            
+
             return false;
         }
 
