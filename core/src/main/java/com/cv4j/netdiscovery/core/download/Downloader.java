@@ -1,12 +1,15 @@
 package com.cv4j.netdiscovery.core.download;
 
-import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.domain.Response;
+import io.reactivex.Maybe;
 
 /**
  * Created by tony on 2017/12/23.
  */
 public interface Downloader {
 
-    Page download(Request request);
+    Maybe<Response> download(Request request);
+
+    void close();
 }

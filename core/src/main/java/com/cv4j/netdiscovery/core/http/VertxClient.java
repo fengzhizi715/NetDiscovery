@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.http;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
+import com.cv4j.netdiscovery.core.download.Downloader;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
@@ -21,16 +22,69 @@ import java.util.Map;
 /**
  * Created by tony on 2017/12/23.
  */
-public class VertxClient {
+public class VertxClient implements Downloader {
 
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
     private URL url;
     private Map<String,String> header;
 
-    public VertxClient(Request request) {
+    public VertxClient() {
 
         this.vertx = VertxUtils.vertx;
+    }
+
+    public Maybe<Response> download(Request request) {
+
+        WebClientOptions options = initWebClientOptions(request);
+
+        webClient = WebClient.create(vertx, options);
+
+        HttpRequest<Buffer> httpRequest = null;
+
+        if ("http".equals(url.getProtocol())) {
+
+            httpRequest = webClient.get(url.getHost(),url.getPath());
+
+            if (Preconditions.isNotBlank(header)) {
+
+                for (Map.Entry<String, String> entry:header.entrySet()) {
+                    httpRequest.putHeader(entry.getKey(),entry.getValue());
+                }
+            }
+
+        } else if ("https".equals(url.getProtocol())){
+
+            httpRequest = webClient.get(443, url.getHost(), url.getPath())
+                    .ssl(true);
+
+            if (Preconditions.isNotBlank(header)) {
+
+                for (Map.Entry<String, String> entry:header.entrySet()) {
+                    httpRequest.putHeader(entry.getKey(),entry.getValue());
+                }
+            }
+        }
+
+        return httpRequest
+                .as(BodyCodec.string())
+                .rxSend()
+                .toMaybe()
+                .map(new Function<HttpResponse<String>, Response>() {
+                    @Override
+                    public Response apply(HttpResponse<String> stringHttpResponse) throws Exception {
+
+                        String html = stringHttpResponse.body();
+                        Response response = new Response();
+                        response.setContent(html);
+                        response.setStatusCode(stringHttpResponse.statusCode());
+
+                        return response;
+                    }
+                });
+    }
+
+    private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
         options.setKeepAlive(true).setReuseAddress(true);
@@ -60,53 +114,7 @@ public class VertxClient {
             header = request.getHeader();
         }
 
-        webClient = WebClient.create(vertx, options);
-    }
-
-    public Maybe<Response> request() {
-
-        HttpRequest<Buffer> request = null;
-
-        if ("http".equals(url.getProtocol())) {
-
-            request = webClient.get(url.getHost(),url.getPath());
-
-            if (Preconditions.isNotBlank(header)) {
-
-                for (Map.Entry<String, String> entry:header.entrySet()) {
-                    request.putHeader(entry.getKey(),entry.getValue());
-                }
-            }
-
-        } else if ("https".equals(url.getProtocol())){
-
-            request = webClient.get(443, url.getHost(), url.getPath())
-                    .ssl(true);
-
-            if (Preconditions.isNotBlank(header)) {
-
-                for (Map.Entry<String, String> entry:header.entrySet()) {
-                    request.putHeader(entry.getKey(),entry.getValue());
-                }
-            }
-        }
-
-        return request
-                .as(BodyCodec.string())
-                .rxSend()
-                .toMaybe()
-                .map(new Function<HttpResponse<String>, Response>() {
-                    @Override
-                    public Response apply(HttpResponse<String> stringHttpResponse) throws Exception {
-
-                        String html = stringHttpResponse.body();
-                        Response response = new Response();
-                        response.setContent(html);
-                        response.setStatusCode(stringHttpResponse.statusCode());
-
-                        return response;
-                    }
-                });
+        return options;
     }
 
     public void close() {

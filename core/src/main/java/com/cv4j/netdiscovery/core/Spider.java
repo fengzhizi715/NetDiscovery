@@ -220,8 +220,8 @@ public class Spider {
                         }
                     }
 
-                    client = new VertxClient(request);
-                    client.request()
+                    client = new VertxClient();
+                    client.download(request)
                             .observeOn(Schedulers.io())
                             .map(new Function<Response, Page>() {
 
