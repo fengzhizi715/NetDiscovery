@@ -3,7 +3,6 @@ package com.cv4j.netdiscovery.core.http;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.buffer.Buffer;

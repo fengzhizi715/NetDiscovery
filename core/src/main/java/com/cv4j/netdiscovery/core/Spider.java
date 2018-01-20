@@ -108,8 +108,8 @@ public class Spider {
     }
 
     /**
-     * 用于重复提交的request
-     * @param period
+     * 可用于重复提交的request，用于实现定时任务
+     * @param period 每隔一定的时间提交一次request
      * @param url
      * @return
      */

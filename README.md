@@ -1,2 +1,6 @@
 # NetDiscovery
-打算实现一个通用的爬虫框架
+
+
+TODO List:
+1. 增加对登录验证码的识别
+2. 增加对Kafka的支持
