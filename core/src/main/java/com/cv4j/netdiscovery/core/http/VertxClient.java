@@ -63,7 +63,6 @@ public class VertxClient {
 
     public Maybe<Response> request() {
 
-        Maybe<Response> result = null;
         HttpRequest<Buffer> request = null;
 
         if ("http".equals(url.getProtocol())) {
@@ -90,7 +89,7 @@ public class VertxClient {
             }
         }
 
-        result = request
+        return request
                 .as(BodyCodec.string())
                 .rxSend()
                 .toMaybe()
@@ -100,14 +99,12 @@ public class VertxClient {
 
                         String html = stringHttpResponse.body();
                         Response response = new Response();
-                        response.content = html;
-                        response.statusCode = stringHttpResponse.statusCode();
+                        response.setContent(html);
+                        response.setStatusCode(stringHttpResponse.statusCode());
 
                         return response;
                     }
                 });
-
-        return result;
     }
 
     public void close() {

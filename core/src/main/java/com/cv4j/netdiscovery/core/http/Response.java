@@ -1,10 +1,13 @@
 package com.cv4j.netdiscovery.core.http;
 
+import lombok.Data;
+
 /**
  * Created by tony on 2018/1/20.
  */
+@Data
 public class Response {
 
-    public String content;
-    public int statusCode;
+    private String content;
+    private int statusCode;
 }

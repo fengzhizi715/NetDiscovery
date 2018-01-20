@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
+import com.cv4j.netdiscovery.core.http.Request;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -197,7 +198,8 @@ public class SpiderEngine {
 
         Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
-                .repeatRequest(10000,"http://www.baidu.com");
+                .request(new Request("http://www.baidu.com"))
+                .request(new Request("http://www.163.com"));
 
         engine.addSpider(spider);
         engine.httpd(8080);

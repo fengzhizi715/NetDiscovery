@@ -230,10 +230,10 @@ public class Spider {
                                 public Page apply(Response response) throws Exception {
 
                                     Page page = new Page();
-                                    page.setHtml(new Html(response.content));
+                                    page.setHtml(new Html(response.getContent()));
                                     page.setRequest(request);
                                     page.setUrl(request.getUrl());
-                                    page.setStatusCode(response.statusCode);
+                                    page.setStatusCode(response.getStatusCode());
 
                                     return page;
                                 }
@@ -270,7 +270,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-                                    log.info(page.getUrl());
+                                    log.info(page.getHtml().get());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override
