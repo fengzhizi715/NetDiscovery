@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.http;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
+import io.reactivex.functions.Function;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.buffer.Buffer;
@@ -60,13 +61,14 @@ public class VertxClient {
         webClient = WebClient.create(vertx, options);
     }
 
-    public Maybe<HttpResponse<String>> request() {
+    public Maybe<Response> request() {
 
-        Maybe<HttpResponse<String>> result = null;
+        Maybe<Response> result = null;
+        HttpRequest<Buffer> request = null;
 
         if ("http".equals(url.getProtocol())) {
 
-            HttpRequest<Buffer> request = webClient.get(url.getHost(),url.getPath());
+            request = webClient.get(url.getHost(),url.getPath());
 
             if (Preconditions.isNotBlank(header)) {
 
@@ -75,12 +77,9 @@ public class VertxClient {
                 }
             }
 
-            result = request.as(BodyCodec.string())
-                    .rxSend().toMaybe();
-
         } else if ("https".equals(url.getProtocol())){
 
-            HttpRequest<Buffer> request = webClient.get(443, url.getHost(), url.getPath())
+            request = webClient.get(443, url.getHost(), url.getPath())
                     .ssl(true);
 
             if (Preconditions.isNotBlank(header)) {
@@ -89,10 +88,24 @@ public class VertxClient {
                     request.putHeader(entry.getKey(),entry.getValue());
                 }
             }
-
-            result = request.as(BodyCodec.string())
-                    .rxSend().toMaybe();
         }
+
+        result = request
+                .as(BodyCodec.string())
+                .rxSend()
+                .toMaybe()
+                .map(new Function<HttpResponse<String>, Response>() {
+                    @Override
+                    public Response apply(HttpResponse<String> stringHttpResponse) throws Exception {
+
+                        String html = stringHttpResponse.body();
+                        Response response = new Response();
+                        response.content = html;
+                        response.statusCode = stringHttpResponse.statusCode();
+
+                        return response;
+                    }
+                });
 
         return result;
     }

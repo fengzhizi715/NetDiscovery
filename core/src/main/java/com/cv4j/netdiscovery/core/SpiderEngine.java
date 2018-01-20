@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
+ * 可以管理多个Spider的容器
  * Created by tony on 2018/1/2.
  */
 @Slf4j
@@ -30,6 +31,8 @@ public class SpiderEngine {
 
     @Getter
     private Queue queue;
+
+    private HttpServer server;
 
     private SpiderEngine() {
 
@@ -97,7 +100,7 @@ public class SpiderEngine {
      */
     public void httpd(int port) {
 
-        HttpServer server = Vertx.vertx().createHttpServer();
+        server = Vertx.vertx().createHttpServer();
 
         Router router = Router.router(Vertx.vertx());
 
@@ -127,6 +130,17 @@ public class SpiderEngine {
         }
 
         server.requestHandler(router::accept).listen(port);
+    }
+
+    /**
+     * 关闭HttpServer
+     */
+    public void closeServer() {
+
+        if (server!=null) {
+
+            server.close();
+        }
     }
 
     /**

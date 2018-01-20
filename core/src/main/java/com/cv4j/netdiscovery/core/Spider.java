@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core;
 
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.http.Response;
 import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
@@ -108,7 +109,7 @@ public class Spider {
     }
 
     /**
-     * 可用于重复提交的request，用于实现定时任务
+     * 可以重复提交request，用于实现定时任务
      * @param period 每隔一定的时间提交一次request
      * @param url
      * @return
@@ -223,18 +224,16 @@ public class Spider {
                     client = new VertxClient(request);
                     client.request()
                             .observeOn(Schedulers.io())
-                            .map(new Function<HttpResponse<String>, Page>() {
+                            .map(new Function<Response, Page>() {
 
                                 @Override
-                                public Page apply(HttpResponse<String> stringHttpResponse) throws Exception {
-
-                                    String html = stringHttpResponse.body();
+                                public Page apply(Response response) throws Exception {
 
                                     Page page = new Page();
-                                    page.setHtml(new Html(html));
+                                    page.setHtml(new Html(response.content));
                                     page.setRequest(request);
                                     page.setUrl(request.getUrl());
-                                    page.setStatusCode(stringHttpResponse.statusCode());
+                                    page.setStatusCode(response.statusCode);
 
                                     return page;
                                 }
