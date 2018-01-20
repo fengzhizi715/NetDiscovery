@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.download.http;
+package com.cv4j.netdiscovery.core.download.vertx;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;

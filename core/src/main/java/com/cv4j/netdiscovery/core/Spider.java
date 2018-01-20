@@ -4,7 +4,7 @@ import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.download.Downloader;
-import com.cv4j.netdiscovery.core.download.http.VertxDownloader;
+import com.cv4j.netdiscovery.core.download.vertx.VertxDownloader;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
