@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.queue.filter;
 
-import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.domain.Request;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 

@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.queue;
 
-import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
 import com.cv4j.netdiscovery.core.queue.filter.HashSetDuplicateFilter;
 import lombok.extern.slf4j.Slf4j;

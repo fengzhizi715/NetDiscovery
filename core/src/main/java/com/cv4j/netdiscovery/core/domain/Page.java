@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.core.domain;
 
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import lombok.*;
-import com.cv4j.netdiscovery.core.http.Request;
 
 /**
  * Created by tony on 2017/12/23.

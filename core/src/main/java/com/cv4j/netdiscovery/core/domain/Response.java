@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.http;
+package com.cv4j.netdiscovery.core.domain;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.queue;
 
-import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.domain.Request;
 
 /**
  * Created by tony on 2018/1/1.

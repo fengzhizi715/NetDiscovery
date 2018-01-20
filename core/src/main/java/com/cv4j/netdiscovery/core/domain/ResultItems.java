@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.core.domain;
 
-import com.cv4j.netdiscovery.core.http.Request;
 import lombok.Getter;
 import lombok.Setter;
 

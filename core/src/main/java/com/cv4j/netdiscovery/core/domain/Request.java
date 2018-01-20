@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.http;
+package com.cv4j.netdiscovery.core.domain;
 
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;

@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.queue.filter;
 
-import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.domain.Request;
 
 import java.util.ArrayList;
 import java.util.Collections;

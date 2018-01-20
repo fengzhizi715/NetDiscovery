@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.core.download;
 
 import com.cv4j.netdiscovery.core.domain.Page;
-import com.cv4j.netdiscovery.core.http.Request;
+import com.cv4j.netdiscovery.core.domain.Request;
 
 /**
  * Created by tony on 2017/12/23.

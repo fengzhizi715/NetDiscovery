@@ -1,8 +1,8 @@
 package com.cv4j.netdiscovery.core;
 
 import com.cv4j.netdiscovery.core.domain.Page;
-import com.cv4j.netdiscovery.core.http.Request;
-import com.cv4j.netdiscovery.core.http.Response;
+import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
@@ -17,7 +17,6 @@ import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import io.vertx.reactivex.ext.web.client.HttpResponse;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
