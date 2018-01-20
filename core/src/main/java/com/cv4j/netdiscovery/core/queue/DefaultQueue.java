@@ -35,9 +35,4 @@ public class DefaultQueue extends AbstractQueue {
     public int getTotalRequests(String spiderName) {
         return getFilter().getTotalRequestsCount();
     }
-
-    @Override
-    public String type() {
-        return "default";
-    }
 }

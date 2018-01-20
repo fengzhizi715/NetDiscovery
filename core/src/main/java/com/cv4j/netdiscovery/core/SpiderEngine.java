@@ -121,7 +121,7 @@ public class SpiderEngine {
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
-                    entity.setQueueType(spider.getQueue().type());
+                    entity.setQueueType(spider.getQueue().getClass().getSimpleName());
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
                     // 写入响应并结束处理

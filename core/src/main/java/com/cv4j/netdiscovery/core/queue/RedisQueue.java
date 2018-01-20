@@ -121,11 +121,6 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
     }
 
     @Override
-    public String type() {
-        return "redis";
-    }
-
-    @Override
     public int getTotalRequestsCount() {
         return 0;
     }
