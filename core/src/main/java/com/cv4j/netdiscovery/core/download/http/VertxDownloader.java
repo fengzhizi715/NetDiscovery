@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.http;
+package com.cv4j.netdiscovery.core.download.http;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -22,14 +22,14 @@ import java.util.Map;
 /**
  * Created by tony on 2017/12/23.
  */
-public class VertxClient implements Downloader {
+public class VertxDownloader implements Downloader {
 
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
     private URL url;
     private Map<String,String> header;
 
-    public VertxClient() {
+    public VertxDownloader() {
 
         this.vertx = VertxUtils.vertx;
     }

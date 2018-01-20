@@ -4,7 +4,7 @@ import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.download.Downloader;
-import com.cv4j.netdiscovery.core.http.VertxClient;
+import com.cv4j.netdiscovery.core.download.http.VertxDownloader;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
@@ -56,7 +56,7 @@ public class Spider {
     private long initialDelay = 0;
 
     @Getter
-    private Downloader downloader = new VertxClient();
+    private Downloader downloader = new VertxDownloader();
 
     private Spider() {
         queue = new DefaultQueue();

@@ -29,6 +29,8 @@ dependencies {
     compile 'ch.qos.logback:logback-access:1.1.7'
     compile 'org.projectlombok:lombok:1.16.18'
 
+    compile 'org.asynchttpclient:async-http-client:2.1.2'
+
     compile 'redis.clients:jedis:2.9.0'
     compile 'com.google.guava:guava:23.6-jre'
     compile 'us.codecraft:xsoup:0.3.1'
