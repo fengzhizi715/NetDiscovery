@@ -56,14 +56,15 @@ public class Spider {
     private long initialDelay = 0;
 
     @Getter
-    private Downloader downloader = new VertxDownloader();
+    private Downloader downloader;
 
     private Spider() {
-        queue = new DefaultQueue();
+        this(new DefaultQueue());
     }
 
     private Spider(Queue queue) {
         this.queue = queue;
+        downloader = new VertxDownloader();
     }
 
     public static Spider create() {
@@ -277,7 +278,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-//                                    log.info(page.getHtml().get());
+                                    log.info(page.getUrl());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override
