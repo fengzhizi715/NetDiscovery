@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
+import com.cv4j.netdiscovery.core.download.Downloader;
 import com.cv4j.netdiscovery.core.http.VertxClient;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
@@ -53,6 +54,9 @@ public class Spider {
     private boolean autoProxy = false;
 
     private long initialDelay = 0;
+
+    @Getter
+    private Downloader downloader = new VertxClient();
 
     private Spider() {
         queue = new DefaultQueue();
@@ -136,6 +140,13 @@ public class Spider {
         return this;
     }
 
+    public Spider downloader(Downloader downloader) {
+
+        checkIfRunning();
+        this.downloader = downloader;
+        return this;
+    }
+
     public Spider parser(Parser parser) {
 
         checkIfRunning();
@@ -193,8 +204,6 @@ public class Spider {
             }
         }
 
-        VertxClient client = null;
-
         try {
             while (true && getSpiderStatus() == SPIDER_STATUS_RUNNING) {
 
@@ -220,8 +229,7 @@ public class Spider {
                         }
                     }
 
-                    client = new VertxClient();
-                    client.download(request)
+                    downloader.download(request)
                             .observeOn(Schedulers.io())
                             .map(new Function<Response, Page>() {
 
@@ -269,7 +277,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-                                    log.info(page.getHtml().get());
+//                                    log.info(page.getHtml().get());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override
@@ -285,7 +293,7 @@ public class Spider {
             }
         } finally {
 
-            stopSpider(client); // 爬虫停止
+            stopSpider(downloader); // 爬虫停止
         }
 
     }
@@ -317,10 +325,10 @@ public class Spider {
         return stat.get();
     }
 
-    private void stopSpider(VertxClient client) {
+    private void stopSpider(Downloader downloader) {
 
-        if (client!=null) {
-            client.close(); // 关闭VertxClient
+        if (downloader!=null) {
+            downloader.close();
         }
 
         stopSpider();

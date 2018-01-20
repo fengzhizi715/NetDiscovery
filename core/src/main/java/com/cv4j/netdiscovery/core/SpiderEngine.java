@@ -1,8 +1,8 @@
 package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
-import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -19,7 +19,6 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 /**
  * 可以管理多个Spider的容器
@@ -123,6 +122,7 @@ public class SpiderEngine {
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
                     entity.setQueueType(spider.getQueue().type());
+                    entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(entity));
@@ -151,12 +151,7 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach(new BiConsumer<String, Spider>() {
-                @Override
-                public void accept(String s, Spider spider) {
-                    spider.run();
-                }
-            });
+            spiders.forEach((s,spider)->spider.run());
         }
     }
 
@@ -181,12 +176,7 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach(new BiConsumer<String, Spider>() {
-                @Override
-                public void accept(String s, Spider spider) {
-                    spider.stopSpider();
-                }
-            });
+            spiders.forEach((s,spider)->spider.stopSpider());
         }
     }
 

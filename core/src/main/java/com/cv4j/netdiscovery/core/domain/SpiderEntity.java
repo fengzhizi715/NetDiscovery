@@ -13,4 +13,5 @@ public class SpiderEntity {
     private int leftRequestSize;
     private int totalRequestSize;
     private String queueType;
+    private String downloaderType;
 }
