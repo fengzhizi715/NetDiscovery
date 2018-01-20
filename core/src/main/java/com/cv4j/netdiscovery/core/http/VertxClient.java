@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.http;
 
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
@@ -60,9 +61,9 @@ public class VertxClient {
         webClient = WebClient.create(vertx, options);
     }
 
-    public Single<HttpResponse<String>> request() {
+    public Maybe<HttpResponse<String>> request() {
 
-        Single<HttpResponse<String>> result = null;
+        Maybe<HttpResponse<String>> result = null;
 
         if ("http".equals(url.getProtocol())) {
 
@@ -76,7 +77,7 @@ public class VertxClient {
             }
 
             result = request.as(BodyCodec.string())
-                    .rxSend();
+                    .rxSend().toMaybe();
 
         } else if ("https".equals(url.getProtocol())){
 
@@ -91,7 +92,7 @@ public class VertxClient {
             }
 
             result = request.as(BodyCodec.string())
-                    .rxSend();
+                    .rxSend().toMaybe();
         }
 
         return result;

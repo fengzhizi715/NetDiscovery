@@ -158,6 +158,17 @@ public class Spider {
     }
 
     /**
+     * 自动获取代理，从代理池组件中获取代理
+     * @return
+     */
+    public Spider autoProxy() {
+
+        checkIfRunning();
+        this.autoProxy = true;
+        return this;
+    }
+
+    /**
      * 是否自动获取代理，如果是的话可以从代理池组件中获取代理
      * @param autoProxy
      * @return
