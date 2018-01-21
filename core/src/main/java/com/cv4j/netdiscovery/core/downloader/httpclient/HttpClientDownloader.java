@@ -51,5 +51,6 @@ public class HttpClientDownloader implements Downloader{
     @Override
     public void close() {
 
+        httpManager.close();
     }
 }

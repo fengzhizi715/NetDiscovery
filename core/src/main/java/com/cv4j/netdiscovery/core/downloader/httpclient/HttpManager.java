@@ -193,4 +193,9 @@ public class HttpManager {
 
         return response;
     }
+
+    public void close() {
+
+        connManager.close();
+    }
 }
