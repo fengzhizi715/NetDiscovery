@@ -283,7 +283,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-                                    log.info(page.getUrl());
+                                    log.info(page.getHtml().toString());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override

@@ -22,6 +22,7 @@ dependencies {
     compile 'io.vertx:vertx-rx-java2:3.5.0'
 
     compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
 
     compile 'com.cv4j.proxy:proxypool:1.1.5'
     compile 'tony-common:tony-common-utils:1.2.4'
