@@ -122,8 +122,6 @@ public class Spider {
 
         checkIfRunning();
 
-        initialDelay = period;
-
         Flowable.interval(period, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
                 .subscribe(new Consumer<Long>() {
@@ -138,6 +136,13 @@ public class Spider {
                     }
                 });
 
+        return this;
+    }
+
+    public Spider initialDelay(int initialDelay) {
+
+        checkIfRunning();
+        this.initialDelay = initialDelay;
         return this;
     }
 
