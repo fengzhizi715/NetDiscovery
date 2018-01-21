@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.download;
+package com.cv4j.netdiscovery.core.downloader;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;

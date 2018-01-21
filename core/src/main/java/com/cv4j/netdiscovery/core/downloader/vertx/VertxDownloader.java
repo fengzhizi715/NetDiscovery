@@ -1,8 +1,8 @@
-package com.cv4j.netdiscovery.core.download.vertx;
+package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
-import com.cv4j.netdiscovery.core.download.Downloader;
+import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;

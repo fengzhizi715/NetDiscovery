@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.download.httpclient;
+package com.cv4j.netdiscovery.core.downloader.httpclient;
 
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;

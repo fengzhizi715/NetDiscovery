@@ -1,8 +1,8 @@
-package com.cv4j.netdiscovery.core.download.httpclient;
+package com.cv4j.netdiscovery.core.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
-import com.cv4j.netdiscovery.core.download.Downloader;
+import com.cv4j.netdiscovery.core.downloader.Downloader;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
