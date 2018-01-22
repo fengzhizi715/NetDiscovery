@@ -1,7 +1,8 @@
-package com.cv4j.netdiscovery.core.queue;
+package com.cv4j.netdiscovery.extra.queue;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
 import org.apache.commons.codec.digest.DigestUtils;
 import redis.clients.jedis.Jedis;

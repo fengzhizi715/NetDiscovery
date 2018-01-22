@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.downloader.okhttp;
+package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -50,6 +50,5 @@ public class OkHttpDownloader implements Downloader{
 
     @Override
     public void close() {
-
     }
 }

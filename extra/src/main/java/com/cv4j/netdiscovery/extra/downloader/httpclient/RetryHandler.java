@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.core.downloader.httpclient;
+package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;

@@ -1,0 +1,23 @@
+group 'com.cv4j.netdiscovery'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile "org.apache.httpcomponents:httpclient:4.5.2"
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+
+    compile 'redis.clients:jedis:2.9.0'
+
+    compile 'com.alibaba:fastjson:1.2.45'
+
+    compile project(":core")
+}

@@ -3,8 +3,6 @@ package com.cv4j.netdiscovery.core;
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
-import com.cv4j.netdiscovery.core.downloader.httpclient.HttpClientDownloader;
-import com.cv4j.netdiscovery.core.downloader.okhttp.OkHttpDownloader;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -17,7 +15,6 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.JedisPool;
 
 import java.util.List;
 import java.util.Map;
@@ -184,13 +181,10 @@ public class SpiderEngine {
 
     public static void main(String[] args) {
 
-        JedisPool pool = new JedisPool("127.0.0.1", 6379);
-
         SpiderEngine engine = new SpiderEngine();
 
         Spider spider = Spider.create(engine.getQueue())
                 .name("tony")
-                .downloader(new OkHttpDownloader())
                 .request(new Request("http://www.baidu.com"))
                 .request(new Request("http://www.163.com"));
 
