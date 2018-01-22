@@ -1,4 +1,5 @@
 rootProject.name = 'netdiscovery'
 include 'core'
 include 'extra'
+include 'example'
 
