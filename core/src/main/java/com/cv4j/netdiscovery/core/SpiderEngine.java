@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
-import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
@@ -178,19 +177,4 @@ public class SpiderEngine {
             spiders.forEach((s,spider)->spider.stopSpider());
         }
     }
-
-    public static void main(String[] args) {
-
-        SpiderEngine engine = new SpiderEngine();
-
-        Spider spider = Spider.create(engine.getQueue())
-                .name("tony")
-                .request(new Request("http://www.baidu.com"))
-                .request(new Request("http://www.163.com"));
-
-        engine.addSpider(spider);
-        engine.httpd(8080);
-        engine.run();
-    }
-
 }
