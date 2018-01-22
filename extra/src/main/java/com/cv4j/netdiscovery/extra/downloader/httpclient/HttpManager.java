@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.extra.downloader.httpclient;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.tony.common.utils.Preconditions;
 import org.apache.http.HttpHost;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.CookieStore;
@@ -35,6 +36,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -161,13 +163,16 @@ public class HttpManager {
 
     public CloseableHttpResponse getResponse(Request request) {
 
-        return getResponse(request.getUrl(),request.getProxy());
-    }
+        HttpGet httpGet = new HttpGet(request.getUrl());
 
-    public CloseableHttpResponse getResponse(String url,Proxy proxy) {
+        if (Preconditions.isNotBlank(request.getHeader())) {
 
-        HttpGet request = new HttpGet(url);
-        return getResponse(request,proxy);
+            for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
+                httpGet.addHeader(entry.getKey(),entry.getValue());
+            }
+        }
+
+        return getResponse(httpGet,request.getProxy());
     }
 
     public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {
