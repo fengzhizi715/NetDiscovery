@@ -32,7 +32,7 @@ public class HttpClientDownloader implements Downloader{
             @Override
             public void subscribe(MaybeEmitter emitter) throws Exception {
 
-                emitter.onSuccess(httpManager.getResponse(request.getUrl()));
+                emitter.onSuccess(httpManager.getResponse(request));
             }
         }).map(new Function<CloseableHttpResponse, Response>() {
 

@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.httpclient;
 
+import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
 import org.apache.http.HttpHost;
@@ -158,9 +159,9 @@ public class HttpManager {
         return httpClientBuilder.build();
     }
 
-    public CloseableHttpResponse getResponse(String url) {
+    public CloseableHttpResponse getResponse(Request request) {
 
-        return getResponse(url,null);
+        return getResponse(request.getUrl(),request.getProxy());
     }
 
     public CloseableHttpResponse getResponse(String url,Proxy proxy) {

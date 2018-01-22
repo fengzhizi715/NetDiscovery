@@ -113,7 +113,7 @@ public class Spider {
     }
 
     /**
-     * 可以重复提交request，用于实现定时任务
+     * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
      * @param period 每隔一定的时间提交一次request
      * @param url
      * @return
