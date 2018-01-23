@@ -136,11 +136,14 @@ public class SpiderEngine {
 
                 List<SpiderEntity> list = new ArrayList<>();
 
+                Spider spider = null;
+                SpiderEntity entity = null;
+
                 for (Map.Entry<String,Spider> entry:spiders.entrySet()) {
 
-                    final Spider spider = entry.getValue();
+                    spider = entry.getValue();
 
-                    SpiderEntity entity = new SpiderEntity();
+                    entity = new SpiderEntity();
                     entity.setSpiderName(spider.getName());
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));

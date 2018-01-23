@@ -16,9 +16,10 @@ public class Test {
 
         Spider spider = Spider.create()
                 .name("tony")
-                .downloader(new HttpClientDownloader())
-                .request(new Request("http://www.163.com"))
-                .request(new Request("http://www.baidu.com"));
+                .repeatRequest(10000,"http://www.163.com")
+                .initialDelay(10000);
+//                .request(new Request("http://www.163.com"))
+//                .request(new Request("http://www.baidu.com"));
 
         engine.addSpider(spider);
         engine.httpd(8080);
