@@ -15,6 +15,7 @@ import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -54,6 +55,8 @@ public class Spider {
     private boolean autoProxy = false;
 
     private long initialDelay = 0;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Getter
     private Downloader downloader;
@@ -122,7 +125,8 @@ public class Spider {
 
         checkIfRunning();
 
-        Flowable.interval(period, TimeUnit.MILLISECONDS)
+        compositeDisposable
+                .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
                 .onBackpressureBuffer()
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -134,7 +138,7 @@ public class Spider {
                         request.sleep(period);
                         queue.push(request);
                     }
-                });
+                }));
 
         return this;
     }
@@ -211,7 +215,7 @@ public class Spider {
         }
 
         try {
-            while (true && getSpiderStatus() == SPIDER_STATUS_RUNNING) {
+            while (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
 
                 final Request request = queue.poll(name);
 
@@ -283,7 +287,7 @@ public class Spider {
                                 @Override
                                 public void accept(Page page) throws Exception {
 
-                                    log.info(page.getHtml().toString());
+                                    log.info(page.getUrl());
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override
@@ -344,8 +348,15 @@ public class Spider {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info(String.format("Spider %s stop success!",name));
-        } else {
-            log.info(String.format("Spider %s stop fail!",name));
+        }
+    }
+
+    public void forceStopSpider() {
+
+        compositeDisposable.clear();
+
+        if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
+            log.info(String.format("Spider %s stop success!",name));
         }
     }
 }

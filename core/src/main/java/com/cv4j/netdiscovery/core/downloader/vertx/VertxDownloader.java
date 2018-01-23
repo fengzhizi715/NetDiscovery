@@ -119,6 +119,8 @@ public class VertxDownloader implements Downloader {
 
     public void close() {
 
-        webClient.close();
+        if (webClient!=null) {
+            webClient.close();
+        }
     }
 }

@@ -126,6 +126,18 @@ public class SpiderEngine {
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(entity));
                 });
+
+                router.route("/netdiscovery/spider/"+spider.getName()+"/stop").handler(routingContext -> {
+
+                    // 所有的请求都会调用这个处理器处理
+                    HttpServerResponse response = routingContext.response();
+                    response.putHeader("content-type", "application/json");
+
+                    spider.forceStopSpider();
+
+                    // 写入响应并结束处理
+                    response.end(JSON.toJSONString(""));
+                });
             }
 
             router.route("/netdiscovery/spiders/").handler(routingContext -> {
