@@ -2,6 +2,8 @@ package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
+import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
+import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -123,8 +125,13 @@ public class SpiderEngine {
                     entity.setQueueType(spider.getQueue().getClass().getSimpleName());
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
+                    SpiderResponse spiderResponse = new SpiderResponse();
+                    spiderResponse.setCode(200);
+                    spiderResponse.setMessage("success");
+                    spiderResponse.setData(entity);
+
                     // 写入响应并结束处理
-                    response.end(JSON.toJSONString(entity));
+                    response.end(JSON.toJSONString(spiderResponse));
                 });
 
                 router.route("/netdiscovery/spider/"+spider.getName()+"/stop").handler(routingContext -> {
@@ -165,8 +172,13 @@ public class SpiderEngine {
                     list.add(entity);
                 }
 
+                SpidersResponse spidersResponse = new SpidersResponse();
+                spidersResponse.setCode(200);
+                spidersResponse.setMessage("success");
+                spidersResponse.setData(list);
+
                 // 写入响应并结束处理
-                response.end(JSON.toJSONString(list));
+                response.end(JSON.toJSONString(spidersResponse));
             });
         }
 
