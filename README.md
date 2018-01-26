@@ -10,10 +10,10 @@
 
 
 ## NetDiscovery 基本原理：
-## 1.基本原理
+### 1.基本原理
 ![](basic_principle.png)
 
-## 2.集群原理
+### 2.集群原理
 ![](cluster_principle.png)
 
 # TODO:

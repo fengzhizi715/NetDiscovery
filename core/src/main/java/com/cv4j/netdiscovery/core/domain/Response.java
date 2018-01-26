@@ -10,4 +10,5 @@ public class Response {
 
     private String content;
     private int statusCode;
+    private String contentType;
 }
