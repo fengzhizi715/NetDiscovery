@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
+import com.cv4j.netdiscovery.core.domain.response.StopSpiderResponse;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -142,8 +143,13 @@ public class SpiderEngine {
 
                     spider.forceStopSpider();
 
+                    StopSpiderResponse stopSpiderResponse = new StopSpiderResponse();
+                    stopSpiderResponse.setCode(200);
+                    stopSpiderResponse.setMessage("success");
+                    stopSpiderResponse.setData(String.format("stop Spider %s success",spider.getName()));
+
                     // 写入响应并结束处理
-                    response.end(JSON.toJSONString(""));
+                    response.end(JSON.toJSONString(stopSpiderResponse));
                 });
             }
 
