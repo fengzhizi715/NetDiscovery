@@ -214,14 +214,7 @@ public class Spider {
 
         checkRunningStat();
 
-        if (initialDelay > 0) {
-
-            try {
-                Thread.sleep(initialDelay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        initialDelay();
 
         try {
             while (getSpiderStatus() != SPIDER_STATUS_STOPPED) {
@@ -234,14 +227,7 @@ public class Spider {
                         log.error("can't pause : ", e);
                     }
 
-                    if (initialDelay > 0) {
-
-                        try {
-                            Thread.sleep(initialDelay);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    initialDelay();
                 }
 
                 final Request request = queue.poll(name);
@@ -400,8 +386,23 @@ public class Spider {
      * 爬虫重新开始
      */
     public void resume() {
-        this.pauseCountDown.countDown();
-        this.pause = false;
-        stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
+
+        if (stat.get()==SPIDER_STATUS_PAUSE) {
+            this.pauseCountDown.countDown();
+            this.pause = false;
+            stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
+        }
+    }
+
+    private void initialDelay() {
+
+        if (initialDelay > 0) {
+
+            try {
+                Thread.sleep(initialDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
