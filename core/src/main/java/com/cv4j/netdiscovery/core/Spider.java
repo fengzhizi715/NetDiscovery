@@ -252,6 +252,11 @@ public class Spider {
                         }
                     }
 
+                    if (request.getBeforeRequest()!=null) {
+
+                        request.getBeforeRequest().process(request);
+                    }
+
                     downloader.download(request)
                             .observeOn(Schedulers.io())
                             .map(new Function<Response, Page>() {

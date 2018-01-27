@@ -14,13 +14,12 @@ import org.openqa.selenium.WebDriver;
  */
 public class SeleniumDownloader implements Downloader {
 
-    WebDriver webDriver;
+    private WebDriver webDriver;
 
     public SeleniumDownloader(WebDriver webDriver) {
 
         this.webDriver = webDriver;
     }
-
 
     @Override
     public Maybe<Response> download(Request request) {

@@ -30,6 +30,8 @@ public class Request {
 
     private Map<String,Object> extras;
 
+    private BeforeRequest beforeRequest;
+
     public Request(String url) {
 
         this.url = url;
@@ -104,5 +106,19 @@ public class Request {
     public Object getExtra(String key) {
 
         return extras != null?extras.get(key):null;
+    }
+
+    public Request beforeRequest(BeforeRequest beforeRequest) {
+
+        this.beforeRequest = beforeRequest;
+        return this;
+    }
+
+    /**
+     * 在请求request之前做的事情
+     */
+    public interface BeforeRequest{
+
+        void process(Request request);
     }
 }
