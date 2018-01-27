@@ -28,6 +28,8 @@ public class Request {
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
 
+    private Map<String,Object> extras;
+
     public Request(String url) {
 
         this.url = url;
@@ -86,5 +88,21 @@ public class Request {
 
         cookies.put(name, value);
         return this;
+    }
+
+    public Request putExtra(String key,Object value) {
+
+        if (extras==null) {
+
+            extras = new NoEmptyHashMap<>();
+        }
+
+        extras.put(key,value);
+        return this;
+    }
+
+    public Object getExtra(String key) {
+
+        return extras != null?extras.get(key):null;
     }
 }
