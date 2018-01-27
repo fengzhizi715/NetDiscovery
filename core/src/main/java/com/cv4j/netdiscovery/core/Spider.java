@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -55,6 +56,9 @@ public class Spider {
     private boolean autoProxy = false;
 
     private long initialDelay = 0;
+
+    private volatile boolean pause;
+    private CountDownLatch pauseCountDown;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -217,6 +221,15 @@ public class Spider {
         try {
             while (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
 
+                //暂停抓取
+                if(pause) {
+                    try {
+                        this.pauseCountDown.await();
+                    } catch (InterruptedException e) {
+                        log.error("can't pause : ", e);
+                    }
+                }
+
                 final Request request = queue.poll(name);
 
                 if (request != null) {
@@ -341,22 +354,38 @@ public class Spider {
             downloader.close();
         }
 
-        stopSpider();
+        stop();
     }
 
-    public void stopSpider() {
+    public void stop() {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info(String.format("Spider %s stop success!",name));
         }
     }
 
-    public void forceStopSpider() {
+    public void forceStop() {
 
         compositeDisposable.clear();
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info(String.format("Spider %s stop success!",name));
         }
+    }
+
+    /**
+     * 暂停，当前正在抓取的请求会继续抓取完成，之后会等到resume的调用才继续抓取
+     */
+    public void pause() {
+        this.pauseCountDown = new CountDownLatch(1);
+        this.pause = true;
+    }
+
+    /**
+     * 重新开始
+     */
+    public void resume() {
+        this.pauseCountDown.countDown();
+        this.pause = false;
     }
 }
