@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
-import com.cv4j.netdiscovery.core.domain.response.StopSpiderResponse;
+import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
@@ -14,7 +14,9 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -105,6 +107,7 @@ public class SpiderEngine {
         server = Vertx.vertx().createHttpServer();
 
         Router router = Router.router(Vertx.vertx());
+        router.route().handler(BodyHandler.create());
 
         if (Preconditions.isNotBlank(spiders)) {
 
@@ -135,21 +138,52 @@ public class SpiderEngine {
                     response.end(JSON.toJSONString(spiderResponse));
                 });
 
-                router.route("/netdiscovery/spider/"+spider.getName()+"/stop").handler(routingContext -> {
+                router.post("/netdiscovery/spider/"+spider.getName()+"/status").handler(routingContext -> {
 
                     // 所有的请求都会调用这个处理器处理
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "application/json");
 
-                    spider.forceStop();
+                    JsonObject json = routingContext.getBodyAsJson();
 
-                    StopSpiderResponse stopSpiderResponse = new StopSpiderResponse();
-                    stopSpiderResponse.setCode(200);
-                    stopSpiderResponse.setMessage("success");
-                    stopSpiderResponse.setData(String.format("stop Spider %s success",spider.getName()));
+                    SpiderStatusResponse spiderStatusResponse = null;
+
+                    if (json!=null) {
+
+                        int status = json.getInteger("status");
+
+                        spiderStatusResponse = new SpiderStatusResponse();
+
+                        switch (status) {
+
+                            case Spider.SPIDER_STATUS_PAUSE: {
+                                spider.pause();
+                                spiderStatusResponse.setData(String.format("SpiderEngine pause Spider %s success",spider.getName()));
+                                break;
+                            }
+
+                            case Spider.SPIDER_STATUS_RESUME: {
+                                spider.resume();
+                                spiderStatusResponse.setData(String.format("SpiderEngine resume Spider %s success",spider.getName()));
+                                break;
+                            }
+
+                            case Spider.SPIDER_STATUS_STOPPED: {
+                                spider.forceStop();
+                                spiderStatusResponse.setData(String.format("SpiderEngine stop Spider %s success",spider.getName()));
+                                break;
+                            }
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    spiderStatusResponse.setCode(200);
+                    spiderStatusResponse.setMessage("success");
 
                     // 写入响应并结束处理
-                    response.end(JSON.toJSONString(stopSpiderResponse));
+                    response.end(JSON.toJSONString(spiderStatusResponse));
                 });
             }
 

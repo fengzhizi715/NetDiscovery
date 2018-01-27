@@ -233,6 +233,15 @@ public class Spider {
                     } catch (InterruptedException e) {
                         log.error("can't pause : ", e);
                     }
+
+                    if (initialDelay > 0) {
+
+                        try {
+                            Thread.sleep(initialDelay);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
                 final Request request = queue.poll(name);
@@ -374,7 +383,7 @@ public class Spider {
         compositeDisposable.clear();
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info(String.format("Spider %s stop success!",name));
+            log.info(String.format("Spider %s force stop success!",name));
         }
     }
 
