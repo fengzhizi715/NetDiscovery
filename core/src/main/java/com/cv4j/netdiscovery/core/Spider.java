@@ -136,11 +136,14 @@ public class Spider {
                     @Override
                     public void accept(Long aLong) throws Exception {
 
-                        Request request = new Request(url);
-                        request.checkDuplicate(false);
-                        request.spiderName(name);
-                        request.sleep(period);
-                        queue.push(request);
+                        if (!pause) {
+                            Request request = new Request(url);
+                            request.checkDuplicate(false);
+                            request.spiderName(name);
+                            request.sleep(period);
+                            queue.push(request);
+                        }
+
                     }
                 }));
 
