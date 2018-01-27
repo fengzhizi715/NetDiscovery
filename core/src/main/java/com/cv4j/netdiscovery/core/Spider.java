@@ -39,7 +39,9 @@ public class Spider {
 
     public final static int SPIDER_STATUS_INIT = 0;
     public final static int SPIDER_STATUS_RUNNING = 1;
-    public final static int SPIDER_STATUS_STOPPED = 2;
+    public final static int SPIDER_STATUS_PAUSE = 2;
+    public final static int SPIDER_STATUS_RESUME= 3;
+    public final static int SPIDER_STATUS_STOPPED = 4;
 
     protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
@@ -222,7 +224,7 @@ public class Spider {
         }
 
         try {
-            while (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
+            while (getSpiderStatus() != SPIDER_STATUS_STOPPED) {
 
                 //暂停抓取
                 if(pause) {
@@ -377,18 +379,20 @@ public class Spider {
     }
 
     /**
-     * 暂停，当前正在抓取的请求会继续抓取完成，之后会等到resume的调用才继续抓取
+     * 爬虫暂停，当前正在抓取的请求会继续抓取完成，之后会等到resume的调用才继续抓取
      */
     public void pause() {
         this.pauseCountDown = new CountDownLatch(1);
         this.pause = true;
+        stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_PAUSE);
     }
 
     /**
-     * 重新开始
+     * 爬虫重新开始
      */
     public void resume() {
         this.pauseCountDown.countDown();
         this.pause = false;
+        stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
     }
 }

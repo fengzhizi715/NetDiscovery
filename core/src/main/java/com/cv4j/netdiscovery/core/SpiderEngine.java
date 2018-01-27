@@ -141,7 +141,7 @@ public class SpiderEngine {
                     HttpServerResponse response = routingContext.response();
                     response.putHeader("content-type", "application/json");
 
-                    spider.forceStopSpider();
+                    spider.forceStop();
 
                     StopSpiderResponse stopSpiderResponse = new StopSpiderResponse();
                     stopSpiderResponse.setCode(200);
@@ -223,7 +223,7 @@ public class SpiderEngine {
 
         if (spider!=null) {
 
-            spider.stopSpider();
+            spider.stop();
         }
     }
 
@@ -234,7 +234,7 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach((s,spider)->spider.stopSpider());
+            spiders.forEach((s,spider)->spider.stop());
         }
     }
 }
