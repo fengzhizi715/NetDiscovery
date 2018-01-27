@@ -11,4 +11,6 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation 'org.seleniumhq.selenium:selenium-java:3.8.1'
 }
