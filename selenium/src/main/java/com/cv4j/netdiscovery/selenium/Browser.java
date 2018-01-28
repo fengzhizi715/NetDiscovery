@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 /**
  * Created by tony on 2018/1/28.
@@ -29,6 +30,13 @@ public enum Browser implements WebDriverInitializer {
         public WebDriver init(String path) {
             System.setProperty("webdriver.ie.driver", path);
             return new InternetExplorerDriver();
+        }
+    },
+    Phatomjs {
+        @Override
+        public WebDriver init(String path) {
+            System.setProperty("phantomjs.binary.path", path);
+            return new PhantomJSDriver();
         }
     }
 }
