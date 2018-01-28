@@ -21,6 +21,8 @@ dependencies {
 
     implementation 'redis.clients:jedis:2.9.0'
 
+    implementation 'org.apache.kafka:kafka-clients:1.0.0'
+
     implementation 'com.alibaba:fastjson:1.2.45'
 
     implementation "io.reactivex.rxjava2:rxjava:2.1.8"

@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.extra.queue;
+package com.cv4j.netdiscovery.extra.queue.redis;
 
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
