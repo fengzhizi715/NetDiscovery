@@ -44,7 +44,7 @@ public class VertxDownloader implements Downloader {
 
         if ("http".equals(url.getProtocol())) {
 
-            httpRequest = webClient.get(url.getHost(),url.getPath());
+            httpRequest = webClient.get(request.getUrl());
 
             if (Preconditions.isNotBlank(header)) {
 
@@ -55,8 +55,15 @@ public class VertxDownloader implements Downloader {
 
         } else if ("https".equals(url.getProtocol())){
 
-            httpRequest = webClient.get(443, url.getHost(), url.getPath())
-                    .ssl(true);
+            if (Preconditions.isNotBlank(url.getQuery())) {
+
+                httpRequest = webClient.get(443,url.getHost(),url.getPath()+"?"+url.getQuery())
+                        .ssl(true);
+            } else {
+
+                httpRequest = webClient.get(443,url.getHost(),url.getPath())
+                        .ssl(true);
+            }
 
             if (Preconditions.isNotBlank(header)) {
 
