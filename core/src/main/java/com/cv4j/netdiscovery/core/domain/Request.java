@@ -32,6 +32,8 @@ public class Request {
 
     private BeforeRequest beforeRequest;
 
+    private AfterRequest afterRequest;
+
     public Request(String url) {
 
         this.url = url;
@@ -114,11 +116,25 @@ public class Request {
         return this;
     }
 
+    public Request afterRequest(AfterRequest afterRequest) {
+
+        this.afterRequest = afterRequest;
+        return this;
+    }
+
     /**
-     * 在请求request之前做的事情
+     * 在request之前做的事情
      */
     public interface BeforeRequest{
 
         void process(Request request);
+    }
+
+    /**
+     * 在request之前做的事情
+     */
+    public interface AfterRequest{
+
+        void process(Page page);
     }
 }

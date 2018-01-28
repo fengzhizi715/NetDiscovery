@@ -306,6 +306,11 @@ public class Spider {
                                 public void accept(Page page) throws Exception {
 
                                     log.info(page.getUrl());
+
+                                    if (request.getAfterRequest()!=null) {
+
+                                        request.getAfterRequest().process(page);
+                                    }
                                 }
                             }, new Consumer<Throwable>() {
                                 @Override
