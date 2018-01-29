@@ -44,7 +44,7 @@ public class VertxDownloader implements Downloader {
 
         if ("http".equals(url.getProtocol())) {
 
-            httpRequest = webClient.get(request.getUrl());
+            httpRequest = webClient.getAbs(request.getUrl());
 
             if (Preconditions.isNotBlank(header)) {
 
