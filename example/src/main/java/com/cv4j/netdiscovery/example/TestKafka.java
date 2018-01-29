@@ -24,7 +24,7 @@ public class TestKafka {
 
         Properties consumeProperties = new Properties();
         consumeProperties.put("bootstrap.servers", "localhost:9092");
-        consumeProperties.put("group.id", "group-1");
+        consumeProperties.put("group.id", "group");
         consumeProperties.put("enable.auto.commit", "true");
         consumeProperties.put("auto.commit.interval.ms", "1000");
         consumeProperties.put("auto.offset.reset", "earliest");
@@ -36,7 +36,7 @@ public class TestKafka {
 
         Spider.create(queue)
                 .name("tony")
-                .url("http://www.baidu.com")
+                .url("http://www.163.com")
                 .run();
     }
 }

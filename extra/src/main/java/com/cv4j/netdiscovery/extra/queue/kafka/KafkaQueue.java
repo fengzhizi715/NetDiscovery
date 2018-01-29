@@ -27,7 +27,6 @@ public class KafkaQueue extends AbstractQueue {
 
         producer = new KafkaProducer<String, Request>(producerProperties);
         kafkaConsumer = new KafkaConsumer<>(consumeProperties);
-
         kafkaConsumer.subscribe(Arrays.asList(spiderName));
     }
 
@@ -51,6 +50,7 @@ public class KafkaQueue extends AbstractQueue {
 
             return records.iterator().next().value();
         }
+
         return null;
     }
 
