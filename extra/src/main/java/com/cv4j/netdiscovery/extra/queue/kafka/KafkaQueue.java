@@ -2,6 +2,9 @@ package com.cv4j.netdiscovery.extra.queue.kafka;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
+import com.safframework.tony.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -13,6 +16,7 @@ import java.util.Properties;
 /**
  * Created by tony on 2018/1/28.
  */
+@Slf4j
 public class KafkaQueue extends AbstractQueue {
 
     private KafkaProducer<String,Request> producer;
@@ -23,6 +27,7 @@ public class KafkaQueue extends AbstractQueue {
 
         producer = new KafkaProducer<String, Request>(producerProperties);
         kafkaConsumer = new KafkaConsumer<>(consumeProperties);
+
         kafkaConsumer.subscribe(Arrays.asList(spiderName));
     }
 
@@ -33,6 +38,7 @@ public class KafkaQueue extends AbstractQueue {
 
             timeout = request.getSleepTime();
         }
+
         producer.send(new ProducerRecord<String, Request>(request.getSpiderName(), request));
     }
 
@@ -41,9 +47,7 @@ public class KafkaQueue extends AbstractQueue {
 
         ConsumerRecords<String, Request> records = kafkaConsumer.poll(timeout);
 
-        records.iterator().next().value();
-
-        if (records!=null && records.iterator()!=null) {
+        if (records!=null && records.iterator()!=null && records.count()>0) {
 
             return records.iterator().next().value();
         }
