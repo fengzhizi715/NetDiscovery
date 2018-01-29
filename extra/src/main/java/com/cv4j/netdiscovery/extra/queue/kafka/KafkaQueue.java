@@ -33,11 +33,6 @@ public class KafkaQueue extends AbstractQueue {
     @Override
     protected void pushWhenNoDuplicate(Request request) {
 
-        if (request.getSleepTime()>0) {
-
-            timeout = request.getSleepTime();
-        }
-
         producer.send(new ProducerRecord<String, Request>(request.getSpiderName(), request));
     }
 
