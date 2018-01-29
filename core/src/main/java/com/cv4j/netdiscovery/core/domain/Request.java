@@ -34,6 +34,9 @@ public class Request {
 
     private AfterRequest afterRequest;
 
+    public Request() {
+    }
+
     public Request(String url) {
 
         this.url = url;
