@@ -152,7 +152,7 @@ public class Spider {
         return this;
     }
 
-    public Spider initialDelay(int initialDelay) {
+    public Spider initialDelay(long initialDelay) {
 
         checkIfRunning();
         this.initialDelay = initialDelay;
