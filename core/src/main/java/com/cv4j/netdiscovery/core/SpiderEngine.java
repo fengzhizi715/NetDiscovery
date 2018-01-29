@@ -39,8 +39,6 @@ public class SpiderEngine {
     private HttpServer server;
 
     private SpiderEngine() {
-
-        this.queue = new DefaultQueue();
     }
 
     private SpiderEngine(Queue queue) {
