@@ -16,7 +16,6 @@ import java.util.Properties;
 /**
  * Created by tony on 2018/1/28.
  */
-@Slf4j
 public class KafkaQueue extends AbstractQueue {
 
     private KafkaProducer<String,Request> producer;

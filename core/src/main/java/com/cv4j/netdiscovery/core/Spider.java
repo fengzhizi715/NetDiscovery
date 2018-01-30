@@ -72,7 +72,13 @@ public class Spider {
     }
 
     private Spider(Queue queue) {
-        this.queue = queue;
+
+        if (queue!=null) {
+            this.queue = queue;
+        } else {
+            this.queue = new DefaultQueue();
+        }
+
         downloader = new VertxDownloader();
     }
 
