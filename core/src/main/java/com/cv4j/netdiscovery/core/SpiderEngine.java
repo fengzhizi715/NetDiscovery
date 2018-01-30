@@ -241,7 +241,9 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach((s,spider)->spider.run());
+            spiders.entrySet()
+                    .parallelStream()
+                    .forEach(entry -> entry.getValue().run());
         }
     }
 
@@ -266,7 +268,9 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach((s,spider)->spider.stop());
+            spiders.entrySet()
+                    .parallelStream()
+                    .forEach(entry -> entry.getValue().stop());
         }
     }
 }
