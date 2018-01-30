@@ -32,6 +32,12 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 }
 ```
 
+|status       | 作用        |
+|:-------------|:-------------|
+|2|让爬虫暂停|
+|3|让爬虫从暂停中恢复|
+|4|让爬虫停止|
+
 ## NetDiscovery 基本原理：
 ### 1.基本原理
 ![](basic_principle.png)
