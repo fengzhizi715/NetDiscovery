@@ -11,6 +11,10 @@ import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
@@ -19,6 +23,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -241,9 +246,26 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.entrySet()
-                    .parallelStream()
-                    .forEach(entry -> entry.getValue().run());
+            Flowable.fromIterable(spiders.values())
+                    .flatMap(new Function<Spider, Publisher<?>>() {
+                        @Override
+                        public Publisher<?> apply(Spider spider) throws Exception {
+
+                            return Flowable.just(spider)
+                                    .subscribeOn(Schedulers.io())
+                                    .map(new Function<Spider, Void>() {
+
+                                        @Override
+                                        public Void apply(Spider spider) throws Exception {
+
+                                            spider.run();
+
+                                            return null;
+                                        }
+                                    });
+                        }
+                    })
+                    .subscribe();
         }
     }
 
@@ -268,9 +290,7 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.entrySet()
-                    .parallelStream()
-                    .forEach(entry -> entry.getValue().stop());
+            spiders.forEach((s,spider)->spider.stop());
         }
     }
 }
