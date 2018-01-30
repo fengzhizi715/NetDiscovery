@@ -235,7 +235,7 @@ public class SpiderEngine {
     }
 
     /**
-     * 启动SpiderEngine中所有的spider
+     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行
      */
     public void run() {
 

@@ -18,4 +18,4 @@
 
 # TODO:
 1. 增加对登录验证码的识别
-2. 增加对Kafka的支持
+2. 增加elasticsearch的支持
