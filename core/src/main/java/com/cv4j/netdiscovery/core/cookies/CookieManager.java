@@ -20,4 +20,28 @@ public class CookieManager {
     public static final CookieManager getInsatance() {
         return Holder.instance;
     }
+
+    public void addCookieGroup(CookieGroup group) {
+
+        if (group!=null) {
+
+            cookieGroups.put(group.getDomain(), group);
+        }
+    }
+
+    public CookieGroup getCookieGroup(String domain) {
+
+        return cookieGroups.get(domain);
+    }
+
+    public void removeCookieGroup(String domain) {
+
+        CookieGroup group = cookieGroups.remove(domain);
+        if (group != null) {
+            Map cookies = group.getCookies();
+            if (cookies != null) {
+                cookies.clear();
+            }
+        }
+    }
 }
