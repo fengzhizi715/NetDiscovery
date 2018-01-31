@@ -57,3 +57,6 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 # TODO:
 1. 增加对登录验证码的识别
 2. 增加elasticsearch的支持
+
+# 联系方式:
+QQ交流群：490882934
