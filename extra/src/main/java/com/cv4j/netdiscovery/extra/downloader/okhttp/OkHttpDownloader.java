@@ -9,6 +9,7 @@ import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public class OkHttpDownloader implements Downloader{
     OkHttpClient client;
 
     public OkHttpDownloader() {
-        client = new OkHttpClient();
+        client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
     }
 
     @Override
@@ -59,5 +60,14 @@ public class OkHttpDownloader implements Downloader{
 
     @Override
     public void close() {
+
+        try {
+            client.dispatcher().executorService().shutdown();   //清除并关闭线程池
+            client.connectionPool().evictAll();                 //清除并关闭连接池
+            client.cache().close();                             //清除cache
+        } catch (IOException e) {
+
+        }
+
     }
 }
