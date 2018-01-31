@@ -145,6 +145,7 @@ public class Request {
     /**
      * 在request之前做的事情
      */
+    @FunctionalInterface
     public interface BeforeRequest{
 
         void process(Request request);
@@ -153,6 +154,7 @@ public class Request {
     /**
      * 在request之前做的事情
      */
+    @FunctionalInterface
     public interface AfterRequest{
 
         void process(Page page);
