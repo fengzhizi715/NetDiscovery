@@ -4,6 +4,7 @@ import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import lombok.Getter;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -111,6 +112,22 @@ public class Request {
     public Object getExtra(String key) {
 
         return extras != null?extras.get(key):null;
+    }
+
+    public void clearHeader() {
+        Iterator<Map.Entry<String, String>> it = this.header.entrySet().iterator();
+        while(it.hasNext()){
+            it.next();
+            it.remove();
+        }
+    }
+
+    public void clearCookie() {
+        Iterator<Map.Entry<String, String>> it = this.cookies.entrySet().iterator();
+        while(it.hasNext()){
+            it.next();
+            it.remove();
+        }
     }
 
     public Request beforeRequest(BeforeRequest beforeRequest) {
