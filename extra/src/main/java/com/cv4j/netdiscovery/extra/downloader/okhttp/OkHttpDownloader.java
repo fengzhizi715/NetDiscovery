@@ -9,6 +9,8 @@ import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 
+import java.util.Map;
+
 /**
  * Created by tony on 2018/1/21.
  */
@@ -23,9 +25,16 @@ public class OkHttpDownloader implements Downloader{
     @Override
     public Maybe<Response> download(Request request) {
 
-        okhttp3.Request okrequest = new okhttp3.Request.Builder()
-                .url(request.getUrl())
-                .build();
+        okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder().url(request.getUrl());
+
+        if (request.getHeader()!=null) {
+
+            for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
+                requestBuilder.addHeader(entry.getKey(),entry.getValue());
+            }
+        }
+
+        okhttp3.Request okrequest = requestBuilder.build();
 
         return Maybe.create(new MaybeOnSubscribe<okhttp3.Response>(){
 
