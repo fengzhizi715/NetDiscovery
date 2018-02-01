@@ -253,14 +253,14 @@ public class SpiderEngine {
 
                             return Flowable.just(spider)
                                     .subscribeOn(Schedulers.io())
-                                    .map(new Function<Spider, Void>() {
+                                    .map(new Function<Spider, Publisher>() {
 
                                         @Override
-                                        public Void apply(Spider spider) throws Exception {
+                                        public Publisher apply(Spider spider) throws Exception {
 
                                             spider.run();
 
-                                            return null;
+                                            return Flowable.empty();
                                         }
                                     });
                         }
