@@ -10,15 +10,9 @@ public class Test {
 
     public static void main(String[] args) {
 
-        SpiderEngine engine = SpiderEngine.create();
-
-        Spider spider = Spider.create()
+        Spider.create()
                 .name("tony")
-                .repeatRequest(10000,"http://www.163.com")
-                .initialDelay(10000);
-
-        engine.addSpider(spider);
-        engine.httpd(8080);
-        engine.run();
+                .url("http://www.163.com")
+                .run();
     }
 }

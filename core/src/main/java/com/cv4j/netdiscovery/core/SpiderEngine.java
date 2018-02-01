@@ -231,7 +231,7 @@ public class SpiderEngine {
     /**
      * 关闭HttpServer
      */
-    public void closeServer() {
+    public void closeHttpServer() {
 
         if (server!=null) {
 
@@ -240,7 +240,7 @@ public class SpiderEngine {
     }
 
     /**
-     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行
+     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
      */
     public void run() {
 
