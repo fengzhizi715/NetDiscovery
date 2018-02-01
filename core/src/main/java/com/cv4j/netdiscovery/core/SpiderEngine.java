@@ -105,7 +105,7 @@ public class SpiderEngine {
      * 如果要使用此方法，须放在run()之前
      * @param port
      */
-    public void httpd(int port) {
+    public SpiderEngine httpd(int port) {
 
         server = Vertx.vertx().createHttpServer();
 
@@ -226,6 +226,8 @@ public class SpiderEngine {
         }
 
         server.requestHandler(router::accept).listen(port);
+
+        return this;
     }
 
     /**
