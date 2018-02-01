@@ -13,6 +13,7 @@ import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -367,7 +368,7 @@ public class Spider {
     private void stopSpider(Downloader downloader) {
 
         if (downloader!=null) {
-            downloader.close();
+            IOUtils.closeQuietly(downloader);
         }
 
         stop();
