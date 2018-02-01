@@ -3,4 +3,5 @@ include 'core'
 include 'extra'
 include 'example'
 include 'selenium'
+include 'admin'
 
