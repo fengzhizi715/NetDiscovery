@@ -1,7 +1,9 @@
 package com.cv4j.netdiscovery.core.domain;
 
+import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
+import com.safframework.tony.common.utils.Preconditions;
 import lombok.Getter;
 
 import java.util.Iterator;
@@ -56,6 +58,15 @@ public class Request {
         return this;
     }
 
+    public Request autoUA() {
+
+        this.userAgent = UserAgent.getUserAgent();
+        if (Preconditions.isNotBlank(userAgent)) {
+            header.put("User-Agent",userAgent);
+        }
+        return this;
+    }
+
     public Request proxy(Proxy proxy) {
 
         this.proxy = proxy;
@@ -85,7 +96,6 @@ public class Request {
         }
         return this;
     }
-
 
     public Request header(String name,String value) {
 
