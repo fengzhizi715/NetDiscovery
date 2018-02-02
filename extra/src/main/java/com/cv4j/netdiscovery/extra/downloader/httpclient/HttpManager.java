@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
@@ -177,7 +178,10 @@ public class HttpManager {
 
     public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {
 
-        request.setHeader("User-Agent", Constant.userAgentArray[new Random().nextInt(Constant.userAgentArray.length)]);
+        if (Preconditions.isNotBlank(UserAgent.getUserAgent())) {
+
+            request.setHeader("User-Agent", UserAgent.getUserAgent());
+        }
         HttpClientContext httpClientContext = HttpClientContext.create();
         CloseableHttpResponse response = null;
 
