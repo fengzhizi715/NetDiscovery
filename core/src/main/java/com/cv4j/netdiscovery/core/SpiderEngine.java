@@ -3,16 +3,15 @@ package com.cv4j.netdiscovery.core;
 import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
-import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
-import com.cv4j.netdiscovery.core.queue.DefaultQueue;
+import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
+import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.Vertx;
@@ -25,7 +24,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +45,34 @@ public class SpiderEngine {
     private HttpServer server;
 
     private SpiderEngine() {
+
+        this(null);
     }
 
     private SpiderEngine(Queue queue) {
 
         this.queue = queue;
+
+        String filePath = SpiderEngine.class.getClassLoader().getResource("ua/").getPath();
+
+        File file = new File(filePath);
+
+        if (FileUtils.isDirectory(file)) {
+
+            Arrays.asList(file.listFiles()).forEach(f->{
+
+                Vertx.vertx().fileSystem().readFile(f.getAbsolutePath(),result->{
+
+                    if(result.succeeded()) {
+
+                        log.info(result.result().toString());
+                    } else {
+
+                        log.info("Oh oh ..." + result.cause());
+                    }
+                });
+            });
+        }
     }
 
     public static SpiderEngine create() {
