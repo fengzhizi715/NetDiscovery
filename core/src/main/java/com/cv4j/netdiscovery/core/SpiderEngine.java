@@ -11,6 +11,7 @@ import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.FileUtils;
+import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -25,12 +26,11 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 可以管理多个Spider的容器
@@ -55,7 +55,7 @@ public class SpiderEngine {
 
         this.queue = queue;
 
-        initSpiderEngine();
+//        initSpiderEngine();
     }
 
     /**
@@ -67,26 +67,28 @@ public class SpiderEngine {
 
         File file = new File(filePath);
 
-        if (FileUtils.isDirectory(file) && Preconditions.isNotBlank(file.list())) {
+        if (FileUtils.isDirectory(file) && Preconditions.isNotBlank(file.listFiles())) {
 
-            Arrays.asList(file.listFiles()).forEach(f -> {
+            Arrays.asList(file.listFiles())
+                    .forEach(f -> {
 
-                Vertx.vertx().fileSystem().readFile(f.getAbsolutePath(), result -> {
+                        InputStream input = null;
+                        try {
+                            input = new FileInputStream(f);
+                            String inputString = IOUtils.inputStream2String(input);
+                            String[] ss = inputString.split("\r\n");
+                            if (ss.length > 0) {
 
-                    if (result.succeeded() && result.result() != null) {
-
-                        String[] ss = result.result().toString().split("\r\n");
-                        if (ss.length > 0) {
-
-                            Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                                Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            IOUtils.closeQuietly(input);
                         }
-
-                    } else {
-
-                        log.info("Oh oh ..." + result.cause());
-                    }
-                });
-            });
+                    });
         }
     }
 
