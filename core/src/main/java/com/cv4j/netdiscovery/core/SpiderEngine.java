@@ -14,6 +14,7 @@ import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.Vertx;
@@ -55,7 +56,7 @@ public class SpiderEngine {
 
         this.queue = queue;
 
-//        initSpiderEngine();
+        initSpiderEngine();
     }
 
     /**
@@ -292,6 +293,19 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
+            spiders.entrySet()
+                    .parallelStream()
+                    .forEach(entry -> entry.getValue().run());
+        }
+    }
+
+    /**
+     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
+     */
+    public void runWithRepeat() {
+
+        if (Preconditions.isNotBlank(spiders)) {
+
             Flowable.fromIterable(spiders.values())
                     .flatMap(new Function<Spider, Publisher<?>>() {
                         @Override
@@ -312,6 +326,12 @@ public class SpiderEngine {
                         }
                     })
                     .subscribe();
+
+//            spiders.entrySet()
+//                    .parallelStream()
+//                    .forEach(entry -> entry.getValue().run());
+
+
         }
     }
 

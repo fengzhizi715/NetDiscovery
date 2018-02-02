@@ -20,6 +20,6 @@ public class TestRepeatRequest {
                 .repeatRequest(10000,"http://www.126.com")
                 .initialDelay(10000);
 
-        engine.addSpider(spider).httpd(8080).run();
+        engine.addSpider(spider).httpd(8080).runWithRepeat();
     }
 }

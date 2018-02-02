@@ -14,9 +14,12 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Spider.create()
-                .name("tony")
-                .url("http://www.163.com")
+        SpiderEngine spiderEngine = SpiderEngine.create();
+
+        spiderEngine
+                .addSpider(Spider.create().name("tony1").url("http://www.163.com"))
+                .addSpider(Spider.create().name("tony2").url("http://www.126.com"))
+                .addSpider(Spider.create().name("tony3").url("http://www.baidu.com"))
                 .run();
     }
 }

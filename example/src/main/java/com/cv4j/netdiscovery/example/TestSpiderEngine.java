@@ -33,7 +33,9 @@ public class TestSpiderEngine {
 
         engine.addSpider(spider3);
 
+        engine.addSpider(Spider.create().name("tony").url("https://www.jianshu.com/"));
+
         engine.httpd(8080);
-        engine.run();
+        engine.runWithRepeat();
     }
 }
