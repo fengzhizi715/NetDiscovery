@@ -3,6 +3,8 @@ package com.cv4j.netdiscovery.extra.downloader.okhttp;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.utils.UserAgent;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -32,6 +34,15 @@ public class OkHttpDownloader implements Downloader{
 
             for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
                 requestBuilder.addHeader(entry.getKey(),entry.getValue());
+            }
+        }
+
+        if (Preconditions.isBlank(request.getUserAgent())){
+
+            String ua = UserAgent.getUserAgent();
+            if (Preconditions.isNotBlank(ua)) {
+
+                requestBuilder.addHeader("User-Agent",ua);
             }
         }
 

@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.downloader.vertx;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
@@ -98,6 +99,13 @@ public class VertxDownloader implements Downloader {
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
+        } else {
+
+            String ua = UserAgent.getUserAgent();
+
+            if (Preconditions.isNotBlank(ua)) {
+                options.setUserAgent(ua);
+            }
         }
 
         if (Preconditions.isNotBlank(request.getUrl())) {
