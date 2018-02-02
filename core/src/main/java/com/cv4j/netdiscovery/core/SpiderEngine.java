@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
+import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 可以管理多个Spider的容器
@@ -37,7 +39,7 @@ import java.util.Map;
 @Slf4j
 public class SpiderEngine {
 
-    private Map<String,Spider> spiders = new NoEmptyHashMap<>();
+    private Map<String, Spider> spiders = new NoEmptyHashMap<>();
 
     @Getter
     private Queue queue;
@@ -53,19 +55,32 @@ public class SpiderEngine {
 
         this.queue = queue;
 
+        initSpiderEngine();
+    }
+
+    /**
+     * 初始化爬虫引擎
+     */
+    private void initSpiderEngine() {
+
         String filePath = SpiderEngine.class.getClassLoader().getResource("ua/").getPath();
 
         File file = new File(filePath);
 
-        if (FileUtils.isDirectory(file)) {
+        if (FileUtils.isDirectory(file) && Preconditions.isNotBlank(file.list())) {
 
-            Arrays.asList(file.listFiles()).forEach(f->{
+            Arrays.asList(file.listFiles()).forEach(f -> {
 
-                Vertx.vertx().fileSystem().readFile(f.getAbsolutePath(),result->{
+                Vertx.vertx().fileSystem().readFile(f.getAbsolutePath(), result -> {
 
-                    if(result.succeeded()) {
+                    if (result.succeeded() && result.result() != null) {
 
-                        log.info(result.result().toString());
+                        String[] ss = result.result().toString().split("\r\n");
+                        if (ss.length > 0) {
+
+                            Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                        }
+
                     } else {
 
                         log.info("Oh oh ..." + result.cause());
@@ -93,15 +108,16 @@ public class SpiderEngine {
 
     /**
      * 添加爬虫到SpiderEngine，由SpiderEngine来管理
+     *
      * @param spider
      * @return
      */
     public SpiderEngine addSpider(Spider spider) {
 
-        if (spider!=null) {
+        if (spider != null) {
 
             if (!spiders.containsKey(spider.getName())) {
-                spiders.put(spider.getName(),spider);
+                spiders.put(spider.getName(), spider);
             }
         }
         return this;
@@ -109,6 +125,7 @@ public class SpiderEngine {
 
     /**
      * 在SpiderEngine中创建一个爬虫
+     *
      * @param name
      * @return Spider
      */
@@ -117,7 +134,7 @@ public class SpiderEngine {
         if (!spiders.containsKey(name)) {
 
             Spider spider = Spider.create(this.getQueue()).name(name);
-            spiders.put(name,spider);
+            spiders.put(name, spider);
             return spider;
         }
 
@@ -127,6 +144,7 @@ public class SpiderEngine {
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
      * 如果要使用此方法，须放在run()之前
+     *
      * @param port
      */
     public SpiderEngine httpd(int port) {
@@ -138,11 +156,11 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            for (Map.Entry<String,Spider> entry:spiders.entrySet()) {
+            for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
 
                 final Spider spider = entry.getValue();
 
-                router.route("/netdiscovery/spider/"+spider.getName()).handler(routingContext -> {
+                router.route("/netdiscovery/spider/" + spider.getName()).handler(routingContext -> {
 
                     // 所有的请求都会调用这个处理器处理
                     HttpServerResponse response = routingContext.response();
@@ -165,7 +183,7 @@ public class SpiderEngine {
                     response.end(JSON.toJSONString(spiderResponse));
                 });
 
-                router.post("/netdiscovery/spider/"+spider.getName()+"/status").handler(routingContext -> {
+                router.post("/netdiscovery/spider/" + spider.getName() + "/status").handler(routingContext -> {
 
                     // 所有的请求都会调用这个处理器处理
                     HttpServerResponse response = routingContext.response();
@@ -175,7 +193,7 @@ public class SpiderEngine {
 
                     SpiderStatusResponse spiderStatusResponse = null;
 
-                    if (json!=null) {
+                    if (json != null) {
 
                         int status = json.getInteger("status");
 
@@ -185,19 +203,19 @@ public class SpiderEngine {
 
                             case Spider.SPIDER_STATUS_PAUSE: {
                                 spider.pause();
-                                spiderStatusResponse.setData(String.format("SpiderEngine pause Spider %s success",spider.getName()));
+                                spiderStatusResponse.setData(String.format("SpiderEngine pause Spider %s success", spider.getName()));
                                 break;
                             }
 
                             case Spider.SPIDER_STATUS_RESUME: {
                                 spider.resume();
-                                spiderStatusResponse.setData(String.format("SpiderEngine resume Spider %s success",spider.getName()));
+                                spiderStatusResponse.setData(String.format("SpiderEngine resume Spider %s success", spider.getName()));
                                 break;
                             }
 
                             case Spider.SPIDER_STATUS_STOPPED: {
                                 spider.forceStop();
-                                spiderStatusResponse.setData(String.format("SpiderEngine stop Spider %s success",spider.getName()));
+                                spiderStatusResponse.setData(String.format("SpiderEngine stop Spider %s success", spider.getName()));
                                 break;
                             }
 
@@ -225,7 +243,7 @@ public class SpiderEngine {
                 Spider spider = null;
                 SpiderEntity entity = null;
 
-                for (Map.Entry<String,Spider> entry:spiders.entrySet()) {
+                for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
 
                     spider = entry.getValue();
 
@@ -259,7 +277,7 @@ public class SpiderEngine {
      */
     public void closeHttpServer() {
 
-        if (server!=null) {
+        if (server != null) {
 
             server.close();
         }
@@ -297,13 +315,14 @@ public class SpiderEngine {
 
     /**
      * 停止某个爬虫程序
+     *
      * @param name
      */
     public void stopSpider(String name) {
 
         Spider spider = spiders.get(name);
 
-        if (spider!=null) {
+        if (spider != null) {
 
             spider.stop();
         }
@@ -316,7 +335,7 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach((s,spider)->spider.stop());
+            spiders.forEach((s, spider) -> spider.stop());
         }
     }
 }
