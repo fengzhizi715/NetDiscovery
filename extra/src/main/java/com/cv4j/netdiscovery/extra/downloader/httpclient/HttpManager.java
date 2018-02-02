@@ -173,15 +173,20 @@ public class HttpManager {
             }
         }
 
+        if (Preconditions.isBlank(request.getUserAgent())) {
+
+            String ua = UserAgent.getUserAgent();
+            if (Preconditions.isNotBlank(ua)) {
+
+                httpGet.setHeader("User-Agent", ua);
+            }
+        }
+
         return getResponse(httpGet,request.getProxy());
     }
 
     public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {
 
-        if (Preconditions.isNotBlank(UserAgent.getUserAgent())) {
-
-            request.setHeader("User-Agent", UserAgent.getUserAgent());
-        }
         HttpClientContext httpClientContext = HttpClientContext.create();
         CloseableHttpResponse response = null;
 

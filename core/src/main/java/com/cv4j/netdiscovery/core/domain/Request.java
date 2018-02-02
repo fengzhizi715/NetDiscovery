@@ -52,6 +52,7 @@ public class Request {
     public Request ua(String userAgent) {
 
         this.userAgent = userAgent;
+        header.put("User-Agent",userAgent);
         return this;
     }
 
