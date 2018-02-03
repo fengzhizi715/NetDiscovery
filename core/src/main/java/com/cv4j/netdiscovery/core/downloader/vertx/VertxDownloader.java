@@ -32,7 +32,7 @@ public class VertxDownloader implements Downloader {
 
     public VertxDownloader() {
 
-        this.vertx = VertxUtils.vertx;
+        this.vertx = VertxUtils.reactivex_vertx;
     }
 
     public Maybe<Response> download(Request request) {

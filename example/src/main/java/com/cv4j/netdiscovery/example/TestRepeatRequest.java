@@ -16,8 +16,6 @@ public class TestRepeatRequest {
         Spider spider = Spider.create()
                 .name("tony")
                 .repeatRequest(10000,"http://www.163.com")
-                .repeatRequest(10000,"http://www.baidu.com")
-                .repeatRequest(10000,"http://www.126.com")
                 .initialDelay(10000);
 
         engine.addSpider(spider).httpd(8080).runWithRepeat();

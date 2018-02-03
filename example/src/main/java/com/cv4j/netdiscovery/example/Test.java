@@ -19,7 +19,7 @@ public class Test {
         spiderEngine
                 .addSpider(Spider.create().name("tony1").url("http://www.163.com"))
                 .addSpider(Spider.create().name("tony2").url("http://www.126.com"))
-                .addSpider(Spider.create().name("tony3").url("http://www.baidu.com"))
+                .addSpider(Spider.create().name("tony3").url("https://www.baidu.com"))
                 .run();
     }
 }

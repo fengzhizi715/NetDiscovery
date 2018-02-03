@@ -21,7 +21,7 @@ public class TestSpiderEngine {
 
         Spider spider2 = Spider.create()
                 .name("tony2")
-                .repeatRequest(10000,"http://www.baidu.com")
+                .repeatRequest(10000,"https://www.baidu.com")
                 .initialDelay(10000);
 
         engine.addSpider(spider2);
