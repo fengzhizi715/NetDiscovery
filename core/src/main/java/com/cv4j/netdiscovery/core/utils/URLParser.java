@@ -1,5 +1,7 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.safframework.tony.common.utils.Preconditions;
+
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -243,7 +245,7 @@ public class URLParser {
 
     private static LinkedHashMap<String, List<String>> parseQueryString(String query) {
         LinkedHashMap<String, List<String>> params = new LinkedHashMap<String, List<String>>();
-        if (isBlank(query)) {
+        if (Preconditions.isBlank(query)) {
             return params;
         }
         String[] items = query.split("&");
@@ -256,10 +258,6 @@ public class URLParser {
         return params;
     }
 
-    private static boolean isBlank(String str) {
-        return str == null || str.trim().length() == 0;
-    }
-
     private static String substringBefore(String str, String sep) {
         int index = str.indexOf(sep);
         return index == -1 ? "" : str.substring(0, index);
@@ -269,38 +267,4 @@ public class URLParser {
         int index = str.indexOf(sep);
         return index == -1 ? "" : str.substring(index + 1);
     }
-//
-//    /**
-//     * Usage.
-//     */
-//    public static void main(String[] args) throws Exception {
-//        String url = "ftp://www.test.com/aaa/bbb;xxx=xxx?eee=111&fff=222&fff=333";
-//
-//        URLParser parser = new URLParser(url);
-//
-//        // get basic infomation
-//        System.out.println(parser.getHost());
-//        System.out.println(parser.getPort());
-//        System.out.println(parser.getProtocol());
-//        System.out.println(parser.getPath());
-//        System.out.println(parser.getQuery());
-//        System.out.println(parser.getUserInfo());
-//        System.out.println(parser.getCharset());
-//
-//        // get paramsa
-//        System.out.println(parser.getParam("eee"));
-//        System.out.println(parser.getParam("fff"));
-//        System.out.println(parser.getParams("fff"));
-//
-//        // update params
-//        parser.removeParams("eee");
-//        parser.addParam("ggg", "444");
-//        parser.updateParams("fff", "555");
-//
-//        // create query string
-//        System.out.println(parser.createQueryString());
-//
-//        // full url
-//        System.out.println(parser.toString());
-//    }
 }

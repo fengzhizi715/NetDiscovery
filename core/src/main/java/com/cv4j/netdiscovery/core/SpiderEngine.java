@@ -7,6 +7,7 @@ import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
+import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
@@ -16,7 +17,6 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
@@ -153,9 +153,9 @@ public class SpiderEngine {
      */
     public SpiderEngine httpd(int port) {
 
-        server = Vertx.vertx().createHttpServer();
+        server = VertxUtils.vertx.createHttpServer();
 
-        Router router = Router.router(Vertx.vertx());
+        Router router = Router.router(VertxUtils.vertx);
         router.route().handler(BodyHandler.create());
 
         if (Preconditions.isNotBlank(spiders)) {
