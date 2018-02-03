@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Spider可以单独使用，每个Spider只能处理一种Parser，不同的Parser需要不同的Spider
+ * 如果需要使用repeatRequest，建议一个Spider只使用一个repeatRequest方法。
  * <p>
  * Created by tony on 2017/12/22.
  */

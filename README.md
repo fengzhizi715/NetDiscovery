@@ -9,26 +9,26 @@
 ---|:-------------:|:-------------:
 最新版本| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)
 
-## NetDiscovery 功能点：
-### 1.Spider功能
+# NetDiscovery 功能点：
+## 1.Spider功能
 
 ![](Spider.png)
 
-### 2.SpiderEngine功能
+## 2.SpiderEngine功能
 ![](SpiderEngine.png)
 
 
-#### 2.1 获取某个爬虫的状态
+### 2.1 获取某个爬虫的状态
 http://localhost:{port}/netdiscovery/spider/{spiderName}
 
 类型：GET
 
-#### 2.2 获取SpiderEngine中所有爬虫的状态
+### 2.2 获取SpiderEngine中所有爬虫的状态
 http://localhost:{port}/netdiscovery/spiders/
 
 类型：GET
 
-#### 2.3 修改某个爬虫的状态
+### 2.3 修改某个爬虫的状态
 http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 类型：POST
@@ -47,12 +47,15 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |3|让爬虫从暂停中恢复|
 |4|让爬虫停止|
 
-## NetDiscovery 基本原理：
-### 1.基本原理
+# NetDiscovery 基本原理：
+## 1.基本原理
 ![](basic_principle.png)
 
-### 2.集群原理
+## 2.集群原理
 ![](cluster_principle.png)
+
+# 案例:
+* [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用的user agent
 
 # TODO:
 1. 增加对登录验证码的识别

@@ -14,7 +14,6 @@ import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.Vertx;
@@ -77,10 +76,12 @@ public class SpiderEngine {
                         try {
                             input = new FileInputStream(f);
                             String inputString = IOUtils.inputStream2String(input);
-                            String[] ss = inputString.split("\r\n");
-                            if (ss.length > 0) {
+                            if(Preconditions.isNotBlank(inputString)) {
+                                String[] ss = inputString.split("\r\n");
+                                if (ss.length > 0) {
 
-                                Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                                    Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                                }
                             }
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -288,7 +289,7 @@ public class SpiderEngine {
 
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
-     * 如果某个Spider使用了repeateRequest()，则须使用runWithRepeat()
+     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
      */
     public void run() {
 
