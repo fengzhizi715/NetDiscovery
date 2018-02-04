@@ -37,15 +37,6 @@ public class OkHttpDownloader implements Downloader{
             }
         }
 
-        if (Preconditions.isBlank(request.getUserAgent())){
-
-            String ua = UserAgent.getUserAgent();
-            if (Preconditions.isNotBlank(ua)) {
-
-                requestBuilder.addHeader("User-Agent",ua);
-            }
-        }
-
         okhttp3.Request okrequest = requestBuilder.build();
 
         return Maybe.create(new MaybeOnSubscribe<okhttp3.Response>(){

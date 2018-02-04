@@ -99,13 +99,6 @@ public class VertxDownloader implements Downloader {
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
-        } else {
-
-            String ua = UserAgent.getUserAgent();
-
-            if (Preconditions.isNotBlank(ua)) {
-                options.setUserAgent(ua);
-            }
         }
 
         if (Preconditions.isNotBlank(request.getUrl())) {

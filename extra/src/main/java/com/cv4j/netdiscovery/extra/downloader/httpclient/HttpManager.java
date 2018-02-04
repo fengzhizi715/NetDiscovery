@@ -173,15 +173,6 @@ public class HttpManager {
             }
         }
 
-        if (Preconditions.isBlank(request.getUserAgent())) {
-
-            String ua = UserAgent.getUserAgent();
-            if (Preconditions.isNotBlank(ua)) {
-
-                httpGet.setHeader("User-Agent", ua);
-            }
-        }
-
         return getResponse(httpGet,request.getProxy());
     }
 
