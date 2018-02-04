@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.core;
 
 import com.alibaba.fastjson.JSON;
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
@@ -27,10 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 可以管理多个Spider的容器
@@ -59,24 +57,23 @@ public class SpiderEngine {
     }
 
     /**
-     * 初始化爬虫引擎
+     * 初始化爬虫引擎，加载ua列表
      */
     private void initSpiderEngine() {
 
-        String filePath = SpiderEngine.class.getClassLoader().getResource("ua/").getPath();
+        String[] uaList = Constant.uaList;
 
-        File file = new File(filePath);
+        if (Preconditions.isNotBlank(uaList)) {
 
-        if (FileUtils.isDirectory(file) && Preconditions.isNotBlank(file.listFiles())) {
-
-            Arrays.asList(file.listFiles())
-                    .forEach(f -> {
+            Arrays.asList(uaList)
+                    .forEach(name -> {
 
                         InputStream input = null;
+
                         try {
-                            input = new FileInputStream(f);
+                            input = this.getClass().getResourceAsStream(name);
                             String inputString = IOUtils.inputStream2String(input);
-                            if(Preconditions.isNotBlank(inputString)) {
+                            if (Preconditions.isNotBlank(inputString)) {
                                 String[] ss = inputString.split("\r\n");
                                 if (ss.length > 0) {
 
