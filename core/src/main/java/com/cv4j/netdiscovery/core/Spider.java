@@ -392,7 +392,7 @@ public class Spider {
     }
 
     /**
-     * 爬虫暂停，当前正在抓取的请求会继续抓取完成，之后会等到resume的调用才继续抓取
+     * 爬虫暂停，当前正在抓取的请求会继续抓取完成，之后的请求会等到resume的调用才继续抓取
      */
     public void pause() {
         this.pauseCountDown = new CountDownLatch(1);
