@@ -1,7 +1,5 @@
 package com.cv4j.netdiscovery.core.config;
 
-import java.net.URL;
-
 /**
  * Created by tony on 2018/2/4.
  */
