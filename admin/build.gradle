@@ -1,14 +1,51 @@
 group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.0'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
 
 repositories {
+    maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "io.vertx:vertx-unit:3.5.0"
+
+    compile 'io.vertx:vertx-core:3.5.0'
+    compile 'io.vertx:vertx-web:3.5.0'
+    compile 'io.vertx:vertx-mongo-client:3.5.0'
+    compile 'org.slf4j:slf4j-api:1.7.20'
+    compile 'ch.qos.logback:logback-classic:1.1.7'
+    compile 'ch.qos.logback:logback-core:1.1.7'
+    compile 'ch.qos.logback:logback-access:1.1.7'
+    compile 'org.projectlombok:lombok:1.16.18'
+
+    compile 'tony-common:tony-common-utils:1.2.4'
+}
+
+shadowJar {
+    baseName = 'admin'
+    manifest {
+        attributes 'Main-Class': 'com.cv4j.netdiscovery.admin.LaunchAdmin'
+    }
 }

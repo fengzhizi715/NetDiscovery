@@ -1,0 +1,39 @@
+<!--每天生成一个文件，归档文件保存30天：-->
+<configuration >
+
+    <!--设置自定义pattern属性-->
+    <property name="pattern" value="%d{HH:mm:ss.SSS} [%-5level] [%thread] [%logger] %msg%n"/>
+
+    <!--控制台输出日志-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--设置控制台输出日志的格式-->
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--滚动记录日志文件：-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--当天生成的日志文件名称：-->
+        <file>log/admin.out</file>
+        <!--根据时间来记录日志文件：-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--归档日志文件的名称：-->
+            <fileNamePattern>log/admin-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--归档文件保存30天-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!--生成的日志信息格式-->
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--根root logger-->
+    <root level="INFO">
+        <!--设置根logger的日志输出目的地-->
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
