@@ -16,10 +16,12 @@ import java.util.Arrays;
 @Slf4j
 public class AnnotationParser implements Parser {
 
+    protected ResultItems resultItems = null;
+
     @Override
     public void process(Page page) {
 
-        ResultItems resultItems = page.getResultItems();
+        resultItems = page.getResultItems();
 
         Class clazz = this.getClass();
 
