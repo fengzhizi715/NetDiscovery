@@ -43,12 +43,14 @@ public class Request {
     public Request(String url) {
 
         this.url = url;
+        autoUA();
     }
 
     public Request(String url,String spiderName) {
 
         this.url = url;
         this.spiderName = spiderName;
+        autoUA();
     }
 
     public Request ua(String userAgent) {
@@ -58,13 +60,12 @@ public class Request {
         return this;
     }
 
-    public Request autoUA() {
+    private void autoUA() {
 
         this.userAgent = UserAgent.getUserAgent();
         if (Preconditions.isNotBlank(userAgent)) {
             header.put("User-Agent",userAgent);
         }
-        return this;
     }
 
     public Request proxy(Proxy proxy) {
