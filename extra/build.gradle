@@ -23,7 +23,7 @@ dependencies {
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
 
-    implementation 'com.alibaba:fastjson:1.2.45'
+    implementation 'com.alibaba:fastjson:1.2.46'
 
     implementation "io.reactivex.rxjava2:rxjava:2.1.8"
     implementation 'com.cv4j.proxy:proxypool:1.1.5'
