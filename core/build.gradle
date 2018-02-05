@@ -23,7 +23,7 @@ dependencies {
     implementation 'io.vertx:vertx-rx-java2:3.5.0'
 
     implementation 'com.cv4j.proxy:proxypool:1.1.5'
-    implementation 'tony-common:tony-common-utils:1.2.4'
+    implementation 'tony-common:tony-common-utils:1.2.5'
 
     implementation 'ch.qos.logback:logback-classic:1.1.7'
     implementation 'ch.qos.logback:logback-core:1.1.7'
@@ -40,7 +40,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-core'
-    publishVersion = '0.0.8.1'
+    publishVersion = '0.0.9'
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }

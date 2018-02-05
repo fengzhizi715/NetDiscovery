@@ -27,7 +27,7 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:2.1.8"
     implementation 'com.cv4j.proxy:proxypool:1.1.5'
-    implementation 'tony-common:tony-common-utils:1.2.4'
+    implementation 'tony-common:tony-common-utils:1.2.5'
 
     implementation project(":core")
 }
@@ -36,7 +36,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-extra'
-    publishVersion = '0.0.8.1'
+    publishVersion = '0.0.9'
     desc = 'this is a extra library for netdiscovery'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
