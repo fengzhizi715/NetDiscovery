@@ -1,0 +1,86 @@
+package com.cv4j.netdiscovery.core.pipeline.debug;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cv4j.netdiscovery.core.domain.Request;
+import com.safframework.tony.common.utils.Preconditions;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Created by tony on 2018/2/5.
+ */
+@Slf4j
+public class Printer {
+
+    private static final int JSON_INDENT = 3;
+
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    private static final String DOUBLE_SEPARATOR = LINE_SEPARATOR + LINE_SEPARATOR;
+
+    private static final String N = "\n";
+    private static final String T = "\t";
+    private static final String REQUEST_UP_LINE = "┌───────────────────────────────────────────────────────────────────────────────────────";
+    private static final String END_LINE = "└───────────────────────────────────────────────────────────────────────────────────────";
+    private static final String BODY_TAG = "Body:";
+    private static final String URL_TAG = "URL: ";
+    private static final String METHOD_TAG = "Method: @";
+    private static final String HEADERS_TAG = "Headers:";
+    private static final String DEFAULT_LINE = "│ ";
+
+    protected Printer() {
+        throw new UnsupportedOperationException();
+    }
+
+    private static boolean isEmpty(String line) {
+        return Preconditions.isBlank(line) || N.equals(line) || T.equals(line);
+    }
+
+    static void printJsonRequest(Request request) {
+        log.info(REQUEST_UP_LINE);
+
+        logLines(new String[]{URL_TAG + request.getUrl()}, false);
+        logLines(getRequest(request, Level.HEADERS),  true);
+
+        log.info(END_LINE);
+    }
+
+    private static String[] getRequest(Request request, Level level) {
+        String log;
+        String header = JSON.toJSONString(request.getHeader(), SerializerFeature.PrettyFormat);
+        boolean loggableHeader = level == Level.HEADERS || level == Level.BASIC;
+        log = METHOD_TAG + "Get" + DOUBLE_SEPARATOR +
+                (isEmpty(header) ? "" : loggableHeader ? HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header) : "");
+        return log.split(LINE_SEPARATOR);
+    }
+
+    private static String dotHeaders(String header) {
+        String[] headers = header.split(LINE_SEPARATOR);
+        StringBuilder builder = new StringBuilder();
+        String tag = "─ ";
+        if (headers.length > 1) {
+            for (int i = 0; i < headers.length; i++) {
+                builder.append(headers[i]).append("\n");
+            }
+        } else {
+            for (String item : headers) {
+                builder.append(tag).append(item).append("\n");
+            }
+        }
+        return builder.toString();
+    }
+
+    private static void logLines(String[] lines, boolean withLineSize) {
+        for (String line : lines) {
+
+            int lineLength = line.length();
+            int MAX_LONG_SIZE = withLineSize ? 110 : lineLength;
+
+            for (int i = 0; i <= lineLength / MAX_LONG_SIZE; i++) {
+                int start = i * MAX_LONG_SIZE;
+                int end = (i + 1) * MAX_LONG_SIZE;
+                end = end > line.length() ? line.length() : end;
+                log.info(DEFAULT_LINE + line.substring(start, end));
+            }
+        }
+    }
+}
