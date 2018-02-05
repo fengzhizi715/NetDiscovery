@@ -55,7 +55,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 ![](cluster_principle.png)
 
 # 案例:
-* [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用的user agent
+* [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
 
 # TODO:
 1. 增加对登录验证码的识别
