@@ -86,6 +86,7 @@ public class VertxDownloader implements Downloader {
                         Response response = new Response();
                         response.setContent(html);
                         response.setStatusCode(stringHttpResponse.statusCode());
+                        response.setContentType(stringHttpResponse.getHeader("Content-Type"));
 
                         return response;
                     }

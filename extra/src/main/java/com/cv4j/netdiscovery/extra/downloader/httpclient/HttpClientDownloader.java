@@ -43,6 +43,10 @@ public class HttpClientDownloader implements Downloader{
                 Response response = new Response();
                 response.setContent(html);
                 response.setStatusCode(closeableHttpResponse.getStatusLine().getStatusCode());
+                if (closeableHttpResponse.containsHeader("Content-Type")) {
+                    response.setContentType(closeableHttpResponse.getFirstHeader("Content-Type").getValue());
+                }
+
                 return response;
             }
         });
@@ -51,6 +55,6 @@ public class HttpClientDownloader implements Downloader{
     @Override
     public void close() {
 
-        httpManager.close();
+//        httpManager.close();
     }
 }
