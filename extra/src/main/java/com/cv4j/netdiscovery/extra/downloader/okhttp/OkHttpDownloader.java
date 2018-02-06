@@ -49,9 +49,8 @@ public class OkHttpDownloader implements Downloader{
             @Override
             public Response apply(okhttp3.Response resp) throws Exception {
 
-                String html = resp.body().string();
                 Response response = new Response();
-                response.setContent(html);
+                response.setContent(resp.body().bytes());
                 response.setStatusCode(resp.code());
                 response.setContentType(resp.header("Content-Type"));
                 return response;

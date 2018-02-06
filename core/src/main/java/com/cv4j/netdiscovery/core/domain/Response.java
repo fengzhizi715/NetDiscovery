@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Response {
 
-    private String content;
+    private byte[] content;
     private int statusCode;
     private String contentType;
 }

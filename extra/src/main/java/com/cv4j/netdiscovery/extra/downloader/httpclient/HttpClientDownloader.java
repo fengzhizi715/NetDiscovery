@@ -41,7 +41,7 @@ public class HttpClientDownloader implements Downloader{
 
                 String html = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
                 Response response = new Response();
-                response.setContent(html);
+                response.setContent(html.getBytes());
                 response.setStatusCode(closeableHttpResponse.getStatusLine().getStatusCode());
                 if (closeableHttpResponse.containsHeader("Content-Type")) {
                     response.setContentType(closeableHttpResponse.getFirstHeader("Content-Type").getValue());

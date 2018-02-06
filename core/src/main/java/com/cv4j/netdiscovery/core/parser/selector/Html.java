@@ -48,6 +48,15 @@ public class Html extends HtmlNode {
         }
     }
 
+    public Html(byte[] content) {
+        try {
+            this.document = Jsoup.parse(new String(content));
+        } catch (Exception e) {
+            this.document = null;
+            log.warn("parse document error ", e);
+        }
+    }
+
     public Html(Document document) {
         this.document = document;
     }
