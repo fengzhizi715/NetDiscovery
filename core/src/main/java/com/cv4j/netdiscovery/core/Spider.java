@@ -281,14 +281,16 @@ public class Spider {
                                         page.setStatusCode(response.getStatusCode());
 
                                         return page;
+                                    } else {
+
+                                        Page page = new Page();
+//                                        page.putField("RAW_RESPONSE",response.getContent());
+                                        page.setRequest(request);
+                                        page.setUrl(request.getUrl());
+                                        page.setStatusCode(response.getStatusCode());
+
+                                        return page;
                                     }
-
-                                    Page page = new Page();
-                                    page.setRequest(request);
-                                    page.setUrl(request.getUrl());
-                                    page.setStatusCode(response.getStatusCode());
-
-                                    return page;
                                 }
                             })
                             .map(new Function<Page, Page>() {
@@ -309,10 +311,13 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-                                    if (page.getHtml()!=null && Preconditions.isNotBlank(pipelines)) {
+                                    if (page.getHtml()!=null) {
 
-                                        pipelines.stream()
-                                                .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                        if (Preconditions.isNotBlank(pipelines)) {
+
+                                            pipelines.stream()
+                                                    .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                        }
                                     }
 
                                     return page;

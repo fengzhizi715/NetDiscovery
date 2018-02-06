@@ -35,6 +35,10 @@ public class Page {
         resultItems.put(key, field);
     }
 
+    public Object getField(String key) {
+        return resultItems.get(key);
+    }
+
     @Override
     public boolean equals(Object o) {
 
