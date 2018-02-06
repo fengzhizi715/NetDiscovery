@@ -37,7 +37,7 @@ public class SeleniumDownloader implements Downloader {
             public Response apply(String html) throws Exception {
 
                 Response response = new Response();
-                response.setContent(html);
+                response.setContent(html.getBytes());
                 response.setStatusCode(200);
                 return response;
             }
