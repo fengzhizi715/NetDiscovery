@@ -55,6 +55,7 @@ public class OkHttpDownloader implements Downloader{
                 Response response = new Response();
                 response.setContent(html);
                 response.setStatusCode(resp.code());
+//                response.setContentType(resp.header("Content-Type:"));
                 return response;
             }
         });
@@ -66,7 +67,9 @@ public class OkHttpDownloader implements Downloader{
         try {
             client.dispatcher().executorService().shutdown();   //清除并关闭线程池
             client.connectionPool().evictAll();                 //清除并关闭连接池
-            client.cache().close();                             //清除cache
+            if (client.cache()!=null) {
+                client.cache().close();                             //清除cache
+            }
         } catch (IOException e) {
 
         }
