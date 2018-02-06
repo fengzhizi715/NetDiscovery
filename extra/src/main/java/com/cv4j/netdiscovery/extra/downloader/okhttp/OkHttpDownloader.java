@@ -3,8 +3,6 @@ package com.cv4j.netdiscovery.extra.downloader.okhttp;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
-import com.cv4j.netdiscovery.core.utils.UserAgent;
-import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -55,7 +53,7 @@ public class OkHttpDownloader implements Downloader{
                 Response response = new Response();
                 response.setContent(html);
                 response.setStatusCode(resp.code());
-//                response.setContentType(resp.header("Content-Type:"));
+                response.setContentType(resp.header("Content-Type"));
                 return response;
             }
         });
