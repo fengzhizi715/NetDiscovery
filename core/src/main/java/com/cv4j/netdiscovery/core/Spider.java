@@ -272,8 +272,18 @@ public class Spider {
                                 @Override
                                 public Page apply(Response response) throws Exception {
 
+                                    if (Utils.isTextType(response.getContentType())) {
+
+                                        Page page = new Page();
+                                        page.setHtml(new Html(response.getContent()));
+                                        page.setRequest(request);
+                                        page.setUrl(request.getUrl());
+                                        page.setStatusCode(response.getStatusCode());
+
+                                        return page;
+                                    }
+
                                     Page page = new Page();
-                                    page.setHtml(new Html(response.getContent()));
                                     page.setRequest(request);
                                     page.setUrl(request.getUrl());
                                     page.setStatusCode(response.getStatusCode());
@@ -286,7 +296,7 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-                                    if (parser != null) {
+                                    if (page.getHtml()!=null && parser != null) {
 
                                         parser.process(page);
                                     }
@@ -299,7 +309,7 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-                                    if (Preconditions.isNotBlank(pipelines)) {
+                                    if (page.getHtml()!=null && Preconditions.isNotBlank(pipelines)) {
 
                                         pipelines.stream()
                                                 .forEach(pipeline -> pipeline.process(page.getResultItems()));
