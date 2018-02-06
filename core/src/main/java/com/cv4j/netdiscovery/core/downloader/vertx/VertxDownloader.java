@@ -47,13 +47,6 @@ public class VertxDownloader implements Downloader {
 
             httpRequest = webClient.getAbs(request.getUrl());
 
-            if (Preconditions.isNotBlank(header)) {
-
-                for (Map.Entry<String, String> entry:header.entrySet()) {
-                    httpRequest.putHeader(entry.getKey(),entry.getValue());
-                }
-            }
-
         } else if ("https".equals(url.getProtocol())){
 
             if (Preconditions.isNotBlank(url.getQuery())) {
@@ -65,13 +58,14 @@ public class VertxDownloader implements Downloader {
                 httpRequest = webClient.get(443,url.getHost(),url.getPath())
                         .ssl(true);
             }
+        }
 
-            if (Preconditions.isNotBlank(header)) {
+        if (Preconditions.isNotBlank(header)) {
 
-                for (Map.Entry<String, String> entry:header.entrySet()) {
-                    httpRequest.putHeader(entry.getKey(),entry.getValue());
-                }
+            for (Map.Entry<String, String> entry:header.entrySet()) {
+                httpRequest.putHeader(entry.getKey(),entry.getValue());
             }
+
         }
 
         return httpRequest

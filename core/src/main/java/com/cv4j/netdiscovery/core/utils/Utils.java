@@ -30,4 +30,8 @@ public class Utils {
         }
     }
 
+    public static boolean isTextType(String contentType) {
+
+        return contentType!=null?contentType.startsWith("text"):false;
+    }
 }
