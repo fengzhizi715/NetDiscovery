@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
+import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -26,7 +27,15 @@ public class OkHttpDownloader implements Downloader{
     @Override
     public Maybe<Response> download(Request request) {
 
-        okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder().url(request.getUrl());
+        okhttp3.Request.Builder requestBuilder = null;
+
+        if (request.getHttpMethod() == HttpMethod.GET) {
+
+            requestBuilder = new okhttp3.Request.Builder().url(request.getUrl());
+        } else if (request.getHttpMethod() == HttpMethod.POST){
+
+            requestBuilder = new okhttp3.Request.Builder().url(request.getUrl()).method("POST",null);
+        }
 
         if (request.getHeader()!=null) {
 

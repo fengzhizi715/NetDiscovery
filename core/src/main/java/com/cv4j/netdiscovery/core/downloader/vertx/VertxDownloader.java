@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
+import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -43,20 +44,41 @@ public class VertxDownloader implements Downloader {
 
         HttpRequest<Buffer> httpRequest = null;
 
-        if ("http".equals(url.getProtocol())) {
+        if (request.getHttpMethod() == HttpMethod.GET) {
 
-            httpRequest = webClient.getAbs(request.getUrl());
+            if ("http".equals(url.getProtocol())) {
 
-        } else if ("https".equals(url.getProtocol())){
+                httpRequest = webClient.getAbs(request.getUrl());
 
-            if (Preconditions.isNotBlank(url.getQuery())) {
+            } else if ("https".equals(url.getProtocol())){
 
-                httpRequest = webClient.get(443,url.getHost(),url.getPath()+"?"+url.getQuery())
-                        .ssl(true);
-            } else {
+                if (Preconditions.isNotBlank(url.getQuery())) {
 
-                httpRequest = webClient.get(443,url.getHost(),url.getPath())
-                        .ssl(true);
+                    httpRequest = webClient.get(443,url.getHost(),url.getPath()+"?"+url.getQuery())
+                            .ssl(true);
+                } else {
+
+                    httpRequest = webClient.get(443,url.getHost(),url.getPath())
+                            .ssl(true);
+                }
+            }
+        } else if (request.getHttpMethod() == HttpMethod.POST){
+
+            if ("http".equals(url.getProtocol())) {
+
+                httpRequest = webClient.post(request.getUrl());
+
+            } else if ("https".equals(url.getProtocol())){
+
+                if (Preconditions.isNotBlank(url.getQuery())) {
+
+                    httpRequest = webClient.post(443,url.getHost(),url.getPath()+"?"+url.getQuery())
+                            .ssl(true);
+                } else {
+
+                    httpRequest = webClient.post(443,url.getHost(),url.getPath())
+                            .ssl(true);
+                }
             }
         }
 

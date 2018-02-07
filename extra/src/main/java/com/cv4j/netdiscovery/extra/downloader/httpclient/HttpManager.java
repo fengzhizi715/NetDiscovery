@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
+import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.config.Constant;
@@ -13,6 +14,7 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
@@ -164,16 +166,24 @@ public class HttpManager {
 
     public CloseableHttpResponse getResponse(Request request) {
 
-        HttpGet httpGet = new HttpGet(request.getUrl());
+        HttpRequestBase httpRequestBase = null;
+
+        if (request.getHttpMethod()== HttpMethod.GET) {
+
+            httpRequestBase = new HttpGet(request.getUrl());
+        } else if (request.getHttpMethod() == HttpMethod.POST) {
+
+            httpRequestBase = new HttpPost(request.getUrl());
+        }
 
         if (Preconditions.isNotBlank(request.getHeader())) {
 
             for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
-                httpGet.addHeader(entry.getKey(),entry.getValue());
+                httpRequestBase.addHeader(entry.getKey(),entry.getValue());
             }
         }
 
-        return getResponse(httpGet,request.getProxy());
+        return getResponse(httpRequestBase,request.getProxy());
     }
 
     public CloseableHttpResponse getResponse(HttpRequestBase request,Proxy proxy) {

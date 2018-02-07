@@ -23,6 +23,8 @@ public class Request {
 
     private String spiderName;
 
+    private HttpMethod httpMethod;
+
     private boolean checkDuplicate = true;
 
     private long sleepTime = 0;// 每次请求url时先sleep一段时间
@@ -43,6 +45,7 @@ public class Request {
     public Request(String url) {
 
         this.url = url;
+        this.httpMethod = HttpMethod.GET;
         autoUA();
     }
 
@@ -50,6 +53,7 @@ public class Request {
 
         this.url = url;
         this.spiderName = spiderName;
+        this.httpMethod = HttpMethod.GET;
         autoUA();
     }
 
@@ -77,6 +81,12 @@ public class Request {
     public Request spiderName(String spiderName) {
 
         this.spiderName = spiderName;
+        return this;
+    }
+
+    public Request httpMethod(HttpMethod httpMethod) {
+
+        this.httpMethod = httpMethod;
         return this;
     }
 
