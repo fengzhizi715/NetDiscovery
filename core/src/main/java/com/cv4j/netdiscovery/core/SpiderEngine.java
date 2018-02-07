@@ -66,6 +66,7 @@ public class SpiderEngine {
         if (Preconditions.isNotBlank(uaList)) {
 
             Arrays.asList(uaList)
+                    .parallelStream()
                     .forEach(name -> {
 
                         InputStream input = null;
