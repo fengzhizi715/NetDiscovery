@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>爬虫引擎管理</title>
     <link rel="shortcut icon" href="#" />
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -12,10 +13,19 @@
 <div class="container" role="main">
     <div class="page-header">
         <div class="row">
-            <div class="col-md-12">
-                <ul class="nav nav-pills">
-                    <li class="active"><a href="#">爬虫引擎控制台</a></li>
-                </ul>
+            <div class="col-md-4">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-success btn-lg showConfigWin" data-toggle="tooltip"  title="QQ交流群：490882934">
+                        <span class="glyphicon glyphicon-refresh"></span>爬虫引擎控制台
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-success showRun"><span class='glyphicon glyphicon-search'></span>运行</button>
+                    <button type="button" class="btn btn-warning showPause"><span class='glyphicon glyphicon-search'></span>暂停</button>
+                    <button type="button" class="btn btn-danger showStop"><span class='glyphicon glyphicon-search'></span>停止</button>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -23,8 +33,8 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th style="width: 5%">序号</th>
-                            <th style="width: 15%">爬虫名称</th>
+                            <th style="width: 10%">序号</th>
+                            <th style="width: 20%">爬虫名称</th>
                             <th style="width: 15%">爬虫状态</th>
                             <th style="width: 15%">队列中剩余任务</th>
                             <th style="width: 15%">已完成任务</th>
@@ -39,17 +49,60 @@
         </div>
     </div>
 </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="configWin" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">设置接口的访问地址</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="address">访问地址：</label>
+                    <input type="text" class="form-control" id="address" placeholder="http://127.0.0.1:8080"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success saveConfig">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <script>
+    var _address = "";
+    var _api_getAllSpiders = "/netdiscovery/spiders/";                        //获取所有爬虫的信息
+    var _api_getOneSpider = "/netdiscovery/spider/spidername";               //获取单个爬虫的信息
+    var _api_postSpiderStatus = "/netdiscovery/spider/spidername/status";   //设置单个爬虫的状态
+
+    var _status = new Object();
+    _status.init = 0;   //初始化
+    _status.run = 1;    //运行
+    _status.pause = 2;  //暂停
+    _status.resume = 3; //继续
+    _status.stop = 4;   //停止
+
     $(function () {
-        load();
+        initShowButton();
+        checkConfigWin();
     });
 
-    function load() {
+    function checkConfigWin() {
+        if(_address == "") {
+            $("#configWin").modal("show");
+        }
+    }
+
+    function load(status) {
         $("#content").children().remove();
 
-        $.getJSON("http://47.97.7.119:8012/netdiscovery/spiders/", function(result) {
+        $.getJSON(_address + _api_getAllSpiders, function(result) {
             var index = 0;
             $.each(result.data, function (key, val) {
+                if(status != undefined && val.spiderStatus != status ) {
+                    return;
+                }
                 index += 1;
                 $("<tr>" +
                     "<td>" + index + "</td>"+
@@ -58,47 +111,41 @@
                     "<td>" + val.leftRequestSize + "</td>"+
                     "<td>" + (val.totalRequestSize - val.leftRequestSize) + "</td>"+
                     "<td>" +
-                        "<button class='btn btn-primary btnRefresh' id='btnRefresh'>" + "刷新" +
+                        "<button class='btn btn-warning btnPause' data-id='" + val.spiderName + "'><span class='glyphicon glyphicon-pause'/>" + "暂停" +
                         "</button>" + "&nbsp;&nbsp;" +
-                        "<button class='btn btn-warning btnPause' data-id='" + val.spiderName + "'>" + "暂停" +
+                        "<button class='btn btn-success btnResume' data-id='" + val.spiderName + "'><span class='glyphicon glyphicon-play'/>" + "继续" +
                         "</button>" + "&nbsp;&nbsp;" +
-                        "<button class='btn btn-success btnResume' data-id='" + val.spiderName + "'>" + "继续" +
-                        "</button>" + "&nbsp;&nbsp;" +
-                        "<button class='btn btn-danger btnStop' data-id='" + val.spiderName + "'>" + "停止" +
+                        "<button class='btn btn-danger btnStop' data-id='" + val.spiderName + "'><span class='glyphicon glyphicon-stop'/>" + "停止" +
                         "</button>" +
                     "</td>" +
                 "</tr>").appendTo("#content");
             });
 
-            initButtonAction();
+            initOperateButton();
         });
     }
 
-    function initButtonAction() {
-        $(".btnRefresh").click(function() {
-            load();
-        });
-
+    function initOperateButton() {
         $(".btnPause").click(function() {
             var spiderName = $(this).data("id");
-            changeSpiderStatus(spiderName, 2);
+            changeSpiderStatus(spiderName, _status.pause);
         });
 
         $(".btnResume").click(function() {
             var spiderName = $(this).data("id");
-            changeSpiderStatus(spiderName, 3);
+            changeSpiderStatus(spiderName, _status.resume);
         });
 
         $(".btnStop").click(function() {
             var spiderName = $(this).data("id");
-            changeSpiderStatus(spiderName, 4);
+            changeSpiderStatus(spiderName, _status.stop);
         });
     }
 
     function changeSpiderStatus(spiderName, toStatus) {
         $.ajax({
             method: "POST",
-            url: "http://47.97.7.119:8012/netdiscovery/spider/"+spiderName+"/status",
+            url: _address + _api_postSpiderStatus.replace("spidername", spiderName),
             data: JSON.stringify({status: toStatus})
         }).done(function () {
             load();
@@ -107,30 +154,64 @@
 
     function getSpiderStatusName(status) {
         var html = "";
-        var statusName = "";
         switch(status) {
-            case 0:
-                statusName = "初始化";
-                html = "<span class='label label-default'>"+statusName+"</span>";
+            case _status.init:
+                html = "<span class='label label-danger'>初始化</span>";
                 break;
-            case 1:
-                statusName = "运行";
-                html = "<span class='label label-success'>"+statusName+"</span>";
+            case _status.run:
+                html = "<span class='label label-success'>运行</span>";
                 break;
-            case 2:
-                statusName = "暂停";
-                html = "<span class='label label-warning'>"+statusName+"</span>";
+            case _status.pause:
+                html = "<span class='label label-warning'>暂停</span>";
                 break;
-            case 3:
-                statusName = "继续";
-                html = "<span class='label label-success'>"+statusName+"</span>";
+            case _status.resume:
+                html = "<span class='label label-success'>继续</span>";
                 break;
-            case 4:
-                statusName = "停止";
-                html = "<span class='label label-danger'>"+statusName+"</span>";
+            case _status.stop:
+                html = "<span class='label label-danger'>停止</span>";
                 break;
         }
         return html;
+    }
+
+    function initShowButton() {
+        $(".showConfigWin").click(function() {
+            if(_address == "") {
+                $('#configWin').modal('show');
+            } else {
+                load();
+            }
+        });
+
+        $(".saveConfig").click(function() {
+            if($("#address").val().trim() == "") {
+                _address = "http://47.97.7.119:8012";  //默认值
+            } else {
+                _address = $("#address").val().trim();
+            }
+            $('#configWin').modal('hide');
+            load();
+        });
+
+        $(".showRun").click(function() {
+            loadStatus(_status.run);
+        });
+
+        $(".showPause").click(function() {
+            loadStatus(_status.pause);
+        });
+
+        $(".showStop").click(function() {
+            loadStatus(_status.stop);
+        });
+    }
+
+    function loadStatus(status) {
+        if(_address == "") {
+            $('#configWin').modal('show');
+        } else {
+            load(status);
+        }
     }
 </script>
 </body>
