@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.extra.downloader.httpclient;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -39,7 +40,14 @@ public class HttpClientDownloader implements Downloader{
             @Override
             public Response apply(CloseableHttpResponse closeableHttpResponse) throws Exception {
 
-                String html = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
+                String charset = null;
+                if (Preconditions.isNotBlank(request.getCharset())) {
+                    charset = request.getCharset();
+                } else {
+                    charset = "UTF-8";
+                }
+
+                String html = EntityUtils.toString(closeableHttpResponse.getEntity(), charset);
                 Response response = new Response();
                 response.setContent(html.getBytes());
                 response.setStatusCode(closeableHttpResponse.getStatusLine().getStatusCode());

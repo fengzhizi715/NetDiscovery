@@ -25,6 +25,8 @@ public class Request {
 
     private HttpMethod httpMethod;
 
+    private String charset;
+
     private boolean checkDuplicate = true;
 
     private long sleepTime = 0;// 每次请求url时先sleep一段时间
@@ -87,6 +89,12 @@ public class Request {
     public Request httpMethod(HttpMethod httpMethod) {
 
         this.httpMethod = httpMethod;
+        return this;
+    }
+
+    public Request charset(String charset) {
+
+        this.charset = charset;
         return this;
     }
 
