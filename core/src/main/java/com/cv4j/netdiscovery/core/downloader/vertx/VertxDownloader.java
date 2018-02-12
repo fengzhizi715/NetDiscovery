@@ -36,7 +36,7 @@ public class VertxDownloader implements Downloader {
         this.vertx = VertxUtils.reactivex_vertx;
     }
 
-    public Maybe<Response> download(final Request request) {
+    public Maybe<Response> download(Request request) {
 
         WebClientOptions options = initWebClientOptions(request);
 
@@ -90,24 +90,24 @@ public class VertxDownloader implements Downloader {
 
         }
 
+        String charset = null;
+        if (Preconditions.isNotBlank(request.getCharset())) {
+            charset = request.getCharset();
+        } else {
+            charset = "UTF-8";
+        }
+
         return httpRequest
-                .as(BodyCodec.string())
+                .as(BodyCodec.string(charset))
                 .rxSend()
                 .toMaybe()
                 .map(new Function<HttpResponse<String>, Response>() {
                     @Override
                     public Response apply(HttpResponse<String> stringHttpResponse) throws Exception {
 
-                        String charset = null;
-                        if (Preconditions.isNotBlank(request.getCharset())) {
-                            charset = request.getCharset();
-                        } else {
-                            charset = "UTF-8";
-                        }
-
                         String html = stringHttpResponse.body();
                         Response response = new Response();
-                        response.setContent(html.getBytes(charset));
+                        response.setContent(html.getBytes());
                         response.setStatusCode(stringHttpResponse.statusCode());
                         response.setContentType(stringHttpResponse.getHeader("Content-Type"));
 
