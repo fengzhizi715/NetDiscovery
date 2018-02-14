@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.example;
+package com.cv4j.netdiscovery.example.kafka;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
@@ -14,11 +14,11 @@ public class TestKafka {
 
         Properties producerProperties = new Properties();
         producerProperties.put("bootstrap.servers", "localhost:9092");
-        producerProperties.put("acks", "all");
-        producerProperties.put("retries", 0);
-        producerProperties.put("batch.size", 16384);
-        producerProperties.put("linger.ms", 1);
-        producerProperties.put("buffer.memory", 33554432);
+//        producerProperties.put("acks", "all");
+//        producerProperties.put("retries", 0);
+//        producerProperties.put("batch.size", 16384);
+//        producerProperties.put("linger.ms", 1);
+//        producerProperties.put("buffer.memory", 33554432);
         producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         producerProperties.put("value.serializer", "com.cv4j.netdiscovery.extra.queue.kafka.RequestSerializer");
 
@@ -31,12 +31,13 @@ public class TestKafka {
         consumeProperties.put("session.timeout.ms", "30000");
         consumeProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         consumeProperties.put("value.deserializer", "com.cv4j.netdiscovery.extra.queue.kafka.RequestDeserializer");
+        consumeProperties.put("partitioner.class","com.cv4j.netdiscovery.example.kafka.SimplePartitioner");
 
         KafkaQueue queue = new KafkaQueue(producerProperties,consumeProperties,"tony");
 
         Spider.create(queue)
                 .name("tony")
-                .url("http://www.163.com")
+                .url("https://www.baidu.com")
                 .run();
     }
 }
