@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.domain.response;
 import lombok.Data;
 
 /**
+ * 返回的HttpResponse
  * Created by tony on 2018/1/26.
  */
 @Data
