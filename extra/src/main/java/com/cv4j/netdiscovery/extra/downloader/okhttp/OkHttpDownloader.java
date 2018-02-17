@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.proxy.domain.Proxy;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -22,6 +23,11 @@ public class OkHttpDownloader implements Downloader{
 
     public OkHttpDownloader() {
         client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
+    }
+
+    public OkHttpDownloader(Proxy proxy) {
+
+        client = new OkHttpClient.Builder().proxy(proxy.toJavaNetProxy()).retryOnConnectionFailure(true).build();
     }
 
     @Override
