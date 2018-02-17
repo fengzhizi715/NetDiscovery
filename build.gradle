@@ -1,3 +1,11 @@
+ext {
+    libraries = [
+            vertx                     : "3.5.1",
+
+            rxjava                    : "2.1.9"
+    ]
+}
+
 group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
 

@@ -6,6 +6,8 @@ apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     jcenter()
     mavenCentral()
@@ -15,12 +17,12 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    implementation "io.reactivex.rxjava2:rxjava:2.1.8"
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 
-    implementation 'io.vertx:vertx-core:3.5.0'
-    implementation 'io.vertx:vertx-web:3.5.0'
-    implementation 'io.vertx:vertx-web-client:3.5.0'
-    implementation 'io.vertx:vertx-rx-java2:3.5.0'
+    implementation "io.vertx:vertx-core:${libs.vertx}"
+    implementation "io.vertx:vertx-web:${libs.vertx}"
+    implementation "io.vertx:vertx-web-client:${libs.vertx}"
+    implementation "io.vertx:vertx-rx-java2:${libs.vertx}"
 
     implementation 'com.cv4j.proxy:proxypool:1.1.5'
     implementation 'tony-common:tony-common-utils:1.2.5'

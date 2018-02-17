@@ -6,6 +6,8 @@ apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     jcenter()
     mavenCentral()
@@ -14,7 +16,7 @@ repositories {
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 
-    implementation 'io.vertx:vertx-mongo-client:3.5.0'
+    implementation "io.vertx:vertx-mongo-client:${libs.vertx}"
 
     implementation "org.apache.httpcomponents:httpclient:4.5.2"
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
