@@ -37,6 +37,8 @@ public class Request {
 
     private Map<String,Object> extras;
 
+    private HttpRequestBody httpRequestBody;
+
     private BeforeRequest beforeRequest;
 
     private AfterRequest afterRequest;
@@ -56,6 +58,14 @@ public class Request {
         this.url = url;
         this.spiderName = spiderName;
         this.httpMethod = HttpMethod.GET;
+        autoUA();
+    }
+
+    public Request(String url,String spiderName,HttpMethod httpMethod) {
+
+        this.url = url;
+        this.spiderName = spiderName;
+        this.httpMethod = httpMethod;
         autoUA();
     }
 
@@ -174,6 +184,12 @@ public class Request {
             it.next();
             it.remove();
         }
+    }
+
+    public Request httpRequestBody(HttpRequestBody httpRequestBody) {
+
+        this.httpRequestBody = httpRequestBody;
+        return this;
     }
 
     public Request beforeRequest(BeforeRequest beforeRequest) {
