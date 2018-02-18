@@ -29,8 +29,8 @@ dependencies {
 
     implementation 'com.alibaba:fastjson:1.2.46'
 
-    implementation "io.reactivex.rxjava2:rxjava:2.1.8"
-    implementation 'com.cv4j.proxy:proxypool:1.1.6'
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation 'tony-common:tony-common-utils:1.2.5'
 
     implementation project(":core")

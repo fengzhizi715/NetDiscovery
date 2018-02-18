@@ -2,7 +2,9 @@ ext {
     libraries = [
             vertx                     : "3.5.1",
 
-            rxjava                    : "2.1.9"
+            rxjava                    : "2.1.9",
+
+            proxypool                 :  "1.1.6"
     ]
 }
 
