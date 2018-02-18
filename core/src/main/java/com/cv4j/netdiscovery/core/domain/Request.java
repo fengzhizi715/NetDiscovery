@@ -132,9 +132,9 @@ public class Request {
         return this;
     }
 
-    public Request refer(String refer) {
-        
-        this.header("Referer", refer);
+    public Request referer(String referer) {
+
+        this.header("Referer", referer);
         return this;
     }
 
