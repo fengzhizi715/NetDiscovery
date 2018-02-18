@@ -92,12 +92,22 @@ public class Request {
         return this;
     }
 
+    /**
+     * 网页使用的的字符集
+     * @param charset
+     * @return
+     */
     public Request charset(String charset) {
 
         this.charset = charset;
         return this;
     }
 
+    /**
+     * 检查url是否重复，默认情况位true表示需要检查，如果设置为false表示不需要检测url是否重复。
+     * @param checkDuplicate
+     * @return
+     */
     public Request checkDuplicate(boolean checkDuplicate) {
 
         this.checkDuplicate = checkDuplicate;
@@ -119,6 +129,12 @@ public class Request {
     public Request header(String name,String value) {
 
         header.put(name,value);
+        return this;
+    }
+
+    public Request refer(String refer) {
+        
+        this.header("Referer", refer);
         return this;
     }
 
