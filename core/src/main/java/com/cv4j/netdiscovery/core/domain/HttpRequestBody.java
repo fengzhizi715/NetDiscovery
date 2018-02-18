@@ -2,15 +2,11 @@ package com.cv4j.netdiscovery.core.domain;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 /**
  * Created by tony on 2018/2/19.
  */
 public class HttpRequestBody implements Serializable{
-
-
-    private static final long serialVersionUID = 5659170945717023595L;
 
     public static abstract class ContentType {
 
@@ -56,6 +52,11 @@ public class HttpRequestBody implements Serializable{
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    public static HttpRequestBody json(String json) {
+
+        return json(json,"UTF-8");
     }
 
     public static HttpRequestBody json(String json, String encoding) {
