@@ -1,5 +1,7 @@
 package com.cv4j.netdiscovery.core.domain;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -20,10 +22,13 @@ public class HttpRequestBody implements Serializable{
         public static final String MULTIPART = "multipart/form-data";
     }
 
+    @Getter
     private byte[] body;
 
+    @Getter
     private String contentType;
 
+    @Getter
     private String encoding;
 
     public HttpRequestBody() {
@@ -92,7 +97,4 @@ public class HttpRequestBody implements Serializable{
 //        }
 //    }
 
-    public byte[] getBody() {
-        return body;
-    }
 }
