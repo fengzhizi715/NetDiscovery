@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.domain;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * Created by tony on 2018/2/19.

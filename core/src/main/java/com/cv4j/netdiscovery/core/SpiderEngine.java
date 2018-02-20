@@ -78,7 +78,7 @@ public class SpiderEngine {
                                 String[] ss = inputString.split("\r\n");
                                 if (ss.length > 0) {
 
-                                    Arrays.asList(ss).forEach(s -> UserAgent.uas.add(s));
+                                    Arrays.asList(ss).forEach(ua -> UserAgent.uas.add(ua));
                                 }
                             }
                         } catch (FileNotFoundException e) {

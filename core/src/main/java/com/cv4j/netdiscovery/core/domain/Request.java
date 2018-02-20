@@ -84,18 +84,33 @@ public class Request {
         }
     }
 
+    /**
+     * request使用的代理，其优先级高于Spider所设置的autoProxy
+     * @param proxy
+     * @return
+     */
     public Request proxy(Proxy proxy) {
 
         this.proxy = proxy;
         return this;
     }
 
+    /**
+     * 爬虫的名字
+     * @param spiderName
+     * @return
+     */
     public Request spiderName(String spiderName) {
 
         this.spiderName = spiderName;
         return this;
     }
 
+    /**
+     * http method
+     * @param httpMethod
+     * @return
+     */
     public Request httpMethod(HttpMethod httpMethod) {
 
         this.httpMethod = httpMethod;
