@@ -45,6 +45,7 @@ public class Utils {
      * @return
      */
     public static boolean exportCsv(File file, List<String> dataList){
+
         boolean isSucess=false;
 
         FileOutputStream out=null;
@@ -64,28 +65,16 @@ public class Utils {
             isSucess=false;
         }finally{
             if(bw!=null){
-                try {
-                    bw.close();
-                    bw=null;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                IOUtils.closeQuietly(bw);
             }
             if(osw!=null){
-                try {
-                    osw.close();
-                    osw=null;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                IOUtils.closeQuietly(osw);
             }
             if(out!=null){
-                try {
-                    out.close();
-                    out=null;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                IOUtils.closeQuietly(out);
             }
         }
 
