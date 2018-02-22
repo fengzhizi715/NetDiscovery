@@ -32,6 +32,9 @@ public class AnnotationParser implements Parser {
             Arrays.asList(fields)
                     .forEach(field -> {
 
+                        //设置字段可见性
+                        field.setAccessible(true);
+
                         ExtractBy.XPath xpath = field.getAnnotation(ExtractBy.XPath.class);
 
                         if (xpath != null) {
