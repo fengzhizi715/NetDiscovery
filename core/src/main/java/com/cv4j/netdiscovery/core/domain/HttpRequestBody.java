@@ -1,14 +1,20 @@
 package com.cv4j.netdiscovery.core.domain;
 
-import lombok.Getter;
+import lombok.Data;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by tony on 2018/2/19.
  */
+@Data
 public class HttpRequestBody implements Serializable{
 
     public static abstract class ContentType {
@@ -22,41 +28,15 @@ public class HttpRequestBody implements Serializable{
         public static final String MULTIPART = "multipart/form-data";
     }
 
-    @Getter
     private byte[] body;
 
-    @Getter
     private String contentType;
 
-    @Getter
     private String encoding;
-
-    public HttpRequestBody() {
-    }
 
     public HttpRequestBody(byte[] body, String contentType, String encoding) {
         this.body = body;
         this.contentType = contentType;
-        this.encoding = encoding;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
 
@@ -85,16 +65,17 @@ public class HttpRequestBody implements Serializable{
         return new HttpRequestBody(body, contentType, encoding);
     }
 
-//    public static HttpRequestBody form(Map<String,Object> params, String encoding){
-//        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.size());
-//        for (Map.Entry<String, Object> entry : params.entrySet()) {
-//            nameValuePairs.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
-//        }
-//        try {
-//            return new HttpRequestBody(URLEncodedUtils.format(nameValuePairs, encoding).getBytes(encoding), ContentType.FORM, encoding);
-//        } catch (UnsupportedEncodingException e) {
-//            throw new IllegalArgumentException("illegal encoding " + encoding, e);
-//        }
-//    }
+    public static HttpRequestBody form(Map<String,Object> params, String encoding){
+
+        List<NameValuePair> nameValuePairs = new ArrayList<>(params.size());
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            nameValuePairs.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
+        }
+        try {
+            return new HttpRequestBody(URLEncodedUtils.format(nameValuePairs, encoding).getBytes(encoding), ContentType.FORM, encoding);
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException("illegal encoding " + encoding, e);
+        }
+    }
 
 }
