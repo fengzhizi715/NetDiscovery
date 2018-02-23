@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.core.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.http.NameValuePair;
