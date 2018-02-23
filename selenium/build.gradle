@@ -5,6 +5,8 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     jcenter()
     mavenCentral()
@@ -16,7 +18,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:3.8.1'
     implementation 'com.codeborne:phantomjsdriver:1.4.4'
 
-    implementation "io.reactivex.rxjava2:rxjava:2.1.8"
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 
     implementation project(":core")
 }

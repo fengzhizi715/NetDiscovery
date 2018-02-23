@@ -1,17 +1,21 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.domain.HttpMethod;
+import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.config.Constant;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.NameValuePair;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -23,24 +27,26 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.HttpEntityWrapper;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicNameValuePair;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by tony on 2017/10/19.
@@ -180,6 +186,47 @@ public class HttpManager {
 
             for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
                 httpRequestBase.addHeader(entry.getKey(),entry.getValue());
+            }
+        }
+
+        // 真的post请求，需要对header添加一些信息
+        if (request.getHttpRequestBody()!=null && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
+
+            httpRequestBase.addHeader("Content-type",request.getHttpRequestBody().getContentType());
+
+            if(request.getHttpMethod()==HttpMethod.POST) {
+
+                HttpEntity httpEntity = null;
+
+                if (request.getHttpRequestBody().getContentType()== HttpRequestBody.ContentType.FORM) {
+
+                    Map<String,Object> formMap = request.getHttpRequestBody().getFormMap();
+
+                    List<NameValuePair> nameValuePairs = new ArrayList<>(formMap.size());
+                    for (Map.Entry<String, Object> entry : formMap.entrySet()) {
+                        nameValuePairs.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
+                    }
+
+                    try {
+                        httpEntity = new UrlEncodedFormEntity(nameValuePairs,"UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else if (request.getHttpRequestBody().getContentType() == HttpRequestBody.ContentType.JSON) {
+
+                    String jsonString = request.getHttpRequestBody().getJson();
+
+                    if (Preconditions.isNotBlank(jsonString)) {
+
+                        try {
+                            httpEntity = new StringEntity(jsonString);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                ((HttpPost)httpRequestBase).setEntity(httpEntity);
             }
         }
 

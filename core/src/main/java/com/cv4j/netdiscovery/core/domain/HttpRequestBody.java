@@ -1,6 +1,8 @@
 package com.cv4j.netdiscovery.core.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -14,7 +16,6 @@ import java.util.Map;
 /**
  * Created by tony on 2018/2/19.
  */
-@Data
 public class HttpRequestBody implements Serializable{
 
     public static abstract class ContentType {
@@ -26,10 +27,22 @@ public class HttpRequestBody implements Serializable{
         public static final String MULTIPART = "multipart/form-data";
     }
 
+    @Setter
+    @Getter
     private byte[] body;
 
+    @Getter
+    private String json;
+
+    @Getter
+    private Map<String,Object> formMap;
+
+    @Setter
+    @Getter
     private String contentType;
 
+    @Setter
+    @Getter
     private String encoding;
 
     public HttpRequestBody(byte[] body, String contentType, String encoding) {
@@ -38,12 +51,17 @@ public class HttpRequestBody implements Serializable{
         this.encoding = encoding;
     }
 
-    public static HttpRequestBody json(String json) {
+    public HttpRequestBody json(String json) {
+
+        this.json = json;
 
         return json(json,"UTF-8");
     }
 
-    public static HttpRequestBody json(String json, String encoding) {
+    public HttpRequestBody json(String json, String encoding) {
+
+        this.json = json;
+
         try {
             return new HttpRequestBody(json.getBytes(encoding), ContentType.JSON, encoding);
         } catch (UnsupportedEncodingException e) {
@@ -51,11 +69,13 @@ public class HttpRequestBody implements Serializable{
         }
     }
 
-    public static HttpRequestBody custom(byte[] body, String contentType, String encoding) {
+    public HttpRequestBody custom(byte[] body, String contentType, String encoding) {
         return new HttpRequestBody(body, contentType, encoding);
     }
 
-    public static HttpRequestBody form(Map<String,Object> params, String encoding){
+    public HttpRequestBody form(Map<String,Object> params, String encoding){
+
+        this.formMap = params;
 
         List<NameValuePair> nameValuePairs = new ArrayList<>(params.size());
         for (Map.Entry<String, Object> entry : params.entrySet()) {
