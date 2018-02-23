@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core;
 
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -272,10 +273,19 @@ public class Spider {
                                 @Override
                                 public Page apply(Response response) throws Exception {
 
-                                    if (Utils.isTextType(response.getContentType())) {
+                                    if (Utils.isTextType(response.getContentType())) { // text/html
 
                                         Page page = new Page();
                                         page.setHtml(new Html(response.getContent()));
+                                        page.setRequest(request);
+                                        page.setUrl(request.getUrl());
+                                        page.setStatusCode(response.getStatusCode());
+
+                                        return page;
+                                    } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
+
+                                        Page page = new Page();
+                                        page.putField(Constant.JSON_RESPONSE,response.getContent());
                                         page.setRequest(request);
                                         page.setUrl(request.getUrl());
                                         page.setStatusCode(response.getStatusCode());

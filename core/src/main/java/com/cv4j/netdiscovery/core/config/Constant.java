@@ -8,4 +8,6 @@ public class Constant {
     public static final String[] uaList = new String[]{
             "/ua/Baiduspider.txt","/ua/Chrome.txt","/ua/Edge.txt","/ua/Firefox.txt","/ua/Googlebot.txt","/ua/Mozilla.txt","/ua/Opera.txt","/ua/Safari.txt"
     };
+
+    public static final String JSON_RESPONSE = "JSON_RESPONSE";
 }
