@@ -38,11 +38,16 @@ public class Utils {
         return contentType!=null?contentType.startsWith("text"):false;
     }
 
+    public static boolean isApplicationJSONType(String contentType) {
+
+        return contentType!=null?contentType.startsWith("application/json"):false;
+    }
+
     /**
-     * 导出
-     *
-     * @param file csv文件(路径+文件名)，csv文件不存在会自动创建
-     * @param dataList 数据
+     * 导出csv
+     * @param file
+     * @param dataList
+     * @param charset
      * @return
      */
     public static boolean exportCsv(File file, List<String> dataList, Charset charset){
@@ -65,18 +70,9 @@ public class Utils {
         } catch (Exception e) {
             isSucess=false;
         }finally{
-            if(bw!=null){
-
-                IOUtils.closeQuietly(bw);
-            }
-            if(osw!=null){
-
-                IOUtils.closeQuietly(osw);
-            }
-            if(out!=null){
-
-                IOUtils.closeQuietly(out);
-            }
+            IOUtils.closeQuietly(bw);
+            IOUtils.closeQuietly(osw);
+            IOUtils.closeQuietly(out);
         }
 
         return isSucess;
