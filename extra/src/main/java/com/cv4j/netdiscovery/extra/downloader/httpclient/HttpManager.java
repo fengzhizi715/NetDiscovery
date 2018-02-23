@@ -27,6 +27,7 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
@@ -189,7 +190,7 @@ public class HttpManager {
             }
         }
 
-        // 针对post请求，需要对header添加一些信息
+        // 针对post请求，需要对header添加一些信息，然后设置httpEntity到httpRequestBase
         if (request.getHttpRequestBody()!=null && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
             httpRequestBase.addHeader("Content-type",request.getHttpRequestBody().getContentType());
@@ -198,35 +199,19 @@ public class HttpManager {
 
                 HttpEntity httpEntity = null;
 
-                if (request.getHttpRequestBody().getContentType()== HttpRequestBody.ContentType.FORM) {
+                if (request.getHttpRequestBody().getContentType()== HttpRequestBody.ContentType.FORM || request.getHttpRequestBody().getContentType() == HttpRequestBody.ContentType.JSON) {
 
-                    Map<String,Object> formMap = request.getHttpRequestBody().getFormMap();
+                    byte[] postBody = request.getHttpRequestBody().getBody();
 
-                    List<NameValuePair> nameValuePairs = new ArrayList<>(formMap.size());
-                    for (Map.Entry<String, Object> entry : formMap.entrySet()) {
-                        nameValuePairs.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
-                    }
+                    if (Preconditions.isNotBlank(postBody)) {
 
-                    try {
-                        httpEntity = new UrlEncodedFormEntity(nameValuePairs,"UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                } else if (request.getHttpRequestBody().getContentType() == HttpRequestBody.ContentType.JSON) {
-
-                    String jsonString = request.getHttpRequestBody().getJson();
-
-                    if (Preconditions.isNotBlank(jsonString)) {
-
-                        try {
-                            httpEntity = new StringEntity(jsonString);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
+                        httpEntity = new ByteArrayEntity(postBody);
                     }
                 }
 
-                ((HttpPost)httpRequestBase).setEntity(httpEntity);
+                if (httpEntity!=null) {
+                    ((HttpPost)httpRequestBase).setEntity(httpEntity);
+                }
             }
         }
 

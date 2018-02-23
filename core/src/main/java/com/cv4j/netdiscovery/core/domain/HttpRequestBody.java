@@ -30,12 +30,6 @@ public class HttpRequestBody implements Serializable{
     @Getter
     private byte[] body;
 
-    @Getter
-    private String json;
-
-    @Getter
-    private Map<String,Object> formMap;
-
     @Setter
     @Getter
     private String contentType;
@@ -50,16 +44,12 @@ public class HttpRequestBody implements Serializable{
         this.encoding = encoding;
     }
 
-    public HttpRequestBody json(String json) {
-
-        this.json = json;
+    public static HttpRequestBody json(String json) {
 
         return json(json,"UTF-8");
     }
 
-    public HttpRequestBody json(String json, String encoding) {
-
-        this.json = json;
+    public static HttpRequestBody json(String json, String encoding) {
 
         try {
             return new HttpRequestBody(json.getBytes(encoding), ContentType.JSON, encoding);
@@ -68,13 +58,11 @@ public class HttpRequestBody implements Serializable{
         }
     }
 
-    public HttpRequestBody custom(byte[] body, String contentType, String encoding) {
+    public static HttpRequestBody custom(byte[] body, String contentType, String encoding) {
         return new HttpRequestBody(body, contentType, encoding);
     }
 
-    public HttpRequestBody form(Map<String,Object> params, String encoding){
-
-        this.formMap = params;
+    public static HttpRequestBody form(Map<String,Object> params, String encoding){
 
         List<NameValuePair> nameValuePairs = new ArrayList<>(params.size());
         for (Map.Entry<String, Object> entry : params.entrySet()) {
