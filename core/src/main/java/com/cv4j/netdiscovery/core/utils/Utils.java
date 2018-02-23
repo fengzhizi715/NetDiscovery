@@ -7,6 +7,7 @@ import com.safframework.tony.common.utils.Preconditions;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class Utils {
      * @param dataList 数据
      * @return
      */
-    public static boolean exportCsv(File file, List<String> dataList){
+    public static boolean exportCsv(File file, List<String> dataList, Charset charset){
 
         boolean isSucess=false;
 
@@ -53,7 +54,7 @@ public class Utils {
         BufferedWriter bw=null;
         try {
             out = new FileOutputStream(file);
-            osw = new OutputStreamWriter(out);
+            osw = new OutputStreamWriter(out, charset);
             bw =new BufferedWriter(osw);
             if(Preconditions.isNotBlank(dataList)){
                 for(String data : dataList){

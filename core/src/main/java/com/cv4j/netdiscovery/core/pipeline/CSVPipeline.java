@@ -4,8 +4,10 @@ import com.cv4j.netdiscovery.core.domain.ResultItems;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.safframework.tony.common.utils.Preconditions;
 
+import javax.sound.midi.Soundbank;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +43,6 @@ public class CSVPipeline implements Pipeline{
         StringBuilder sb = new StringBuilder();
 
         for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
-
             sb.append(entry.getValue()).append(",");
         }
 
@@ -50,7 +51,7 @@ public class CSVPipeline implements Pipeline{
         if (Preconditions.isNotBlank(ss)) {
 
             List<String> dataList = Arrays.asList(ss);
-            Utils.exportCsv(csvFile,dataList);
+            Utils.exportCsv(csvFile,dataList, Charset.forName("GBK"));
         }
     }
 
