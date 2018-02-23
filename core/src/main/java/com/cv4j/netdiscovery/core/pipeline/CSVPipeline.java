@@ -15,13 +15,9 @@ import java.util.Map;
  */
 public class CSVPipeline implements Pipeline{
 
-    private String filePath;
-    private String fileName;
     private File csvFile = null;
 
     public CSVPipeline(String filePath,String fileName) {
-        this.filePath = filePath;
-        this.fileName = fileName;
 
         csvFile = new File(filePath + fileName + ".csv");
 

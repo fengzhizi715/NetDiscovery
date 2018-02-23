@@ -189,7 +189,7 @@ public class HttpManager {
             }
         }
 
-        // 真的post请求，需要对header添加一些信息
+        // 针对post请求，需要对header添加一些信息
         if (request.getHttpRequestBody()!=null && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
             httpRequestBase.addHeader("Content-type",request.getHttpRequestBody().getContentType());
