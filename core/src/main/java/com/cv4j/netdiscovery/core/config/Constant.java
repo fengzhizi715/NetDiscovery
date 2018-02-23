@@ -10,4 +10,6 @@ public class Constant {
     };
 
     public static final String JSON_RESPONSE = "JSON_RESPONSE";
+
+    public static final String UTF_8 = "UTF-8";
 }

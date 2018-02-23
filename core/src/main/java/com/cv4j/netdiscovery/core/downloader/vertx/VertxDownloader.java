@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -94,7 +95,7 @@ public class VertxDownloader implements Downloader {
         if (Preconditions.isNotBlank(request.getCharset())) {
             charset = request.getCharset();
         } else {
-            charset = "UTF-8";
+            charset = Constant.UTF_8;
         }
 
         return httpRequest
