@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
 import com.cv4j.netdiscovery.core.domain.HttpMethod;
+import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -9,7 +10,9 @@ import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 import java.io.IOException;
 import java.util.Map;
@@ -40,7 +43,17 @@ public class OkHttpDownloader implements Downloader{
             requestBuilder = new okhttp3.Request.Builder().url(request.getUrl());
         } else if (request.getHttpMethod() == HttpMethod.POST){
 
-            requestBuilder = new okhttp3.Request.Builder().url(request.getUrl()).method("POST",null);
+            HttpRequestBody httpRequestBody = request.getHttpRequestBody();
+
+            if (httpRequestBody!=null) {
+
+                MediaType mediaType = MediaType.parse(httpRequestBody.getContentType());
+
+                //创建RequestBody对象，将参数按照指定的MediaType封装
+                RequestBody requestBody = RequestBody.create(mediaType,httpRequestBody.getBody());
+
+                requestBuilder = new okhttp3.Request.Builder().url(request.getUrl()).post(requestBody);
+            }
         }
 
         if (request.getHeader()!=null) {
