@@ -285,7 +285,7 @@ public class Spider {
                                     } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
 
                                         Page page = new Page();
-                                        page.putField(Constant.JSON_RESPONSE,response.getContent());
+                                        page.putField(Constant.RESPONSE_JSON,new String(response.getContent())); // 将json字符串放入Page对象的"RESPONSE_JSON"字段
                                         page.setRequest(request);
                                         page.setUrl(request.getUrl());
                                         page.setStatusCode(response.getStatusCode());
@@ -308,7 +308,7 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-                                    if (page.getHtml()!=null && parser != null) {
+                                    if (parser != null) {
 
                                         parser.process(page);
                                     }
@@ -321,14 +321,14 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-                                    if (page.getHtml()!=null) {
+//                                    if (page.getHtml()!=null) {
 
                                         if (Preconditions.isNotBlank(pipelines)) {
 
                                             pipelines.stream()
                                                     .forEach(pipeline -> pipeline.process(page.getResultItems()));
                                         }
-                                    }
+//                                    }
 
                                     return page;
                                 }
