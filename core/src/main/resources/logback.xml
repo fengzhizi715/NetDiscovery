@@ -19,7 +19,7 @@
         <!--根据时间来记录日志文件：-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--归档日志文件的名称：-->
-            <fileNamePattern>log/proxy_log_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>log/netdiscovery_%d{yyyy-MM-dd}.log</fileNamePattern>
             <!--归档文件保存30天-->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
