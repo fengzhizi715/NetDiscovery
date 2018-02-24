@@ -89,13 +89,13 @@ public class VertxDownloader implements Downloader {
             for (Map.Entry<String, String> entry:header.entrySet()) {
                 httpRequest.putHeader(entry.getKey(),entry.getValue());
             }
+        }
 
-            if (request.getHttpMethod()==HttpMethod.POST) {
+        if (request.getHttpMethod()==HttpMethod.POST) {
 
-                if (Preconditions.isNotBlank(request.getHttpRequestBody())) {
+            if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-                    httpRequest.putHeader("Content-type",request.getHttpRequestBody().getContentType());
-                }
+                httpRequest.putHeader("Content-type",request.getHttpRequestBody().getContentType());
             }
         }
 
