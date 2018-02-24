@@ -48,7 +48,7 @@ public class Printer {
         String log;
         String header = JSON.toJSONString(request.getHeader(), SerializerFeature.PrettyFormat);
         boolean loggableHeader = level == Level.HEADERS || level == Level.BASIC;
-        log = METHOD_TAG + "Get" + DOUBLE_SEPARATOR +
+        log = METHOD_TAG + request.getHttpMethod().name() + DOUBLE_SEPARATOR +
                 (isEmpty(header) ? "" : loggableHeader ? HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header) : "");
         return log.split(LINE_SEPARATOR);
     }
