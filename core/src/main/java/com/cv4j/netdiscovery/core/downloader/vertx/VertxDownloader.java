@@ -90,6 +90,13 @@ public class VertxDownloader implements Downloader {
                 httpRequest.putHeader(entry.getKey(),entry.getValue());
             }
 
+            if (request.getHttpMethod()==HttpMethod.POST) {
+
+                if (Preconditions.isNotBlank(request.getHttpRequestBody())) {
+
+                    httpRequest.putHeader("Content-type",request.getHttpRequestBody().getContentType());
+                }
+            }
         }
 
         String charset = null;
