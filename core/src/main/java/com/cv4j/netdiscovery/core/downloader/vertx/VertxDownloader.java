@@ -9,6 +9,7 @@ import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
@@ -98,9 +99,27 @@ public class VertxDownloader implements Downloader {
             charset = Constant.UTF_8;
         }
 
-        return httpRequest
-                .as(BodyCodec.string(charset))
-                .rxSend()
+
+        HttpRequest<String> stringHttpRequest = httpRequest.as(BodyCodec.string(charset));
+        Single<HttpResponse<String>> httpResponseSingle = null;
+
+        if (request.getHttpMethod()==HttpMethod.GET) {
+
+            httpResponseSingle = stringHttpRequest.rxSend();
+        } else if (request.getHttpMethod()==HttpMethod.POST) {
+
+            if (Preconditions.isNotBlank(request.getHttpRequestBody())) {
+
+                Buffer buffer = Buffer.buffer();
+                buffer.getDelegate().appendBytes(request.getHttpRequestBody().getBody());
+                httpResponseSingle = stringHttpRequest.rxSendBuffer(buffer);
+            } else {
+
+                httpResponseSingle = stringHttpRequest.rxSend();
+            }
+        }
+
+        return httpResponseSingle
                 .toMaybe()
                 .map(new Function<HttpResponse<String>, Response>() {
                     @Override
