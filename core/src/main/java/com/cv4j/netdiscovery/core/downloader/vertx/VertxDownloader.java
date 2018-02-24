@@ -91,6 +91,7 @@ public class VertxDownloader implements Downloader {
             }
         }
 
+        // 针对post请求，需要对header添加一些信息
         if (request.getHttpMethod()==HttpMethod.POST) {
 
             if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {

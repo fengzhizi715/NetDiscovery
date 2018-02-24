@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -60,6 +61,15 @@ public class OkHttpDownloader implements Downloader{
 
             for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
                 requestBuilder.addHeader(entry.getKey(),entry.getValue());
+            }
+        }
+
+        // 针对post请求，需要对header添加一些信息
+        if (request.getHttpMethod()==HttpMethod.POST) {
+
+            if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
+
+                requestBuilder.addHeader("Content-type",request.getHttpRequestBody().getContentType());
             }
         }
 
