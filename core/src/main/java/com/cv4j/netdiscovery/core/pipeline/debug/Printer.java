@@ -6,6 +6,8 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by tony on 2018/2/5.
  */
@@ -36,10 +38,17 @@ public class Printer {
     }
 
     static void printJsonRequest(Request request) {
+
         log.info(REQUEST_UP_LINE);
 
         logLines(new String[]{URL_TAG + request.getUrl()}, false);
         logLines(getRequest(request, Level.HEADERS),  true);
+
+        if (request.getHttpRequestBody()!=null){
+
+            String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyToString(request);
+            logLines(requestBody.split(LINE_SEPARATOR),  true);
+        }
 
         log.info(END_LINE);
     }
@@ -82,5 +91,20 @@ public class Printer {
                 log.info(DEFAULT_LINE + line.substring(start, end));
             }
         }
+    }
+
+    private static String bodyToString(final Request request) {
+
+        if (request.getHttpRequestBody()!=null) {
+
+            byte[] body = request.getHttpRequestBody().getBody();
+            try {
+                return new String(body,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                return "{\"err\": \"" + e.getMessage() + "\"}";
+            }
+        }
+
+        return "";
     }
 }
