@@ -34,7 +34,7 @@ dependencies {
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation "io.vertx:vertx-web:${libs.vertx}"
-    implementation 'io.vertx:vertx-mongo-client:3.5.0'
+    implementation "io.vertx:vertx-mongo-client:${libs.vertx}"
     implementation 'org.slf4j:slf4j-api:1.7.20'
     implementation 'ch.qos.logback:logback-classic:1.1.7'
     implementation 'ch.qos.logback:logback-core:1.1.7'
