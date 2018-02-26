@@ -160,7 +160,9 @@ public class HttpManager {
                 // 把请求重试设置到连接客户端
                 .setRetryHandler(new RetryHandler())
                 // 配置连接池管理对象
-                .setConnectionManager(connManager);
+                .setConnectionManager(connManager)
+                // 302跳转
+                .setRedirectStrategy(new RedirectStrategy());
 
         if (cookie!=null) {
             CookieStore cookieStore = new BasicCookieStore();
