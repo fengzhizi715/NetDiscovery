@@ -147,7 +147,7 @@ public class VertxDownloader implements Downloader {
     private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
-        options.setKeepAlive(true).setReuseAddress(true);
+        options.setKeepAlive(true).setReuseAddress(true).setFollowRedirects(true);
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());

@@ -26,12 +26,12 @@ public class OkHttpDownloader implements Downloader{
     OkHttpClient client;
 
     public OkHttpDownloader() {
-        client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
+        client = new OkHttpClient.Builder().retryOnConnectionFailure(true).addInterceptor(new RedirectInterceptor()).build();
     }
 
     public OkHttpDownloader(Proxy proxy) {
 
-        client = new OkHttpClient.Builder().proxy(proxy.toJavaNetProxy()).retryOnConnectionFailure(true).build();
+        client = new OkHttpClient.Builder().proxy(proxy.toJavaNetProxy()).retryOnConnectionFailure(true).addInterceptor(new RedirectInterceptor()).build();
     }
 
     @Override
