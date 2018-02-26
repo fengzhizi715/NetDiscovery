@@ -267,7 +267,6 @@ public class Spider {
                     }
 
                     downloader.download(request)
-                            .observeOn(Schedulers.io())
                             .map(new Function<Response, Page>() {
 
                                 @Override
@@ -333,6 +332,7 @@ public class Spider {
                                     return page;
                                 }
                             })
+                            .observeOn(Schedulers.io())
                             .subscribe(new Consumer<Page>() {
 
                                 @Override
