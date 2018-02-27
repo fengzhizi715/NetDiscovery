@@ -14,4 +14,12 @@ public @interface ExtractBy {
     @interface XPath {
         String value();
     }
+
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Regex {
+        String value();
+
+        int group() default 3;
+    }
 }

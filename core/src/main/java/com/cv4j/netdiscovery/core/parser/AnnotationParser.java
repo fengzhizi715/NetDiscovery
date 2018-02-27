@@ -35,15 +35,18 @@ public class AnnotationParser implements Parser {
                         //设置字段可见性
                         field.setAccessible(true);
 
-                        ExtractBy.XPath xpath = field.getAnnotation(ExtractBy.XPath.class);
+                        if (field.getAnnotation(ExtractBy.XPath.class) != null) {
 
-                        if (xpath != null) {
-
+                            ExtractBy.XPath xpath = field.getAnnotation(ExtractBy.XPath.class);
                             if (field.getType().isAssignableFrom(Collection.class)) {
-                                resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()));
+                                resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).get());
                             } else {
                                 resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).all());
                             }
+                        } else if (field.getAnnotation(ExtractBy.Regex.class)!=null) {
+
+                            ExtractBy.Regex regex = field.getAnnotation(ExtractBy.Regex.class);
+                            resultItems.put(field.getName(), page.getHtml().regex(regex.value(),regex.group()).get());
                         }
                     });
         }
