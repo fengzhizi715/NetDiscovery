@@ -15,7 +15,7 @@
     <!--滚动记录日志文件：-->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--当天生成的日志文件名称：-->
-        <file>log/proxy_log.out</file>
+        <file>log/netdiscovery_log.out</file>
         <!--根据时间来记录日志文件：-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--归档日志文件的名称：-->
