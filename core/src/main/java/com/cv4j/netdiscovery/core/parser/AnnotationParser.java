@@ -3,12 +3,12 @@ package com.cv4j.netdiscovery.core.parser;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.ResultItems;
 import com.cv4j.netdiscovery.core.parser.annotation.ExtractBy;
-import com.cv4j.netdiscovery.core.parser.annotation.ListFields;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by tony on 2018/2/4.
@@ -39,9 +39,7 @@ public class AnnotationParser implements Parser {
 
                         if (xpath != null) {
 
-                            ListFields listField = field.getAnnotation(ListFields.class);
-
-                            if (listField == null) {
+                            if (field.getType().isAssignableFrom(Collection.class)) {
                                 resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()));
                             } else {
                                 resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).all());
