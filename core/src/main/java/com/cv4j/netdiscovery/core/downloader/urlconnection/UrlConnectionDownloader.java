@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
+import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,6 +36,25 @@ public class UrlConnectionDownloader implements Downloader {
         try {
             url = new URL(request.getUrl());
             httpUrlConnection = (HttpURLConnection) url.openConnection();
+
+            if (request.getHttpMethod() == HttpMethod.POST) {
+
+                httpUrlConnection.setDoOutput(true);
+                httpUrlConnection.setDoInput(true);
+                httpUrlConnection.setRequestMethod("POST");
+                httpUrlConnection.setUseCaches(false); // post 请求不用缓存
+
+                if (request.getHttpRequestBody()!=null) {
+
+                    httpUrlConnection.setRequestProperty("Content-Type", request.getHttpRequestBody().getContentType());
+
+                    OutputStream os = httpUrlConnection.getOutputStream();
+                    os.write(request.getHttpRequestBody().getBody());
+                    os.flush();
+                    os.close();
+                }
+            }
+
             httpUrlConnection.connect();
 
            return Maybe.create(new MaybeOnSubscribe<InputStream>() {
@@ -68,9 +89,9 @@ public class UrlConnectionDownloader implements Downloader {
     @Override
     public void close() throws IOException {
 
-//        if (httpUrlConnection!=null) {
-//
-//            httpUrlConnection.disconnect();
-//        }
+        if (httpUrlConnection!=null) {
+
+            httpUrlConnection.disconnect();
+        }
     }
 }
