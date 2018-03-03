@@ -8,7 +8,9 @@ import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * Created by tony on 2018/1/28.
@@ -37,7 +39,16 @@ public class SeleniumDownloader implements Downloader {
             @Override
             public void subscribe(MaybeEmitter emitter) throws Exception {
 
-                emitter.onSuccess(webDriver.getPageSource());
+                webDriver.get(request.getUrl());
+
+                if (action != null) {
+                    action.execute(webDriver);
+                }
+
+                WebElement webElement = webDriver.findElement(By.xpath("/html"));
+                String content = webElement.getAttribute("outerHTML");
+
+                emitter.onSuccess(content);
             }
         }).map(new Function<String, Response>() {
 
@@ -47,6 +58,7 @@ public class SeleniumDownloader implements Downloader {
                 Response response = new Response();
                 response.setContent(html.getBytes());
                 response.setStatusCode(200);
+                response.setContentType("text/html");
                 return response;
             }
         });
