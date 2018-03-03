@@ -15,6 +15,8 @@ dependencies {
 
     implementation project(":core")
     implementation project(":extra")
+    implementation project(":selenium")
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:3.8.1'
 }
