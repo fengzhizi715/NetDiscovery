@@ -13,11 +13,11 @@ public class TestSelenium {
 
     public static void main(String[] args) {
 
-        WebDriver driver = Browser.Chrome.init("example/chromedriver");
+        WebDriver driver = Browser.Chrome.init("example/chromedriver"); // 目前使用mac版本的chromedriver
 
         Spider.create()
                 .name("tony1")
-                .url("http://www.163.com")
+                .url("http://www.163.com/")
                 .downloader(new SeleniumDownloader(driver))
                 .run();
     }
