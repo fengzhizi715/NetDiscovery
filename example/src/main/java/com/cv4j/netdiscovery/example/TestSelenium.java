@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
+import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,13 +11,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class TestSelenium {
 
-    static {
-        System.setProperty("webdriver.chrome.driver", "example/chromedriver");
-    }
-
     public static void main(String[] args) {
 
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = Browser.Chrome.init("example/chromedriver");
 
         Spider.create()
                 .name("tony1")
