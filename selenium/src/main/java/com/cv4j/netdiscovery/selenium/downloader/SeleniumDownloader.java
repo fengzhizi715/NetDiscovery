@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.selenium.downloader;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.selenium.SeleniumAction;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -15,10 +16,17 @@ import org.openqa.selenium.WebDriver;
 public class SeleniumDownloader implements Downloader {
 
     private WebDriver webDriver;
+    private SeleniumAction action = null;
 
     public SeleniumDownloader(WebDriver webDriver) {
 
+        this(webDriver,null);
+    }
+
+    public SeleniumDownloader(WebDriver webDriver,SeleniumAction action) {
+
         this.webDriver = webDriver;
+        this.action = action;
     }
 
     @Override
