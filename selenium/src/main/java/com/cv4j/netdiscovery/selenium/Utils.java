@@ -3,9 +3,11 @@ package com.cv4j.netdiscovery.selenium;
 import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -51,5 +53,41 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 操作关闭模态窗口
+     * @param driver
+     * @param type 如Id,ClassName
+     * @param sel 选择器
+     */
+    public static void clickModal(WebDriver driver,String type,String sel){
+        String js="document.getElementsBy"+type+"('"+sel+"')[0].click();";
+        ((JavascriptExecutor)driver).executeScript(js);
+    }
+
+    /**
+     * 点击一个元素
+     * @param driver
+     * @param by
+     */
+    public static void clickElement(WebDriver driver,By by){
+        WebElement tmp=driver.findElement(by);
+        Actions actions=new Actions(driver);
+        actions.moveToElement(tmp).click().perform();
+    }
+
+    public static void clickElement(WebDriver driver,WebElement tmp){
+        Actions actions=new Actions(driver);
+        actions.moveToElement(tmp).click().perform();
+    }
+
+    public static Object execJs(WebDriver driver,String js){
+        return ((JavascriptExecutor)driver).executeScript(js);
+    }
+    
+    public static void clickByJsCssSelector(WebDriver driver,String cssSelector){
+        String js="document.querySelector('"+cssSelector+"').click();";
+        ((JavascriptExecutor)driver).executeScript(js);
     }
 }
