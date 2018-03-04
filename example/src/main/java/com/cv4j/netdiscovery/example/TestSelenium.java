@@ -4,7 +4,6 @@ import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
  * Created by tony on 2018/3/3.
@@ -17,7 +16,7 @@ public class TestSelenium {
 
         Spider.create()
                 .name("tony1")
-                .url("http://www.163.com/")
+                .url("https://www.jianshu.com/u/4f2c483c12d8")
                 .downloader(new SeleniumDownloader(driver))
                 .run();
     }

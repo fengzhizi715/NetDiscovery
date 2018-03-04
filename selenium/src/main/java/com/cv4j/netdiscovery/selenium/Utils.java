@@ -1,13 +1,11 @@
 package com.cv4j.netdiscovery.selenium;
 
-import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -85,7 +83,7 @@ public class Utils {
     public static Object execJs(WebDriver driver,String js){
         return ((JavascriptExecutor)driver).executeScript(js);
     }
-    
+
     public static void clickByJsCssSelector(WebDriver driver,String cssSelector){
         String js="document.querySelector('"+cssSelector+"').click();";
         ((JavascriptExecutor)driver).executeScript(js);
