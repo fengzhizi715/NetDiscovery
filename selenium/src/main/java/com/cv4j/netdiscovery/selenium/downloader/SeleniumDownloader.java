@@ -47,8 +47,7 @@ public class SeleniumDownloader implements Downloader {
                     action.execute(webDriver);
                 }
 
-                WebElement webElement = webDriver.findElement(By.xpath("/html"));
-                String content = webElement.getAttribute("outerHTML");
+                String content = webDriver.getPageSource();
 
                 emitter.onSuccess(content);
             }
