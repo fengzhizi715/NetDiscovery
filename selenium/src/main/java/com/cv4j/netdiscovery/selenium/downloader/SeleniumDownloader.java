@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.selenium.downloader;
 
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -58,7 +59,7 @@ public class SeleniumDownloader implements Downloader {
 
                 Response response = new Response();
                 response.setContent(html.getBytes());
-                response.setStatusCode(200);
+                response.setStatusCode(Constant.OK_STATUS_CODE);
                 response.setContentType(getContentType(webDriver));
                 return response;
             }
