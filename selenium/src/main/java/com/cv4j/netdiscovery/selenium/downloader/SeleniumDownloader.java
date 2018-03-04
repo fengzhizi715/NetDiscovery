@@ -9,6 +9,7 @@ import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -58,11 +59,29 @@ public class SeleniumDownloader implements Downloader {
                 Response response = new Response();
                 response.setContent(html.getBytes());
                 response.setStatusCode(200);
-                response.setContentType("text/html");
+                response.setContentType(getContentType(webDriver));
                 return response;
             }
         });
     }
+
+    /**
+     * @param wd
+     * @return
+     */
+    private String getContentType(final WebDriver wd) {
+        if (wd instanceof JavascriptExecutor) {
+            final JavascriptExecutor jsExecutor = (JavascriptExecutor) wd;
+            // TODO document.contentType does not exist.
+            final Object ret = jsExecutor
+                    .executeScript("return document.contentType;");
+            if (ret != null) {
+                return ret.toString();
+            }
+        }
+        return "text/html";
+    }
+
 
     @Override
     public void close() {
