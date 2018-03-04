@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.codeborne:phantomjsdriver:1.4.4'
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 
     implementation project(":core")
 }
