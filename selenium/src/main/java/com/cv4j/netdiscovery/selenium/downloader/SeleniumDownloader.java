@@ -4,7 +4,7 @@ import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
-import com.cv4j.netdiscovery.selenium.SeleniumAction;
+import com.cv4j.netdiscovery.selenium.action.SeleniumAction;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -42,7 +42,7 @@ public class SeleniumDownloader implements Downloader {
                 webDriver.get(request.getUrl());
 
                 if (action != null) {
-                    action.execute(webDriver);
+                    action.perform(webDriver);
                 }
 
                 String content = webDriver.getPageSource();
