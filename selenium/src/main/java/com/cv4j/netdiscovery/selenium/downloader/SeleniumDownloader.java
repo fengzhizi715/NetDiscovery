@@ -85,7 +85,7 @@ public class SeleniumDownloader implements Downloader {
     public void close() {
 
         if (webDriver!=null) {
-            webDriver.close();
+            webDriver.quit();
         }
     }
 }
