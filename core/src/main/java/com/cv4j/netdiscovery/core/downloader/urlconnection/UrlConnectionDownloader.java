@@ -14,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 /**
  * Created by tony on 2018/3/2.
@@ -35,7 +33,15 @@ public class UrlConnectionDownloader implements Downloader {
 
         try {
             url = new URL(request.getUrl());
-            httpUrlConnection = (HttpURLConnection) url.openConnection();
+
+            if (request.getProxy()!=null) {
+
+                Proxy proxy = request.getProxy().toJavaNetProxy();
+                httpUrlConnection = (HttpURLConnection) url.openConnection(proxy);
+
+            } else {
+                httpUrlConnection = (HttpURLConnection) url.openConnection();
+            }
 
             if (request.getHttpMethod() == HttpMethod.POST) {
 
