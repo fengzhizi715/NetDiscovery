@@ -14,7 +14,11 @@ NetDiscovery目前还是很早期的版本，很多的细节需要不断地完�
 # NetDiscovery 功能点：
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
-Spider内置了很多组件，即使是downloader都支持好几种，可以热插拔随时替换，或者编写自己的downloader。
+
+Spider中内置了很多组件。即使是downloader都支持好几种，可以热插拔随时替换，或者编写自己的downloader。
+
+queue、parser、pipeline也都类似。
+
 ![](Spider.png)
 
 在调试的时候，可以使用ConsolePipe或者DebugPipeline
