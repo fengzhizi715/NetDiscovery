@@ -62,7 +62,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |4|让爬虫停止|
 
 ## 3. admin模块
-admin模块可以监控线上的爬虫，并进行管理
+admin模块可以监控线上的爬虫，并进行管理。前端部分使用elementUI框架进行开发。
+
 ![](NetDiscovery-admin.jpeg)
 
 # NetDiscovery 基本原理：
