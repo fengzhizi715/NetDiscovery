@@ -1,3 +1,4 @@
 # Java class files
+.idea
 build/
 out/production/

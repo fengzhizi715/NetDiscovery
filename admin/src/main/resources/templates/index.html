@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>导航页面</title>
+    <link rel="stylesheet" href="//unpkg.com/element-ui@2.2.0/lib/theme-chalk/index.css"/>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-tabs type="border-card" value="defaultTab">
+                <el-tab-pane label="可解析资源"><iframe name="show-iframe" src="resourcelist.html" frameborder="0" scrolling="auto"></iframe></el-tab-pane>
+                <el-tab-pane label="JOB计划资源"><iframe name="show-iframe" src="planreslist.html" frameborder="0" scrolling="auto"></iframe></el-tab-pane>
+                <el-tab-pane label="JOB运行监控"><iframe name="show-iframe" src="joblist.html" frameborder="0" scrolling="auto"></iframe></el-tab-pane>
+                <el-tab-pane label="免费代理IP资源"><iframe name="show-iframe" src="proxylist.html" frameborder="0" scrolling="auto"></iframe></el-tab-pane>
+                <el-tab-pane label="爬虫引擎监控" name="defaultTab"><iframe name="show-iframe" src="spiderlist.html" frameborder="0" scrolling="auto"></iframe></el-tab-pane>
+            </el-tabs>
+        </el-header>
+    </el-container>
+</div>
+</body>
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/element-ui@2.2.0/lib/index.js"></script>
+<script>
+    var Main = {
+            data () {
+              return {
+              }
+            },
+            mounted(){
+                var oIframes = document.getElementsByName('show-iframe');
+                const deviceWidth = document.documentElement.clientWidth;
+                const deviceHeight = document.documentElement.clientHeight;
+                for(var i=0;i<oIframes.length;i++){
+                    oIframes[i].style.width = deviceWidth + 'px';
+                    oIframes[i].style.height = deviceHeight + 'px';
+                }
+            },
+            methods: {
+            }
+          };
+
+    var Ctor = Vue.extend(Main);
+    new Ctor().$mount('#app');
+</script>
+</html>

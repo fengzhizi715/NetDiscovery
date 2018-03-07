@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Job监控</title>
+    <link rel="stylesheet" href="//unpkg.com/element-ui@2.2.0/lib/theme-chalk/index.css"/>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-tag type="danger">说明：当前运行的Job信息</el-tag>
+            <el-button type="primary" icon="el-icon-search" @click="queryJobs()" round>查询</el-button>
+            <el-pagination layout="total" :current-page.sync="currentPageIndex" :total="totalCount"></el-pagination>
+        </el-header>
+        <el-main>
+            <el-table ref="jobTable" :data="jobListData" style="width:100%" max-height="400" border highlight-current-row>
+                <el-table-column type="index" align="center" width="100"></el-table-column>
+                <el-table-column prop="jobName" align="center" label="Job名称" width="200" sortable></el-table-column>
+                <el-table-column prop="jobCron" align="center" label="Job Schedule" width="200" sortable></el-table-column>
+                <el-table-column prop="jobStatus" align="center" label="Job 状态" width="200" :formatter="formatStatus" sortable></el-table-column>
+                <el-table-column fixed="right" align="center" label="操作">
+                    <template slot-scope="scope">
+                        <el-button @click="changeStatus(scope.row, 2)" type="warning" size="small" round>暂停</el-button>
+                        <el-button @click="changeStatus(scope.row, 3)" type="success" size="small" round>继续</el-button>
+                        <el-button @click="changeStatus(scope.row, 4)" type="danger" size="small" round>停止</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-main>
+    </el-container>
+</div>
+</body>
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/element-ui@2.2.0/lib/index.js"></script>
+<script src="//unpkg.com/axios@0.18.0/dist/axios.js"></script>
+<script>
+    var statuslist = new Array("初始化","运行","暂停","运行","停止");
+
+    var Main = {
+        data() {
+            return {
+                jobListData:[],
+                currentPageIndex:1,
+                totalCount:0
+            }
+        },
+        methods: {
+            queryJobs() {
+                this.jobListData = [{
+                    jobName:"job1",
+                    jobCron:"0 0 0/3 * * ?s",
+                    jobStatus:1}];
+
+                this.totalCount = this.jobListData.length;
+            },
+            changeStatus(row, toStatus) {
+                this.$refs.jobTable.setCurrentRow(row);  //选中当前行
+                row.jobStatus = toStatus;
+            },
+            formatStatus(row, column, cellValue) {
+                var statusName = "";
+                switch(cellValue) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        statusName = statuslist[cellValue];
+                        break;
+                    default:
+                        break;
+                }
+                return statusName;
+            }
+        }
+    }
+
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+</script>
+</html>
