@@ -61,6 +61,10 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |3|让爬虫从暂停中恢复|
 |4|让爬虫停止|
 
+## 3. admin模块
+admin模块可以监控线上的爬虫，并进行管理
+![](NetDiscovery-admin.jpeg)
+
 # NetDiscovery 基本原理：
 ## 1.基本原理
 ![](basic_principle.png)
