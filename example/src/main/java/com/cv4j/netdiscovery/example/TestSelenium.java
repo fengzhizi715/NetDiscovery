@@ -12,12 +12,17 @@ public class TestSelenium {
 
     public static void main(String[] args) {
 
-        WebDriver driver = Browser.Chrome.init("example/chromedriver"); // 目前使用mac版本的chromedriver
-
+        //设置浏览器的驱动程序
+//        WebDriver driver = Browser.Chrome.init("example/chromedriver");             //for mac
+        WebDriver driver = Browser.Chrome.init("example/chromedriver.exe");//for windows（要和本地浏览器版本匹配）
+        //创建SeleniumAction类并设置到Downloader类
+        TestSeleniumAction testSeleniumAction = new TestSeleniumAction();
+        SeleniumDownloader seleniumDownloader = new SeleniumDownloader(driver, testSeleniumAction);
+        //设置并启动爬虫
         Spider.create()
-                .name("tony1")
+                .name("testseleinum")
                 .url("https://www.jianshu.com/u/4f2c483c12d8")
-                .downloader(new SeleniumDownloader(driver))
+                .downloader(seleniumDownloader)
                 .run();
     }
 }

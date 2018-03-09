@@ -14,12 +14,21 @@ import java.util.concurrent.TimeUnit;
 public class Utils {
 
     /**
-     * 滚动窗口。
+     * 滚动窗口到目的位置
      * @param driver
-     * @param height
+     * @param height  目的位置
      */
-    public static void scroll(WebDriver driver, int height){
+    public static void scrollTo(WebDriver driver, int height){
         ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+height+" );");
+    }
+
+    /**
+     * 增量滚动窗口
+     * @param driver
+     * @param height  增量位置
+     */
+    public static void scrollBy(WebDriver driver, int height){
+        ((JavascriptExecutor)driver).executeScript("window.scrollBy(0,"+height+" );");
     }
 
     /**
@@ -62,6 +71,10 @@ public class Utils {
     public static void clickModal(WebDriver driver,String type,String sel){
         String js="document.getElementsBy"+type+"('"+sel+"')[0].click();";
         ((JavascriptExecutor)driver).executeScript(js);
+    }
+
+    public static WebElement getWebElementByXpath(WebDriver driver, String xpath){
+        return driver.findElement(By.xpath(xpath));
     }
 
     /**
