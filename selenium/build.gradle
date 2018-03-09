@@ -21,6 +21,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation 'org.apache.commons:commons-pool2:2.5.0'
+    implementation 'org.projectlombok:lombok:1.16.18'
 
     implementation project(":core")
 }
