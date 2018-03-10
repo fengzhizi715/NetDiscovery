@@ -40,13 +40,15 @@ public class SeleniumDownloader implements Downloader {
             @Override
             public void subscribe(MaybeEmitter emitter) throws Exception {
 
-                webDriver.get(request.getUrl());
+                if (webDriver!=null) {
+                    webDriver.get(request.getUrl());
 
-                if (action != null) {
-                    action.perform(webDriver);
+                    if (action != null) {
+                        action.perform(webDriver);
+                    }
+
+                    emitter.onSuccess(webDriver.getPageSource());
                 }
-
-                emitter.onSuccess(webDriver.getPageSource());
             }
         }).map(new Function<String, Response>() {
 

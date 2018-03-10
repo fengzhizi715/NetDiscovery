@@ -32,19 +32,40 @@ public class WebDriverPool {
     }
 
     public static WebDriver borrowOne() {
-        try {
-            return webDriverPool.borrowObject();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+        if (webDriverPool!=null) {
+
+            try {
+                return webDriverPool.borrowObject();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+
+            return null;
         }
+
     }
 
     public static void returnOne(WebDriver driver) {
-        webDriverPool.returnObject(driver);
+
+        if (webDriverPool!=null) {
+
+            webDriverPool.returnObject(driver);
+        }
     }
 
     public static void destory() {
-        webDriverPool.clear();
-        webDriverPool.close();
+
+        if (webDriverPool!=null) {
+
+            webDriverPool.clear();
+            webDriverPool.close();
+        }
+    }
+
+    public static boolean hasWebDriverPool() {
+
+        return webDriverPool!=null;
     }
 }
