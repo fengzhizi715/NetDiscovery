@@ -10,7 +10,6 @@ import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.vertx.core.http.HttpMethod;
-import io.vertx.core.http.RequestOptions;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.buffer.Buffer;
