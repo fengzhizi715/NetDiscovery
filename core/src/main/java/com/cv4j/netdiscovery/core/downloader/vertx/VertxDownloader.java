@@ -10,6 +10,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.http.RequestOptions;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.buffer.Buffer;
@@ -53,15 +54,7 @@ public class VertxDownloader implements Downloader {
 
             } else if ("https".equals(url.getProtocol())){
 
-                if (Preconditions.isNotBlank(url.getQuery())) {
-
-                    httpRequest = webClient.get(443,url.getHost(),url.getPath()+"?"+url.getQuery())
-                            .ssl(true);
-                } else {
-
-                    httpRequest = webClient.get(443,url.getHost(),url.getPath())
-                            .ssl(true);
-                }
+                httpRequest = webClient.get(443,url.getHost(),Preconditions.isNotBlank(url.getQuery())?url.getPath()+"?"+url.getQuery():url.getPath()).ssl(true);
             }
         } else if (request.getHttpMethod() == HttpMethod.POST){
 
@@ -71,15 +64,7 @@ public class VertxDownloader implements Downloader {
 
             } else if ("https".equals(url.getProtocol())){
 
-                if (Preconditions.isNotBlank(url.getQuery())) {
-
-                    httpRequest = webClient.post(443,url.getHost(),url.getPath()+"?"+url.getQuery())
-                            .ssl(true);
-                } else {
-
-                    httpRequest = webClient.post(443,url.getHost(),url.getPath())
-                            .ssl(true);
-                }
+                httpRequest = webClient.post(443,url.getHost(),Preconditions.isNotBlank(url.getQuery())?url.getPath()+"?"+url.getQuery():url.getPath()).ssl(true);
             }
         }
 
