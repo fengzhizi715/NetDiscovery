@@ -5,6 +5,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.selenium.action.SeleniumAction;
+import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -20,14 +21,14 @@ public class SeleniumDownloader implements Downloader {
     private WebDriver webDriver;
     private SeleniumAction action = null;
 
-    public SeleniumDownloader(WebDriver webDriver) {
+    public SeleniumDownloader() {
 
-        this(webDriver,null);
+        this(null);
     }
 
-    public SeleniumDownloader(WebDriver webDriver,SeleniumAction action) {
+    public SeleniumDownloader(SeleniumAction action) {
 
-        this.webDriver = webDriver;
+        this.webDriver = WebDriverPool.borrowOne(); // 从连接池中获取webDriver
         this.action = action;
     }
 
@@ -45,9 +46,7 @@ public class SeleniumDownloader implements Downloader {
                     action.perform(webDriver);
                 }
 
-                String content = webDriver.getPageSource();
-
-                emitter.onSuccess(content);
+                emitter.onSuccess(webDriver.getPageSource());
             }
         }).map(new Function<String, Response>() {
 
@@ -64,12 +63,14 @@ public class SeleniumDownloader implements Downloader {
     }
 
     /**
-     * @param wd
+     * @param webDriver
      * @return
      */
-    private String getContentType(final WebDriver wd) {
-        if (wd instanceof JavascriptExecutor) {
-            final JavascriptExecutor jsExecutor = (JavascriptExecutor) wd;
+    private String getContentType(final WebDriver webDriver) {
+
+        if (webDriver instanceof JavascriptExecutor) {
+
+            final JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
             // TODO document.contentType does not exist.
             final Object ret = jsExecutor
                     .executeScript("return document.contentType;");
@@ -85,7 +86,7 @@ public class SeleniumDownloader implements Downloader {
     public void close() {
 
         if (webDriver!=null) {
-            webDriver.quit();
+            WebDriverPool.returnOne(webDriver); // 将webDriver返回到连接池
         }
     }
 }

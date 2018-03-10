@@ -3,6 +3,8 @@ package com.cv4j.netdiscovery.example;
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
+import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
+import com.cv4j.netdiscovery.selenium.pool.WebDriverPoolConfig;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -12,12 +14,14 @@ public class TestSelenium {
 
     public static void main(String[] args) {
 
-        //设置浏览器的驱动程序
-//        WebDriver driver = Browser.Chrome.init("example/chromedriver");             //for mac
-        WebDriver driver = Browser.Chrome.init("example/chromedriver.exe");//for windows（要和本地浏览器版本匹配）
+        WebDriverPoolConfig config = new WebDriverPoolConfig("example/chromedriver",Browser.Chrome); //设置浏览器的驱动程序和浏览器到类型
+
+        WebDriverPool.init(config); // 需要先使用init，才能使用WebDriverPool
+
         //创建SeleniumAction类并设置到Downloader类
         TestSeleniumAction testSeleniumAction = new TestSeleniumAction();
-        SeleniumDownloader seleniumDownloader = new SeleniumDownloader(driver, testSeleniumAction);
+        SeleniumDownloader seleniumDownloader = new SeleniumDownloader(testSeleniumAction);
+
         //设置并启动爬虫
         Spider.create()
                 .name("testseleinum")

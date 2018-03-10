@@ -10,6 +10,11 @@ public class WebDriverPool {
 
     private static GenericObjectPool<WebDriver> webDriverPool = null;
 
+    /**
+     * 使用WebDriverPool时，必须先调用这个init()方法
+     *
+     * @param config
+     */
     public static void init(WebDriverPoolConfig config) {
 
         webDriverPool = new GenericObjectPool<>(new WebDriverPooledFactory(config));
