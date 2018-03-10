@@ -103,7 +103,7 @@ public class OkHttpDownloader implements Downloader{
             client.dispatcher().executorService().shutdown();   //清除并关闭线程池
             client.connectionPool().evictAll();                 //清除并关闭连接池
             if (client.cache()!=null) {
-                client.cache().close();                             //清除cache
+                client.cache().close();                         //清除cache
             }
         } catch (IOException e) {
 

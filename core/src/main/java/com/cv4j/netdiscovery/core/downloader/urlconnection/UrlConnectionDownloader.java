@@ -71,6 +71,11 @@ public class UrlConnectionDownloader implements Downloader {
                 }
             }
 
+            if (Preconditions.isNotBlank(request.getCharset())) {
+
+                httpUrlConnection.setRequestProperty("Accept-Charset", request.getCharset());
+            }
+            
             httpUrlConnection.connect();
 
            return Maybe.create(new MaybeOnSubscribe<InputStream>() {
