@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
-import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -10,6 +9,7 @@ import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
+import io.vertx.core.http.HttpMethod;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class UrlConnectionDownloader implements Downloader {
 
                 httpUrlConnection.setRequestProperty("Accept-Charset", request.getCharset());
             }
-            
+
             httpUrlConnection.connect();
 
            return Maybe.create(new MaybeOnSubscribe<InputStream>() {

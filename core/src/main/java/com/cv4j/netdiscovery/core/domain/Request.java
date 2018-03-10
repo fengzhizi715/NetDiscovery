@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
+import io.vertx.core.http.HttpMethod;
 import lombok.Getter;
 
 import java.util.Iterator;

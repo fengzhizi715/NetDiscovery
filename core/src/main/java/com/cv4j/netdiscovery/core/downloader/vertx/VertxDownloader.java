@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.domain.HttpMethod;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -10,6 +9,7 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.net.ProxyOptions;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.buffer.Buffer;
