@@ -5,6 +5,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.safframework.tony.common.utils.IOUtils;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.*;
+import java.util.Map;
 
 /**
  * Created by tony on 2018/3/2.
@@ -58,6 +60,14 @@ public class UrlConnectionDownloader implements Downloader {
                     os.write(request.getHttpRequestBody().getBody());
                     os.flush();
                     os.close();
+                }
+            }
+
+            //设置请求头header
+            if (Preconditions.isNotBlank(request.getHeader())) {
+
+                for (Map.Entry<String, String> entry:request.getHeader().entrySet()) {
+                    httpUrlConnection.setRequestProperty(entry.getKey(),entry.getValue());
                 }
             }
 

@@ -84,6 +84,7 @@ public class VertxDownloader implements Downloader {
             }
         }
 
+        //设置请求头header
         if (Preconditions.isNotBlank(header)) {
 
             for (Map.Entry<String, String> entry:header.entrySet()) {

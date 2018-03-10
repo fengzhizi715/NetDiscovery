@@ -5,8 +5,6 @@ import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPoolConfig;
-import org.openqa.selenium.WebDriver;
-
 /**
  * Created by tony on 2018/3/3.
  */
