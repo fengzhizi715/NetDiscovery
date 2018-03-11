@@ -91,7 +91,6 @@ public class VertxDownloader implements Downloader {
             charset = Constant.UTF_8;
         }
 
-
         HttpRequest<String> stringHttpRequest = httpRequest.as(BodyCodec.string(charset));
         Single<HttpResponse<String>> httpResponseSingle = null;
 

@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.domain;
 
+import com.cv4j.netdiscovery.core.utils.URLParser;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
@@ -7,6 +8,7 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.http.HttpMethod;
 import lombok.Getter;
 
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,6 +19,8 @@ import java.util.Map;
 public class Request {
 
     private String url;
+
+    private URLParser urlParser;
 
     private String userAgent;
 
@@ -50,6 +54,12 @@ public class Request {
     public Request(String url) {
 
         this.url = url;
+        try {
+            this.urlParser = new URLParser(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         this.httpMethod = HttpMethod.GET;
         autoUA();
     }
@@ -57,6 +67,12 @@ public class Request {
     public Request(String url,String spiderName) {
 
         this.url = url;
+        try {
+            this.urlParser = new URLParser(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         this.spiderName = spiderName;
         this.httpMethod = HttpMethod.GET;
         autoUA();
@@ -65,6 +81,12 @@ public class Request {
     public Request(String url,String spiderName,HttpMethod httpMethod) {
 
         this.url = url;
+        try {
+            this.urlParser = new URLParser(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         this.spiderName = spiderName;
         this.httpMethod = httpMethod;
         autoUA();
