@@ -29,7 +29,6 @@ public class VertxDownloader implements Downloader {
 
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
-    private URL url;
     private Map<String,String> header;
 
     public VertxDownloader() {
@@ -47,23 +46,23 @@ public class VertxDownloader implements Downloader {
 
         if (request.getHttpMethod() == HttpMethod.GET) {
 
-            if ("http".equals(url.getProtocol())) {
+            if ("http".equals(request.getUrlParser().getProtocol())) {
 
                 httpRequest = webClient.getAbs(request.getUrl());
 
-            } else if ("https".equals(url.getProtocol())){
+            } else if ("https".equals(request.getUrlParser().getProtocol())){
 
-                httpRequest = webClient.get(443,url.getHost(),Preconditions.isNotBlank(url.getQuery())?url.getPath()+"?"+url.getQuery():url.getPath()).ssl(true);
+                httpRequest = webClient.get(443,request.getUrlParser().getHost(),Preconditions.isNotBlank(request.getUrlParser().getQuery())?request.getUrlParser().getPath()+"?"+request.getUrlParser().getQuery():request.getUrlParser().getPath()).ssl(true);
             }
         } else if (request.getHttpMethod() == HttpMethod.POST){
 
-            if ("http".equals(url.getProtocol())) {
+            if ("http".equals(request.getUrlParser().getProtocol())) {
 
                 httpRequest = webClient.post(request.getUrl());
 
-            } else if ("https".equals(url.getProtocol())){
+            } else if ("https".equals(request.getUrlParser().getProtocol())){
 
-                httpRequest = webClient.post(443,url.getHost(),Preconditions.isNotBlank(url.getQuery())?url.getPath()+"?"+url.getQuery():url.getPath()).ssl(true);
+                httpRequest = webClient.post(443,request.getUrlParser().getHost(),Preconditions.isNotBlank(request.getUrlParser().getQuery())?request.getUrlParser().getPath()+"?"+request.getUrlParser().getQuery():request.getUrlParser().getPath()).ssl(true);
             }
         }
 
@@ -134,14 +133,6 @@ public class VertxDownloader implements Downloader {
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
-        }
-
-        if (Preconditions.isNotBlank(request.getUrl())) {
-            try {
-                url = new URL(request.getUrl());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
         }
 
         if (Preconditions.isNotBlank(request.getProxy())) {
