@@ -293,7 +293,7 @@ public class Spider {
                                     } else {
 
                                         Page page = new Page();
-//                                        page.putField("RAW_RESPONSE",response.getContent());
+                                        page.putField(Constant.RESPONSE_RAW,response.getIs()); // 保存InputStream
                                         page.setRequest(request);
                                         page.setUrl(request.getUrl());
                                         page.setStatusCode(response.getStatusCode());
@@ -320,14 +320,11 @@ public class Spider {
                                 @Override
                                 public Page apply(Page page) throws Exception {
 
-//                                    if (page.getHtml()!=null) {
+                                    if (Preconditions.isNotBlank(pipelines)) {
 
-                                        if (Preconditions.isNotBlank(pipelines)) {
-
-                                            pipelines.stream()
-                                                    .forEach(pipeline -> pipeline.process(page.getResultItems()));
-                                        }
-//                                    }
+                                        pipelines.stream()
+                                                .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                    }
 
                                     return page;
                                 }
