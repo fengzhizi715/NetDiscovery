@@ -15,7 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -94,6 +97,7 @@ public class UrlConnectionDownloader implements Downloader {
                     response.setContent(IOUtils.readInputStream(inputStream));
                     response.setStatusCode(httpUrlConnection.getResponseCode());
                     response.setContentType(httpUrlConnection.getHeaderField("Content-Type"));
+
                     return response;
                 }
             });

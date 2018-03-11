@@ -11,6 +11,8 @@ public class Constant {
 
     public static final String RESPONSE_JSON = "RESPONSE_JSON";
 
+    public static final String RESPONSE_RAW = "RESPONSE_RAW";
+
     public static final String UTF_8 = "UTF-8";
 
     public static final int OK_STATUS_CODE = 200;
