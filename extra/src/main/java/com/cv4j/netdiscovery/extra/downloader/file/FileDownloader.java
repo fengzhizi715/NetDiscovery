@@ -12,7 +12,7 @@ import io.vertx.core.http.HttpMethod;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
 /**
- * 使用FileDownloader时，需要使用FileDownloadAfterRequest或者自己定义一个AfterRequest
+ * 在使用FileDownloader时，可以使用AfterRequest或者Pipeline对文件进行保存等处理。
  * Created by tony on 2018/3/11.
  */
 public class FileDownloader implements Downloader{
