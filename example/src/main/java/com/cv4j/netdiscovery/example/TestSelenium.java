@@ -12,7 +12,7 @@ public class TestSelenium {
 
     public static void main(String[] args) {
 
-        WebDriverPoolConfig config = new WebDriverPoolConfig("example/chromedriver",Browser.Chrome); //设置浏览器的驱动程序和浏览器到类型
+        WebDriverPoolConfig config = new WebDriverPoolConfig("example/chromedriver",Browser.Chrome); //设置浏览器的驱动程序和浏览器的类型，浏览器的驱动程序要跟操作系统匹配。
 
         WebDriverPool.init(config); // 需要先使用init，才能使用WebDriverPool
 
