@@ -39,6 +39,8 @@ public class UrlConnectionDownloader implements Downloader {
         try {
             url = new URL(request.getUrl());
 
+
+            // 设置Proxy
             if (request.getProxy()!=null) {
 
                 Proxy proxy = request.getProxy().toJavaNetProxy();
@@ -48,6 +50,7 @@ public class UrlConnectionDownloader implements Downloader {
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
             }
 
+            // 使用Post请求时，设置Post body
             if (request.getHttpMethod() == HttpMethod.POST) {
 
                 httpUrlConnection.setDoOutput(true);
@@ -74,6 +77,7 @@ public class UrlConnectionDownloader implements Downloader {
                 }
             }
 
+            //设置字符集
             if (Preconditions.isNotBlank(request.getCharset())) {
 
                 httpUrlConnection.setRequestProperty("Accept-Charset", request.getCharset());
