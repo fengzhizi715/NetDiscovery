@@ -36,7 +36,7 @@ public class FileDownloader implements Downloader{
 
                 if (request.getHeader().get("Referer")==null) {
 
-                    request.referer(request.getUrlParser().getHost());
+                    request.referer(request.getUrlParser().getProtocol()+"://"+request.getUrlParser().getHost());
                 }
 
                 emitter.onSuccess(httpManager.getResponse(request));
