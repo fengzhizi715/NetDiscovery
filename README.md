@@ -9,13 +9,13 @@
 ---|:-------------:|:-------------:
 最新版本| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)
 
-NetDiscovery目前还是很早期的版本，很多的细节需要不断地完善。
+NetDiscovery目前还是早期的版本，很多的细节需要不断地完善。
 
 # NetDiscovery 功能点：
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
 
-Spider中内置了很多组件。即使是downloader都支持好几种，可以热插拔随时替换，或者编写自己的downloader。
+Spider中内置了很多组件。例如downloader就已经支持了好几种，可以热插拔随时替换，或者编写自己的downloader。
 
 queue、parser、pipeline也都类似。
 
