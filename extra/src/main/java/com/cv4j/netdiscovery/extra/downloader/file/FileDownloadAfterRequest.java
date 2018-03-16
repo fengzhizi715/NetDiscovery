@@ -28,8 +28,14 @@ public class FileDownloadAfterRequest implements Request.AfterRequest {
         InputStream is = page.getResultItems().get(Constant.RESPONSE_RAW);
         if (is!=null) {
 
+            // 创建文件对象
+            File f = new File(filePath+fileName);
+            // 创建文件路径
+            if (!f.getParentFile().exists())
+                f.getParentFile().mkdirs();
+
             try {
-                IOUtils.writeToFile(is,new File(filePath+fileName));
+                IOUtils.writeToFile(is,f);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
