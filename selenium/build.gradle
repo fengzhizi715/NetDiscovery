@@ -2,6 +2,7 @@ group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = 1.8
 
@@ -24,4 +25,13 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.16.18'
 
     implementation project(":core")
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'com.cv4j.netdiscovery'
+    artifactId = 'netdiscovery-selenium'
+    publishVersion = '0.1.4'
+    desc = 'this is a library which is wrapped the selenium for netdiscovery'
+    website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
