@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.downloader.file;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 
 import java.io.*;
@@ -35,7 +36,7 @@ public class FileDownloadAfterRequest implements Request.AfterRequest {
                 }
                 // 创建保存的文件
                 File file = new File(savePath + "/" + fileName);
-                if (file != null && !file.exists()) {
+                if (FileUtils.exists(file)) {
                     file.createNewFile();
                 }
 

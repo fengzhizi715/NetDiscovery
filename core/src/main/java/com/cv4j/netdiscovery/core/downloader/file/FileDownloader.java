@@ -19,6 +19,7 @@ import java.net.URL;
 
 /**
  * 在使用FileDownloader时，可以使用AfterRequest或者Pipeline对文件进行保存等处理。
+ * 不建议在Parser中处理文件下载，因为Parser的主要功能是解析html、json等
  * Created by tony on 2018/3/11.
  */
 public class FileDownloader implements Downloader{
@@ -53,7 +54,7 @@ public class FileDownloader implements Downloader{
                 public Response apply(InputStream inputStream) throws Exception {
 
                     ByteArrayOutputStream baos = Utils.cloneInputStream(inputStream);
-                    InputStream is = new ByteArrayInputStream(baos.toByteArray());
+                    InputStream is = new ByteArrayInputStream(baos.toByteArray());  // 只针对小的文件使用，大型的文件不建议这样使用
 
                     Response response = new Response();
                     response.setIs(is);

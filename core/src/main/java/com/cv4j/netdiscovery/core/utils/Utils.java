@@ -78,7 +78,6 @@ public class Utils {
         return isSucess;
     }
 
-
     public static ByteArrayOutputStream cloneInputStream(InputStream input) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
