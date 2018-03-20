@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.cookies;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by tony on 2018/2/1.
@@ -38,7 +39,7 @@ public class CookieManager {
 
         CookieGroup group = cookieGroups.remove(domain);
         if (group != null) {
-            Map cookies = group.getCookies();
+            Set<Cookie> cookies = group.getCookies();
             if (cookies != null) {
                 cookies.clear();
             }

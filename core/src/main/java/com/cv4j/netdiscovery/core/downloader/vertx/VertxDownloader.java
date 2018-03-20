@@ -1,6 +1,9 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.config.Constant;
+import com.cv4j.netdiscovery.core.cookies.Cookie;
+import com.cv4j.netdiscovery.core.cookies.CookieGroup;
+import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -18,7 +21,9 @@ import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
 import io.vertx.reactivex.ext.web.codec.BodyCodec;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by tony on 2017/12/23.
@@ -28,10 +33,12 @@ public class VertxDownloader implements Downloader {
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
     private Map<String,String> header;
+    private Set<Cookie> cookieSet;
 
     public VertxDownloader() {
 
         this.vertx = VertxUtils.reactivex_vertx;
+        this.cookieSet = new LinkedHashSet<>();
     }
 
     public Maybe<Response> download(Request request) {
@@ -118,6 +125,56 @@ public class VertxDownloader implements Downloader {
                         response.setContent(html.getBytes());
                         response.setStatusCode(stringHttpResponse.statusCode());
                         response.setContentType(stringHttpResponse.getHeader("Content-Type"));
+
+                        // save cookies
+                        if (Preconditions.isNotBlank(stringHttpResponse.cookies())) {
+
+                            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+
+                            if (cookieGroup==null) {
+
+                                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+
+                                for (String cookieStr:stringHttpResponse.cookies()) {
+
+                                    String[] segs = cookieStr.split(";");
+                                    if (Preconditions.isNotBlank(segs)) {
+
+                                        for (String seg:segs) {
+
+                                            String[] pairs = seg.trim().split("\\=");
+                                            if (pairs.length==2) {
+
+                                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                cookieGroup.putAllCookies(cookieSet);
+
+                                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                            } else {
+
+                                for (String cookieStr:stringHttpResponse.cookies()) {
+
+                                    String[] segs = cookieStr.split(";");
+                                    if (Preconditions.isNotBlank(segs)) {
+
+                                        for (String seg:segs) {
+
+                                            String[] pairs = seg.trim().split("\\=");
+                                            if (pairs.length==2) {
+
+                                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                cookieGroup.putAllCookies(cookieSet);
+                            }
+                        }
 
                         return response;
                     }
