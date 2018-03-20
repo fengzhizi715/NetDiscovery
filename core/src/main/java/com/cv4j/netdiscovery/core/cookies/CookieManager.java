@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Cookies的管理类，每一个域名对应一个CookieGroup
+ *
  * Created by tony on 2018/2/1.
  */
 public class CookieManager {

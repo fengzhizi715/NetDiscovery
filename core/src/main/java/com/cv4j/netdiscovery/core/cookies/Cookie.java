@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
+ * 一个键值对
  * Created by tony on 2018/3/20.
  */
 @AllArgsConstructor
