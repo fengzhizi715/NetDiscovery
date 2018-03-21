@@ -99,7 +99,7 @@ public class UrlConnectionDownloader implements Downloader {
                     Response response = new Response();
                     response.setContent(IOUtils.readInputStream(inputStream));
                     response.setStatusCode(httpUrlConnection.getResponseCode());
-                    response.setContentType(httpUrlConnection.getHeaderField("Content-Type"));
+                    response.setContentType(httpUrlConnection.getContentType());
 
                     return response;
                 }

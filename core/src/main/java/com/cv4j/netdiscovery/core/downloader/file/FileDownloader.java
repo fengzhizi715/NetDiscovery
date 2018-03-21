@@ -59,7 +59,7 @@ public class FileDownloader implements Downloader{
                     Response response = new Response();
                     response.setIs(is);
                     response.setStatusCode(httpUrlConnection.getResponseCode());
-                    response.setContentType(httpUrlConnection.getHeaderField("Content-Type"));
+                    response.setContentType(httpUrlConnection.getContentType());
 
                     return response;
                 }
