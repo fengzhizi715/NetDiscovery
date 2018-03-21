@@ -1,5 +1,9 @@
 package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
+import com.cv4j.netdiscovery.core.config.Constant;
+import com.cv4j.netdiscovery.core.cookies.Cookie;
+import com.cv4j.netdiscovery.core.cookies.CookieGroup;
+import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -19,7 +23,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by tony on 2018/3/2.
@@ -29,8 +35,10 @@ public class UrlConnectionDownloader implements Downloader {
 
     private URL url = null;
     private HttpURLConnection httpUrlConnection = null;
+    private Set<Cookie> cookieSet;
 
     public UrlConnectionDownloader() {
+        this.cookieSet = new LinkedHashSet<>();
     }
 
     @Override
@@ -100,6 +108,53 @@ public class UrlConnectionDownloader implements Downloader {
                     response.setContent(IOUtils.readInputStream(inputStream));
                     response.setStatusCode(httpUrlConnection.getResponseCode());
                     response.setContentType(httpUrlConnection.getContentType());
+
+                    // save cookies
+                    if (Preconditions.isNotBlank(httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER))) {
+
+                        CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+
+                        if (cookieGroup==null) {
+
+                            cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+
+                            String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
+
+                            String[] segs = cookieStr.split(";");
+                            if (Preconditions.isNotBlank(segs)) {
+
+                                for (String seg:segs) {
+
+                                    String[] pairs = seg.trim().split("\\=");
+                                    if (pairs.length==2) {
+
+                                        cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                    }
+                                }
+                            }
+
+                            cookieGroup.putAllCookies(cookieSet);
+
+                            CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                        } else {
+
+                            String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
+                            String[] segs = cookieStr.split(";");
+                            if (Preconditions.isNotBlank(segs)) {
+
+                                for (String seg:segs) {
+
+                                    String[] pairs = seg.trim().split("\\=");
+                                    if (pairs.length==2) {
+
+                                        cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                    }
+                                }
+                            }
+
+                            cookieGroup.putAllCookies(cookieSet);
+                        }
+                    }
 
                     return response;
                 }
