@@ -26,7 +26,6 @@ public class SpiderVerticle extends AbstractVerticle {
     public final static String API_SPIDER_BY_NAME = "/spider";
     public final static String API_SPIDER_STATUS = "/spiderstatus";
 
-    private MongoDao mongoDao = MongoDao.getInstance();
     private Router router;
     private static WebClient webClient = WebClient.create(LaunchAdmin.vertx);
 
@@ -44,7 +43,6 @@ public class SpiderVerticle extends AbstractVerticle {
         router.get(API_SPIDER_BY_NAME).handler(this::getSpider);
         // 设置某个爬虫的状态
         router.post(API_SPIDER_STATUS).handler(this::setSpiderStatus);
-
     }
 
 
@@ -53,8 +51,7 @@ public class SpiderVerticle extends AbstractVerticle {
      * @param routingContext
      */
     private void getSpiders(RoutingContext routingContext) {
-//        MultiMap paramMap = routingContext.queryParams();
-//        String engineUri = paramMap.get("uri");
+
         String engineUri = CommonUtil.ENGINE_URI;
         HttpGetHandler httpGetHandler = new HttpGetHandler(routingContext);
         webClient.getAbs(engineUri + Constant.API_GET_SPIDERS).send(httpGetHandler);
@@ -66,7 +63,6 @@ public class SpiderVerticle extends AbstractVerticle {
      */
     private void getSpider(RoutingContext routingContext) {
         MultiMap paramMap = routingContext.queryParams();
-//        String engineUri = paramMap.get("uri");
         String engineUri = CommonUtil.ENGINE_URI;
         String spiderName = paramMap.get("spidername");
         HttpGetHandler httpGetHandler = new HttpGetHandler(routingContext);
@@ -78,8 +74,7 @@ public class SpiderVerticle extends AbstractVerticle {
      * @param routingContext
      */
     private void setSpiderStatus(RoutingContext routingContext) {
-//        MultiMap paramMap = routingContext.queryParams();
-//        String engineUri = paramMap.get("uri");
+
         String engineUri = CommonUtil.ENGINE_URI;
 
         JsonObject postParam = routingContext.getBodyAsJson();
