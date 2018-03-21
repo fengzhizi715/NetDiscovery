@@ -252,11 +252,11 @@ public class Spider {
                         }
                     }
 
-                    if (autoProxy) {
+                    if (autoProxy && request.getProxy() == null) {
 
                         Proxy proxy = ProxyPool.getProxy();
 
-                        if (proxy!=null && request.getProxy() == null && Utils.checkProxy(proxy)) {
+                        if (proxy!=null && Utils.checkProxy(proxy)) {
                             request.proxy(proxy);
                         }
                     }
