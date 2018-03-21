@@ -39,7 +39,6 @@ public class UrlConnectionDownloader implements Downloader {
         try {
             url = new URL(request.getUrl());
 
-
             // 设置Proxy
             if (request.getProxy()!=null) {
 

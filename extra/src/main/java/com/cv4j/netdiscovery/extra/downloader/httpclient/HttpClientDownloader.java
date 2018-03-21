@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -44,7 +45,7 @@ public class HttpClientDownloader implements Downloader{
                 if (Preconditions.isNotBlank(request.getCharset())) {
                     charset = request.getCharset();
                 } else {
-                    charset = "UTF-8";
+                    charset = Constant.UTF_8;
                 }
 
                 String html = EntityUtils.toString(closeableHttpResponse.getEntity(), charset);
