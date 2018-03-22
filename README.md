@@ -19,17 +19,17 @@ Spider中内置了很多组件。例如downloader就已经支持了好几种，�
 
 queue、parser、pipeline也都类似。
 
-![](Spider.png)
+![](images/Spider.png)
 
 在调试的时候，可以使用ConsolePipe或者DebugPipeline
 
 DebugPipeline的效果如下
 
-![](DebugPipeline.jpg)
+![](images/DebugPipeline.jpg)
 
 ## 2.SpiderEngine功能
 SpiderEngine可以管理引擎中的爬虫，包括爬虫的生命周期。
-![](SpiderEngine.png)
+![](images/SpiderEngine.png)
 
 
 ### 2.1 获取某个爬虫的状态
@@ -64,14 +64,14 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 ## 3. admin模块
 admin模块可以监控线上的爬虫运行情况，并进行管理。前端部分使用vue的elementUI框架进行开发。
 
-![](NetDiscovery-admin.jpeg)
+![](images/NetDiscovery-admin.jpeg)
 
 # NetDiscovery 基本原理：
 ## 1.基本原理
-![](basic_principle.png)
+![](images/basic_principle.png)
 
 ## 2.集群原理
-![](cluster_principle.png)
+![](images/cluster_principle.png)
 
 # 案例:
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
