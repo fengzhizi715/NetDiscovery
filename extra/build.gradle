@@ -27,6 +27,8 @@ dependencies {
 
     implementation 'com.couchbase.client:java-client:2.5.5'
 
+    implementation "io.vertx:vertx-redis-client:${libs.vertx}"
+
     implementation 'com.alibaba:fastjson:1.2.46'
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
