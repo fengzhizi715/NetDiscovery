@@ -34,13 +34,13 @@ public class Request {
 
     private boolean checkDuplicate = true;
 
-    private long sleepTime = 0;// 每次请求url时先sleep一段时间
+    private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
     private Map<String,String> header = new NoEmptyHashMap<>();
 
     private Map<String, String> cookies = new NoEmptyHashMap<>();
 
-    private Map<String,Object> extras;
+    private Map<String,Object> extras; // extras 中的数据可以在pipeline中使用
 
     private HttpRequestBody httpRequestBody;
 
@@ -152,7 +152,8 @@ public class Request {
     }
 
     /**
-     * 检查url是否重复，默认情况位true表示需要检查，如果设置为false表示不需要检测url是否重复。
+     * 检查url是否重复，默认情况下为true表示需要检查。
+     * 如果设置为false表示不需要检测url是否重复，此时可以多次请求该url。
      * @param checkDuplicate
      * @return
      */
