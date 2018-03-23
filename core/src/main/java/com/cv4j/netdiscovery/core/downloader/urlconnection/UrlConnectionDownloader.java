@@ -50,10 +50,9 @@ public class UrlConnectionDownloader implements Downloader {
             // 设置Proxy
             if (request.getProxy()!=null) {
 
-                Proxy proxy = request.getProxy().toJavaNetProxy();
-                httpUrlConnection = (HttpURLConnection) url.openConnection(proxy);
-
+                httpUrlConnection = (HttpURLConnection) url.openConnection(request.getProxy().toJavaNetProxy());
             } else {
+
                 httpUrlConnection = (HttpURLConnection) url.openConnection();
             }
 
