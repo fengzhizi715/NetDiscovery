@@ -22,7 +22,7 @@ queue、parser、pipeline也都类似。
 
 ![](images/Spider.png)
 
-在调试的时候，可以使用ConsolePipe或者DebugPipeline
+在调试的时候，可以使用ConsolePipeline或者DebugPipeline
 
 DebugPipeline的效果如下
 
@@ -64,6 +64,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 ## 3. admin模块
 admin模块可以监控线上的爬虫运行情况，并进行管理。前端部分使用vue的elementUI框架进行开发。
+
+下图是使用admin模块的例子
 
 ![](images/NetDiscovery-admin.jpeg)
 
