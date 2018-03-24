@@ -38,8 +38,6 @@ public class Request {
 
     private Map<String,String> header = new NoEmptyHashMap<>();
 
-    private Map<String, String> cookies = new NoEmptyHashMap<>();
-
     private Map<String,Object> extras; // extras 中的数据可以在pipeline中使用
 
     private HttpRequestBody httpRequestBody;
@@ -187,12 +185,6 @@ public class Request {
         return this;
     }
 
-    public Request addCookie(String name, String value) {
-
-        cookies.put(name, value);
-        return this;
-    }
-
     public Request putExtra(String key,Object value) {
 
         if (extras==null) {
@@ -211,14 +203,6 @@ public class Request {
 
     public void clearHeader() {
         Iterator<Map.Entry<String, String>> it = this.header.entrySet().iterator();
-        while(it.hasNext()){
-            it.next();
-            it.remove();
-        }
-    }
-
-    public void clearCookie() {
-        Iterator<Map.Entry<String, String>> it = this.cookies.entrySet().iterator();
         while(it.hasNext()){
             it.next();
             it.remove();
