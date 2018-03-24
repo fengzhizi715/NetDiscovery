@@ -185,6 +185,12 @@ public class Request {
         return this;
     }
 
+    public Request addCookie(String cookie) {
+
+        this.header("Cookie", cookie);
+        return this;
+    }
+
     public Request putExtra(String key,Object value) {
 
         if (extras==null) {
