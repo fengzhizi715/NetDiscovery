@@ -329,7 +329,6 @@ public class Spider {
                                 public void accept(Page page) throws Exception {
 
                                     log.info(page.getUrl());
-                                    log.info(page.getHtml().toString());
 
                                     if (request.getAfterRequest()!=null) {
 
