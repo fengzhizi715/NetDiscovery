@@ -272,31 +272,24 @@ public class Spider {
                                 @Override
                                 public Page apply(Response response) throws Exception {
 
+                                    Page page = new Page();
+                                    page.setRequest(request);
+                                    page.setUrl(request.getUrl());
+                                    page.setStatusCode(response.getStatusCode());
+
                                     if (Utils.isTextType(response.getContentType())) { // text/html
 
-                                        Page page = new Page();
                                         page.setHtml(new Html(response.getContent()));
-                                        page.setRequest(request);
-                                        page.setUrl(request.getUrl());
-                                        page.setStatusCode(response.getStatusCode());
 
                                         return page;
                                     } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
 
-                                        Page page = new Page();
                                         page.putField(Constant.RESPONSE_JSON,new String(response.getContent())); // 将json字符串放入Page对象的"RESPONSE_JSON"字段
-                                        page.setRequest(request);
-                                        page.setUrl(request.getUrl());
-                                        page.setStatusCode(response.getStatusCode());
 
                                         return page;
                                     } else {
 
-                                        Page page = new Page();
                                         page.putField(Constant.RESPONSE_RAW,response.getIs()); // 保存InputStream
-                                        page.setRequest(request);
-                                        page.setUrl(request.getUrl());
-                                        page.setStatusCode(response.getStatusCode());
 
                                         return page;
                                     }
@@ -336,6 +329,7 @@ public class Spider {
                                 public void accept(Page page) throws Exception {
 
                                     log.info(page.getUrl());
+                                    log.info(page.getHtml().toString());
 
                                     if (request.getAfterRequest()!=null) {
 
