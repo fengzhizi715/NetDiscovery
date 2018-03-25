@@ -1,12 +1,17 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -92,5 +97,48 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 返回验证码的内容
+     * @param imageUrl 验证码的url
+     * @return
+     */
+    public static String getCaptcha(String imageUrl) {
+
+        try {
+            URL httpUrl = new URL("http://47.97.7.119:8018/captcha");
+            HttpURLConnection httpUrlConnection = (HttpURLConnection) httpUrl.openConnection();
+            httpUrlConnection.setDoOutput(true);
+            httpUrlConnection.setDoInput(true);
+            httpUrlConnection.setRequestMethod("POST");
+            httpUrlConnection.setUseCaches(false); // post 请求不用缓存
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("imageSource",imageUrl);
+            HttpRequestBody body = HttpRequestBody.json(jsonObject);
+
+            httpUrlConnection.setRequestProperty("Content-Type", HttpRequestBody.ContentType.JSON);
+
+            OutputStream os = httpUrlConnection.getOutputStream();
+            os.write(body.getBody());
+            os.flush();
+            os.close();
+
+            httpUrlConnection.connect();
+
+            String response = IOUtils.inputStream2String(httpUrlConnection.getInputStream());
+
+            if (Preconditions.isNotBlank(response)) {
+
+                JSONObject json = JSON.parseObject(response);
+                return (String) json.get("text");
+            }
+
+            return null;
+        } catch (IOException e) {
+        }
+
+        return null;
     }
 }

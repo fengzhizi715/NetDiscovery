@@ -45,6 +45,11 @@ public class HttpRequestBody implements Serializable{
         this.encoding = encoding;
     }
 
+    /**
+     * post body使用jsonObject时，传递一个jsonObject即可生成HttpRequestBody对象
+     * @param jsonObject
+     * @return
+     */
     public static HttpRequestBody json(JSONObject jsonObject) {
 
         return json(jsonObject.toJSONString());
