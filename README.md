@@ -80,7 +80,7 @@ admin模块可以监控线上的爬虫运行情况，并进行管理。前端部
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
 
 # TODO:
-1. 增加对登录验证码的识别
+1. 整合cv4j，支持OCR识别的功能
 2. 增加elasticsearch的支持
 
 # 联系方式:

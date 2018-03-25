@@ -63,7 +63,7 @@ public class VertxDownloader implements Downloader {
 
             if ("http".equals(request.getUrlParser().getProtocol())) {
 
-                httpRequest = webClient.post(request.getUrl());
+                httpRequest = webClient.postAbs(request.getUrl());
 
             } else if ("https".equals(request.getUrlParser().getProtocol())){
 
