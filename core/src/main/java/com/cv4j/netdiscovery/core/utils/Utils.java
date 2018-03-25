@@ -106,9 +106,30 @@ public class Utils {
      */
     public static String getCaptcha(String imageUrl) {
 
+        return getCaptcha(imageUrl,null);
+    }
+
+    /**
+     * 返回验证码的内容
+     * @param imageUrl 验证码的url
+     * @param proxy
+     * @return
+     */
+    public static String getCaptcha(String imageUrl,Proxy proxy) {
+
         try {
-            URL httpUrl = new URL("http://47.97.7.119:8018/captcha");
-            HttpURLConnection httpUrlConnection = (HttpURLConnection) httpUrl.openConnection();
+            URL url = new URL("http://47.97.7.119:8018/captcha");
+            HttpURLConnection httpUrlConnection = null;
+
+            // 设置Proxy
+            if (proxy!=null) {
+
+                httpUrlConnection = (HttpURLConnection) url.openConnection(proxy.toJavaNetProxy());
+            } else {
+
+                httpUrlConnection = (HttpURLConnection) url.openConnection();
+            }
+
             httpUrlConnection.setDoOutput(true);
             httpUrlConnection.setDoInput(true);
             httpUrlConnection.setRequestMethod("POST");
