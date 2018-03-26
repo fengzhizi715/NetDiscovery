@@ -17,5 +17,7 @@ public class Constant {
 
     public static final int OK_STATUS_CODE = 200;
 
+    public static final String CONTENT_TYPE_JSON = "application/json";
+
     public static final String SET_COOKIES_HEADER = "Set-Cookie";
 }

@@ -170,7 +170,7 @@ public class SpiderEngine {
 
                     // 所有的请求都会调用这个处理器处理
                     HttpServerResponse response = routingContext.response();
-                    response.putHeader("content-type", "application/json");
+                    response.putHeader("content-type", Constant.CONTENT_TYPE_JSON);
 
                     SpiderEntity entity = new SpiderEntity();
                     entity.setSpiderName(spider.getName());
@@ -193,7 +193,7 @@ public class SpiderEngine {
 
                     // 所有的请求都会调用这个处理器处理
                     HttpServerResponse response = routingContext.response();
-                    response.putHeader("content-type", "application/json");
+                    response.putHeader("content-type", Constant.CONTENT_TYPE_JSON);
 
                     JsonObject json = routingContext.getBodyAsJson();
 
@@ -242,7 +242,7 @@ public class SpiderEngine {
 
                 // 所有的请求都会调用这个处理器处理
                 HttpServerResponse response = routingContext.response();
-                response.putHeader("content-type", "application/json");
+                response.putHeader("content-type", Constant.CONTENT_TYPE_JSON);
 
                 List<SpiderEntity> list = new ArrayList<>();
 
