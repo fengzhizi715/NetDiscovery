@@ -108,50 +108,53 @@ public class UrlConnectionDownloader implements Downloader {
                     response.setStatusCode(httpUrlConnection.getResponseCode());
                     response.setContentType(httpUrlConnection.getContentType());
 
-                    // save cookies
-                    if (Preconditions.isNotBlank(httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER))) {
+                    if (request.isSaveCookie()) {
 
-                        CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+                        // save cookies
+                        if (Preconditions.isNotBlank(httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER))) {
 
-                        if (cookieGroup==null) {
+                            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
 
-                            cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+                            if (cookieGroup==null) {
 
-                            String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
+                                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
 
-                            String[] segs = cookieStr.split(";");
-                            if (Preconditions.isNotBlank(segs)) {
+                                String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
 
-                                for (String seg:segs) {
+                                String[] segs = cookieStr.split(";");
+                                if (Preconditions.isNotBlank(segs)) {
 
-                                    String[] pairs = seg.trim().split("\\=");
-                                    if (pairs.length==2) {
+                                    for (String seg:segs) {
 
-                                        cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                        String[] pairs = seg.trim().split("\\=");
+                                        if (pairs.length==2) {
+
+                                            cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                        }
                                     }
                                 }
-                            }
 
-                            cookieGroup.putAllCookies(cookieSet);
+                                cookieGroup.putAllCookies(cookieSet);
 
-                            CookieManager.getInsatance().addCookieGroup(cookieGroup);
-                        } else {
+                                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                            } else {
 
-                            String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
-                            String[] segs = cookieStr.split(";");
-                            if (Preconditions.isNotBlank(segs)) {
+                                String cookieStr = httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER);
+                                String[] segs = cookieStr.split(";");
+                                if (Preconditions.isNotBlank(segs)) {
 
-                                for (String seg:segs) {
+                                    for (String seg:segs) {
 
-                                    String[] pairs = seg.trim().split("\\=");
-                                    if (pairs.length==2) {
+                                        String[] pairs = seg.trim().split("\\=");
+                                        if (pairs.length==2) {
 
-                                        cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                            cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                        }
                                     }
                                 }
-                            }
 
-                            cookieGroup.putAllCookies(cookieSet);
+                                cookieGroup.putAllCookies(cookieSet);
+                            }
                         }
                     }
 

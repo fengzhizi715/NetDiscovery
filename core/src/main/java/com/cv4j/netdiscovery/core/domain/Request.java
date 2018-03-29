@@ -34,6 +34,8 @@ public class Request {
 
     private boolean checkDuplicate = true;
 
+    private boolean saveCookie = false;
+
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
     private Map<String,String> header = new NoEmptyHashMap<>();
@@ -158,6 +160,18 @@ public class Request {
     public Request checkDuplicate(boolean checkDuplicate) {
 
         this.checkDuplicate = checkDuplicate;
+        return this;
+    }
+
+    /**
+     * 是否保存cookie，默认情况下为false表示不保存cookie
+     * 
+     * @param saveCookie
+     * @return
+     */
+    public Request saveCookie(boolean saveCookie) {
+
+        this.saveCookie = saveCookie;
         return this;
     }
 

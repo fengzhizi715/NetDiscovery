@@ -126,56 +126,59 @@ public class VertxDownloader implements Downloader {
                         response.setStatusCode(stringHttpResponse.statusCode());
                         response.setContentType(stringHttpResponse.getHeader("Content-Type"));
 
-                        // save cookies
-                        if (Preconditions.isNotBlank(stringHttpResponse.cookies())) {
+                        if (request.isSaveCookie()) {
 
-                            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+                            // save cookies
+                            if (Preconditions.isNotBlank(stringHttpResponse.cookies())) {
 
-                            if (cookieGroup==null) {
+                                CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
 
-                                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+                                if (cookieGroup==null) {
 
-                                for (String cookieStr:stringHttpResponse.cookies()) {
+                                    cookieGroup = new CookieGroup(request.getUrlParser().getHost());
 
-                                    String[] segs = cookieStr.split(";");
-                                    if (Preconditions.isNotBlank(segs)) {
+                                    for (String cookieStr:stringHttpResponse.cookies()) {
 
-                                        for (String seg:segs) {
+                                        String[] segs = cookieStr.split(";");
+                                        if (Preconditions.isNotBlank(segs)) {
 
-                                            String[] pairs = seg.trim().split("\\=");
-                                            if (pairs.length==2) {
+                                            for (String seg:segs) {
 
-                                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                                String[] pairs = seg.trim().split("\\=");
+                                                if (pairs.length==2) {
+
+                                                    cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                                }
                                             }
                                         }
                                     }
-                                }
 
-                                cookieGroup.putAllCookies(cookieSet);
+                                    cookieGroup.putAllCookies(cookieSet);
 
-                                CookieManager.getInsatance().addCookieGroup(cookieGroup);
-                            } else {
+                                    CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                                } else {
 
-                                for (String cookieStr:stringHttpResponse.cookies()) {
+                                    for (String cookieStr:stringHttpResponse.cookies()) {
 
-                                    String[] segs = cookieStr.split(";");
-                                    if (Preconditions.isNotBlank(segs)) {
+                                        String[] segs = cookieStr.split(";");
+                                        if (Preconditions.isNotBlank(segs)) {
 
-                                        for (String seg:segs) {
+                                            for (String seg:segs) {
 
-                                            String[] pairs = seg.trim().split("\\=");
-                                            if (pairs.length==2) {
+                                                String[] pairs = seg.trim().split("\\=");
+                                                if (pairs.length==2) {
 
-                                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                                    cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                                }
                                             }
                                         }
                                     }
-                                }
 
-                                cookieGroup.putAllCookies(cookieSet);
+                                    cookieGroup.putAllCookies(cookieSet);
+                                }
                             }
                         }
-
+                        
                         return response;
                     }
                 });
