@@ -8,6 +8,7 @@ import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
+import com.cv4j.netdiscovery.core.parser.selector.Json;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
@@ -284,7 +285,8 @@ public class Spider {
                                         return page;
                                     } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
 
-                                        page.putField(Constant.RESPONSE_JSON,new String(response.getContent())); // 将json字符串放入Page对象的"RESPONSE_JSON"字段
+                                        // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
+                                        page.putField(Constant.RESPONSE_JSON,new Json(new String(response.getContent())));
 
                                         return page;
                                     } else {
