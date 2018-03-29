@@ -38,10 +38,10 @@ public class AnnotationParser implements Parser {
                         if (field.getAnnotation(ExtractBy.XPath.class) != null) {
 
                             ExtractBy.XPath xpath = field.getAnnotation(ExtractBy.XPath.class);
-                            if (field.getType().isAssignableFrom(Collection.class)) {
-                                resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).get());
-                            } else {
+                            if (Collection.class.isAssignableFrom(field.getType())) {  // Collection是否为filed的父类
                                 resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).all());
+                            } else {
+                                resultItems.put(field.getName(), page.getHtml().xpath(xpath.value()).get());
                             }
                         } else if (field.getAnnotation(ExtractBy.Regex.class)!=null) {
 
