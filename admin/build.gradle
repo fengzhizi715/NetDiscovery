@@ -1,55 +1,52 @@
-group 'com.cv4j.netdiscovery'
-version '1.0-SNAPSHOT'
-
 buildscript {
+    ext {
+        springBootVersion = '2.0.0.RELEASE'
+    }
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.0'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-def libs = rootProject.ext.libraries // 库
-
+group 'com.cv4j.netdiscovery.admin'
+version = '1.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+bootJar {
+    baseName = 'admin'
+    version =  '1.0'
+}
+
 tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+    options.encoding = 'UTF-8'
 }
 
 repositories {
-    jcenter()
+    maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile "io.vertx:vertx-unit:3.5.0"
+    implementation project(":core")
 
-    implementation "io.vertx:vertx-core:${libs.vertx}"
-    implementation "io.vertx:vertx-web:${libs.vertx}"
-    implementation "io.vertx:vertx-web-client:${libs.vertx}"
-    implementation "io.vertx:vertx-mongo-client:${libs.vertx}"
-    implementation 'org.slf4j:slf4j-api:1.7.20'
-    implementation 'ch.qos.logback:logback-classic:1.1.7'
-    implementation 'ch.qos.logback:logback-core:1.1.7'
-    implementation 'ch.qos.logback:logback-access:1.1.7'
-    implementation 'org.projectlombok:lombok:1.16.18'
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-aop'
+    compile 'org.springframework.boot:spring-boot-configuration-processor'
 
-    implementation 'com.cv4j.vertxs:vertxs:0.1.0'
-    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
-    implementation 'com.cv4j.proxy:proxypool:1.1.7'
-}
+    compile 'mysql:mysql-connector-java:5.1.44'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.3'
+    compile 'org.projectlombok:lombok'
+    compile 'com.google.code.gson:gson:2.8.0'
 
-shadowJar {
-    baseName = 'admin'
-    manifest {
-        attributes 'Main-Class': 'com.cv4j.netdiscovery.admin.LaunchAdmin'
-    }
 }

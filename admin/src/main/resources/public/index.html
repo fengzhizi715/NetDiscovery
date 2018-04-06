@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<title>Admin For NetDiscovery</title>
+		<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+		<link rel="stylesheet" href="/libs/layui/css/layui.css" />
+		<link rel="stylesheet" href="/css/comment.css" />
+	</head>
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<!-- 头部 -->
+			<div class="layui-header">
+				<div class="layui-logo"><a  href="#!home"><img src="/images/logo.png"/>Admin</a></div>
+				<ul class="layui-nav layui-layout-left">
+					<li class="layui-nav-item"><a href="javascript:;" id="switchNav"><i class="layui-icon">&#xe668;</i></a></li>
+					<li class="layui-nav-item"><a target="_blank" href="https://github.com/fengzhizi715/NetDiscovery">Admin For NetDiscovery</a></li>
+				</ul>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<img id="userHead" src="/images/head.jpg" class="layui-nav-img"><span id="userNickName">Admin</span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:systemSet();"><i class="layui-icon">&#xe631;</i>&emsp;系统设置</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+			<!-- 左侧栏 -->
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<ul class="layui-nav layui-nav-tree" id="index-nav" lay-filter="index-nav" style="margin-top: 25px;">
+					</ul>
+				</div>
+			</div>
+			<!-- 主体部分 -->
+			<div class="layui-body" id="main-content" style="padding: 15px;"></div>
+		</div>
+		<!-- 左侧导航渲染模板 -->
+		<script type="text/html" id="sideNavTpl">
+			{{#  layui.each(d, function(index, item){ }}
+			<li class="layui-nav-item">
+				<a class="" href="javascript:openNavItem();"><i class="layui-icon">{{ item.permissionIcon }}</i>&emsp;<span>{{ item.permissionName }}</span></a>
+				<dl class="layui-nav-child">
+					{{#  layui.each(item.subMenus, function(index, subItem){ }}
+					<dd>
+						<a href="#!{{ subItem.permissionValue }}">{{ subItem.permissionName }}</a>
+					</dd>
+					{{#  }); }}
+				</dl>
+			</li>
+			{{#  }); }}
+		</script>
+		<!-- 系统设置弹窗 -->
+		<script type="text/html" id="systemModel">
+			<div id="systemForm" method="post" class="layui-form model-form">
+				<div class="layui-form-item">
+					<label for="engineUrl" class="layui-form-label">引擎地址</label>
+					<div class="layui-input-block">
+						<input type="text" class="layui-input" id="engineUrl" name="engineUrl" placeholder="http://127.0.0.1:8016" lay-verify="required"/>
+					</div>
+				</div>
+				<div class="layui-form-item model-form-footer">
+					<button class="layui-btn" lay-filter="saveBtn" lay-submit>本地保存</button>
+					<button class="layui-btn layui-btn-primary" type="button" id="closeBtn">关闭</button>
+				</div>
+			</div>
+		</script>
+		<script type="text/javascript" src="/libs/jquery/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/libs/layui/layui.all.js"></script>
+		<script type="text/javascript" src="/libs/q.js"></script>
+		<script type="text/javascript" src="/libs/axios.min.js"></script>
+		<script type="text/javascript" src="/js/comment.js"></script>
+		<script type="text/javascript" src="/js/common.js"></script>
+		<script type="text/javascript" src="/js/page/index.js"></script>
+	</body>
+</html>
