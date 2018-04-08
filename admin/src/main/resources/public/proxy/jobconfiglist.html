@@ -1,0 +1,81 @@
+<div class="content-header">
+	<h2 class="content-title">【管理Job资源】</h2>
+	<span class="layui-breadcrumb">
+		  <a href="#!home">首页</a>
+		  <a><cite>代理管理</cite></a>
+		</span>
+</div>
+<div>
+	<div class="layui-row">
+		<div class="layui-form toolbar">
+			<button class="layui-btn search-btn" id="queryBtn" lay-filter="queryBtn"><i class="layui-icon">&#xe615;</i>查询</button>
+			<button class="layui-btn search-btn" id="addBtn" lay-filter="addBtn"><i class="layui-icon">&#xe654;</i>增加</button>
+		</div>
+	</div>
+	<div class="layui-row">
+		<table class="layui-table" id="resultTable" lay-filter="resultTable"></table>
+	</div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+	<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="updateEvent">更新</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="deleteEvent">删除</a>
+</script>
+<script type="text/html" id="editModel">
+	<div id="editForm" class="layui-form layui-form-pane" method="POST">
+		<input type="hidden" id="primaryId" name="primaryId" />
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="resourceName" class="layui-form-label"><span class="we-red">*</span>资源名称</label>
+				<div class="layui-input-inline">
+					<input type="text" id="resourceName" name="resourceName" lay-verify="required" class="layui-input"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="urlPrefix" class="layui-form-label"><span class="we-red">*</span>地址前缀</label>
+				<div class="layui-input-inline">
+					<input type="text" id="urlPrefix" name="urlPrefix" lay-verify="required" class="layui-input" style="width:200%"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="startPage" class="layui-form-label"><span class="we-red">*</span>开始页码</label>
+				<div class="layui-input-inline">
+					<input type="text" id="startPage" name="startPage" lay-verify="required" class="layui-input"/>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label for="endPage" class="layui-form-label"><span class="we-red">*</span>结束页码</label>
+				<div class="layui-input-inline">
+					<input type="text" id="endPage" name="endPage" lay-verify="required" class="layui-input"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="urlSuffix" class="layui-form-label">地址后缀</label>
+				<div class="layui-input-inline">
+					<input type="text" id="urlSuffix" name="urlSuffix" class="layui-input"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="parserClass" class="layui-form-label"><span class="we-red">*</span>解析类</label>
+				<div class="layui-input-inline">
+					<input type="text" id="parserClass" name="parserClass" lay-verify="required" class="layui-input" style = "width:200%;"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-filter="saveBtn" lay-submit>保存</button>
+				<button class="layui-btn layui-btn-primary" type="button" id="closeBtn">关闭</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/javascript" src="/js/page/proxy/jobconfiglist.js"></script>

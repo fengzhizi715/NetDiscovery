@@ -16,7 +16,7 @@ public class PageResult<T> {
 	
 	private String msg = "";  //提示信息
 
-	private int count; // 总数量,
+	private long count; // 总数量,
 
 	private List<T> data; // 当前页数据
 
@@ -24,7 +24,7 @@ public class PageResult<T> {
 		this.code = code;
 	}
 
-	public PageResult(List<T> data, int count) {
+	public PageResult(List<T> data, long count) {
 		this.data = data;
 		this.count = count;
 	}

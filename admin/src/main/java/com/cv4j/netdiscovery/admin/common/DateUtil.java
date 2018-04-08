@@ -10,7 +10,7 @@ import java.util.Date;
 public class DateUtil {
 
 	public static String getCurrentDateForTag(){
-		return getCurrentDate("yyyyMMddHHmmss");
+		return getCurrentDate("yyyy-MM-dd HH:mm:ss");
 	}
 
 	/**

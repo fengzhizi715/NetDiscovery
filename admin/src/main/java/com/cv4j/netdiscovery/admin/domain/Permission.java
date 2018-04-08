@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.admin.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class Permission {
 
     private Integer isDelete;
 
-    private Date createTime;
+    private Timestamp createTime;
 
-    private Date updateTime;
+    private Timestamp updateTime;
 
     private List<Permission> subMenus;  //子菜单
 
