@@ -289,6 +289,13 @@ public class Spider {
                                         page.putField(Constant.RESPONSE_JSON,new Json(new String(response.getContent())));
 
                                         return page;
+                                    } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
+
+                                        // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
+                                        // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
+                                        page.putField(Constant.RESPONSE_JSONP,new String(response.getContent()));
+
+                                        return page;
                                     } else {
 
                                         page.putField(Constant.RESPONSE_RAW,response.getIs()); // 保存InputStream
