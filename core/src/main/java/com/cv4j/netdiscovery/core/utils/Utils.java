@@ -48,6 +48,11 @@ public class Utils {
         return contentType!=null?contentType.startsWith("application/json"):false;
     }
 
+    public static boolean isApplicationJSONPType(String contentType) {
+
+        return contentType!=null?contentType.startsWith("application/javascript"):false;
+    }
+
     /**
      * 导出csv
      * @param file
