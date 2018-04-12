@@ -286,3 +286,7 @@
 	overflow: visible;
 	list-style-type: disc;
 }
+
+.we-red {
+  color: red;
+}
