@@ -50,7 +50,7 @@ public class Utils {
 
     public static boolean isApplicationJSONPType(String contentType) {
 
-        return contentType!=null?contentType.startsWith("application/javascript"):false;
+        return contentType != null ? contentType.startsWith("application/javascript") || contentType.startsWith("application/x-javascript") : false;
     }
 
     /**
