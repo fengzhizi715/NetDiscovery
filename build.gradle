@@ -39,5 +39,5 @@ buildscript {
 }
 
 tasks.getByPath(":core:bintrayUpload").enabled = true
-tasks.getByPath(":extra:bintrayUpload").enabled = true
-tasks.getByPath(":selenium:bintrayUpload").enabled = true
+tasks.getByPath(":extra:bintrayUpload").enabled = false
+tasks.getByPath(":selenium:bintrayUpload").enabled = false
