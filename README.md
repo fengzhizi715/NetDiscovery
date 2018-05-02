@@ -63,11 +63,23 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |4|让爬虫停止|
 
 ## 3. admin模块
-admin模块可以监控线上的爬虫运行情况，并进行管理。前端部分使用vue的elementUI框架进行开发。
+1. admin模块可以监控线上的爬虫运行情况，并进行管理。
+2. admin通过定时Job的工作，实现从代理网页抓取代理IP数据。
+3. 前端部分使用layUI框架进行开发。
 
 下图是使用admin模块的例子
 
-![](images/NetDiscovery-admin.jpeg)
+监控爬虫引擎
+![](images/admin1.png)
+
+Job依赖的资源
+![](images/admin2.png)
+
+Job运行参数
+![](images/admin3.png)
+
+监控调度器里的Job
+![](images/admin4.png)
 
 # NetDiscovery 基本原理：
 ## 1.基本原理
