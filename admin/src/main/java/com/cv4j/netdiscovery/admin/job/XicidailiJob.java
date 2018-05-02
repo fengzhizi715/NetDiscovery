@@ -1,20 +1,41 @@
 package com.cv4j.netdiscovery.admin.job;
 
-import com.cv4j.netdiscovery.admin.common.DateUtil;
-import com.cv4j.netdiscovery.admin.domain.JobConfigModel;
-import com.google.gson.Gson;
+import com.cv4j.netdiscovery.admin.common.CommonUtil;
+import com.cv4j.netdiscovery.admin.domain.JobResource;
+import com.cv4j.netdiscovery.admin.service.ResourceService;
+import com.cv4j.proxy.ProxyManager;
+import com.cv4j.proxy.ProxyPool;
+import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@DisallowConcurrentExecution
 @Slf4j
 public class XicidailiJob implements Job {
 
+    @Autowired
+    ResourceService resourceService;
+
+    ProxyManager proxyManager = ProxyManager.get();
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JobKey jobKey = context.getJobDetail().getKey();
+        log.info("XicidailiJob start");
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-        JobConfigModel jobConfigModel = new Gson().fromJson(jobDataMap.getString("jobConfig"), JobConfigModel.class);
-        log.info("1 XicidailiJob run at " + DateUtil.getCurrentDateForTag() +", jobKey="+jobKey+", parserClass="+jobConfigModel.getParserClass());
-        log.info("XicidailiJob startPage, endPage = "+jobConfigModel.getStartPage()+", "+jobConfigModel.getEndPage());
+        JobResource jobResource = resourceService.getResourceByName(jobDataMap.getString("resourceName"));
+
+        ProxyPool.proxyMap = CommonUtil.getProxyPageMap(jobResource);
+        if(Preconditions.isBlank(ProxyPool.proxyMap)) {
+            log.info("ProxyPool.proxyMap is empty");
+            return;
+        } else {
+            log.info("before proxyManager.start() size="+ProxyPool.proxyList.size());
+            proxyManager.start();
+            log.info("after proxyManager.start() size="+ProxyPool.proxyList.size());
+        }
     }
 }

@@ -11,11 +11,10 @@ import java.util.List;
 @Mapper
 public interface PermissionMapper {
 
-    @Select("SELECT * FROM sys_permission WHERE is_delete = 0 ORDER BY order_number")
+    @Select("SELECT * FROM sys_permission WHERE is_delete = 0")
     @Results(id="permissionMap", value={
             @Result(property = "permissionId", column = "permission_id")
             ,@Result(property = "parentId", column = "parent_id")
-            ,@Result(property = "permissionType", column = "permission_type")
             ,@Result(property = "permissionName", column = "permission_name")
             ,@Result(property = "permissionValue", column = "permission_value")
             ,@Result(property = "permissionIcon", column = "permission_icon")

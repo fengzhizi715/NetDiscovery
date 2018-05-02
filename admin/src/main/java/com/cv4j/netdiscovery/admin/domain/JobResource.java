@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.admin.domain;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,15 +7,16 @@ import java.sql.Timestamp;
 
 @Setter
 @Getter
-public class JobModel {
+public class JobResource {
+
     private Integer primaryId;
-    private Integer jobConfigId;
-    private String name;
-    private String group;
-    private String cron;
-    private String remark;
-    private String status;
+    private String resourceName;
+    private String parserClassPath;
+    private String urlPrefix;
+    private String urlSuffix;
+    private int startPage;
+    private int endPage;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private JobConfigModel jobConfigModel;
+
 }

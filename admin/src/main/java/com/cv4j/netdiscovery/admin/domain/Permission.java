@@ -15,8 +15,6 @@ public class Permission {
 
     private String parentId;
 
-    private Integer permissionType;
-
     private String permissionName;
 
     private String permissionValue;

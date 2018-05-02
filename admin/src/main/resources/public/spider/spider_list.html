@@ -18,9 +18,14 @@
 </div>
 <!-- 表格操作列 -->
 <script type="text/html" id="barTpl">
-	<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="pauseEvent">暂停</a>
-	<a class="layui-btn layui-btn-xs" lay-event="resumeEvent">继续</a>
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="stopEvent">停止</a>
+</script>
+<script type="text/html" id="changeStatusTpl">
+	{{#  if(d.spiderStatus === 2){ }}
+	<input type="checkbox" name="spiderStatus" value="{{d.spiderName}}" lay-skin="switch" lay-text="运行|暂停" lay-filter="spiderStatus" />
+	{{#  } else { }}
+	<input type="checkbox" name="spiderStatus" value="{{d.spiderName}}" lay-skin="switch" lay-text="运行|暂停" lay-filter="spiderStatus" checked />
+	{{#  } }}
 </script>
 <!-- 表格状态列 -->
 <script type="text/html" id="statusTpl">
@@ -32,4 +37,4 @@
 	<span style="color: #FFF; background-color: #009688;">运行</span>
 	{{#  } }}
 </script>
-<script type="text/javascript" src="/js/page/spider/spiderlist.js"></script>
+<script type="text/javascript" src="/js/page/spider/spider_list.js"></script>

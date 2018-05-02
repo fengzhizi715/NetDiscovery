@@ -182,35 +182,35 @@
 		width: 220px;
 		left: 0;
 	}
-	
+
 	.nav-mini .layui-side .layui-nav {
 		width: 220px;
 	}
-	
+
 	.nav-mini .layui-side-scroll {
 		width: 240px;
 	}
-	
+
 	.nav-mini .layui-logo {
 		width: 220px;
 	}
-	
+
 	.nav-mini .layui-side .layui-nav .layui-nav-item>a span {
 		display: inline-block;
 	}
-	
+
 	.nav-mini .layui-body {
 		left: 0;
 	}
-	
+
 	.nav-mini .layui-footer {
 		left: 0;
 	}
-	
+
 	.nav-mini .layui-layout-left {
 		left: 0;
 	}
-	
+
 	.nav-mini .site-mobile-shade {
 	    content: '';
 	    position: fixed;

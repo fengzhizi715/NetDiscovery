@@ -39,20 +39,21 @@ repositories {
 
 dependencies {
     implementation project(":core")
-    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+
+    compile "tony-common:tony-common-utils:${libs.tony_common_utils}"
+    compile 'com.cv4j.proxy:proxypool:1.1.7'
 
     compile 'org.springframework.boot:spring-boot-starter'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-aop'
     compile 'org.springframework.boot:spring-boot-configuration-processor'
-
     compile 'org.springframework:spring-context-support:4.3.12.RELEASE'
     compile 'org.springframework:spring-tx:4.3.12.RELEASE'
 
     compile 'mysql:mysql-connector-java:5.1.44'
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2'
     compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.3'
-    compile 'org.projectlombok:lombok'
+    compile 'org.projectlombok:lombok:1.16.20'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.quartz-scheduler:quartz:2.3.0'
     compile 'org.quartz-scheduler:quartz-jobs:2.3.0'

@@ -1,0 +1,109 @@
+<div class="content-header">
+	<h2 class="content-title">【Job配置】</h2>
+	<span class="layui-breadcrumb">
+		<a href="#!home">首页</a>
+		<a><cite>代理管理</cite></a>
+	</span>
+</div>
+<div>
+	<div class="layui-row">
+		<div class="layui-form toolbar">
+			<button class="layui-btn search-btn" id="addBtn" lay-filter="addBtn"><i class="layui-icon">&#xe654;</i>增加</button>
+		</div>
+	</div>
+	<div class="layui-row">
+		<table class="layui-table" id="resultTable" lay-filter="resultTable"></table>
+	</div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+	<a class="layui-btn layui-btn-xs" lay-event="addJobEvent">AddToScheduler</a>
+	<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="updateEvent">Edit</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="deleteEvent">Delete</a>
+</script>
+<!-- Job类select模板 -->
+<script id="jobSelect" type="text/html">
+	<option value="">--请选择Job类--</option>
+	{{#  layui.each(d, function(index, item){ }}
+	<option value="{{ item.optValue }}">{{ item.optText }}</option>
+	{{#  }); }}
+</script>
+<!-- Job资源select模板 -->
+<script id="resourceSelect" type="text/html">
+	<option value="">--Job依赖的资源--</option>
+	{{#  layui.each(d, function(index, item){ }}
+	<option value="{{ item.resourceName }}">{{ item.resourceName }}</option>
+	{{#  }); }}
+</script>
+<script type="text/html" id="editModel">
+	<div id="editForm" class="layui-form layui-form-pane" method="POST">
+		<input type="hidden" id="primaryId" name="primaryId" />
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="jobClassPath" class="layui-form-label"><span class="we-red">*</span>Job类</label>
+				<div class="layui-input-inline">
+					<select id="jobClassPath" name="jobClassPath" lay-filter="jobClassPath" lay-verify="required" lay-search></select>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="cronExpression" class="layui-form-label"><span class="we-red">*</span>Cron表达式</label>
+				<div class="layui-input-inline">
+					<input type="text" id="cronExpression" name="cronExpression" lay-verify="required" class="layui-input"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="resourceName" class="layui-form-label">Job资源</label>
+				<div class="layui-input-inline">
+					<select id="resourceName" name="resourceName"></select>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="jobName" class="layui-form-label"><span class="we-red">*</span>Job名称</label>
+				<div class="layui-input-inline">
+					<input type="text" id="jobName" name="jobName" lay-verify="required" placeholder="唯一" class="layui-input"/>
+				</div>
+			</div>
+			<!--<div class="layui-inline">-->
+				<!--<label for="jobGroupName" class="layui-form-label"><span class="we-red">*</span>Job组名称</label>-->
+				<!--<div class="layui-input-inline">-->
+					<!--<input type="text" id="jobGroupName" name="jobGroupName" value="group1" lay-verify="required" class="layui-input"/>-->
+				<!--</div>-->
+			<!--</div>-->
+		</div>
+		<!--<div class="layui-form-item">-->
+			<!--<div class="layui-inline">-->
+				<!--<label for="triggerName" class="layui-form-label">Trigger名称</label>-->
+				<!--<div class="layui-input-inline">-->
+					<!--<input type="text" id="triggerName" name="triggerName" class="layui-input"/>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="layui-inline">-->
+				<!--<label for="triggerGroupName" class="layui-form-label">Trigger组名称</label>-->
+				<!--<div class="layui-input-inline">-->
+					<!--<input type="text" id="triggerGroupName" name="triggerGroupName" value="group1" class="layui-input"/>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label for="remark" class="layui-form-label">备注</label>
+				<div class="layui-input-inline">
+					<input type="text" id="remark" name="remark" class="layui-input"/>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-filter="saveBtn" lay-submit>保存</button>
+				<button class="layui-btn layui-btn-primary" type="button" id="closeBtn">关闭</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/javascript" src="/js/page/proxy/job_config_list.js"></script>

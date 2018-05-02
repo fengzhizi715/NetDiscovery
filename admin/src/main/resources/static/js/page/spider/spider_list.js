@@ -7,6 +7,15 @@ $(function() {
 });
 
 function bindClickEvent() {
+      layui.form.on('switch(spiderStatus)', function(obj){
+          var spiderName = this.value;
+          if(obj.elem.checked) {
+            changeSpiderStatus('继续', spiderName, 3);
+          } else {
+            changeSpiderStatus('暂停', spiderName, 2);
+          }
+      });
+
     $("#queryBtn").click(function() {
         if(!checkEngineUrl()) return;
 
@@ -24,12 +33,8 @@ function bindClickEvent() {
         var rowData = rowObj.data;
         var layEvent = rowObj.event;
 
-        if(layEvent === 'pauseEvent') {
-            changeSpiderStatus('暂停', rowData, 2);
-        }else if(layEvent === 'resumeEvent'){
-            changeSpiderStatus('继续', rowData, 3);
-        }else if(layEvent === 'stopEvent') {
-            changeSpiderStatus('停止', rowData, 4);
+        if(layEvent === 'stopEvent') {
+            changeSpiderStatus('停止', rowData.spiderName, 4);
         }
     });
 }
@@ -54,13 +59,14 @@ function initLoadData() {
             {field:'spiderStatus', title: '爬虫状态', templet: '#statusTpl', sort: true, align:'center', width:160},
             {field:'remainCount', title: '队列中剩余任务', sort: true, align:'center', width:160},
             {field:'finishCount', title: '已完成任务数', sort: true, align:'center', width:160},
-            {toolbar: '#barTpl', title: '操作', align:'center'}
+            {field:'spiderStatus', title: '状态控制', sort: true, align:'center', width:120, templet:'#changeStatusTpl'},
+            {toolbar: '#barTpl', title: '操作', align:'center', width:160}
         ]]
     });
 }
 
-function changeSpiderStatus(tag, rowData, toStatus) {
-    axios.post('/spider/status', {spiderName:rowData.spiderName, toStatus: toStatus, engineUrl: engineUrl})
+function changeSpiderStatus(tag, spiderName, toStatus) {
+    axios.post('/spider/status', {spiderName:spiderName, toStatus: toStatus, engineUrl: engineUrl})
             .then(function(response){
                 var result = response.data;
                 if(result.code == 200) {

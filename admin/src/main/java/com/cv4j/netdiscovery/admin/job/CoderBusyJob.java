@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @DisallowConcurrentExecution
 @Slf4j
-public class MimiipJob implements Job {
+public class CoderBusyJob implements Job {
 
     @Autowired
     ResourceService resourceService;
@@ -21,7 +21,7 @@ public class MimiipJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("MimiipJob start");
+        log.info("CoderBusyJob start");
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         JobResource jobResource = resourceService.getResourceByName(jobDataMap.getString("resourceName"));
 

@@ -40,7 +40,7 @@ public class ResultMap extends HashMap<String, Object>{
 	/**
 	 * 返回成功
 	 */
-	public static ResultMap ok(int code,String message) {
+	public static ResultMap ok(int code, String message) {
 		ResultMap resultMap = new ResultMap();
 		resultMap.put("code", code);
 		resultMap.put("msg", message);
@@ -77,7 +77,10 @@ public class ResultMap extends HashMap<String, Object>{
 	 * 返回失败
 	 */
 	public static ResultMap error(int code, String message) {
-		return ok(code, message);
+		ResultMap resultMap = new ResultMap();
+		resultMap.put("code", code);
+		resultMap.put("msg", message);
+		return resultMap;
 	}
 	
 	/**

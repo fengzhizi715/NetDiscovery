@@ -6,10 +6,11 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PostResponse {
+
     private int code;
 
-    private String data;
-
     private String message;
+
+    private String data;
 
 }
