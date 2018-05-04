@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.admin.mapper;
 
-import com.cv4j.netdiscovery.admin.common.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
