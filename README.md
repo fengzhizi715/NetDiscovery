@@ -16,7 +16,7 @@ NetDiscovery目前还是早期的版本，很多的细节需要不断地完善�
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
 
-Spider中内置了很多组件。例如downloader就已经支持了好几种，可以热插拔随时替换，或者编写自己的downloader。
+Spider中内置了很多组件。例如downloader就已经支持了好几种，支持热插拔随时替换，或者编写自己的downloader。
 
 queue、parser、pipeline也都类似。
 
@@ -63,6 +63,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |4|让爬虫停止|
 
 ## 3. admin模块功能
+
+admin是一个单独的模块
 
 1. 可以监控线上的爬虫运行情况，并进行管理。
 2. 定时Job的工作，实现从代理网页抓取代理IP数据。
