@@ -2,24 +2,18 @@ package com.cv4j.netdiscovery.admin.service.impl;
 
 import com.cv4j.netdiscovery.admin.common.CommonUtil;
 import com.cv4j.netdiscovery.admin.common.Constant;
-import com.cv4j.netdiscovery.admin.common.DateUtil;
-import com.cv4j.netdiscovery.admin.domain.JobConfig;
 import com.cv4j.netdiscovery.admin.domain.JobResource;
 import com.cv4j.netdiscovery.admin.domain.SysOption;
 import com.cv4j.netdiscovery.admin.dto.PageResult;
 import com.cv4j.netdiscovery.admin.mapper.ResourceMapper;
 import com.cv4j.netdiscovery.admin.service.ResourceService;
 import com.cv4j.proxy.ProxyListPageParser;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -29,14 +23,14 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public boolean addResource(JobResource jobResource) {
-		jobResource.setCreateTime(DateUtil.getCurrentTimestamp());
-		jobResource.setUpdateTime(DateUtil.getCurrentTimestamp());
+		jobResource.setCreateTime(new Timestamp(new Date().getTime()));
+		jobResource.setUpdateTime(new Timestamp(new Date().getTime()));
 		return resourceMapper.insertResource(jobResource)>0;
 	}
 
 	@Override
 	public boolean updateResource(JobResource jobResource) {
-		jobResource.setUpdateTime(DateUtil.getCurrentTimestamp());
+		jobResource.setUpdateTime(new Timestamp(new Date().getTime()));
 		return resourceMapper.updateResourceByPrimaryKey(jobResource)>0;
 	}
 
