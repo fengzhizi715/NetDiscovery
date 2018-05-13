@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.admin.service.impl;
 
 import com.cv4j.netdiscovery.admin.common.CommonUtil;
-import com.cv4j.netdiscovery.admin.common.Constant;
+import com.cv4j.netdiscovery.admin.config.Constant;
 import com.cv4j.netdiscovery.admin.domain.JobResource;
 import com.cv4j.netdiscovery.admin.domain.SysOption;
 import com.cv4j.netdiscovery.admin.dto.PageResult;

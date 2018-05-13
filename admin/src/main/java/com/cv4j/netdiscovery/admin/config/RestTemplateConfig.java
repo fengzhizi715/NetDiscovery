@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.admin.common;
+package com.cv4j.netdiscovery.admin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

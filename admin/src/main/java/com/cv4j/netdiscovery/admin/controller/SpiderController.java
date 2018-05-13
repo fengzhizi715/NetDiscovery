@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.admin.controller;
 
 import com.cv4j.netdiscovery.admin.common.CommonUtil;
-import com.cv4j.netdiscovery.admin.common.Constant;
+import com.cv4j.netdiscovery.admin.config.Constant;
 import com.cv4j.netdiscovery.admin.dto.*;
 import com.cv4j.netdiscovery.admin.service.SpiderService;
 import com.google.gson.JsonObject;
