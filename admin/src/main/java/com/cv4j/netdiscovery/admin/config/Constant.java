@@ -2,6 +2,10 @@ package com.cv4j.netdiscovery.admin.config;
 
 public class Constant {
 
+    // http code
+    public final static int STATUS_SUCCESS = 200;
+    public final static int STATUS_ERROR = 500;
+
     public final static String PACKAGE_JOB = "com.cv4j.netdiscovery.admin.job";
     public final static String PACKAGE_PARSER = "com.cv4j.proxy.site";
 

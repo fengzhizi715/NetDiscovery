@@ -23,16 +23,16 @@ import java.util.jar.JarFile;
 @Slf4j
 public class CommonUtil {
 
-    public static void main(String[] args) {
-        Set<Class<?>> allClasses = getClassesFromPackage("com.cv4j.proxy.site");
-        Set<Class<?>> classes = getClassesByInterface(ProxyListPageParser.class, allClasses);
-        Iterator iterator = classes.iterator();
-        while (iterator.hasNext()) {
-            Object object = iterator.next();
-            String classPath = object.toString();
-            System.out.println(classPath.substring(classPath.lastIndexOf(".")+1));
-        }
-    }
+//    public static void main(String[] args) {
+//        Set<Class<?>> allClasses = getClassesFromPackage("com.cv4j.proxy.site");
+//        Set<Class<?>> classes = getClassesByInterface(ProxyListPageParser.class, allClasses);
+//        Iterator iterator = classes.iterator();
+//        while (iterator.hasNext()) {
+//            Object object = iterator.next();
+//            String classPath = object.toString();
+//            System.out.println(classPath.substring(classPath.lastIndexOf(".")+1));
+//        }
+//    }
 
     public static Set<Class<?>> getClassesFromPackage(String pack) {
         // 第一个class类的集合

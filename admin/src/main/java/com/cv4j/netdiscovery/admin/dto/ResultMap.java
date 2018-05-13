@@ -1,12 +1,15 @@
 package com.cv4j.netdiscovery.admin.dto;
 
+import com.cv4j.netdiscovery.admin.config.Constant;
+
 import java.util.HashMap;
 
 /**
  * 返回结果对象
  */
 public class ResultMap extends HashMap<String, Object>{
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1333253070110384732L;
 	
 	private ResultMap() { }
 
@@ -34,7 +37,7 @@ public class ResultMap extends HashMap<String, Object>{
 	 * 返回成功
 	 */
 	public static ResultMap ok(String message) {
-		return ok(200, message);
+		return ok(Constant.STATUS_SUCCESS, message);
 	}
 	
 	/**
@@ -70,7 +73,7 @@ public class ResultMap extends HashMap<String, Object>{
 	 * 返回失败
 	 */
 	public static ResultMap error(String messag) {
-		return error(500, messag);
+		return error(Constant.STATUS_ERROR, messag);
 	}
 
 	/**
