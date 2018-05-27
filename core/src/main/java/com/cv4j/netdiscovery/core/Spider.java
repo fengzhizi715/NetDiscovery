@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -112,6 +113,18 @@ public class Spider {
             Arrays.asList(urls)
                     .stream()
                     .forEach(url -> queue.push(new Request(url, name)));
+        }
+
+        return this;
+    }
+
+    public Spider url(List<String> urls) {
+
+        checkIfRunning();
+
+        if (Preconditions.isNotBlank(urls)) {
+
+            urls.forEach(url -> queue.push(new Request(url, name)));
         }
 
         return this;
