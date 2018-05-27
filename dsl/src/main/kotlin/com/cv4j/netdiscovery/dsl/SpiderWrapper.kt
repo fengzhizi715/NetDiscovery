@@ -21,7 +21,7 @@ class SpiderWrapper {
 
     var pipelines:Set<Pipeline>? = null
 
-    var urls:Array<String>? = null
+    var urls:List<String>? = null
 
 }
 
@@ -34,12 +34,17 @@ fun spider(init: SpiderWrapper.() -> Unit) {
     execute(wrap)
 }
 
+fun url() {
+
+
+}
+
 private fun execute(wrap:SpiderWrapper) {
 
     val spider = Spider.create(wrap?.queue)
             .name(wrap?.name)
 
-    var urls = wrap?.urls?.toList()
+    var urls = wrap?.urls
 
     urls?.let {
 
