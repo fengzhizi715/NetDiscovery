@@ -34,11 +34,6 @@ fun spider(init: SpiderWrapper.() -> Unit) {
     execute(wrap)
 }
 
-fun url() {
-
-
-}
-
 private fun execute(wrap:SpiderWrapper) {
 
     val spider = Spider.create(wrap?.queue)
