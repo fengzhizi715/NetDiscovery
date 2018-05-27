@@ -100,7 +100,11 @@ public class Spider {
     public Spider name(String name) {
 
         checkIfRunning();
-        this.name = name;
+
+        if (Preconditions.isNotBlank(name)) {
+            this.name = name;
+        }
+
         return this;
     }
 
@@ -218,21 +222,33 @@ public class Spider {
     public Spider downloader(Downloader downloader) {
 
         checkIfRunning();
-        this.downloader = downloader;
+
+        if (downloader!=null) {
+            this.downloader = downloader;
+        }
+
         return this;
     }
 
     public Spider parser(Parser parser) {
 
         checkIfRunning();
-        this.parser = parser;
+
+        if (parser!=null) {
+            this.parser = parser;
+        }
+
         return this;
     }
 
     public Spider pipeline(Pipeline pipeline) {
 
         checkIfRunning();
-        this.pipelines.add(pipeline);
+
+        if (pipeline!=null) {
+            this.pipelines.add(pipeline);
+        }
+
         return this;
     }
 
