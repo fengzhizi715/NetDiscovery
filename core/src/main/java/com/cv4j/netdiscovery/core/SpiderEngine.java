@@ -181,7 +181,7 @@ public class SpiderEngine {
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
                     SpiderResponse spiderResponse = new SpiderResponse();
-                    spiderResponse.setCode(200);
+                    spiderResponse.setCode(Constant.OK_STATUS_CODE);
                     spiderResponse.setMessage("success");
                     spiderResponse.setData(entity);
 
@@ -230,7 +230,7 @@ public class SpiderEngine {
                         }
                     }
 
-                    spiderStatusResponse.setCode(200);
+                    spiderStatusResponse.setCode(Constant.OK_STATUS_CODE);
                     spiderStatusResponse.setMessage("success");
 
                     // 写入响应并结束处理
@@ -264,7 +264,7 @@ public class SpiderEngine {
                 }
 
                 SpidersResponse spidersResponse = new SpidersResponse();
-                spidersResponse.setCode(200);
+                spidersResponse.setCode(Constant.OK_STATUS_CODE);
                 spidersResponse.setMessage("success");
                 spidersResponse.setData(list);
 
