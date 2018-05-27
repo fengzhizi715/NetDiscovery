@@ -48,5 +48,14 @@ private fun execute(wrap:SpiderWrapper) {
 
     spider.downloader(wrap?.downloader)
             .parser(wrap?.parser)
-            .run()
+
+    wrap?.pipelines?.let {
+
+        it.forEach { // 这里的it指wrap?.pipelines
+
+            spider.pipeline(it) // 这里的it指pipelines里的各个pipeline
+        }
+    }
+
+    spider.run()
 }
