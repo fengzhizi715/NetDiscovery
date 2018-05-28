@@ -129,54 +129,7 @@ public class VertxDownloader implements Downloader {
                         if (request.isSaveCookie()) {
 
                             // save cookies
-                            if (Preconditions.isNotBlank(stringHttpResponse.cookies())) {
-
-                                CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
-
-                                if (cookieGroup==null) {
-
-                                    cookieGroup = new CookieGroup(request.getUrlParser().getHost());
-
-                                    for (String cookieStr:stringHttpResponse.cookies()) {
-
-                                        String[] segs = cookieStr.split(";");
-                                        if (Preconditions.isNotBlank(segs)) {
-
-                                            for (String seg:segs) {
-
-                                                String[] pairs = seg.trim().split("\\=");
-                                                if (pairs.length==2) {
-
-                                                    cookieSet.add(new Cookie(pairs[0],pairs[1]));
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    cookieGroup.putAllCookies(cookieSet);
-
-                                    CookieManager.getInsatance().addCookieGroup(cookieGroup);
-                                } else {
-
-                                    for (String cookieStr:stringHttpResponse.cookies()) {
-
-                                        String[] segs = cookieStr.split(";");
-                                        if (Preconditions.isNotBlank(segs)) {
-
-                                            for (String seg:segs) {
-
-                                                String[] pairs = seg.trim().split("\\=");
-                                                if (pairs.length==2) {
-
-                                                    cookieSet.add(new Cookie(pairs[0],pairs[1]));
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    cookieGroup.putAllCookies(cookieSet);
-                                }
-                            }
+                            CookieManager.getInsatance().saveCookie(request,cookieSet,stringHttpResponse.cookies());
                         }
                         
                         return response;

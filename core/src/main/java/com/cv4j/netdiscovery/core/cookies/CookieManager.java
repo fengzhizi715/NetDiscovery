@@ -1,6 +1,11 @@
 package com.cv4j.netdiscovery.core.cookies;
 
+import com.cv4j.netdiscovery.core.config.Constant;
+import com.cv4j.netdiscovery.core.domain.Request;
+import com.safframework.tony.common.utils.Preconditions;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +49,104 @@ public class CookieManager {
             Set<Cookie> cookies = group.getCookies();
             if (cookies != null) {
                 cookies.clear();
+            }
+        }
+    }
+
+    public void saveCookie(Request request,Set<Cookie> cookieSet,String cookieStr) {
+
+        if (Preconditions.isNotBlank(cookieStr)) {
+
+            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+
+            if (cookieGroup == null) {
+
+                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+
+                String[] segs = cookieStr.split(";");
+                if (Preconditions.isNotBlank(segs)) {
+
+                    for (String seg : segs) {
+
+                        String[] pairs = seg.trim().split("\\=");
+                        if (pairs.length == 2) {
+
+                            cookieSet.add(new Cookie(pairs[0], pairs[1]));
+                        }
+                    }
+                }
+
+                cookieGroup.putAllCookies(cookieSet);
+
+                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+            } else {
+
+                String[] segs = cookieStr.split(";");
+                if (Preconditions.isNotBlank(segs)) {
+
+                    for (String seg : segs) {
+
+                        String[] pairs = seg.trim().split("\\=");
+                        if (pairs.length == 2) {
+
+                            cookieSet.add(new Cookie(pairs[0], pairs[1]));
+                        }
+                    }
+                }
+
+                cookieGroup.putAllCookies(cookieSet);
+            }
+        }
+    }
+
+    public void saveCookie(Request request, Set<Cookie> cookieSet, List<String> cookies) {
+
+        if (Preconditions.isNotBlank(cookies)) {
+
+            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+
+            if (cookieGroup==null) {
+
+                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+
+                for (String cookieStr:cookies) {
+
+                    String[] segs = cookieStr.split(";");
+                    if (Preconditions.isNotBlank(segs)) {
+
+                        for (String seg:segs) {
+
+                            String[] pairs = seg.trim().split("\\=");
+                            if (pairs.length==2) {
+
+                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                            }
+                        }
+                    }
+                }
+
+                cookieGroup.putAllCookies(cookieSet);
+
+                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+            } else {
+
+                for (String cookieStr:cookies) {
+
+                    String[] segs = cookieStr.split(";");
+                    if (Preconditions.isNotBlank(segs)) {
+
+                        for (String seg:segs) {
+
+                            String[] pairs = seg.trim().split("\\=");
+                            if (pairs.length==2) {
+
+                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                            }
+                        }
+                    }
+                }
+
+                cookieGroup.putAllCookies(cookieSet);
             }
         }
     }
