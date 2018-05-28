@@ -302,6 +302,7 @@ public class Spider {
                     initialDelay();
                 }
 
+                // 从消息队列中取出request
                 final Request request = queue.poll(name);
 
                 if (request != null) {
@@ -315,6 +316,7 @@ public class Spider {
                         }
                     }
 
+                    // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
                     if (autoProxy && request.getProxy() == null) {
 
                         Proxy proxy = ProxyPool.getProxy();
@@ -324,11 +326,13 @@ public class Spider {
                         }
                     }
 
+                    // request请求之前的处理
                     if (request.getBeforeRequest()!=null) {
 
                         request.getBeforeRequest().process(request);
                     }
 
+                    // request正在处理
                     downloader.download(request)
                             .map(new Function<Response, Page>() {
 
@@ -360,7 +364,7 @@ public class Spider {
                                         return page;
                                     } else {
 
-                                        page.putField(Constant.RESPONSE_RAW,response.getIs()); // 保存InputStream
+                                        page.putField(Constant.RESPONSE_RAW,response.getIs()); // 默认情况，保存InputStream
 
                                         return page;
                                     }

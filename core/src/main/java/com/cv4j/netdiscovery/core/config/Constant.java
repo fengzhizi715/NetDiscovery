@@ -9,15 +9,20 @@ public class Constant {
             "/ua/Baiduspider.txt","/ua/Chrome.txt","/ua/Edge.txt","/ua/Firefox.txt","/ua/Googlebot.txt","/ua/Mozilla.txt","/ua/Opera.txt","/ua/Safari.txt"
     };
 
+
     public static final String RESPONSE_JSON = "RESPONSE_JSON";
 
     public static final String RESPONSE_JSONP = "RESPONSE_JSONP";
 
     public static final String RESPONSE_RAW = "RESPONSE_RAW";
 
+
+
     public static final String UTF_8 = "UTF-8";
 
     public static final int OK_STATUS_CODE = 200;
+
+
 
     public static final String CONTENT_TYPE_JSON = "application/json";
 
