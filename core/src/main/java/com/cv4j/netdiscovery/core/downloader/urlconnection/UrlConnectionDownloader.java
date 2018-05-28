@@ -66,7 +66,7 @@ public class UrlConnectionDownloader implements Downloader {
 
                 if (request.getHttpRequestBody()!=null) {
 
-                    httpUrlConnection.setRequestProperty("Content-Type", request.getHttpRequestBody().getContentType());
+                    httpUrlConnection.setRequestProperty(Constant.CONTENT_TYPE, request.getHttpRequestBody().getContentType());
 
                     OutputStream os = httpUrlConnection.getOutputStream();
                     os.write(request.getHttpRequestBody().getBody());

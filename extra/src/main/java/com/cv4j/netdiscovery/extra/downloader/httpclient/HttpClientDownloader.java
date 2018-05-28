@@ -52,8 +52,8 @@ public class HttpClientDownloader implements Downloader{
                 Response response = new Response();
                 response.setContent(html.getBytes());
                 response.setStatusCode(closeableHttpResponse.getStatusLine().getStatusCode());
-                if (closeableHttpResponse.containsHeader("Content-Type")) {
-                    response.setContentType(closeableHttpResponse.getFirstHeader("Content-Type").getValue());
+                if (closeableHttpResponse.containsHeader(Constant.CONTENT_TYPE)) {
+                    response.setContentType(closeableHttpResponse.getFirstHeader(Constant.CONTENT_TYPE).getValue());
                 }
 
                 return response;

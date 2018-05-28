@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
+import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -69,7 +70,7 @@ public class OkHttpDownloader implements Downloader{
 
             if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-                requestBuilder.addHeader("Content-type",request.getHttpRequestBody().getContentType());
+                requestBuilder.addHeader(Constant.CONTENT_TYPE,request.getHttpRequestBody().getContentType());
             }
         }
 
@@ -90,7 +91,7 @@ public class OkHttpDownloader implements Downloader{
                 Response response = new Response();
                 response.setContent(resp.body().bytes());
                 response.setStatusCode(resp.code());
-                response.setContentType(resp.header("Content-Type"));
+                response.setContentType(resp.header(Constant.CONTENT_TYPE));
                 return response;
             }
         });

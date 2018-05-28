@@ -124,7 +124,7 @@ public class VertxDownloader implements Downloader {
                         Response response = new Response();
                         response.setContent(html.getBytes());
                         response.setStatusCode(stringHttpResponse.statusCode());
-                        response.setContentType(stringHttpResponse.getHeader("Content-Type"));
+                        response.setContentType(stringHttpResponse.getHeader(Constant.CONTENT_TYPE));
 
                         if (request.isSaveCookie()) {
 
