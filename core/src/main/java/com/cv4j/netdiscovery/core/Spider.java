@@ -216,7 +216,11 @@ public class Spider {
     public Spider initialDelay(long initialDelay) {
 
         checkIfRunning();
-        this.initialDelay = initialDelay;
+
+        if (initialDelay>0) {
+            this.initialDelay = initialDelay;
+        }
+
         return this;
     }
 
@@ -266,9 +270,7 @@ public class Spider {
      */
     public Spider autoProxy() {
 
-        checkIfRunning();
-        this.autoProxy = true;
-        return this;
+        return autoProxy(true);
     }
 
     /**
