@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.core.cookies;
 
-import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 

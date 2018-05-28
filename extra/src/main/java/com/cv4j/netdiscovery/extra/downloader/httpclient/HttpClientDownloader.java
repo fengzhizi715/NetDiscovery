@@ -19,8 +19,6 @@ import org.apache.http.util.EntityUtils;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static com.cv4j.netdiscovery.core.config.Constant.SET_COOKIES_HEADER;
-
 /**
  * Created by tony on 2018/1/20.
  */
@@ -69,7 +67,6 @@ public class HttpClientDownloader implements Downloader{
                 if (request.isSaveCookie()) {
 
                     // save cookies
-
                     Header[] headers = closeableHttpResponse.getHeaders(Constant.SET_COOKIES_HEADER);
 
                     if (Preconditions.isNotBlank(headers)) {
