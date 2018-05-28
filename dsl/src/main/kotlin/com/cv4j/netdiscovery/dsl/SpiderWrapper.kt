@@ -25,16 +25,16 @@ class SpiderWrapper {
 
 }
 
-fun spider(init: SpiderWrapper.() -> Unit) {
+fun spider(init: SpiderWrapper.() -> Unit):Spider {
 
     val wrap = SpiderWrapper()
 
     wrap.init()
 
-    execute(wrap)
+    return config(wrap)
 }
 
-private fun execute(wrap:SpiderWrapper) {
+private fun config(wrap:SpiderWrapper):Spider {
 
     val spider = Spider.create(wrap?.queue)
             .name(wrap?.name)
@@ -57,5 +57,5 @@ private fun execute(wrap:SpiderWrapper) {
         }
     }
 
-    spider.run()
+    return spider
 }

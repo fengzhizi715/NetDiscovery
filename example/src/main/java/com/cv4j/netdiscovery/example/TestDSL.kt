@@ -12,7 +12,7 @@ object TestDSL {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        spider {
+        val spider = spider {
 
             name = "tony"
 
@@ -20,6 +20,8 @@ object TestDSL {
 
             pipelines = setOf(ConsolePipeline())
         }
+
+        spider.run()
     }
 
 }
