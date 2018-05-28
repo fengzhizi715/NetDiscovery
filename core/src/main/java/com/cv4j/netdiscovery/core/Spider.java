@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader;
+import com.cv4j.netdiscovery.core.exception.SpiderException;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.parser.selector.Json;
@@ -432,7 +433,7 @@ public class Spider {
     private void checkIfRunning() {
 
         if (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
-            throw new IllegalStateException(String.format("Spider %s is already running!",name));
+            throw new SpiderException(String.format("Spider %s is already running!",name));
         }
     }
 
@@ -442,7 +443,7 @@ public class Spider {
 
             int statNow = getSpiderStatus();
             if (statNow == SPIDER_STATUS_RUNNING) {
-                throw new IllegalStateException(String.format("Spider %s is already running!",name));
+                throw new SpiderException(String.format("Spider %s is already running!",name));
             }
 
             if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
