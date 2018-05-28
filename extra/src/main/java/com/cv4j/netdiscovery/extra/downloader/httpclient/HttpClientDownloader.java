@@ -1,6 +1,8 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.config.Constant;
+import com.cv4j.netdiscovery.core.cookies.Cookie;
+import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -10,8 +12,14 @@ import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static com.cv4j.netdiscovery.core.config.Constant.SET_COOKIES_HEADER;
 
 /**
  * Created by tony on 2018/1/20.
@@ -20,10 +28,12 @@ import org.apache.http.util.EntityUtils;
 public class HttpClientDownloader implements Downloader{
 
     HttpManager httpManager;
+    private Set<Cookie> cookieSet;
 
     public HttpClientDownloader() {
 
         httpManager = HttpManager.get();
+        this.cookieSet = new LinkedHashSet<>();
     }
 
     @Override
@@ -54,6 +64,21 @@ public class HttpClientDownloader implements Downloader{
                 response.setStatusCode(closeableHttpResponse.getStatusLine().getStatusCode());
                 if (closeableHttpResponse.containsHeader(Constant.CONTENT_TYPE)) {
                     response.setContentType(closeableHttpResponse.getFirstHeader(Constant.CONTENT_TYPE).getValue());
+                }
+
+                if (request.isSaveCookie()) {
+
+                    // save cookies
+
+                    Header[] headers = closeableHttpResponse.getHeaders(Constant.SET_COOKIES_HEADER);
+
+                    if (Preconditions.isNotBlank(headers)) {
+
+                        for (Header header:headers) {
+
+                            CookieManager.getInsatance().saveCookie(request,cookieSet,header.getValue());
+                        }
+                    }
                 }
 
                 return response;
