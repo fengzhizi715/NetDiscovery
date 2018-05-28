@@ -18,7 +18,7 @@ object TestDSL {
 
             urls = listOf("http://www.163.com/","https://www.baidu.com/")
 
-            pipelines = hashSetOf(ConsolePipeline())
+            pipelines = setOf(ConsolePipeline())
         }
     }
 
