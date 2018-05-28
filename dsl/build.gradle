@@ -6,6 +6,8 @@ apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     mavenCentral()
 }
@@ -15,6 +17,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation project(":core")
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 }
 
 compileKotlin {

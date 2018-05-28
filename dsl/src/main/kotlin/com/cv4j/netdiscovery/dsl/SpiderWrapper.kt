@@ -31,10 +31,10 @@ fun spider(init: SpiderWrapper.() -> Unit):Spider {
 
     wrap.init()
 
-    return config(wrap)
+    return configSpider(wrap)
 }
 
-private fun config(wrap:SpiderWrapper):Spider {
+private fun configSpider(wrap:SpiderWrapper):Spider {
 
     val spider = Spider.create(wrap?.queue)
             .name(wrap?.name)
