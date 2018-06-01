@@ -1,9 +1,13 @@
 package com.cv4j.netdiscovery.selenium;
 
 import com.safframework.tony.common.utils.IOUtils;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
+import javax.imageio.ImageIO;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -61,6 +65,48 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static void taskScreenShot(WebDriver driver,WebElement element,String pathName) {
+
+        //指定了OutputType.FILE做为参数传递给getScreenshotAs()方法，其含义是将截取的屏幕以文件形式返回。
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        //利用IOUtils工具类的copyFile()方法保存getScreenshotAs()返回的文件对象。
+
+        try {
+            //获取元素在所处frame中位置对象
+            Point p = element.getLocation();
+            //获取元素的宽与高
+            int width = element.getSize().getWidth();
+            int height = element.getSize().getHeight();
+            //矩形图像对象
+            Rectangle rect = new Rectangle(width, height);
+            BufferedImage img = ImageIO.read(srcFile);
+            BufferedImage dest = img.getSubimage(p.getX(), p.getY(), rect.width, rect.height);
+            ImageIO.write(dest, "png", srcFile);
+            IOUtils.copyFile(srcFile, new File(pathName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void taskScreenShot(WebDriver driver,int x,int y,int width,int height,String pathName) {
+
+        //指定了OutputType.FILE做为参数传递给getScreenshotAs()方法，其含义是将截取的屏幕以文件形式返回。
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        //利用IOUtils工具类的copyFile()方法保存getScreenshotAs()返回的文件对象。
+
+        try {
+            //矩形图像对象
+            Rectangle rect = new Rectangle(width, height);
+            BufferedImage img = ImageIO.read(srcFile);
+            BufferedImage dest = img.getSubimage(x, y, rect.width, rect.height);
+            ImageIO.write(dest, "png", srcFile);
+            IOUtils.copyFile(srcFile, new File(pathName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 操作关闭模态窗口
