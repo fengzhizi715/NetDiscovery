@@ -89,6 +89,15 @@ public class Utils {
         }
     }
 
+    /**
+     * 截取某个区域的截图
+     * @param driver
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param pathName
+     */
     public static void taskScreenShot(WebDriver driver,int x,int y,int width,int height,String pathName) {
 
         //指定了OutputType.FILE做为参数传递给getScreenshotAs()方法，其含义是将截取的屏幕以文件形式返回。
@@ -106,7 +115,6 @@ public class Utils {
             e.printStackTrace();
         }
     }
-
 
     /**
      * 操作关闭模态窗口
