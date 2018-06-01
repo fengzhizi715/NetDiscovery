@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.selenium.action.SeleniumAction;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -13,23 +14,32 @@ import io.reactivex.functions.Function;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by tony on 2018/1/28.
  */
 public class SeleniumDownloader implements Downloader {
 
     private WebDriver webDriver;
-    private SeleniumAction action = null;
+    private List<SeleniumAction> actions = new LinkedList<>();
 
     public SeleniumDownloader() {
 
-        this(null);
+        this.webDriver = WebDriverPool.borrowOne(); // 从连接池中获取webDriver
     }
 
     public SeleniumDownloader(SeleniumAction action) {
 
         this.webDriver = WebDriverPool.borrowOne(); // 从连接池中获取webDriver
-        this.action = action;
+        this.actions.add(action);
+    }
+
+    public SeleniumDownloader(List<SeleniumAction> actions) {
+
+        this.webDriver = WebDriverPool.borrowOne(); // 从连接池中获取webDriver
+        this.actions.addAll(actions);
     }
 
     @Override
@@ -43,8 +53,11 @@ public class SeleniumDownloader implements Downloader {
                 if (webDriver!=null) {
                     webDriver.get(request.getUrl());
 
-                    if (action != null) {
-                        action.perform(webDriver);
+                    if (Preconditions.isNotBlank(actions)) {
+
+                        actions.forEach(
+                                action-> action.perform(webDriver)
+                        );
                     }
 
                     emitter.onSuccess(webDriver.getPageSource());
