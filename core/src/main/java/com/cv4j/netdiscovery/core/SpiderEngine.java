@@ -335,6 +335,16 @@ public class SpiderEngine {
     }
 
     /**
+     * 基于爬虫的名字，从SpiderEngine中获取爬虫
+     *
+     * @param name
+     */
+    public Spider getSpider(String name) {
+
+        return spiders.get(name);
+    }
+
+    /**
      * 停止某个爬虫程序
      *
      * @param name
