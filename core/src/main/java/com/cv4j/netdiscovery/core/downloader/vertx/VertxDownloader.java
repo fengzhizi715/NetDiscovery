@@ -84,7 +84,7 @@ public class VertxDownloader implements Downloader {
 
             if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-                httpRequest.putHeader("Content-type",request.getHttpRequestBody().getContentType());
+                httpRequest.putHeader(Constant.CONTENT_TYPE ,request.getHttpRequestBody().getContentType());
             }
         }
 
