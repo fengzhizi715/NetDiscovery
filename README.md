@@ -75,6 +75,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 # 案例:
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
+* 公众号回复数字货币的关键字，获取最新的价格
+![](images/spider_case.png)
 
 # TODO:
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及Tesseract，实现OCR识别的功能
