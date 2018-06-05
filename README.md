@@ -18,7 +18,7 @@ Spider可以单独使用，也可以添加到SpiderEngine中使用。
 
 Spider中内置了很多组件。例如downloader就已经支持了好几种，支持热插拔随时替换，或者编写自己的downloader。
 
-queue、parser、pipeline也都类似。
+queue、parser、pipeline也都类似。其中，支持多个pipeline按照顺序执行。
 
 ![](images/Spider.png)
 
