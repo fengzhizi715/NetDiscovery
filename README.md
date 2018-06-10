@@ -12,6 +12,15 @@
 
 NetDiscovery目前还是早期的版本，很多的细节正在不断地完善中。
 
+对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
+
+```groovy
+repositories {
+    mavenCentral()
+    jcenter()
+}
+```
+
 # NetDiscovery 功能点：
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
