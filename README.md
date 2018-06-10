@@ -10,7 +10,7 @@
 ---|:-------------:|:-------------:|:-------------:|:-------------:
 最新版本| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
 
-NetDiscovery目前还是早期的版本，很多的细节需要不断地完善。
+NetDiscovery目前还是早期的版本，很多的细节正在不断地完善中。
 
 # NetDiscovery 功能点：
 ## 1.Spider功能
