@@ -21,6 +21,24 @@ repositories {
 }
 ```
 
+
+
+# 下载
+
+netdiscovery-core
+
+```groovy
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.1.7'
+
+```
+
+
+netdiscovery-extra
+
+```groovy
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.1.7'
+```
+
 # NetDiscovery 功能点：
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
