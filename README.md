@@ -32,11 +32,22 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.1.7'
 
 ```
 
-
 netdiscovery-extra
 
 ```groovy
 implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.1.7'
+```
+
+netdiscovery-selenium
+
+```groovy
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.1.7'
+```
+
+netdiscovery-dsl
+
+```groovy
+implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.1'
 ```
 
 # NetDiscovery 功能点：
