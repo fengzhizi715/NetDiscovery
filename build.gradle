@@ -4,6 +4,14 @@ ext {
 
             rxjava                    : "2.1.14",
 
+            httpclient                : "4.5.2",
+
+            okhttp                    : "3.9.1",
+
+            jedis                     : "2.9.0",
+
+            fastjson                  : "1.2.47",
+
             htmlunit                  : "2.31",
 
             selenium_java             : "3.8.1",

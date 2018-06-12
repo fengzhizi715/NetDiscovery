@@ -18,10 +18,10 @@ dependencies {
 
     implementation "io.vertx:vertx-mongo-client:${libs.vertx}"
 
-    implementation "org.apache.httpcomponents:httpclient:4.5.2"
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation "org.apache.httpcomponents:httpclient:${libs.httpclient}"
+    implementation "com.squareup.okhttp3:okhttp:${libs.okhttp}"
 
-    implementation 'redis.clients:jedis:2.9.0'
+    implementation "redis.clients:jedis:${libs.jedis}"
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
 
@@ -29,7 +29,7 @@ dependencies {
 
     implementation "io.vertx:vertx-redis-client:${libs.vertx}"
 
-    implementation 'com.alibaba:fastjson:1.2.46'
+    implementation "com.alibaba:fastjson:${libs.fastjson}"
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
