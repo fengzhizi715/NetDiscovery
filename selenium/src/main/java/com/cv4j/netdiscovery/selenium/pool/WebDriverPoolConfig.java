@@ -21,16 +21,16 @@ public class WebDriverPoolConfig {
 
         if (path.contains("chrome")) {
 
-            this.browser = Browser.Chrome;
+            this.browser = Browser.CHROME;
         } else if (path.contains("firefox")){
 
-            this.browser = Browser.Firefox;
+            this.browser = Browser.FIREFOX;
         } else if (path.contains("ie")) {
 
             this.browser = Browser.IE;
         } else if (path.contains("phatomjs")){
 
-            this.browser = Browser.Phatomjs;
+            this.browser = Browser.PHANTOMJS;
         }
     }
 

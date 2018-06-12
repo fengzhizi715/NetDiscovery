@@ -11,14 +11,14 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
  */
 public enum Browser implements WebDriverInitializer {
 
-    Chrome {
+    CHROME {
         @Override
         public WebDriver init(String path) {
             System.setProperty("webdriver.chrome.driver", path);
             return new ChromeDriver();
         }
     },
-    Firefox {
+    FIREFOX {
         @Override
         public WebDriver init(String path) {
             System.setProperty("webdriver.firefox.bin", path);
@@ -32,7 +32,7 @@ public enum Browser implements WebDriverInitializer {
             return new InternetExplorerDriver();
         }
     },
-    Phatomjs {
+    PHANTOMJS {
         @Override
         public WebDriver init(String path) {
             System.setProperty("phantomjs.binary.path", path);

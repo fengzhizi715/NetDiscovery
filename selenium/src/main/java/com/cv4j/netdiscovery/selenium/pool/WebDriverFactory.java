@@ -12,20 +12,21 @@ public class WebDriverFactory {
 
         switch (browser) {
 
-            case Chrome:
+            case CHROME:
 
-                return Browser.Chrome.init(path);
-            case Firefox:
+                return Browser.CHROME.init(path);
 
-                return Browser.Firefox.init(path);
+            case FIREFOX:
+
+                return Browser.FIREFOX.init(path);
 
             case IE:
 
                 return Browser.IE.init(path);
 
-            case Phatomjs:
+            case PHANTOMJS:
 
-                return Browser.Phatomjs.init(path);
+                return Browser.PHANTOMJS.init(path);
         }
 
         return null;
