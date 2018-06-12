@@ -24,6 +24,7 @@ public class WebDriverPool {
                 "webdriver.pool.min.idle", "1")));   // 最少有几个闲置对象
         webDriverPool.setMaxIdle(Integer.parseInt(System.getProperty(
                 "webdriver.pool.max.idle", "20"))); // 最多允许多少个闲置对象
+
         try {
             webDriverPool.preparePool();
         } catch (Exception e) {
@@ -40,11 +41,9 @@ public class WebDriverPool {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } else {
-
-            return null;
         }
 
+        return null;
     }
 
     public static void returnOne(WebDriver driver) {
