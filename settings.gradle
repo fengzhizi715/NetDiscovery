@@ -3,7 +3,6 @@ include 'core'
 include 'extra'
 include 'example'
 include 'selenium'
-include 'admin'
 include 'dsl'
 include 'htmlunit'
 
