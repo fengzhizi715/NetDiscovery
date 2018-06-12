@@ -16,7 +16,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    implementation 'org.seleniumhq.selenium:selenium-java:3.8.1'
+    implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
     implementation 'com.codeborne:phantomjsdriver:1.4.4'
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
