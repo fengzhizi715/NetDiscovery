@@ -16,8 +16,9 @@ import java.util.List;
 public class JDSpider {
 
     public static void main(String[] args) {
-        WebDriverPoolConfig config = new WebDriverPoolConfig("example/chromedriver", Browser.CHROME);
-        WebDriverPool.init(config);
+
+        WebDriverPoolConfig config = new WebDriverPoolConfig("example/chromedriver",Browser.CHROME); //设置浏览器的驱动程序和浏览器的类型，浏览器的驱动程序要跟操作系统匹配。
+        WebDriverPool.init(config); // 需要先使用init，才能使用WebDriverPool
 
         List<SeleniumAction> actions = new ArrayList<>();
         actions.add(new BrowserAction());
