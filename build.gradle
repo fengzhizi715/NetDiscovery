@@ -8,6 +8,12 @@ ext {
 
             selenium_java             : "3.8.1",
 
+            phantomjsdriver           : "1.4.4",
+
+            commons_pool2             : "2.5.0",
+
+            lombok                    : "1.16.18",
+
             proxypool                 : "1.1.8",
 
             tony_common_utils         : "1.2.5"
