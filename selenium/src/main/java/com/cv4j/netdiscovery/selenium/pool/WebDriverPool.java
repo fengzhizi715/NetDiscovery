@@ -11,7 +11,7 @@ public class WebDriverPool {
     private static GenericObjectPool<WebDriver> webDriverPool = null;
 
     /**
-     * 使用WebDriverPool时，必须先调用这个init()方法
+     * 如果需要使用WebDriverPool，则必须先调用这个init()方法
      *
      * @param config
      */

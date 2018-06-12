@@ -21,7 +21,7 @@ public enum Browser implements WebDriverInitializer {
     FIREFOX {
         @Override
         public WebDriver init(String path) {
-            System.setProperty("webdriver.firefox.bin", path);
+            System.setProperty("webdriver.gecko.driver", path);
             return new FirefoxDriver();
         }
     },
