@@ -7,7 +7,7 @@ import com.cv4j.netdiscovery.dsl.spider
 /**
  * Created by tony on 2018/5/27.
  */
-object TestDSL {
+object TestDSL4Spider {
 
     @JvmStatic
     fun main(args: Array<String>) {
