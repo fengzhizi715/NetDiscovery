@@ -41,9 +41,25 @@ public final class WebDriverPooledFactory implements PooledObjectFactory<WebDriv
         if (proxy!=null && HttpManager.get().checkProxy(proxy)) {
 
             return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,proxy));
+        } else { // 重试第一次获取Proxy
+
+            proxy = ProxyPool.getProxy();
+
+            if (proxy!=null && HttpManager.get().checkProxy(proxy)) {
+
+                return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,proxy));
+            } else { // 重试第二次获取Proxy
+
+                proxy = ProxyPool.getProxy();
+
+                if (proxy!=null && HttpManager.get().checkProxy(proxy)) {
+
+                    return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path, browser, proxy));
+                }
+            }
         }
 
-        return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,null));
+        return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,null)); // 不使用Proxy
     }
 
     /**

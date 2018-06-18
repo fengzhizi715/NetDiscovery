@@ -31,6 +31,7 @@ public enum Browser implements WebDriverInitializer {
 
                 return new ChromeDriver(options);
             } else {
+
                 return new ChromeDriver();
             }
         }
