@@ -5,11 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -30,16 +33,30 @@ public enum Browser implements WebDriverInitializer {
                 options.setCapability("proxy", ProxyUtils.toSeleniumProxy(proxy));
 
                 return new ChromeDriver(options);
-            } else {
-
-                return new ChromeDriver();
             }
+
+            return new ChromeDriver();
         }
     },
     FIREFOX {
         @Override
         public WebDriver init(String path, Proxy proxy) {
             System.setProperty("webdriver.gecko.driver", path);
+
+            if (proxy!=null) {
+
+                String PROXY = proxy.getIp()+":"+proxy.getPort();
+
+                org.openqa.selenium.Proxy seleniumProxy = new org.openqa.selenium.Proxy();
+                seleniumProxy.setHttpProxy(PROXY)
+                        .setFtpProxy(PROXY)
+                        .setSslProxy(PROXY);
+                DesiredCapabilities cap = new DesiredCapabilities();
+                cap.setCapability(CapabilityType.PROXY, proxy);
+
+                return new FirefoxDriver(cap);
+            }
+
             return new FirefoxDriver();
         }
     },
