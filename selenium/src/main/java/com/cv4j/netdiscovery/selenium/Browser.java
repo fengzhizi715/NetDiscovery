@@ -9,6 +9,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -92,6 +93,17 @@ public enum Browser implements WebDriverInitializer {
             capabilities.setJavascriptEnabled(true);
             capabilities.setCapability("takesScreenshot", true);
             capabilities.setCapability("cssSelectorsEnabled", true);
+
+            if (proxy!=null) {
+
+                ArrayList<String> cliArgsCap = new ArrayList<String>();
+                cliArgsCap.add("--proxy="+proxy.getIp()+":"+proxy.getPort());
+//                cliArgsCap.add("--proxy-auth=username:password");
+                cliArgsCap.add("--proxy-type=http");
+                capabilities.setCapability(
+                        PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cliArgsCap);
+            }
+
             return new PhantomJSDriver(capabilities);
         }
     }
