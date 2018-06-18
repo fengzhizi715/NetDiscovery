@@ -1,11 +1,16 @@
 package com.cv4j.netdiscovery.selenium.pool;
 
 import com.cv4j.netdiscovery.selenium.Browser;
+import com.cv4j.proxy.ProxyPool;
+import com.cv4j.proxy.domain.Proxy;
+import com.cv4j.proxy.http.HttpManager;
+import com.safframework.tony.common.utils.Preconditions;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,6 +25,7 @@ public final class WebDriverPooledFactory implements PooledObjectFactory<WebDriv
 
         this.path = config.getPath();
         this.browser = config.getBrowser();
+        ProxyPool.addProxyList(config.getProxies());
     }
 
     /**
@@ -29,7 +35,15 @@ public final class WebDriverPooledFactory implements PooledObjectFactory<WebDriv
      */
     @Override
     public PooledObject<WebDriver> makeObject() throws Exception {
-        return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser));
+
+        Proxy proxy =  ProxyPool.getProxy();
+
+        if (proxy!=null && HttpManager.get().checkProxy(proxy)) {
+
+            return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,proxy));
+        }
+
+        return new DefaultPooledObject<>(WebDriverFactory.getWebDriver(path,browser,null));
     }
 
     /**

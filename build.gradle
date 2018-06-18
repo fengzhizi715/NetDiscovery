@@ -22,7 +22,7 @@ ext {
 
             lombok                    : "1.16.18",
 
-            proxypool                 : "1.1.8",
+            proxypool                 : "1.1.9",
 
             tony_common_utils         : "1.2.5"
     ]

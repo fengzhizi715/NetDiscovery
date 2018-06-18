@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.selenium.pool;
 
 import com.cv4j.netdiscovery.selenium.Browser;
+import com.cv4j.proxy.domain.Proxy;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -8,25 +9,25 @@ import org.openqa.selenium.WebDriver;
  */
 public class WebDriverFactory {
 
-    public static WebDriver getWebDriver(String path,Browser browser) {
+    public static WebDriver getWebDriver(String path, Browser browser, Proxy proxy) {
 
         switch (browser) {
 
             case CHROME:
 
-                return Browser.CHROME.init(path);
+                return Browser.CHROME.init(path,proxy);
 
             case FIREFOX:
 
-                return Browser.FIREFOX.init(path);
+                return Browser.FIREFOX.init(path,proxy);
 
             case IE:
 
-                return Browser.IE.init(path);
+                return Browser.IE.init(path,proxy);
 
             case PHANTOMJS:
 
-                return Browser.PHANTOMJS.init(path);
+                return Browser.PHANTOMJS.init(path,proxy);
         }
 
         return null;

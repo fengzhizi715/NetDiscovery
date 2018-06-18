@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.selenium;
 
+import com.cv4j.proxy.domain.Proxy;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -7,5 +8,11 @@ import org.openqa.selenium.WebDriver;
  */
 public interface WebDriverInitializer {
 
-    WebDriver init(String driverPath);
+    /**
+     *
+     * @param driverPath
+     * @param proxy
+     * @return
+     */
+    WebDriver init(String driverPath,Proxy proxy);
 }
