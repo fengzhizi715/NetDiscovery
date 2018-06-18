@@ -64,6 +64,21 @@ public enum Browser implements WebDriverInitializer {
         @Override
         public WebDriver init(String path, Proxy proxy) {
             System.setProperty("webdriver.ie.driver", path);
+
+            if (proxy!=null) {
+
+                String PROXY = proxy.getIp()+":"+proxy.getPort();
+
+                org.openqa.selenium.Proxy seleniumProxy = new org.openqa.selenium.Proxy();
+                seleniumProxy.setHttpProxy(PROXY)
+                        .setFtpProxy(PROXY)
+                        .setSslProxy(PROXY);
+                DesiredCapabilities cap = new DesiredCapabilities();
+                cap.setCapability(CapabilityType.PROXY, proxy);
+
+                return new InternetExplorerDriver(cap);
+            }
+
             return new InternetExplorerDriver();
         }
     },
