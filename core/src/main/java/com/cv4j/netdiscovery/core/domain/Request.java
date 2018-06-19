@@ -42,6 +42,8 @@ public class Request {
 
     private Map<String,Object> extras; // extras 中的数据可以在pipeline中使用
 
+    private long priority = 0; // request的优先级，数字越大优先级越高
+
     private HttpRequestBody httpRequestBody;
 
     private BeforeRequest beforeRequest;
@@ -219,6 +221,21 @@ public class Request {
     public Object getExtra(String key) {
 
         return extras != null?extras.get(key):null;
+    }
+
+    /**
+     * 设置Request的优先级
+     * @param priority
+     * @return
+     */
+    public Request priority(long priority) {
+
+        if (priority > 0) {
+
+            this.priority = priority;
+        }
+
+        return this;
     }
 
     public void clearHeader() {
