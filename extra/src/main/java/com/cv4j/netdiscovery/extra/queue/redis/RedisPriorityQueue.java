@@ -18,9 +18,9 @@ public class RedisPriorityQueue extends RedisQueue {
 
     private static final String QUEUE_PREFIX = "queue_";
 
-    private static final String NO_PRIORITY_SUFFIX = "_zore";
+    private static final String NORMAL_SUFFIX = "_normal";
 
-    private static final String PRIORITY_SUFFIX = "_plus";
+    private static final String PRIORITY_SUFFIX = "_priority";
 
     public RedisPriorityQueue(String host) {
         super(host);
@@ -39,7 +39,7 @@ public class RedisPriorityQueue extends RedisQueue {
             if (request.getPriority() > 0)
                 jedis.zadd(getZsetPriorityKey(request.getSpiderName()), request.getPriority(), request.getUrl());
             else
-                jedis.lpush(getQueueNoPriorityKey(request.getSpiderName()), request.getUrl());
+                jedis.lpush(getQueueNormalKey(request.getSpiderName()), request.getUrl());
 
             setExtrasInItem(jedis, request);
         } finally {
@@ -69,7 +69,7 @@ public class RedisPriorityQueue extends RedisQueue {
         Set<String> urls = jedis.zrevrange(getZsetPriorityKey(spiderName), 0, 0);
 
         if (urls.isEmpty()) {
-            url = jedis.lpop(getQueueNoPriorityKey(spiderName));
+            url = jedis.lpop(getQueueNormalKey(spiderName));
         } else {
             url = urls.toArray(new String[0])[0];
             jedis.zrem(getZsetPriorityKey(spiderName), url);
@@ -82,8 +82,8 @@ public class RedisPriorityQueue extends RedisQueue {
         return ZSET_PREFIX + spiderName + PRIORITY_SUFFIX;
     }
 
-    private String getQueueNoPriorityKey(String spiderName) {
-        return QUEUE_PREFIX + spiderName + NO_PRIORITY_SUFFIX;
+    private String getQueueNormalKey(String spiderName) {
+        return QUEUE_PREFIX + spiderName + NORMAL_SUFFIX;
     }
 
     private void setExtrasInItem(Jedis jedis, Request request) {
