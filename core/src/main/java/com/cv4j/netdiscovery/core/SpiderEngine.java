@@ -130,7 +130,7 @@ public class SpiderEngine {
     }
 
     /**
-     * 在SpiderEngine中创建一个爬虫
+     * 在SpiderEngine中创建一个爬虫，使用SpiderEngine的Queue
      *
      * @param name
      * @return Spider
@@ -149,7 +149,7 @@ public class SpiderEngine {
 
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
-     * 如果要使用此方法，须放在run()之前
+     * 如果要使用此方法，须放在run()/runWithRepeat()之前
      *
      * @param port
      */
