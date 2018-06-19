@@ -5,11 +5,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.proxy.domain.Proxy;
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.HttpMethod;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
@@ -36,6 +32,8 @@ public class HtmlUnitDownloader implements Downloader {
         this.webClient.getOptions().setRedirectEnabled(false);
         this.webClient.getOptions().setCssEnabled(false);
         this.webClient.setJavaScriptTimeout(1000);
+        this.webClient.getOptions().setJavaScriptEnabled(true);
+        this.webClient.setAjaxController(new NicelyResynchronizingAjaxController());//设置支持AJAX
     }
 
     @Override
