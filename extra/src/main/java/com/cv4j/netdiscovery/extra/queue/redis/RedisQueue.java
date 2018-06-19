@@ -139,10 +139,10 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
     }
 
     protected String getItemKey(Request request) {
-        return ITEM_PREFIX + request.getSpiderName();
+        return ITEM_PREFIX + request.getUrl();
     }
 
-    protected String getItemKey(String spiderName) {
-        return ITEM_PREFIX + spiderName;
+    protected String getItemKey(String url) {
+        return ITEM_PREFIX + url;
     }
 }

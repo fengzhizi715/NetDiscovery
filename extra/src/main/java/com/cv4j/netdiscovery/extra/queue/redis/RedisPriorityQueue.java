@@ -97,7 +97,7 @@ public class RedisPriorityQueue extends RedisQueue {
 
     private Request getExtrasInItem(Jedis jedis, String url, String spiderName) {
 
-        String key = getItemKey(spiderName);
+        String key = getItemKey(url);
         String field = DigestUtils.shaHex(url);
         byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
         if (bytes != null)
