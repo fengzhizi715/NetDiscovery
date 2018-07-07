@@ -26,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -109,6 +110,24 @@ public class Spider {
         return this;
     }
 
+    public Spider url(Charset charset, String... urls) {
+
+        checkIfRunning();
+
+        if (Preconditions.isNotBlank(urls)) {
+
+            Arrays.asList(urls)
+                    .stream()
+                    .forEach(url -> {
+                        Request request = new Request(url, name);
+                        request.charset(charset.name());
+                        queue.push(request);
+                    });
+        }
+
+        return this;
+    }
+
     public Spider url(String... urls) {
 
         checkIfRunning();
@@ -118,6 +137,22 @@ public class Spider {
             Arrays.asList(urls)
                     .stream()
                     .forEach(url -> queue.push(new Request(url, name)));
+        }
+
+        return this;
+    }
+
+    public Spider url(Charset charset, List<String> urls) {
+
+        checkIfRunning();
+
+        if (Preconditions.isNotBlank(urls)) {
+
+            urls.forEach(url -> {
+                Request request = new Request(url, name);
+                request.charset(charset.name());
+                queue.push(request);
+            });
         }
 
         return this;
