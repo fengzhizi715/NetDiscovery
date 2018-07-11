@@ -116,6 +116,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 # TODO:
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及Tesseract，实现OCR识别的功能
 2. 增加elasticsearch的支持
+3. 增加Cooikes Pool
 
 # 联系方式:
 QQ交流群：490882934
