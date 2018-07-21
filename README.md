@@ -10,9 +10,9 @@
 ---|:-------------:|:-------------:|:-------------:|:-------------:
 最新版本| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
 
-NetDiscover主要是基于Vert.x、RxJava2等实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
+NetDiscover 主要是基于 Vert.x、RxJava2 等实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
 
-对于Java工程如果使用gradle构建，由于默认没有使用jcenter()，需要在相应module的build.gradle中配置
+对于Java工程如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
 ```groovy
 repositories {
@@ -114,9 +114,9 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 ![](images/spider_case.jpeg)
 
 # TODO:
-1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及Tesseract，实现OCR识别的功能
-2. 增加elasticsearch的支持
-3. 增加Cooikes Pool
+1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+2. 增加 elasticsearch 的支持
+3. 增加 Cooikes Pool
 
 # 联系方式:
 QQ交流群：490882934
