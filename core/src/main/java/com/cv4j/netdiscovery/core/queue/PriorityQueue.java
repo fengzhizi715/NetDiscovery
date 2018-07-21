@@ -15,20 +15,16 @@ public class PriorityQueue extends AbstractQueue {
 
     private ConcurrentLinkedQueue<Request> normalQueue = new ConcurrentLinkedQueue<>();
 
-    private PriorityBlockingQueue<Request> priorityQueue = new PriorityBlockingQueue<Request>(INITIAL_CAPACITY, new Comparator<Request>() {
-        @Override
-        public int compare(Request o1, Request o2) {
+    private PriorityBlockingQueue<Request> priorityQueue = new PriorityBlockingQueue<>(INITIAL_CAPACITY, (Request o1, Request o2) -> {
+        if (o1.getPriority() > o2.getPriority()) {
 
-            if (o1.getPriority() > o2.getPriority()) {
+            return -1;
+        } else if (o1.getPriority() == o2.getPriority()) {
 
-                return -1;
-            } else if (o1.getPriority() == o2.getPriority()) {
+            return 0;
+        } else {
 
-                return 0;
-            } else {
-
-                return 1;
-            }
+            return 1;
         }
     });
 
