@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.core.queue;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 
-import java.util.Comparator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
