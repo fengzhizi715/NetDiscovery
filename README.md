@@ -113,6 +113,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 * 在“Java与Android技术栈”公众号回复数字货币的关键字，获取最新的价格
 ![](images/spider_case1.jpeg)
 
+![](images/spider_case2.jpeg)
+
 # TODO:
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 2. 增加 elasticsearch 的支持
