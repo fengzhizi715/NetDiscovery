@@ -75,13 +75,13 @@ public class URLParser {
     }
 
     public void addParam(String name, String value) {
-        addParams(name, Arrays.asList(encode(value)));
+        addParams(name, Arrays.asList(value));
     }
 
     public void addParams(String name, List<String> values) {
         List<String> list = getOrCreate(params, name);
         for (String value : values) {
-            list.add(encode(value));
+            list.add(value);
         }
     }
 
