@@ -81,7 +81,8 @@ public class URLParser {
     public void addParams(String name, List<String> values) {
         List<String> list = getOrCreate(params, name);
         for (String value : values) {
-            list.add(value);
+
+            list.add(encode(value));
         }
     }
 
@@ -179,7 +180,7 @@ public class URLParser {
                 if (sb.length() > 0) {
                     sb.append("&");
                 }
-                sb.append(name).append("=").append(encode(value));
+                sb.append(name).append("=").append(value);
             }
         }
         return sb.toString();
