@@ -127,7 +127,7 @@ public class URLParser {
         }
         List<String> params = new ArrayList<String>();
         for (String value : rawParams) {
-            params.add(encode(value));
+            params.add(decode(value));
         }
         return params;
     }
