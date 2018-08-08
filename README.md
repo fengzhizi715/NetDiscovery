@@ -10,9 +10,9 @@
 ---|:-------------:|:-------------:|:-------------:|:-------------:
 最新版本| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
 
-NetDiscover 主要是基于 Vert.x、RxJava2 等实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
+NetDiscover 主要是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
 
-对于Java工程如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
+对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
 ```groovy
 repositories {
@@ -51,6 +51,7 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.1'
 ```
 
 # NetDiscovery 功能点：
+
 ## 1.Spider功能
 Spider可以单独使用，也可以添加到SpiderEngine中使用。
 
@@ -99,6 +100,59 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |2|让爬虫暂停|
 |3|让爬虫从暂停中恢复|
 |4|让爬虫停止|
+
+## 3. DSL 模块
+
+使用 DSL 来创建一个爬虫并运行:
+
+```kotlin
+        val spider = spider {
+
+            name = "tony"
+
+            urls = listOf("http://www.163.com/","https://www.baidu.com/")
+
+            pipelines = setOf(ConsolePipeline())
+        }
+
+        spider.run()
+```
+
+它等价于下面的java代码
+
+```java
+        Spider.create().name("tony1")
+                .url("http://www.163.com/", "https://www.baidu.com/")
+                .pipeline(new ConsolePipeline())
+                .run();
+```
+
+还可以使用 DSL 来创建 SpiderEngine：
+
+```kotlin
+        val spiderEngine = spiderEngine {
+
+            port = 7070
+        }
+
+        val spider1 = spider {
+
+            name = "tony1"
+        }
+
+        spider1.repeatRequest(10000,"http://www.163.com")
+                .initialDelay(10000)
+
+        spiderEngine.addSpider(spider1)
+
+        spiderEngine.addSpider(spider {
+
+            name = "tony2"
+            urls = listOf("https://www.baidu.com")
+        })
+
+        spiderEngine.runWithRepeat()
+```
 
 
 # NetDiscovery 基本原理：
