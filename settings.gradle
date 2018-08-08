@@ -5,4 +5,5 @@ include 'example'
 include 'selenium'
 include 'dsl'
 include 'htmlunit'
+include 'coroutines'
 
