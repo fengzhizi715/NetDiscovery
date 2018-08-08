@@ -35,13 +35,13 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     protected var stat = AtomicInteger(SPIDER_STATUS_INIT)
 
-    private var name = "spider" // 爬虫的名字，默认使用spider
+    var name = "spider" // 爬虫的名字，默认使用spider
 
     private var parser: Parser? = null
 
     private val pipelines = LinkedHashSet<Pipeline>()
 
-    private var queue: Queue
+    var queue: Queue
 
     private var autoProxy = false
 
@@ -52,7 +52,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private var downloader: Downloader
+    var downloader: Downloader
 
     val spiderStatus: Int
         get() = stat.get()
