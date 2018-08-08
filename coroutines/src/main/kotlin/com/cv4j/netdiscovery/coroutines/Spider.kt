@@ -167,6 +167,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                 .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
                         .onBackpressureBuffer()
                         .subscribe {
+
                             if (!pause) {
                                 val request = Request(url)
                                 request.checkDuplicate(false)
@@ -426,7 +427,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     fun stop() {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-//            log.info(String.format("Spider %s stop success!", name))
+            println(String.format("Spider %s stop success!", name))
         }
     }
 
@@ -435,7 +436,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         compositeDisposable.clear()
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-//            log.info(String.format("Spider %s force stop success!", name))
+            println(String.format("Spider %s force stop success!", name))
         }
     }
 
