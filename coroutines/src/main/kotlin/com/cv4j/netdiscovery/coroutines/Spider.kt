@@ -18,7 +18,9 @@ import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.rx2.await
 import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -271,129 +273,123 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     fun run() {
 
-        checkRunningStat()
+        runBlocking(CommonPool) {
 
-        initialDelay()
 
-        try {
-            while (spiderStatus != SPIDER_STATUS_STOPPED) {
+            checkRunningStat()
 
-                //暂停抓取
-                if (pause) {
-                    try {
-                        this.pauseCountDown.await()
-                    } catch (e: InterruptedException) {
-//                        log.error("can't pause : ", e)
-                    }
+            initialDelay()
 
-                    initialDelay()
-                }
+            try {
+                while (spiderStatus != SPIDER_STATUS_STOPPED) {
 
-                // 从消息队列中取出request
-                val request = queue.poll(name)
-
-                if (request != null) {
-
-                    if (request.sleepTime > 0) {
-
+                    //暂停抓取
+                    if (pause) {
                         try {
-                            Thread.sleep(request.sleepTime)
+                            this@Spider.pauseCountDown.await()
                         } catch (e: InterruptedException) {
-                            e.printStackTrace()
+//                        log.error("can't pause : ", e)
                         }
 
+                        initialDelay()
                     }
 
-                    // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
-                    if (autoProxy && request.proxy == null) {
+                    // 从消息队列中取出request
+                    val request = queue.poll(name)
 
-                        val proxy = ProxyPool.getProxy()
+                    if (request != null) {
 
-                        if (proxy != null && Utils.checkProxy(proxy)) {
-                            request.proxy(proxy)
+                        if (request.sleepTime > 0) {
+
+                            try {
+                                Thread.sleep(request.sleepTime)
+                            } catch (e: InterruptedException) {
+                                e.printStackTrace()
+                            }
+
                         }
+
+                        // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
+                        if (autoProxy && request.proxy == null) {
+
+                            val proxy = ProxyPool.getProxy()
+
+                            if (proxy != null && Utils.checkProxy(proxy)) {
+                                request.proxy(proxy)
+                            }
+                        }
+
+                        // request请求之前的处理
+                        if (request.beforeRequest != null) {
+
+                            request.beforeRequest.process(request)
+                        }
+
+                        // request正在处理
+                        val download = downloader.download(request).await()
+
+                        download?.run {
+
+                            val page = Page()
+                            page.request = request
+                            page.url = request.url
+                            page.statusCode = statusCode
+
+                            if (Utils.isTextType(contentType)) { // text/html
+
+                                page.html = Html(content)
+                            } else if (Utils.isApplicationJSONType(contentType)) { // application/json
+
+                                // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
+                                page.putField(Constant.RESPONSE_JSON, Json(String(content)))
+                            } else if (Utils.isApplicationJSONPType(contentType)) { // application/javascript
+
+                                // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
+                                // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
+                                page.putField(Constant.RESPONSE_JSONP, String(content))
+                            } else {
+
+                                page.putField(Constant.RESPONSE_RAW, `is`) // 默认情况，保存InputStream
+                            }
+
+                            page
+                        }?.apply {
+
+                            if (parser != null) {
+
+                                parser!!.process(this)
+                            }
+
+                            this
+
+                        }?.apply {
+                            if (Preconditions.isNotBlank(pipelines)) {
+
+                                pipelines.stream()
+                                        .forEach { pipeline -> pipeline.process(resultItems) }
+                            }
+
+                            this
+
+                        }?.apply {
+
+                            println(url)
+
+                            if (request.afterRequest != null) {
+
+                                request.afterRequest.process(this)
+                            }
+                        }
+                    } else {
+
+                        break
                     }
-
-                    // request请求之前的处理
-                    if (request.beforeRequest != null) {
-
-                        request.beforeRequest.process(request)
-                    }
-
-                    // request正在处理
-                    downloader.download(request)
-                            .map {
-
-                                val page = Page()
-                                page.request = request
-                                page.url = request.url
-                                page.statusCode = it.statusCode
-
-                                if (Utils.isTextType(it.contentType)) { // text/html
-
-                                    page.html = Html(it.content)
-
-                                    page
-                                } else if (Utils.isApplicationJSONType(it.contentType)) { // application/json
-
-                                    // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
-                                    page.putField(Constant.RESPONSE_JSON, Json(String(it.content)))
-
-                                    page
-                                } else if (Utils.isApplicationJSONPType(it.contentType)) { // application/javascript
-
-                                    // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
-                                    // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
-                                    page.putField(Constant.RESPONSE_JSONP, String(it.content))
-
-                                    page
-                                } else {
-
-                                    page.putField(Constant.RESPONSE_RAW, it.`is`) // 默认情况，保存InputStream
-
-                                    page
-                                }
-                            }
-                            .map {
-
-                                if (parser != null) {
-
-                                    parser?.process(it)
-                                }
-
-                                it
-                            }
-                            .map {
-
-                                if (Preconditions.isNotBlank(pipelines)) {
-
-                                    pipelines.stream()
-                                            .forEach { pipeline -> pipeline.process(it.resultItems) }
-                                }
-
-                                it
-                            }
-                            .observeOn(Schedulers.io())
-                            .subscribe({
-                                // log.info(page.url)
-
-                                if (request.afterRequest != null) {
-
-                                    request.afterRequest.process(it)
-                                }
-                            },{
-
-                            })
-                } else {
-
-                    break
                 }
+            } finally {
+
+                stopSpider(downloader) // 爬虫停止
             }
-        } finally {
-
-            stopSpider(downloader) // 爬虫停止
         }
-
     }
 
     private fun checkIfRunning() {
