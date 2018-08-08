@@ -361,16 +361,13 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                                 parser!!.process(this)
                             }
 
-                            this
-
                         }?.apply {
+
                             if (Preconditions.isNotBlank(pipelines)) {
 
                                 pipelines.stream()
                                         .forEach { pipeline -> pipeline.process(resultItems) }
                             }
-
-                            this
 
                         }?.apply {
 
