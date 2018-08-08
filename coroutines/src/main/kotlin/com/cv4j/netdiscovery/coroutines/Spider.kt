@@ -35,7 +35,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private var name = "spider" // 爬虫的名字，默认使用spider
 
-    private lateinit var parser: Parser
+    private var parser: Parser? = null
 
     private val pipelines = LinkedHashSet<Pipeline>()
 
@@ -322,63 +322,68 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                     // request正在处理
                     downloader.download(request)
-                            .map { response ->
+                            .map {
+
                                 val page = Page()
                                 page.request = request
                                 page.url = request.url
-                                page.statusCode = response.statusCode
+                                page.statusCode = it.statusCode
 
-                                if (Utils.isTextType(response.contentType)) { // text/html
+                                if (Utils.isTextType(it.contentType)) { // text/html
 
-                                    page.html = Html(response.content)
+                                    page.html = Html(it.content)
 
                                     page
-                                } else if (Utils.isApplicationJSONType(response.contentType)) { // application/json
+                                } else if (Utils.isApplicationJSONType(it.contentType)) { // application/json
 
                                     // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
-                                    page.putField(Constant.RESPONSE_JSON, Json(String(response.content)))
+                                    page.putField(Constant.RESPONSE_JSON, Json(String(it.content)))
 
                                     page
-                                } else if (Utils.isApplicationJSONPType(response.contentType)) { // application/javascript
+                                } else if (Utils.isApplicationJSONPType(it.contentType)) { // application/javascript
 
                                     // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                                     // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
-                                    page.putField(Constant.RESPONSE_JSONP, String(response.content))
+                                    page.putField(Constant.RESPONSE_JSONP, String(it.content))
 
                                     page
                                 } else {
 
-                                    page.putField(Constant.RESPONSE_RAW, response.`is`) // 默认情况，保存InputStream
+                                    page.putField(Constant.RESPONSE_RAW, it.`is`) // 默认情况，保存InputStream
 
                                     page
                                 }
                             }
-                            .map { page ->
+                            .map {
+
                                 if (parser != null) {
 
-                                    parser.process(page)
+                                    parser?.process(it)
                                 }
 
-                                page
+                                it
                             }
-                            .map { page ->
+                            .map {
+
                                 if (Preconditions.isNotBlank(pipelines)) {
 
                                     pipelines.stream()
-                                            .forEach { pipeline -> pipeline.process(page.resultItems) }
+                                            .forEach { pipeline -> pipeline.process(it.resultItems) }
                                 }
 
-                                page
+                                it
                             }
                             .observeOn(Schedulers.io())
-                            .subscribe({ page ->
-//                                log.info(page.url)
+                            .subscribe({
+                                // log.info(page.url)
 
                                 if (request.afterRequest != null) {
 
-                                    request.afterRequest.process(page)
+                                    request.afterRequest.process(it)
                                 }
-                            }) { }
+                            },{
+
+                            })
                 } else {
 
                     break
