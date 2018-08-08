@@ -28,20 +28,20 @@ repositories {
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.1.8'
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.0'
 
 ```
 
 netdiscovery-extra
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.1.8'
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.0'
 ```
 
 netdiscovery-selenium
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.1.8'
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.0'
 ```
 
 netdiscovery-dsl
