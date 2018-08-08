@@ -35,22 +35,22 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private var name = "spider" // 爬虫的名字，默认使用spider
 
-    private var parser: Parser? = null
+    private lateinit var parser: Parser
 
     private val pipelines = LinkedHashSet<Pipeline>()
 
-    private var queue: Queue? = null
+    private var queue: Queue
 
     private var autoProxy = false
 
     private var initialDelay: Long = 0
 
     private var pause: Boolean = false
-    private var pauseCountDown: CountDownLatch? = null
+    private lateinit var pauseCountDown: CountDownLatch
 
     private val compositeDisposable = CompositeDisposable()
 
-    private var downloader: Downloader? = null
+    private var downloader: Downloader
 
     val spiderStatus: Int
         get() = stat.get()
@@ -88,7 +88,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                     .forEach { url ->
                         val request = Request(url, name)
                         request.charset(charset.name())
-                        queue!!.push(request)
+                        queue.push(request)
                     }
         }
 
@@ -103,7 +103,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             Arrays.asList(*urls)
                     .stream()
-                    .forEach { url -> queue!!.push(Request(url, name)) }
+                    .forEach { url -> queue.push(Request(url, name)) }
         }
 
         return this
@@ -118,7 +118,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
             urls.forEach { url ->
                 val request = Request(url, name)
                 request.charset(charset.name())
-                queue!!.push(request)
+                queue.push(request)
             }
         }
 
@@ -131,7 +131,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach { url -> queue!!.push(Request(url, name)) }
+            urls.forEach { url -> queue.push(Request(url, name)) }
         }
 
         return this
@@ -145,7 +145,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             Arrays.asList(*requests)
                     .stream()
-                    .forEach { request -> queue!!.push(request.spiderName(name)) }
+                    .forEach { request -> queue.push(request.spiderName(name)) }
         }
 
         return this
@@ -170,7 +170,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                                 request.checkDuplicate(false)
                                 request.spiderName(name)
                                 request.sleep(period)
-                                queue!!.push(request)
+                                queue.push(request)
                             }
                         })
 
@@ -198,7 +198,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                                 request.spiderName(name)
                                 request.sleep(period)
                                 request.charset(charset)
-                                queue!!.push(request)
+                                queue.push(request)
                             }
                         })
 
@@ -281,7 +281,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                 //暂停抓取
                 if (pause) {
                     try {
-                        this.pauseCountDown!!.await()
+                        this.pauseCountDown.await()
                     } catch (e: InterruptedException) {
 //                        log.error("can't pause : ", e)
                     }
@@ -290,7 +290,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                 }
 
                 // 从消息队列中取出request
-                val request = queue!!.poll(name)
+                val request = queue.poll(name)
 
                 if (request != null) {
 
@@ -321,7 +321,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                     }
 
                     // request正在处理
-                    downloader!!.download(request)
+                    downloader.download(request)
                             .map { response ->
                                 val page = Page()
                                 page.request = request
@@ -356,7 +356,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                             .map { page ->
                                 if (parser != null) {
 
-                                    parser!!.process(page)
+                                    parser.process(page)
                                 }
 
                                 page
@@ -453,7 +453,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     fun resume() {
 
         if (stat.get() == SPIDER_STATUS_PAUSE) {
-            this.pauseCountDown!!.countDown()
+            this.pauseCountDown.countDown()
             this.pause = false
             stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING)
         }
