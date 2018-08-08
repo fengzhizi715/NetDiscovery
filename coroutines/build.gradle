@@ -16,7 +16,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.23.0'
     implementation project(":core")
 }
 
@@ -25,4 +25,10 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'     // avoid compiler reports a warning every time when we use the experimental coroutines
+    }
 }
