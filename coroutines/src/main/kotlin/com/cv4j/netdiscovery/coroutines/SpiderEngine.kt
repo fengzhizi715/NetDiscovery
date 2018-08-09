@@ -57,12 +57,12 @@ class SpiderEngine private constructor(@field:Getter
 
             Arrays.asList(*uaList)
                     .parallelStream()
-                    .forEach { name ->
+                    .forEach {
 
                         var input: InputStream? = null
 
                         try {
-                            input = this.javaClass.getResourceAsStream(name)
+                            input = this.javaClass.getResourceAsStream(it)
                             val inputString = IOUtils.inputStream2String(input!!)
                             if (Preconditions.isNotBlank(inputString)) {
                                 val ss = inputString.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -321,12 +321,7 @@ class SpiderEngine private constructor(@field:Getter
      *
      * @param name
      */
-    fun stopSpider(name: String) {
-
-        val spider = spiders[name]
-
-        spider?.stop()
-    }
+    fun stopSpider(name: String) = spiders[name]?.stop()
 
     /**
      * 停止所有的爬虫程序
