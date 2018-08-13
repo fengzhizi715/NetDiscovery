@@ -67,6 +67,10 @@ public class Spider {
 
     private long initialDelay = 0;
 
+    private int maxRetries = 3;
+
+    private int retryDelayMillis = 1000;
+
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
 
@@ -260,6 +264,28 @@ public class Spider {
         return this;
     }
 
+    public Spider maxRetries(int maxRetries) {
+
+        checkIfRunning();
+
+        if (maxRetries>0) {
+            this.maxRetries = maxRetries;
+        }
+
+        return this;
+    }
+
+    public Spider retryDelayMillis(int retryDelayMillis) {
+
+        checkIfRunning();
+
+        if (retryDelayMillis>0) {
+            this.retryDelayMillis = retryDelayMillis;
+        }
+
+        return this;
+    }
+
     public Spider downloader(Downloader downloader) {
 
         checkIfRunning();
@@ -436,7 +462,7 @@ public class Spider {
                                     return page;
                                 }
                             })
-                            .retryWhen(new RetryWithDelay(3,1000,request.getUrl()))
+                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl()))
                             .observeOn(Schedulers.io())
                             .subscribe(new Consumer<Page>() {
 
