@@ -13,6 +13,7 @@ import com.cv4j.netdiscovery.core.parser.selector.Json;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
+import com.cv4j.netdiscovery.core.utils.RetryWithDelay;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
@@ -435,6 +436,7 @@ public class Spider {
                                     return page;
                                 }
                             })
+                            .retryWhen(new RetryWithDelay(3,1000))
                             .observeOn(Schedulers.io())
                             .subscribe(new Consumer<Page>() {
 
