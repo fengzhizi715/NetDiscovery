@@ -399,6 +399,7 @@ public class Spider {
 
                     // request正在处理
                     downloader.download(request)
+                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl()))
                             .map(new Function<Response, Page>() {
 
                                 @Override
@@ -462,7 +463,6 @@ public class Spider {
                                     return page;
                                 }
                             })
-                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl()))
                             .observeOn(Schedulers.io())
                             .subscribe(new Consumer<Page>() {
 
