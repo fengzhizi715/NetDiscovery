@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import lombok.extern.slf4j.Slf4j;
@@ -11,16 +12,24 @@ import java.util.concurrent.TimeUnit;
  * Created by tony on 2018/8/13.
  */
 @Slf4j
-public class RetryWithDelay implements Function<Flowable<Throwable>, Publisher> {
+public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publisher<T>> {
 
     private int retryCount=0;
     private int maxRetries;
     private int retryDelayMillis;
+    private String url;
 
     public RetryWithDelay(int maxRetries,int retryDelayMillis) {
 
         this.maxRetries = maxRetries;
         this.retryDelayMillis = retryDelayMillis;
+    }
+
+    public RetryWithDelay(int maxRetries,int retryDelayMillis,String url) {
+
+        this.maxRetries = maxRetries;
+        this.retryDelayMillis = retryDelayMillis;
+        this.url = url;
     }
 
     @Override
@@ -30,10 +39,16 @@ public class RetryWithDelay implements Function<Flowable<Throwable>, Publisher> 
             public Publisher<?> apply(Throwable throwable) throws Exception {
                 if (++retryCount <= maxRetries) {
 
-                    log.info("get error, it will try after " + retryDelayMillis
-                            + " millisecond, retry count " + retryCount);
-                    // When this Observable calls onNext, the original
-                    // Observable will be retried (i.e. re-subscribed).
+                    if (Preconditions.isNotBlank(url)) {
+
+                        log.info("url:"+url+" get error, it will try after " + retryDelayMillis
+                                + " millisecond, retry count " + retryCount);
+                    } else {
+
+                        log.info("get error, it will try after " + retryDelayMillis
+                                + " millisecond, retry count " + retryCount);
+                    }
+
                     return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS);
 
                 } else {

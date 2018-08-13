@@ -436,7 +436,7 @@ public class Spider {
                                     return page;
                                 }
                             })
-                            .retryWhen(new RetryWithDelay(3,1000))
+                            .retryWhen(new RetryWithDelay(3,1000,request.getUrl()))
                             .observeOn(Schedulers.io())
                             .subscribe(new Consumer<Page>() {
 
