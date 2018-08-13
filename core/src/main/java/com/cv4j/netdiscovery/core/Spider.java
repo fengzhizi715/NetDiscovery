@@ -399,7 +399,7 @@ public class Spider {
 
                     // request正在处理
                     downloader.download(request)
-                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl()))
+                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl())) // 对网络请求的重试机制
                             .map(new Function<Response, Page>() {
 
                                 @Override
@@ -538,6 +538,10 @@ public class Spider {
         }
     }
 
+    /**
+     * 如果爬虫使用了repeatRequest
+     * 爬虫需要停止时，需要使用该方法
+     */
     public void forceStop() {
 
         compositeDisposable.clear();
