@@ -483,11 +483,13 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         val SPIDER_STATUS_RESUME = 3
         val SPIDER_STATUS_STOPPED = 4
 
+        @JvmStatic
         fun create(): Spider {
 
             return Spider()
         }
 
+        @JvmStatic
         fun create(queue: Queue?): Spider {
 
             return if (queue != null) Spider(queue) else Spider()

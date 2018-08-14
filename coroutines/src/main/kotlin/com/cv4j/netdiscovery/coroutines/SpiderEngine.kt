@@ -336,11 +336,13 @@ class SpiderEngine private constructor(@field:Getter
 
     companion object {
 
+        @JvmStatic
         fun create(): SpiderEngine {
 
             return SpiderEngine()
         }
 
+        @JvmStatic
         fun create(queue: Queue): SpiderEngine {
 
             return SpiderEngine(queue)
