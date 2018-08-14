@@ -24,6 +24,7 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import lombok.Getter
 import org.reactivestreams.Publisher
 import java.io.FileNotFoundException
@@ -270,13 +271,10 @@ class SpiderEngine private constructor(@field:Getter
 
             spiders.entries
                     .forEach{
-                        launch(CommonPool) {
-
+                        runBlocking(CommonPool) {
                             it.value.run()
                         }
                     }
-
-
 
         }
     }
