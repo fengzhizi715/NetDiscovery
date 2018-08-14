@@ -376,7 +376,6 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                         }?.apply {
 
                             println(url)
-                            println(this.html.get())
 
                             if (request.afterRequest != null) {
 

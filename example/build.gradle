@@ -21,6 +21,7 @@ dependencies {
     implementation project(":selenium")
     implementation project(":dsl")
     implementation project(":htmlunit")
+    implementation project(":coroutines")
 
     implementation "redis.clients:jedis:${libs.jedis}"
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
