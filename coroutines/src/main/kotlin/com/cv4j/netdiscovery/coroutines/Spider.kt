@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.coroutines
 import com.cv4j.netdiscovery.core.config.Constant
 import com.cv4j.netdiscovery.core.domain.Page
 import com.cv4j.netdiscovery.core.domain.Request
+import com.cv4j.netdiscovery.core.domain.Response
 import com.cv4j.netdiscovery.core.downloader.Downloader
 import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader
 import com.cv4j.netdiscovery.core.exception.SpiderException
@@ -12,6 +13,7 @@ import com.cv4j.netdiscovery.core.parser.selector.Json
 import com.cv4j.netdiscovery.core.pipeline.Pipeline
 import com.cv4j.netdiscovery.core.queue.DefaultQueue
 import com.cv4j.netdiscovery.core.queue.Queue
+import com.cv4j.netdiscovery.core.utils.RetryWithDelay
 import com.cv4j.netdiscovery.core.utils.Utils
 import com.cv4j.proxy.ProxyPool
 import com.safframework.tony.common.utils.IOUtils
@@ -327,7 +329,9 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                         }
 
                         // request正在处理
-                        val download = downloader.download(request).await()
+                        val download = downloader.download(request)
+                                .retryWhen(RetryWithDelay<Response>(3,1000,request.url))
+                                .await()
 
                         download?.run {
 
@@ -372,6 +376,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                         }?.apply {
 
                             println(url)
+                            println(this.html.get())
 
                             if (request.afterRequest != null) {
 
