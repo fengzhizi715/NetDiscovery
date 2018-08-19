@@ -21,6 +21,7 @@ import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.rx2.await
 import java.nio.charset.Charset
@@ -462,15 +463,17 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         }
     }
 
-    private fun initialDelay() {
+    private suspend fun initialDelay() {
 
         if (initialDelay > 0) {
 
-            try {
-                Thread.sleep(initialDelay)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+//            try {
+//                Thread.sleep(initialDelay)
+//            } catch (e: InterruptedException) {
+//                e.printStackTrace()
+//            }
+
+            delay(initialDelay,TimeUnit.MILLISECONDS)
 
         }
     }
