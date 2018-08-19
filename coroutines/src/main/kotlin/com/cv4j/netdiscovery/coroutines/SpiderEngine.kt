@@ -25,6 +25,7 @@ import io.vertx.ext.web.handler.BodyHandler
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.withContext
 import lombok.Getter
 import org.reactivestreams.Publisher
 import java.io.FileNotFoundException
@@ -285,23 +286,23 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun runWithRepeat() {
 
-        if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
+        runBlocking(CommonPool) {
+            if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
-            Flowable.fromIterable(spiders.values)
-                    .flatMap(Function<Spider, Publisher<*>> {
-                        Flowable.just(it)
-                                .subscribeOn(Schedulers.io())
-                                .map {
-
-                                    launch(CommonPool) {
+                Flowable.fromIterable(spiders.values)
+                        .flatMap(Function<Spider, Publisher<*>> {
+                            Flowable.just(it)
+                                    .subscribeOn(Schedulers.io())
+                                    .map {
                                         it.run()
-                                    }
 
-                                    Flowable.empty<Any>()
-                                }
-                    })
-                    .subscribe()
+                                        Flowable.empty<Any>()
+                                    }
+                        })
+                        .subscribe()
+            }
         }
+
     }
 
     /**
