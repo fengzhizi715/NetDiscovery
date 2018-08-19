@@ -11,8 +11,9 @@ fun main(args: Array<String>) {
     val spiderEngine = SpiderEngine.create()
 
     spiderEngine
-            .addSpider(Spider.create().name("tony1").url("http://www.163.com"))
-            .addSpider(Spider.create().name("tony2").url("http://www.126.com"))
-            .addSpider(Spider.create().name("tony3").url("https://www.baidu.com"))
-            .run()
+            .addSpider(Spider.create().name("tony1").repeatRequest(1000,"http://www.163.com").initialDelay(1200))
+            .addSpider(Spider.create().name("tony2").repeatRequest(1000,"http://www.126.com").initialDelay(1200))
+            .addSpider(Spider.create().name("tony3").repeatRequest(1000,"https://www.baidu.com").initialDelay(1200))
+            .httpd(8080)
+            .runWithRepeat()
 }
