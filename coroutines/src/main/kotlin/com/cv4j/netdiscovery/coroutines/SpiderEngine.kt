@@ -286,17 +286,62 @@ class SpiderEngine private constructor(@field:Getter
         runBlocking(CommonPool) {
             if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
-                Flowable.fromIterable(spiders.values)
-                        .flatMap(Function<Spider, Publisher<*>> {
-                            Flowable.just(it)
-                                    .subscribeOn(Schedulers.io())
-                                    .map {
-                                        it.run()
+                val length = spiders.size
 
-                                        Flowable.empty<Any>()
-                                    }
-                        })
-                        .subscribe()
+                if (length > 128) {
+
+                    var i = 0
+
+                    while (i < length) {
+
+                        if (i + 128 < length) {
+
+                            val temp = spiders.toList().subList(i, i + 128)
+
+                            Flowable.fromIterable(temp.toMap().values)
+                                    .flatMap(Function<Spider, Publisher<*>> {
+                                        Flowable.just(it)
+                                                .subscribeOn(Schedulers.io())
+                                                .map {
+                                                    it.run()
+
+                                                    Flowable.empty<Any>()
+                                                }
+                                    })
+                                    .subscribe()
+                        } else {
+
+                            val temp = spiders.toList().subList(i, length)
+
+                            Flowable.fromIterable(temp.toMap().values)
+                                    .flatMap(Function<Spider, Publisher<*>> {
+                                        Flowable.just(it)
+                                                .subscribeOn(Schedulers.io())
+                                                .map {
+                                                    it.run()
+
+                                                    Flowable.empty<Any>()
+                                                }
+                                    })
+                                    .subscribe()
+                        }
+
+                        i += 128
+                    }
+
+                } else {
+                    Flowable.fromIterable(spiders.values)
+                            .flatMap(Function<Spider, Publisher<*>> {
+                                Flowable.just(it)
+                                        .subscribeOn(Schedulers.io())
+                                        .map {
+                                            it.run()
+
+                                            Flowable.empty<Any>()
+                                        }
+                            })
+                            .subscribe()
+                }
             }
         }
 
