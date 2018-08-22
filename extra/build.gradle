@@ -22,6 +22,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:${libs.okhttp}"
 
     implementation "redis.clients:jedis:${libs.jedis}"
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
 

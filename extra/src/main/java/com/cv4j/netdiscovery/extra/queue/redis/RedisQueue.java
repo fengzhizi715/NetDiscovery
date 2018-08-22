@@ -1,9 +1,11 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
+import com.google.gson.Gson;
 import com.safframework.tony.common.utils.Preconditions;
 import org.apache.commons.codec.digest.DigestUtils;
 import redis.clients.jedis.Jedis;
@@ -22,6 +24,8 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
     private static final String ITEM_PREFIX = "item_";
 
     protected JedisPool pool;
+
+    private Gson gson = new Gson();
 
     public RedisQueue(String host) {
 
@@ -117,9 +121,10 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             String key = ITEM_PREFIX + url;
             String field = DigestUtils.shaHex(url);
             byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
-
+            System.out.println("bytes="+new String(bytes));
             if (bytes != null) {
-                Request o = JSON.parseObject(new String(bytes), Request.class);
+
+                Request o = gson.fromJson(new String(bytes),Request.class);
                 return o;
             }
 
