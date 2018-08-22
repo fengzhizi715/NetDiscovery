@@ -63,4 +63,4 @@ buildscript {
 tasks.getByPath(":core:bintrayUpload").enabled = true
 tasks.getByPath(":dsl:bintrayUpload").enabled = false
 tasks.getByPath(":extra:bintrayUpload").enabled = true
-tasks.getByPath(":selenium:bintrayUpload").enabled = true
+tasks.getByPath(":selenium:bintrayUpload").enabled = false
