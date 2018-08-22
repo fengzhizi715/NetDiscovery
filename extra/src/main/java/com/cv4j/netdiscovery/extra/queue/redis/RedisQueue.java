@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
+import com.safframework.tony.common.utils.Preconditions;
 import org.apache.commons.codec.digest.DigestUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -64,13 +65,43 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
         Jedis jedis = pool.getResource();
         try {
             jedis.rpush(getQueueKey(request.getSpiderName()), request.getUrl());
-            String field = DigestUtils.shaHex(request.getUrl());
-            String value = JSON.toJSONString(request);
-            jedis.hset((ITEM_PREFIX + request.getUrl()), field, value);
+
+            if (hasExtraRequestInfo(request)) {
+
+                String field = DigestUtils.shaHex(request.getUrl());
+                String value = JSON.toJSONString(request);
+                jedis.hset((ITEM_PREFIX + request.getUrl()), field, value);
+            }
+
         } finally {
             jedis.close();
         }
 
+    }
+
+    private boolean hasExtraRequestInfo(Request request) {
+
+        if (request == null) {
+            return false;
+        }
+
+        if (Preconditions.isNotBlank(request.getHeader())) {
+            return true;
+        }
+
+        if (Preconditions.isNotBlank(request.getCharset())) {
+            return true;
+        }
+
+        if (Preconditions.isNotBlank(request.getExtras())) {
+            return true;
+        }
+
+        if (request.getPriority()>0) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -86,6 +117,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             String key = ITEM_PREFIX + url;
             String field = DigestUtils.shaHex(url);
             byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
+
             if (bytes != null) {
                 Request o = JSON.parseObject(new String(bytes), Request.class);
                 return o;
