@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
-import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
@@ -72,7 +71,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             if (hasExtraRequestInfo(request)) {
 
                 String field = DigestUtils.shaHex(request.getUrl());
-                String value = JSON.toJSONString(request);
+                String value = gson.toJson(request);
                 jedis.hset((ITEM_PREFIX + request.getUrl()), field, value);
             }
 
