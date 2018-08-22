@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
@@ -25,7 +24,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
     protected JedisPool pool;
 
-    private Gson gson = new Gson();
+    protected Gson gson = new Gson();
 
     public RedisQueue(String host) {
 

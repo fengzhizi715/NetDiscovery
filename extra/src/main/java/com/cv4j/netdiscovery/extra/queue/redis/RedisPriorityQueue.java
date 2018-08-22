@@ -101,7 +101,8 @@ public class RedisPriorityQueue extends RedisQueue {
         String field = DigestUtils.shaHex(url);
         byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
         if (bytes != null)
-            return JSON.parseObject(new String(bytes), Request.class);
+            return gson.fromJson(new String(bytes),Request.class);
+
         return new Request(url);
     }
 }
