@@ -35,6 +35,9 @@ public class URLParser implements Serializable {
 
     private boolean hasDomain = true;
 
+    public URLParser() {
+    }
+
     public URLParser(String url) throws MalformedURLException {
         this(url, "utf-8");
     }
