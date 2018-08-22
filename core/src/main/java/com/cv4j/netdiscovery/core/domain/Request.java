@@ -8,6 +8,7 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.http.HttpMethod;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
  * Created by tony on 2017/12/23.
  */
 @Getter
-public class Request {
+public class Request implements Serializable {
 
     private String url;
 

@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.utils;
 
 import com.safframework.tony.common.utils.Preconditions;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * Created by tony on 2018/2/3.
  */
-public class URLParser {
+public class URLParser implements Serializable {
 
     private String host;
 
