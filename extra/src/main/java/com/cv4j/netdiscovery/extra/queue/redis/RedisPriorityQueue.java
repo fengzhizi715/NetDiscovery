@@ -90,7 +90,7 @@ public class RedisPriorityQueue extends RedisQueue {
 
         if (request.getExtras() != null) {
             String field = DigestUtils.shaHex(request.getUrl());
-            String value = JSON.toJSONString(request);
+            String value = gson.toJson(request);
             jedis.hset(getItemKey(request), field, value);
         }
     }
