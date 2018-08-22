@@ -121,7 +121,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             String key = ITEM_PREFIX + url;
             String field = DigestUtils.shaHex(url);
             byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
-            System.out.println("bytes="+new String(bytes));
+
             if (bytes != null) {
 
                 Request o = gson.fromJson(new String(bytes),Request.class);
