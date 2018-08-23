@@ -2,19 +2,13 @@ package com.cv4j.netdiscovery.extra.queue.kafka;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
-import com.safframework.tony.common.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
-import org.apache.kafka.common.serialization.Serializer;
+import org.apache.kafka.common.TopicPartition;
 
 import java.util.Arrays;
-import java.util.Properties;
 
 /**
  * Created by tony on 2018/1/28.
@@ -22,28 +16,29 @@ import java.util.Properties;
 public class KafkaQueue extends AbstractQueue {
 
     private KafkaProducer<String,Request> producer;
-    private KafkaConsumer<String, Request> kafkaConsumer;
+    private KafkaConsumer<String, Request> consumer;
     private long timeout = 1000;
+    private int partition = 0;
 
-    public KafkaQueue(Properties producerProperties,Properties consumeProperties,String spiderName) {
+    public KafkaQueue(KafkaQueueConfig kafkaQueueConfig) {
 
-        producer = new KafkaProducer<String, Request>(producerProperties);
-        kafkaConsumer = new KafkaConsumer<>(consumeProperties);
-        kafkaConsumer.subscribe(Arrays.asList(spiderName));
-    }
+        producer = new KafkaProducer<String, Request>(kafkaQueueConfig.getProducerProperties());
+        consumer = new KafkaConsumer<>(kafkaQueueConfig.getConsumeProperties());
 
-    public KafkaQueue(Properties producerProperties, Properties consumeProperties, Serializer<String> keySerializer, Serializer<Request> valueSerializer,String spiderName) {
+        if (kafkaQueueConfig.getPartition()>0) {
 
-        producer = new KafkaProducer<String, Request>(producerProperties,keySerializer,valueSerializer);
-        kafkaConsumer = new KafkaConsumer<>(consumeProperties);
-        kafkaConsumer.subscribe(Arrays.asList(spiderName));
+            partition = kafkaQueueConfig.getPartition();
+        }
+
+        TopicPartition topicPartition = new TopicPartition(kafkaQueueConfig.getTopicName(), partition);
+        consumer.assign(Arrays.asList(topicPartition));
     }
 
     @Override
     protected void pushWhenNoDuplicate(Request request) {
 
         try {
-            producer.send(new ProducerRecord<String, Request>(request.getSpiderName(), request));
+            producer.send(new ProducerRecord<String, Request>(request.getSpiderName(),partition,null, request));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,7 +47,7 @@ public class KafkaQueue extends AbstractQueue {
     @Override
     public Request poll(String spiderName) {
 
-        ConsumerRecords<String, Request> records = kafkaConsumer.poll(timeout);
+        ConsumerRecords<String, Request> records = consumer.poll(timeout);
 
         if (records!=null && records.iterator()!=null && records.count()>0) {
 
