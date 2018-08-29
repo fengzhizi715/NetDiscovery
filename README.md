@@ -10,8 +10,9 @@
 ---|:-------------:
 netdiscovery-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)
 netdiscovery-extra|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)
-netdiscovery-selenium|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)|
+netdiscovery-selenium|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)
 netdiscovery-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
+netdiscovery-coroutines| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-coroutines/_latestVersion)
 
 
 NetDiscover 主要是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
