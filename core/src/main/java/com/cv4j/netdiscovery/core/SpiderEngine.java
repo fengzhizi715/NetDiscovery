@@ -177,6 +177,7 @@ public class SpiderEngine {
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
+                    entity.setConsumedRequestSize(entity.getTotalRequestSize()-entity.getLeftRequestSize());
                     entity.setQueueType(spider.getQueue().getClass().getSimpleName());
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
@@ -258,6 +259,7 @@ public class SpiderEngine {
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
+                    entity.setConsumedRequestSize(entity.getTotalRequestSize()-entity.getLeftRequestSize());
                     entity.setQueueType(spider.getQueue().getClass().getSimpleName());
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
                     list.add(entity);

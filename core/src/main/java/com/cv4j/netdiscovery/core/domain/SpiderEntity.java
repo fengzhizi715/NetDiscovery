@@ -10,8 +10,9 @@ public class SpiderEntity {
 
     private String spiderName;
     private int spiderStatus;
-    private int leftRequestSize;
-    private int totalRequestSize;
+    private int leftRequestSize;     // 剩余的请求数
+    private int totalRequestSize;    // 总共的请求数
+    private int consumedRequestSize; // 已消费的请求数
     private String queueType;
     private String downloaderType;
 }
