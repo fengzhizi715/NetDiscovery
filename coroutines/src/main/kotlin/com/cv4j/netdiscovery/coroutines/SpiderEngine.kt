@@ -17,9 +17,7 @@ import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
-import io.vertx.core.Handler
 import io.vertx.core.http.HttpServer
-import io.vertx.core.http.HttpServerRequest
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
 import kotlinx.coroutines.experimental.*
@@ -150,6 +148,7 @@ class SpiderEngine private constructor(@field:Getter
                     entity.spiderStatus = spider.spiderStatus
                     entity.leftRequestSize = spider.queue.getLeftRequests(spider.name)
                     entity.totalRequestSize = spider.queue.getTotalRequests(spider.name)
+                    entity.consumedRequestSize = entity.totalRequestSize - entity.leftRequestSize
                     entity.queueType = spider.queue.javaClass.simpleName
                     entity.downloaderType = spider.downloader.javaClass.simpleName
 
@@ -228,6 +227,7 @@ class SpiderEngine private constructor(@field:Getter
                     entity.spiderStatus = spider.spiderStatus
                     entity.leftRequestSize = spider.queue.getLeftRequests(spider.name)
                     entity.totalRequestSize = spider.queue.getTotalRequests(spider.name)
+                    entity.consumedRequestSize = entity.totalRequestSize - entity.leftRequestSize
                     entity.queueType = spider.queue.javaClass.simpleName
                     entity.downloaderType = spider.downloader.javaClass.simpleName
                     list.add(entity)
@@ -243,7 +243,7 @@ class SpiderEngine private constructor(@field:Getter
             })
         }
 
-        server.requestHandler(Handler<HttpServerRequest> { router.accept(it) }).listen(port)
+        server.requestHandler{ router.accept(it) }.listen(port)
 
         return this
     }
@@ -269,11 +269,10 @@ class SpiderEngine private constructor(@field:Getter
 
             spiders.entries
                     .forEach{
-                        runBlocking(CommonPool) {
+                        launch(CommonPool) {
                             it.value.run()
                         }
                     }
-
         }
     }
 
@@ -283,8 +282,9 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun runWithRepeat() {
 
-        runBlocking(CommonPool) {
-            if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
+        if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
+
+            runBlocking(CommonPool) {
 
                 val length = spiders.size
 
@@ -299,7 +299,7 @@ class SpiderEngine private constructor(@field:Getter
                             val temp = spiders.toList().subList(i, i + 128)
 
                             Flowable.fromIterable(temp.toMap().values)
-                                    .flatMap(Function<Spider, Publisher<*>> {
+                                    .flatMap {
                                         Flowable.just(it)
                                                 .subscribeOn(Schedulers.io())
                                                 .map {
@@ -307,14 +307,15 @@ class SpiderEngine private constructor(@field:Getter
 
                                                     Flowable.empty<Any>()
                                                 }
-                                    })
+                                    }
                                     .subscribe()
+
                         } else {
 
                             val temp = spiders.toList().subList(i, length)
 
                             Flowable.fromIterable(temp.toMap().values)
-                                    .flatMap(Function<Spider, Publisher<*>> {
+                                    .flatMap {
                                         Flowable.just(it)
                                                 .subscribeOn(Schedulers.io())
                                                 .map {
@@ -322,7 +323,7 @@ class SpiderEngine private constructor(@field:Getter
 
                                                     Flowable.empty<Any>()
                                                 }
-                                    })
+                                    }
                                     .subscribe()
                         }
 
@@ -330,8 +331,10 @@ class SpiderEngine private constructor(@field:Getter
                     }
 
                 } else {
-                    Flowable.fromIterable(spiders.values)
+
+                    Flowable.fromIterable(spiders.toMap().values)
                             .flatMap(Function<Spider, Publisher<*>> {
+
                                 Flowable.just(it)
                                         .subscribeOn(Schedulers.io())
                                         .map {
@@ -339,10 +342,13 @@ class SpiderEngine private constructor(@field:Getter
 
                                             Flowable.empty<Any>()
                                         }
+
                             })
                             .subscribe()
+
                 }
             }
+
         }
 
     }

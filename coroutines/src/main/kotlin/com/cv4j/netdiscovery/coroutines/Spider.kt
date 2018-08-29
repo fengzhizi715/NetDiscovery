@@ -21,6 +21,7 @@ import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.rx2.await
@@ -305,12 +306,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         if (request.sleepTime > 0) {
 
-                            try {
-                                Thread.sleep(request.sleepTime)
-                            } catch (e: InterruptedException) {
-                                e.printStackTrace()
-                            }
-
+                            delay(request.sleepTime,TimeUnit.MILLISECONDS)
                         }
 
                         // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
@@ -466,13 +462,6 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     private suspend fun initialDelay() {
 
         if (initialDelay > 0) {
-
-//            try {
-//                Thread.sleep(initialDelay)
-//            } catch (e: InterruptedException) {
-//                e.printStackTrace()
-//            }
-
             delay(initialDelay,TimeUnit.MILLISECONDS)
 
         }

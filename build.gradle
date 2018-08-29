@@ -2,7 +2,7 @@ ext {
     libraries = [
             vertx                     : "3.5.1",
 
-            rxjava                    : "2.1.14",
+            rxjava                    : "2.2.1",
 
             httpclient                : "4.5.2",
 

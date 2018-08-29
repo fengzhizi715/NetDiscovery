@@ -308,7 +308,7 @@ public class SpiderEngine {
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来。
      * 只适用于SpiderEngine中有Spider使用了repeateRequest()
-     * 
+     *
      * 目前建议SpiderEngine中Spider个数不要超过128个。
      */
     public void runWithRepeat() {
