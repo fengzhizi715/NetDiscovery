@@ -181,10 +181,11 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 ![](images/spider_case2.jpeg)
 
 # Todo List:
-1. 增加 RabbitMQ 的支持
-2. 增加 elasticsearch 的支持
-3. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-4. 增加 Cooikes Pool
+1. 增加 Disruptor 的支持
+2. 增加 RabbitMQ 的支持
+3. 增加 elasticsearch 的支持
+4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+5. 增加 Cooikes Pool
 
 # 联系方式:
 
