@@ -1,6 +1,6 @@
 ext {
     libraries = [
-            vertx                     : "3.5.1",
+            vertx                     : "3.5.3",
 
             rxjava                    : "2.2.1",
 
