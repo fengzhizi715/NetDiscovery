@@ -17,9 +17,8 @@ public abstract class AbstractQueue implements Queue {
         return filter;
     }
 
-    public AbstractQueue setFilter(DuplicateFilter filter) {
+    public void setFilter(DuplicateFilter filter) {
         this.filter = filter;
-        return this;
     }
 
     @Override
