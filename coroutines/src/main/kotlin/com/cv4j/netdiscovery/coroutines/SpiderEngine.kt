@@ -56,24 +56,18 @@ class SpiderEngine private constructor(@field:Getter
                     .parallelStream()
                     .forEach {
 
-                        var input: InputStream? = null
+                        str ->
+                        var input = this.javaClass.getResourceAsStream(str)
+                        input?.use {
 
-                        try {
-                            input = this.javaClass.getResourceAsStream(it)
-                            val inputString = IOUtils.inputStream2String(input!!)
+                            val inputString = IOUtils.inputStream2String(input)
                             if (Preconditions.isNotBlank(inputString)) {
-                                val ss = inputString.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                                if (ss.size > 0) {
+                                val ss = inputString.split("\r\n".toRegex()).dropLastWhile { str.isEmpty() }.toTypedArray()
+                                if (ss.isNotEmpty()) {
 
-                                    Arrays.asList(*ss).forEach { ua -> UserAgent.uas.add(ua) }
+                                    Arrays.asList(*ss).forEach { UserAgent.uas.add(it) }
                                 }
                             }
-                        } catch (e: FileNotFoundException) {
-                            e.printStackTrace()
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        } finally {
-                            IOUtils.closeQuietly(input)
                         }
                     }
         }
