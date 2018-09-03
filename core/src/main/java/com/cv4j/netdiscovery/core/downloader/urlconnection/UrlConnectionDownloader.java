@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.cookies.Cookie;
-import com.cv4j.netdiscovery.core.cookies.CookieGroup;
 import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -21,7 +20,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -124,7 +122,7 @@ public class UrlConnectionDownloader implements Downloader {
             e.printStackTrace();
         }
 
-        return null;
+        return Maybe.empty();
     }
 
     @Override

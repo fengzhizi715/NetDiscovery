@@ -71,7 +71,7 @@ public class FileDownloader implements Downloader{
             e.printStackTrace();
         }
 
-        return null;
+        return Maybe.empty();
     }
 
     @Override
