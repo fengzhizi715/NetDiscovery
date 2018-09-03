@@ -16,7 +16,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation "net.sourceforge.htmlunit:htmlunit:${libs.htmlunit}"
-    implementation "io.vertx:vertx-redis-client:${libs.vertx}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
