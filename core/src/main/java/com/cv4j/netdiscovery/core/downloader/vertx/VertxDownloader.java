@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.cookies.Cookie;
-import com.cv4j.netdiscovery.core.cookies.CookieGroup;
 import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;

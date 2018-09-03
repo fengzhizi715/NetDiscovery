@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
-import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 import org.apache.commons.codec.digest.DigestUtils;

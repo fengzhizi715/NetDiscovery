@@ -19,6 +19,7 @@ dependencies {
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+    implementation "io.vertx:vertx-web:${libs.vertx}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 
     implementation project(":core")

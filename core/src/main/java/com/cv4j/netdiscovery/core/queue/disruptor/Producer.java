@@ -16,6 +16,7 @@ public class Producer {
 
     public void pushData(Request request){
         long sequence = ringBuffer.next();
+
         try{
             RequestEvent event = ringBuffer.get(sequence);
             event.setRequest(request);
