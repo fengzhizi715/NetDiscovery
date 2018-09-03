@@ -2,13 +2,9 @@ package com.cv4j.netdiscovery.core.queue.disruptor;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
-import com.lmax.disruptor.BlockingWaitStrategy;
-import com.lmax.disruptor.EventFactory;
-import com.lmax.disruptor.RingBuffer;
-import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.ProducerType;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -16,23 +12,38 @@ import java.util.concurrent.Executors;
  */
 public class DisruptorQueue extends AbstractQueue {
 
-    private Disruptor<RequestEvent> disruptor = null;
     private RingBuffer<RequestEvent> ringBuffer;
+    private Consumer consumer = null;
     private Producer producer = null;
 
     public DisruptorQueue() {
 
-        EventFactory<RequestEvent> eventFactory = new RequestEventFactory();
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        int ringBufferSize = 1024; // RingBuffer 大小，必须是 2 的 N 次方；
+        int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方；
 
-        disruptor = new Disruptor<RequestEvent>(eventFactory,ringBufferSize,executor,
-                ProducerType.MULTI,new BlockingWaitStrategy());
+        //创建ringBuffer
+        ringBuffer = RingBuffer.create(ProducerType.MULTI,
+                        new EventFactory<RequestEvent>() {
+                            @Override
+                            public RequestEvent newInstance() {
+                                return new RequestEvent();
+                            }
+                        },
+                        ringBufferSize ,
+                        new YieldingWaitStrategy());
 
-        disruptor.handleEventsWithWorkerPool(new Consumer());
-        disruptor.start();
+        SequenceBarrier barriers = ringBuffer.newBarrier();
 
-        ringBuffer = disruptor.getRingBuffer();
+        consumer = new Consumer();
+
+        WorkerPool<RequestEvent> workerPool =
+                new WorkerPool<RequestEvent>(ringBuffer,
+                        barriers,
+                        new IntEventExceptionHandler(),
+                        consumer);
+
+        ringBuffer.addGatingSequences(workerPool.getWorkerSequences());
+        workerPool.start(Executors.newSingleThreadExecutor());
+
         producer = new Producer(ringBuffer);
     }
 
@@ -51,13 +62,19 @@ public class DisruptorQueue extends AbstractQueue {
     @Override
     public Request poll(String spiderName) {
 
-        Request request = disruptor.get(disruptor.getCursor()-getTotalRequests(spiderName)+1).getRequest();
-        disruptor.getRingBuffer().next();
+        Request request = ringBuffer.get(ringBuffer.getCursor()-getTotalRequests(spiderName)+1).getRequest();
+        ringBuffer.next();
         return request;
     }
 
     @Override
     public int getLeftRequests(String spiderName) {
         return 0;
+    }
+
+    static class IntEventExceptionHandler implements ExceptionHandler {
+        public void handleEventException(Throwable ex, long sequence, Object event) {}
+        public void handleOnStartException(Throwable ex) {}
+        public void handleOnShutdownException(Throwable ex) {}
     }
 }
