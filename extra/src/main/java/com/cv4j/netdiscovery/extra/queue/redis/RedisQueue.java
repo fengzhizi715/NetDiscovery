@@ -156,6 +156,10 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
         }
     }
 
+    /**
+     * RedisQueue 无须使用该方法来获取Queue中总共的Request
+     * @return
+     */
     @Override
     public int getTotalRequestsCount() {
         return 0;

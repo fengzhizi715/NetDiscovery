@@ -31,7 +31,7 @@ public interface Queue {
     int getLeftRequests(String spiderName);
 
     /**
-     * Queue中总共到Request
+     * Queue中总共的Request
      *
      * @param spiderName
      * @return
