@@ -15,14 +15,14 @@ import com.safframework.tony.common.collection.NoEmptyHashMap
 import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import lombok.Getter
-import org.reactivestreams.Publisher
 import java.util.*
 
 /**
@@ -243,13 +243,7 @@ class SpiderEngine private constructor(@field:Getter
     /**
      * 关闭HttpServer
      */
-    fun closeHttpServer() {
-
-        if (server != null) {
-
-            server.close()
-        }
-    }
+    fun closeHttpServer() = server?.close()
 
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
@@ -325,8 +319,7 @@ class SpiderEngine private constructor(@field:Getter
                 } else {
 
                     Flowable.fromIterable(spiders.toMap().values)
-                            .flatMap(Function<Spider, Publisher<*>> {
-
+                            .flatMap{
                                 Flowable.just(it)
                                         .subscribeOn(Schedulers.io())
                                         .map {
@@ -335,7 +328,7 @@ class SpiderEngine private constructor(@field:Getter
                                             Flowable.empty<Any>()
                                         }
 
-                            })
+                            }
                             .subscribe()
 
                 }
@@ -350,10 +343,7 @@ class SpiderEngine private constructor(@field:Getter
      *
      * @param name
      */
-    fun getSpider(name: String): Spider? {
-
-        return spiders[name]
-    }
+    fun getSpider(name: String): Spider? = spiders[name]
 
     /**
      * 停止某个爬虫程序
