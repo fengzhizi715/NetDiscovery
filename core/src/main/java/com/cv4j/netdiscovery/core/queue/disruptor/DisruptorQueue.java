@@ -60,9 +60,4 @@ public class DisruptorQueue extends AbstractQueue {
     public int getLeftRequests(String spiderName) {
         return 0;
     }
-
-    @Override
-    public int getTotalRequests(String spiderName) {
-        return getFilter().getTotalRequestsCount();
-    }
 }

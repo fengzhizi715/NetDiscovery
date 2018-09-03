@@ -57,9 +57,4 @@ public class PriorityQueue extends AbstractQueue {
 
         return normalQueue.size();
     }
-
-    @Override
-    public int getTotalRequests(String spiderName) {
-        return getFilter().getTotalRequestsCount();
-    }
 }

@@ -32,4 +32,9 @@ public abstract class AbstractQueue implements Queue {
     }
 
     protected abstract void pushWhenNoDuplicate(Request request);
+
+    public int getTotalRequests(String spiderName) {
+
+        return getFilter().getTotalRequestsCount();
+    }
 }

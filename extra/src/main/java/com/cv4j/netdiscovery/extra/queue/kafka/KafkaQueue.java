@@ -62,10 +62,4 @@ public class KafkaQueue extends AbstractQueue {
 
         return 0;
     }
-
-    @Override
-    public int getTotalRequests(String spiderName) {
-
-        return getFilter().getTotalRequestsCount();
-    }
 }
