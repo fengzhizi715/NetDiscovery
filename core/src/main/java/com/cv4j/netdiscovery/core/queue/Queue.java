@@ -8,20 +8,22 @@ import com.cv4j.netdiscovery.core.domain.Request;
 public interface Queue {
 
     /**
-     * add a url to fetch
+     * 把Request请求添加到Queue
      *
      * @param request request
      */
     void push(Request request);
 
     /**
-     * get an url to crawl
+     * 从Queue中取出一个Request
+     *
      * @param spiderName
-     * @return the url to spider
+     * @return the request to spider
      */
     Request poll(String spiderName);
 
     /**
+     * Queue中还剩下多少Request没有消费
      *
      * @param spiderName
      * @return
@@ -29,6 +31,7 @@ public interface Queue {
     int getLeftRequests(String spiderName);
 
     /**
+     * Queue中总共到Request
      *
      * @param spiderName
      * @return

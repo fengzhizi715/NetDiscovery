@@ -10,11 +10,19 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class PriorityQueue extends AbstractQueue {
 
-    private final static int INITIAL_CAPACITY = 20;
+    private int capacity = 20;
 
     private ConcurrentLinkedQueue<Request> normalQueue = new ConcurrentLinkedQueue<>();
 
-    private PriorityBlockingQueue<Request> priorityQueue = new PriorityBlockingQueue<>(INITIAL_CAPACITY, (Request o1, Request o2) -> {
+    public PriorityQueue() {
+    }
+
+    public PriorityQueue(int capacity) {
+
+        this.capacity = capacity;
+    }
+
+    private PriorityBlockingQueue<Request> priorityQueue = new PriorityBlockingQueue<>(capacity, (Request o1, Request o2) -> {
         if (o1.getPriority() > o2.getPriority()) {
 
             return -1;
