@@ -23,9 +23,6 @@ import io.vertx.ext.web.handler.BodyHandler
 import kotlinx.coroutines.experimental.*
 import lombok.Getter
 import org.reactivestreams.Publisher
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
 import java.util.*
 
 /**
@@ -57,15 +54,16 @@ class SpiderEngine private constructor(@field:Getter
                     .forEach {
 
                         str ->
-                        var input = this.javaClass.getResourceAsStream(str)
-                        input?.use {
+                        this.javaClass.getResourceAsStream(str)?.use {
 
-                            val inputString = IOUtils.inputStream2String(input)
+                            val inputString = IOUtils.inputStream2String(it)
                             if (Preconditions.isNotBlank(inputString)) {
                                 val ss = inputString.split("\r\n".toRegex()).dropLastWhile { str.isEmpty() }.toTypedArray()
                                 if (ss.isNotEmpty()) {
 
-                                    Arrays.asList(*ss).forEach { UserAgent.uas.add(it) }
+                                    Arrays.asList(*ss).forEach {
+                                        UserAgent.uas.add(it)
+                                    }
                                 }
                             }
                         }
