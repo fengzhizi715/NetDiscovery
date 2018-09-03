@@ -6,6 +6,7 @@ import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.ProducerType;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by tony on 2018/9/1.
@@ -15,6 +16,7 @@ public class DisruptorQueue extends AbstractQueue {
     private RingBuffer<RequestEvent> ringBuffer;
     private Consumer consumer = null;
     private Producer producer = null;
+    private AtomicInteger count = new AtomicInteger(0);
 
     public DisruptorQueue() {
 
@@ -64,12 +66,18 @@ public class DisruptorQueue extends AbstractQueue {
 
         Request request = ringBuffer.get(ringBuffer.getCursor()-getTotalRequests(spiderName)+1).getRequest();
         ringBuffer.next();
+        count.incrementAndGet();
         return request;
     }
 
     @Override
     public int getLeftRequests(String spiderName) {
-        return 0;
+        return getTotalRequests(spiderName) - count.get()+1;
+    }
+
+    public int getTotalRequests(String spiderName) {
+
+        return consumer.getCount();
     }
 
     static class IntEventExceptionHandler implements ExceptionHandler {
