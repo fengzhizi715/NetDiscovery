@@ -6,7 +6,7 @@ ext {
 
             httpclient                : "4.5.2",
 
-            okhttp                    : "3.9.1",
+            okhttp                    : "3.11.0",
 
             jedis                     : "2.9.0",
 
@@ -16,7 +16,7 @@ ext {
 
             phantomjsdriver           : "1.4.4",
 
-            commons_pool2             : "2.5.0",
+            commons_pool2             : "2.6.0",
 
             lombok                    : "1.16.18",
 
