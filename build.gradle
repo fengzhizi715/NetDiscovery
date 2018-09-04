@@ -20,7 +20,9 @@ ext {
 
             lombok                    : "1.18.0",
 
-            proxypool                 : "1.1.9",
+            logback                   : "1.2.3",
+
+            proxypool                 : "1.1.10",
 
             tony_common_utils         : "1.2.5"
     ]
