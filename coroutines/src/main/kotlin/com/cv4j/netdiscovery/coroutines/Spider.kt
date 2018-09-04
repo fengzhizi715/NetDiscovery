@@ -90,8 +90,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             Arrays.asList(*urls)
                     .stream()
-                    .forEach { url ->
-                        val request = Request(url, name)
+                    .forEach {
+                        val request = Request(it, name)
                         request.charset(charset.name())
                         queue.push(request)
                     }
@@ -108,7 +108,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             Arrays.asList(*urls)
                     .stream()
-                    .forEach { url -> queue.push(Request(url, name)) }
+                    .forEach { queue.push(Request(it, name)) }
         }
 
         return this
@@ -120,8 +120,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach { url ->
-                val request = Request(url, name)
+            urls.forEach {
+                val request = Request(it, name)
                 request.charset(charset.name())
                 queue.push(request)
             }
@@ -136,7 +136,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach { url -> queue.push(Request(url, name)) }
+            urls.forEach { queue.push(Request(it, name)) }
         }
 
         return this
@@ -150,7 +150,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             Arrays.asList(*requests)
                     .stream()
-                    .forEach { request -> queue.push(request.spiderName(name)) }
+                    .forEach { queue.push(it.spiderName(name)) }
         }
 
         return this
