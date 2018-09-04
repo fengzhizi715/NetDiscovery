@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'junit:junit:4.12'
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 
@@ -33,7 +33,9 @@ dependencies {
     implementation "org.projectlombok:lombok:${libs.lombok}"
 
     implementation 'com.google.guava:guava:23.6-jre'
-    implementation 'us.codecraft:xsoup:0.3.1'
+    implementation ("us.codecraft:xsoup:0.3.1",{
+        exclude group: 'org.jsoup', module: 'jsoup'
+    })
     implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'org.jsoup:jsoup:1.10.3'
 
