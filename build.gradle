@@ -18,7 +18,7 @@ ext {
 
             commons_pool2             : "2.6.0",
 
-            lombok                    : "1.16.18",
+            lombok                    : "1.18.0",
 
             proxypool                 : "1.1.9",
 

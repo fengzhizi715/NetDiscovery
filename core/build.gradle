@@ -27,9 +27,9 @@ dependencies {
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 
-    compileOnly 'ch.qos.logback:logback-classic:1.1.7'
-    compileOnly 'ch.qos.logback:logback-core:1.1.7'
-    compileOnly 'ch.qos.logback:logback-access:1.1.7'
+    compileOnly 'ch.qos.logback:logback-classic:1.2.3'
+    compileOnly 'ch.qos.logback:logback-core:1.2.3'
+    compileOnly 'ch.qos.logback:logback-access:1.2.3'
     implementation "org.projectlombok:lombok:${libs.lombok}"
 
     implementation 'com.google.guava:guava:23.6-jre'
