@@ -133,7 +133,7 @@ class SpiderEngine private constructor(@field:Getter
 
                     // 所有的请求都会调用这个处理器处理
                     val response = routingContext.response()
-                    response.putHeader("content-type", Constant.CONTENT_TYPE_JSON)
+                    response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON)
 
                     val entity = SpiderEntity()
                     entity.spiderName = spider.name
@@ -157,7 +157,7 @@ class SpiderEngine private constructor(@field:Getter
 
                     // 所有的请求都会调用这个处理器处理
                     val response = routingContext.response()
-                    response.putHeader("content-type", Constant.CONTENT_TYPE_JSON)
+                    response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON)
 
                     val json = routingContext.getBodyAsJson()
 
@@ -203,7 +203,7 @@ class SpiderEngine private constructor(@field:Getter
 
                 // 所有的请求都会调用这个处理器处理
                 val response = routingContext.response()
-                response.putHeader("content-type", Constant.CONTENT_TYPE_JSON)
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON)
 
                 val list = ArrayList<SpiderEntity>()
 
