@@ -28,4 +28,6 @@ public class Constant {
     public static final String CONTENT_TYPE_JSON = "application/json";
 
     public static final String SET_COOKIES_HEADER = "Set-Cookie";
+
+    public static final String SUCCESS = "success";
 }

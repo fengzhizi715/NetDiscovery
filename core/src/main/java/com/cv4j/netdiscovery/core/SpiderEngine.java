@@ -183,7 +183,7 @@ public class SpiderEngine {
 
                     SpiderResponse spiderResponse = new SpiderResponse();
                     spiderResponse.setCode(Constant.OK_STATUS_CODE);
-                    spiderResponse.setMessage("success");
+                    spiderResponse.setMessage(Constant.SUCCESS);
                     spiderResponse.setData(entity);
 
                     // 写入响应并结束处理
@@ -232,7 +232,7 @@ public class SpiderEngine {
                     }
 
                     spiderStatusResponse.setCode(Constant.OK_STATUS_CODE);
-                    spiderStatusResponse.setMessage("success");
+                    spiderStatusResponse.setMessage(Constant.SUCCESS);
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(spiderStatusResponse));
@@ -267,7 +267,7 @@ public class SpiderEngine {
 
                 SpidersResponse spidersResponse = new SpidersResponse();
                 spidersResponse.setCode(Constant.OK_STATUS_CODE);
-                spidersResponse.setMessage("success");
+                spidersResponse.setMessage(Constant.SUCCESS);
                 spidersResponse.setData(list);
 
                 // 写入响应并结束处理

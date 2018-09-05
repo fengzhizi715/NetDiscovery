@@ -146,7 +146,7 @@ class SpiderEngine private constructor(@field:Getter
 
                     val spiderResponse = SpiderResponse()
                     spiderResponse.code = Constant.OK_STATUS_CODE
-                    spiderResponse.message = "success"
+                    spiderResponse.message = Constant.SUCCESS
                     spiderResponse.data = entity
 
                     // 写入响应并结束处理
@@ -192,7 +192,7 @@ class SpiderEngine private constructor(@field:Getter
                     }
 
                     spiderStatusResponse!!.code = Constant.OK_STATUS_CODE
-                    spiderStatusResponse.message = "success"
+                    spiderStatusResponse.message = Constant.SUCCESS
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(spiderStatusResponse))
@@ -227,7 +227,7 @@ class SpiderEngine private constructor(@field:Getter
 
                 val spidersResponse = SpidersResponse()
                 spidersResponse.code = Constant.OK_STATUS_CODE
-                spidersResponse.message = "success"
+                spidersResponse.message = Constant.SUCCESS
                 spidersResponse.data = list
 
                 // 写入响应并结束处理
