@@ -24,7 +24,7 @@ ext {
 
             proxypool                 : "1.1.10",
 
-            tony_common_utils         : "1.2.5"
+            tony_common_utils         : "1.2.6"
     ]
 }
 
