@@ -122,12 +122,10 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
             if (bytes != null) {
 
-                Request o = gson.fromJson(new String(bytes),Request.class);
-                return o;
+                return gson.fromJson(new String(bytes),Request.class);
             }
 
-            Request request = new Request(url);
-            return request;
+            return new Request(url);
         } finally {
             pool.returnResource(jedis);
         }
@@ -157,7 +155,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
     }
 
     /**
-     * RedisQueue 无须使用该方法来获取Queue中总共的Request
+     * RedisQueue 无须使用该方法来获取Queue中总共的Request数量，所有返回0
      * @return
      */
     @Override
