@@ -14,7 +14,7 @@ import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
-import io.reactivex.Flowable;
+import io.reactivex.*;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.http.HttpServer;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * 可以管理多个Spider的容器
@@ -309,31 +310,24 @@ public class SpiderEngine {
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来。
      * 只适用于SpiderEngine中有Spider使用了repeateRequest()
      *
-     * 目前建议SpiderEngine中Spider个数不要超过128个。
      */
     public void runWithRepeat() {
 
         if (Preconditions.isNotBlank(spiders)) {
 
             Flowable.fromIterable(spiders.values())
-                    .flatMap(new Function<Spider, Publisher<?>>() {
+                    .parallel(spiders.values().size())
+                    .runOn(Schedulers.io())
+                    .map(new Function<Spider, Void>() {
+
                         @Override
-                        public Publisher<?> apply(Spider spider) throws Exception {
+                        public Void apply(Spider spider) throws Exception {
 
-                            return Flowable.just(spider)
-                                    .subscribeOn(Schedulers.io())
-                                    .map(new Function<Spider, Publisher>() {
-
-                                        @Override
-                                        public Publisher apply(Spider spider) throws Exception {
-
-                                            spider.run();
-
-                                            return Flowable.empty();
-                                        }
-                                    });
+                            spider.run();
+                            return null;
                         }
                     })
+                    .sequential()
                     .subscribe();
         }
     }
