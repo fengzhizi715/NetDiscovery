@@ -33,32 +33,32 @@ repositories {
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.4'
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.5'
 
 ```
 
 netdiscovery-extra
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.4'
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.5'
 ```
 
 netdiscovery-selenium
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.4'
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.5'
 ```
 
 netdiscovery-dsl
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.4'
+implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.5'
 ```
 
 netdiscovery-coroutines
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.4'
+implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.5'
 ```
 
 # NetDiscovery 功能点：
