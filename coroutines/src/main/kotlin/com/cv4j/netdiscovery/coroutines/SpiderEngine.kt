@@ -269,69 +269,18 @@ class SpiderEngine private constructor(@field:Getter
     fun runWithRepeat() {
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
-
+            
             runBlocking(CommonPool) {
 
-                val length = spiders.size
-
-                if (length > 128) {
-
-                    var i = 0
-
-                    while (i < length) {
-
-                        if (i + 128 < length) {
-
-                            val temp = spiders.toList().subList(i, i + 128)
-
-                            Flowable.fromIterable(temp.toMap().values)
-                                    .flatMap {
-                                        Flowable.just(it)
-                                                .subscribeOn(Schedulers.io())
-                                                .map {
-                                                    it.run()
-
-                                                    Flowable.empty<Any>()
-                                                }
-                                    }
-                                    .subscribe()
-
-                        } else {
-
-                            val temp = spiders.toList().subList(i, length)
-
-                            Flowable.fromIterable(temp.toMap().values)
-                                    .flatMap {
-                                        Flowable.just(it)
-                                                .subscribeOn(Schedulers.io())
-                                                .map {
-                                                    it.run()
-
-                                                    Flowable.empty<Any>()
-                                                }
-                                    }
-                                    .subscribe()
+                Flowable.fromIterable(spiders.toMap().values)
+                        .parallel(spiders.values.size)
+                        .runOn(Schedulers.io())
+                        .map { spider ->
+                            spider.run()
+                            null
                         }
-
-                        i += 128
-                    }
-
-                } else {
-
-                    Flowable.fromIterable(spiders.toMap().values)
-                            .flatMap{
-                                Flowable.just(it)
-                                        .subscribeOn(Schedulers.io())
-                                        .map {
-                                            it.run()
-
-                                            Flowable.empty<Any>()
-                                        }
-
-                            }
-                            .subscribe()
-
-                }
+                        .sequential()
+                        .subscribe()
             }
 
         }
