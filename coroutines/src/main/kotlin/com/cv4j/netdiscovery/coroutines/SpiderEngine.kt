@@ -269,7 +269,7 @@ class SpiderEngine private constructor(@field:Getter
     fun runWithRepeat() {
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
-            
+
             runBlocking(CommonPool) {
 
                 Flowable.fromIterable(spiders.toMap().values)
