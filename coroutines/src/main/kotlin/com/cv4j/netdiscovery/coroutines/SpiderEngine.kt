@@ -165,7 +165,7 @@ class SpiderEngine private constructor(@field:Getter
 
                     if (json != null) {
 
-                        val status = json!!.getInteger("status")
+                        val status = json.getInteger("status")
 
                         spiderStatusResponse = SpiderStatusResponse()
 
