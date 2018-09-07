@@ -475,15 +475,9 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         val SPIDER_STATUS_STOPPED = 4
 
         @JvmStatic
-        fun create(): Spider {
-
-            return Spider()
-        }
+        fun create(): Spider = Spider()
 
         @JvmStatic
-        fun create(queue: Queue?): Spider {
-
-            return if (queue != null) Spider(queue) else Spider()
-        }
+        fun create(queue: Queue?): Spider = if (queue != null) Spider(queue) else Spider()
     }
 }
