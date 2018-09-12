@@ -197,27 +197,7 @@ public class Spider {
      */
     public Spider repeatRequest(long period, String url) {
 
-        checkIfRunning();
-
-        compositeDisposable
-                .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
-                .onBackpressureBuffer()
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-
-                        if (!pause) {
-                            Request request = new Request(url);
-                            request.checkDuplicate(false);
-                            request.spiderName(name);
-                            request.sleep(period);
-                            queue.push(request);
-                        }
-
-                    }
-                }));
-
-        return this;
+        return repeatRequest(period,url,"UTF-8");
     }
 
     /**
