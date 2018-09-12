@@ -39,11 +39,9 @@ fun configSpider(wrap:SpiderWrapper):Spider {
     val spider = Spider.create(wrap?.queue)
             .name(wrap?.name)
 
-    var urls = wrap?.urls
+    wrap?.urls?.let {
 
-    urls?.let {
-
-        spider.url(urls)
+        spider.url(it)
     }
 
     spider.downloader(wrap?.downloader)
