@@ -12,16 +12,14 @@ object TestDSL4Spider {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val spider = spider {
+        spider {
 
             name = "tony"
 
             urls = listOf("http://www.163.com/","https://www.baidu.com/")
 
             pipelines = listOf(ConsolePipeline())
-        }
-
-        spider.run()
+        }.run()
     }
 
 }
