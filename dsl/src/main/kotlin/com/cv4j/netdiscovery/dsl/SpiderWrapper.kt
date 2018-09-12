@@ -34,7 +34,7 @@ fun spider(init: SpiderWrapper.() -> Unit):Spider {
     return configSpider(wrap)
 }
 
-private fun configSpider(wrap:SpiderWrapper):Spider {
+fun configSpider(wrap:SpiderWrapper):Spider {
 
     val spider = Spider.create(wrap?.queue)
             .name(wrap?.name)

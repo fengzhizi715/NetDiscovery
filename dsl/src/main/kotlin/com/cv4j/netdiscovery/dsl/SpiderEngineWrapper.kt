@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.dsl
 
+import com.cv4j.netdiscovery.core.Spider
 import com.cv4j.netdiscovery.core.SpiderEngine
 import com.cv4j.netdiscovery.core.queue.Queue
 import com.cv4j.proxy.domain.Proxy
@@ -14,6 +15,15 @@ class SpiderEngineWrapper {
     var port: Int = 8080
 
     var proxyList:List<Proxy>? = null
+
+    val spiders = mutableSetOf<Spider>()
+
+    fun addSpider(block: SpiderWrapper.() -> Unit) {
+        val spiderWrapper = SpiderWrapper()
+        spiderWrapper.block()
+        val spider = configSpider(spiderWrapper)
+        spiders.add(spider)
+    }
 }
 
 fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
@@ -32,6 +42,11 @@ fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
     engine.proxyList(wrap?.proxyList)
 
     engine.httpd(wrap.port)
+
+    wrap.spiders.forEach {
+
+        engine.addSpider(it)
+    }
 
     return engine
 }
