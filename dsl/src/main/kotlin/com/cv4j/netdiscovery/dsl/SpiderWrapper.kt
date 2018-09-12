@@ -19,7 +19,7 @@ class SpiderWrapper {
 
     var downloader: Downloader? = null
 
-    var pipelines:Set<Pipeline>? = null
+    var pipelines:List<Pipeline>? = null
 
     var urls:List<String>? = null
 

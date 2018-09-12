@@ -18,7 +18,7 @@ object TestDSL4Spider {
 
             urls = listOf("http://www.163.com/","https://www.baidu.com/")
 
-            pipelines = setOf(ConsolePipeline())
+            pipelines = listOf(ConsolePipeline())
         }
 
         spider.run()
