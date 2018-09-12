@@ -14,6 +14,12 @@ object TestDSL4SpiderEngine {
         val spiderEngine = spiderEngine {
 
             port = 7070
+
+            addSpider {
+
+                name = "tony2"
+                urls = listOf("https://www.baidu.com")
+            }
         }
 
         val spider1 = spider {
@@ -21,18 +27,12 @@ object TestDSL4SpiderEngine {
             name = "tony1"
         }
 
-        spider1.repeatRequest(10000,"http://www.163.com")
+        spider1.repeatRequest(10000,"https://github.com/fengzhizi715")
                 .initialDelay(10000)
 
         spiderEngine.addSpider(spider1)
 
-        spiderEngine.addSpider(spider {
-
-            name = "tony2"
-            urls = listOf("https://www.baidu.com")
-        })
-
-        spiderEngine.runWithRepeat()
+        spiderEngine.run()
     }
 
 }

@@ -197,7 +197,7 @@ public class Spider {
      */
     public Spider repeatRequest(long period, String url) {
 
-        return repeatRequest(period,url,"UTF-8");
+        return repeatRequest(period,url,Constant.UTF_8);
     }
 
     /**
