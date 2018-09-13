@@ -275,7 +275,7 @@ public class Request implements Serializable {
     }
 
     /**
-     * 在request之前做的事情
+     * 在request之后做的事情
      */
     @FunctionalInterface
     public interface AfterRequest{
