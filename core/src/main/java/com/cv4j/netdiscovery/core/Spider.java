@@ -48,7 +48,7 @@ public class Spider {
     public final static int SPIDER_STATUS_INIT = 0;
     public final static int SPIDER_STATUS_RUNNING = 1;
     public final static int SPIDER_STATUS_PAUSE = 2;
-    public final static int SPIDER_STATUS_RESUME= 3;
+    public final static int SPIDER_STATUS_RESUME = 3;
     public final static int SPIDER_STATUS_STOPPED = 4;
 
     protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
@@ -85,7 +85,7 @@ public class Spider {
 
     private Spider(Queue queue) {
 
-        if (queue!=null) {
+        if (queue != null) {
             this.queue = queue;
         } else {
             this.queue = new DefaultQueue();
@@ -101,7 +101,7 @@ public class Spider {
 
     public static Spider create(Queue queue) {
 
-        return queue!=null?new Spider(queue):new Spider();
+        return queue != null ? new Spider(queue) : new Spider();
     }
 
     public Spider name(String name) {
@@ -191,23 +191,25 @@ public class Spider {
 
     /**
      * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
+     *
      * @param period 每隔一定的时间提交一次request
      * @param url
      * @return
      */
     public Spider repeatRequest(long period, String url) {
 
-        return repeatRequest(period,url,Constant.UTF_8);
+        return repeatRequest(period, url, Constant.UTF_8);
     }
 
     /**
      * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
+     *
      * @param period
      * @param url
      * @param charset 字符集
      * @return
      */
-    public Spider repeatRequest(long period, String url,String charset) {
+    public Spider repeatRequest(long period, String url, String charset) {
 
         checkIfRunning();
 
@@ -237,7 +239,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (initialDelay>0) {
+        if (initialDelay > 0) {
             this.initialDelay = initialDelay;
         }
 
@@ -248,7 +250,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (maxRetries>0) {
+        if (maxRetries > 0) {
             this.maxRetries = maxRetries;
         }
 
@@ -259,7 +261,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (retryDelayMillis>0) {
+        if (retryDelayMillis > 0) {
             this.retryDelayMillis = retryDelayMillis;
         }
 
@@ -270,7 +272,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (downloader!=null) {
+        if (downloader != null) {
             this.downloader = downloader;
         }
 
@@ -281,7 +283,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (parser!=null) {
+        if (parser != null) {
             this.parser = parser;
         }
 
@@ -292,7 +294,7 @@ public class Spider {
 
         checkIfRunning();
 
-        if (pipeline!=null) {
+        if (pipeline != null) {
             this.pipelines.add(pipeline);
         }
 
@@ -308,6 +310,7 @@ public class Spider {
 
     /**
      * 自动获取代理，从代理池组件中获取代理
+     *
      * @return
      */
     public Spider autoProxy() {
@@ -317,6 +320,7 @@ public class Spider {
 
     /**
      * 是否自动获取代理，如果是的话可以从代理池组件中获取代理
+     *
      * @param autoProxy
      * @return
      */
@@ -337,7 +341,7 @@ public class Spider {
             while (getSpiderStatus() != SPIDER_STATUS_STOPPED) {
 
                 //暂停抓取
-                if(pause) {
+                if (pause) {
                     try {
                         this.pauseCountDown.await();
                     } catch (InterruptedException e) {
@@ -352,7 +356,7 @@ public class Spider {
 
                 if (request != null) {
 
-                    if (request.getSleepTime()>0) {
+                    if (request.getSleepTime() > 0) {
 
                         try {
                             Thread.sleep(request.getSleepTime());
@@ -366,20 +370,20 @@ public class Spider {
 
                         Proxy proxy = ProxyPool.getProxy();
 
-                        if (proxy!=null && Utils.checkProxy(proxy)) {
+                        if (proxy != null && Utils.checkProxy(proxy)) {
                             request.proxy(proxy);
                         }
                     }
 
                     // request请求之前的处理
-                    if (request.getBeforeRequest()!=null) {
+                    if (request.getBeforeRequest() != null) {
 
                         request.getBeforeRequest().process(request);
                     }
 
                     // request正在处理
                     downloader.download(request)
-                            .retryWhen(new RetryWithDelay(maxRetries,retryDelayMillis,request.getUrl())) // 对网络请求的重试机制
+                            .retryWhen(new RetryWithDelay(maxRetries, retryDelayMillis, request.getUrl())) // 对网络请求的重试机制
                             .map(new Function<Response, Page>() {
 
                                 @Override
@@ -398,19 +402,19 @@ public class Spider {
                                     } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
 
                                         // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
-                                        page.putField(Constant.RESPONSE_JSON,new Json(new String(response.getContent())));
+                                        page.putField(Constant.RESPONSE_JSON, new Json(new String(response.getContent())));
 
                                         return page;
                                     } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
 
                                         // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                                         // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
-                                        page.putField(Constant.RESPONSE_JSONP,new String(response.getContent()));
+                                        page.putField(Constant.RESPONSE_JSONP, new String(response.getContent()));
 
                                         return page;
                                     } else {
 
-                                        page.putField(Constant.RESPONSE_RAW,response.getIs()); // 默认情况，保存InputStream
+                                        page.putField(Constant.RESPONSE_RAW, response.getIs()); // 默认情况，保存InputStream
 
                                         return page;
                                     }
@@ -451,7 +455,7 @@ public class Spider {
 
                                     log.info(page.getUrl());
 
-                                    if (request.getAfterRequest()!=null) {
+                                    if (request.getAfterRequest() != null) {
 
                                         request.getAfterRequest().process(page);
                                     }
@@ -460,7 +464,7 @@ public class Spider {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
 
-                                    log.error(throwable.getMessage());
+                                    log.error(throwable.getMessage(), throwable);
                                 }
                             });
                 } else {
@@ -478,7 +482,7 @@ public class Spider {
     private void checkIfRunning() {
 
         if (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
-            throw new SpiderException(String.format("Spider %s is already running!",name));
+            throw new SpiderException(String.format("Spider %s is already running!", name));
         }
     }
 
@@ -488,7 +492,7 @@ public class Spider {
 
             int statNow = getSpiderStatus();
             if (statNow == SPIDER_STATUS_RUNNING) {
-                throw new SpiderException(String.format("Spider %s is already running!",name));
+                throw new SpiderException(String.format("Spider %s is already running!", name));
             }
 
             if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
@@ -504,7 +508,7 @@ public class Spider {
 
     private void stopSpider(Downloader downloader) {
 
-        if (downloader!=null) {
+        if (downloader != null) {
             IOUtils.closeQuietly(downloader);
         }
 
@@ -514,7 +518,7 @@ public class Spider {
     public void stop() {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info(String.format("Spider %s stop success!",name));
+            log.info(String.format("Spider %s stop success!", name));
         }
     }
 
@@ -527,7 +531,7 @@ public class Spider {
         compositeDisposable.clear();
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info(String.format("Spider %s force stop success!",name));
+            log.info(String.format("Spider %s force stop success!", name));
         }
     }
 
@@ -545,7 +549,7 @@ public class Spider {
      */
     public void resume() {
 
-        if (stat.get()==SPIDER_STATUS_PAUSE) {
+        if (stat.get() == SPIDER_STATUS_PAUSE) {
             this.pauseCountDown.countDown();
             this.pause = false;
             stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
