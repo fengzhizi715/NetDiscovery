@@ -397,27 +397,22 @@ public class Spider {
                                     if (Utils.isTextType(response.getContentType())) { // text/html
 
                                         page.setHtml(new Html(response.getContent()));
-
-                                        return page;
                                     } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
 
                                         // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
                                         page.putField(Constant.RESPONSE_JSON, new Json(new String(response.getContent())));
-
-                                        return page;
                                     } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
 
                                         // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                                         // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
                                         page.putField(Constant.RESPONSE_JSONP, new String(response.getContent()));
-
-                                        return page;
                                     } else {
 
                                         page.putField(Constant.RESPONSE_RAW, response.getIs()); // 默认情况，保存InputStream
-
-                                        return page;
                                     }
+
+
+                                    return page;
                                 }
                             })
                             .map(new Function<Page, Page>() {
