@@ -91,9 +91,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
             Arrays.asList(*urls)
                     .stream()
                     .forEach {
-                        val request = Request(it, name)
-                        request.charset(charset.name())
-                        queue.push(request)
+
+                        queue.push(Request(it, name).charset(charset.name()))
                     }
         }
 
@@ -121,9 +120,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach {
-                val request = Request(it, name)
-                request.charset(charset.name())
-                queue.push(request)
+
+                queue.push(Request(it, name).charset(charset.name()))
             }
         }
 
@@ -162,26 +160,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
      * @param url
      * @return
      */
-    fun repeatRequest(period: Long, url: String): Spider {
-
-        checkIfRunning()
-
-        compositeDisposable
-                .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
-                        .onBackpressureBuffer()
-                        .subscribe {
-
-                            if (!pause) {
-                                val request = Request(url)
-                                request.checkDuplicate(false)
-                                request.spiderName(name)
-                                request.sleep(period)
-                                queue.push(request)
-                            }
-                        })
-
-        return this
-    }
+    fun repeatRequest(period: Long, url: String): Spider = repeatRequest(period, url, Constant.UTF_8)
 
     /**
      * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
