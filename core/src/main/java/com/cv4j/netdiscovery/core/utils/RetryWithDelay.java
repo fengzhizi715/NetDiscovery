@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -14,22 +15,22 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publisher<T>> {
 
-    private int retryCount=0;
+    private int retryCount = 0;
     private int maxRetries;
     private int retryDelayMillis;
-    private String url;
+    private Request request;
 
-    public RetryWithDelay(int maxRetries,int retryDelayMillis) {
+    public RetryWithDelay(int maxRetries, int retryDelayMillis) {
 
         this.maxRetries = maxRetries;
         this.retryDelayMillis = retryDelayMillis;
     }
 
-    public RetryWithDelay(int maxRetries,int retryDelayMillis,String url) {
+    public RetryWithDelay(int maxRetries, int retryDelayMillis, Request request) {
 
         this.maxRetries = maxRetries;
         this.retryDelayMillis = retryDelayMillis;
-        this.url = url;
+        this.request = request;
     }
 
     @Override
@@ -39,15 +40,18 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
             public Publisher<?> apply(Throwable throwable) throws Exception {
                 if (++retryCount <= maxRetries) {
 
-                    if (Preconditions.isNotBlank(url)) {
+                    if (Preconditions.isNotBlank(request.getUrl())) {
 
-                        log.info("url:"+url+" get error, it will try after " + retryDelayMillis
+                        log.info("url:" + request.getUrl() + " get error, it will try after " + retryDelayMillis
                                 + " millisecond, retry count " + retryCount);
                     } else {
 
                         log.info("get error, it will try after " + retryDelayMillis
                                 + " millisecond, retry count " + retryCount);
                     }
+
+                    // Redo beforeRequest.
+                    request.getBeforeRequest().process(request);
 
                     return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS);
 
