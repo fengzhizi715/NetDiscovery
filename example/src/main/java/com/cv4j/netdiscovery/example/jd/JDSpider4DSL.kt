@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.example.jd
 
-import com.cv4j.netdiscovery.core.Spider
 import com.cv4j.netdiscovery.dsl.seleniumDownloader
+import com.cv4j.netdiscovery.dsl.spider
 import com.cv4j.netdiscovery.selenium.Browser
 
 /**
@@ -12,32 +12,34 @@ object JDSpider4DSL {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val seleniumDownloader = seleniumDownloader {
+        spider {
 
-            path = "example/chromedriver"
-            browser = Browser.CHROME
+            name = "jd"
 
-            addAction {
-                action = BrowserAction()
+            urls = listOf("https://search.jd.com/")
+
+            downloader = seleniumDownloader {
+
+                path = "example/chromedriver"
+                browser = Browser.CHROME
+
+                addAction {
+                    action = BrowserAction()
+                }
+
+                addAction {
+                    action = SearchAction()
+                }
+
+                addAction {
+                    action = SortAction()
+                }
             }
 
-            addAction {
-                action = SearchAction()
-            }
+            parser = PriceParser()
 
-            addAction {
-                action = SortAction()
-            }
-        }
+            pipelines = listOf(PricePipeline())
 
-        val url = "https://search.jd.com/"
-
-        Spider.create()
-                .name("jd")
-                .url(url)
-                .downloader(seleniumDownloader)
-                .parser(PriceParser())
-                .pipeline(PricePipeline())
-                .run()
+        }.run()
     }
 }
