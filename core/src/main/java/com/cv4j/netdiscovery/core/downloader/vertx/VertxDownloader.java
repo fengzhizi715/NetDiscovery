@@ -31,7 +31,7 @@ public class VertxDownloader implements Downloader {
 
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
-    private Map<String,String> header;
+    private Map<String, String> header;
     private Set<Cookie> cookieSet;
 
     public VertxDownloader() {
@@ -54,36 +54,36 @@ public class VertxDownloader implements Downloader {
 
                 httpRequest = webClient.getAbs(request.getUrl());
 
-            } else if ("https".equals(request.getUrlParser().getProtocol())){
+            } else if ("https".equals(request.getUrlParser().getProtocol())) {
 
-                httpRequest = webClient.get(443,request.getUrlParser().getHost(),Preconditions.isNotBlank(request.getUrlParser().getQuery())?request.getUrlParser().getPath()+"?"+request.getUrlParser().getQuery():request.getUrlParser().getPath()).ssl(true);
+                httpRequest = webClient.get(443, request.getUrlParser().getHost(), Preconditions.isNotBlank(request.getUrlParser().getQuery()) ? request.getUrlParser().getPath() + "?" + request.getUrlParser().getQuery() : request.getUrlParser().getPath()).ssl(true);
             }
-        } else if (request.getHttpMethod() == HttpMethod.POST){
+        } else if (request.getHttpMethod() == HttpMethod.POST) {
 
             if ("http".equals(request.getUrlParser().getProtocol())) {
 
                 httpRequest = webClient.postAbs(request.getUrl());
 
-            } else if ("https".equals(request.getUrlParser().getProtocol())){
+            } else if ("https".equals(request.getUrlParser().getProtocol())) {
 
-                httpRequest = webClient.post(443,request.getUrlParser().getHost(),Preconditions.isNotBlank(request.getUrlParser().getQuery())?request.getUrlParser().getPath()+"?"+request.getUrlParser().getQuery():request.getUrlParser().getPath()).ssl(true);
+                httpRequest = webClient.post(443, request.getUrlParser().getHost(), Preconditions.isNotBlank(request.getUrlParser().getQuery()) ? request.getUrlParser().getPath() + "?" + request.getUrlParser().getQuery() : request.getUrlParser().getPath()).ssl(true);
             }
         }
 
         //设置请求头header
         if (Preconditions.isNotBlank(header)) {
 
-            for (Map.Entry<String, String> entry:header.entrySet()) {
-                httpRequest.putHeader(entry.getKey(),entry.getValue());
+            for (Map.Entry<String, String> entry : header.entrySet()) {
+                httpRequest.putHeader(entry.getKey(), entry.getValue());
             }
         }
 
         // 针对post请求，需要对header添加一些信息
-        if (request.getHttpMethod()==HttpMethod.POST) {
+        if (request.getHttpMethod() == HttpMethod.POST) {
 
             if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-                httpRequest.putHeader(Constant.CONTENT_TYPE ,request.getHttpRequestBody().getContentType());
+                httpRequest.putHeader(Constant.CONTENT_TYPE, request.getHttpRequestBody().getContentType());
             }
         }
 
@@ -97,10 +97,10 @@ public class VertxDownloader implements Downloader {
         HttpRequest<String> stringHttpRequest = httpRequest.as(BodyCodec.string(charset));
         Single<HttpResponse<String>> httpResponseSingle = null;
 
-        if (request.getHttpMethod()==HttpMethod.GET) {
+        if (request.getHttpMethod() == HttpMethod.GET) {
 
             httpResponseSingle = stringHttpRequest.rxSend();
-        } else if (request.getHttpMethod()==HttpMethod.POST) {
+        } else if (request.getHttpMethod() == HttpMethod.POST) {
 
             if (Preconditions.isNotBlank(request.getHttpRequestBody())) {
 
@@ -128,9 +128,9 @@ public class VertxDownloader implements Downloader {
                         if (request.isSaveCookie()) {
 
                             // save cookies
-                            CookieManager.getInsatance().saveCookie(request,cookieSet,stringHttpResponse.cookies());
+                            CookieManager.getInsatance().saveCookie(request, cookieSet, stringHttpResponse.cookies());
                         }
-                        
+
                         return response;
                     }
                 });
@@ -139,7 +139,8 @@ public class VertxDownloader implements Downloader {
     private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
-        options.setKeepAlive(true).setReuseAddress(true).setFollowRedirects(true);
+        options.setKeepAlive(true).setReuseAddress(true).setFollowRedirects(true).setConnectTimeout(10000)
+                .setIdleTimeout(10).setMaxWaitQueueSize(10);
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
@@ -163,7 +164,7 @@ public class VertxDownloader implements Downloader {
 
     public void close() {
 
-        if (webClient!=null) {
+        if (webClient != null) {
             webClient.close();
         }
     }
