@@ -16,7 +16,7 @@ class SpiderEngineWrapper {
 
     var proxyList:List<Proxy>? = null
 
-    val spiders = mutableSetOf<Spider>()
+    private val spiders = mutableSetOf<Spider>()
 
     fun addSpider(block: SpiderWrapper.() -> Unit) {
         val spiderWrapper = SpiderWrapper()
@@ -24,6 +24,8 @@ class SpiderEngineWrapper {
         val spider = configSpider(spiderWrapper)
         spiders.add(spider)
     }
+
+    fun getSpiders() = spiders
 }
 
 fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
@@ -43,7 +45,7 @@ fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
 
     engine.httpd(wrap.port)
 
-    wrap.spiders.forEach {
+    wrap.getSpiders().forEach {
 
         engine.addSpider(it)
     }
