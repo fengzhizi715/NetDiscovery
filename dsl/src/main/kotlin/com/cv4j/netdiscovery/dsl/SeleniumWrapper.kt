@@ -15,7 +15,7 @@ class SeleniumWrapper {
 
     var browser: Browser? = null
 
-    val actions = mutableListOf<SeleniumAction>()
+    private val actions = mutableListOf<SeleniumAction>()
 
     fun addAction(block: ActionWrapper.() -> Unit) {
 
@@ -26,6 +26,8 @@ class SeleniumWrapper {
             actions.add(it)
         }
     }
+
+    fun getActions() = actions
 }
 
 class ActionWrapper{
@@ -47,5 +49,5 @@ private fun configSeleniumDownloader(wrap: SeleniumWrapper): SeleniumDownloader 
     val config = WebDriverPoolConfig(wrap.path, wrap.browser)
     WebDriverPool.init(config)
 
-    return SeleniumDownloader(wrap.actions)
+    return SeleniumDownloader(wrap.getActions())
 }
