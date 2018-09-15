@@ -21,6 +21,7 @@ dependencies {
     implementation project(":core")
     implementation project(":selenium")
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
 }
 
 compileKotlin {

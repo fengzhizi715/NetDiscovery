@@ -12,7 +12,7 @@ ext {
 
             htmlunit                  : "2.31",
 
-            selenium_java             : "3.8.1",
+            selenium_java             : "3.14.0",
 
             phantomjsdriver           : "1.4.4",
 
