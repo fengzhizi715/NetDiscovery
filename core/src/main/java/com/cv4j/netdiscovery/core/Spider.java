@@ -383,7 +383,7 @@ public class Spider {
 
                     // request正在处理
                     downloader.download(request)
-                            .retryWhen(new RetryWithDelay(maxRetries, retryDelayMillis, request.getUrl())) // 对网络请求的重试机制
+                            .retryWhen(new RetryWithDelay(maxRetries, retryDelayMillis, request)) // 对网络请求的重试机制
                             .map(new Function<Response, Page>() {
 
                                 @Override
