@@ -17,5 +17,7 @@ inline fun WebDriver.elementByName(name: String, init: WebElement.() -> Unit) = 
 
 inline fun <T> WebDriver.elementByTag(tag: String, init: WebElement.() -> T): T = findElement(By.tagName(tag)).init()
 
+inline fun WebDriver.elementBySelector(selector: String, init: WebElement.() -> Unit) = findElement(By.cssSelector(selector)).init()
+
 inline fun WebDriver.elementByXpath(xpath: String, init: WebElement.() -> Unit) = findElement(By.xpath(xpath)).init()
 
