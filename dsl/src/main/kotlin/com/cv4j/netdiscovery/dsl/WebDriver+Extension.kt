@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.dsl
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.WebDriverWait
 
 /**
  * Created by tony on 2018/9/15.
@@ -21,3 +22,6 @@ fun WebDriver.elementBySelector(selector: String, init: WebElement.() -> Unit) =
 
 fun WebDriver.elementByXpath(xpath: String, init: WebElement.() -> Unit) = findElement(By.xpath(xpath)).init()
 
+fun WebDriver.wait(timeout: Long, sleepTimeout: Long = 500, init: WebDriverWait.() -> Unit) {
+    WebDriverWait(this, timeout, sleepTimeout).init()
+}
