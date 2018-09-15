@@ -44,7 +44,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-coroutines'
-    publishVersion = '0.0.5'
+    publishVersion = '0.0.6'
     desc = 'this is a coroutines library for netdiscovery use kotlin'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
