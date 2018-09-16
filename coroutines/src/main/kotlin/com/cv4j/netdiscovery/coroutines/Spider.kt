@@ -305,7 +305,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         // request正在处理
                         val download = downloader.download(request)
-                                .retryWhen(RetryWithDelay<Response>(3,1000,request.url))
+                                .retryWhen(RetryWithDelay<Response>(3,1000,request))
                                 .await()
 
                         download?.run {

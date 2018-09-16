@@ -48,7 +48,7 @@ tasks.withType(JavaCompile) {
 }
 
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.70'
 
     repositories {
         jcenter()
