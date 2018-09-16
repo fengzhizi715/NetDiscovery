@@ -20,12 +20,6 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
     private int retryDelayMillis;
     private Request request;
 
-    public RetryWithDelay(int maxRetries, int retryDelayMillis) {
-
-        this.maxRetries = maxRetries;
-        this.retryDelayMillis = retryDelayMillis;
-    }
-
     public RetryWithDelay(int maxRetries, int retryDelayMillis, Request request) {
 
         this.maxRetries = maxRetries;
@@ -40,35 +34,38 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
             public Publisher<?> apply(Throwable throwable) throws Exception {
                 if (++retryCount <= maxRetries) {
 
-                    String url = request.getUrl();
+                    if (request!=null) {
 
-                    if (Preconditions.isNotBlank(url)) {
+                        String url = request.getUrl();
 
-                        log.info("url:" + url + " get error, it will try after " + retryDelayMillis
-                                + " millisecond, retry count " + retryCount);
-                    } else {
+                        if (Preconditions.isNotBlank(url)) {
 
-                        log.info("get error, it will try after " + retryDelayMillis
-                                + " millisecond, retry count " + retryCount);
-                    }
+                            log.info("url:" + url + " get error, it will try after " + retryDelayMillis
+                                    + " millisecond, retry count " + retryCount);
+                        } else {
 
-                    return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS)
-                            .map(new Function<Long, Long>() {
-                                @Override
-                                public Long apply(Long aLong) throws Exception {
-                                    Request.BeforeRequest beforeRequest = request.getBeforeRequest();
-                                    if (beforeRequest != null) {
-                                        beforeRequest.process(request);
+                            log.info("get error, it will try after " + retryDelayMillis
+                                    + " millisecond, retry count " + retryCount);
+
+                            return Flowable.error(throwable);
+                        }
+
+                        return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS)
+                                .map(new Function<Long, Long>() {
+                                    @Override
+                                    public Long apply(Long aLong) throws Exception {
+                                        Request.BeforeRequest beforeRequest = request.getBeforeRequest();
+                                        if (beforeRequest != null) {
+                                            beforeRequest.process(request);
+                                        }
+                                        return aLong;
                                     }
-                                    return aLong;
-                                }
-                            });
-
-                } else {
-
-                    // Max retries hit. Just pass the error along.
-                    return Flowable.error(throwable);
+                                });
+                    }
                 }
+
+                // Max retries hit. Just pass the error along.
+                return Flowable.error(throwable);
             }
         });
     }
