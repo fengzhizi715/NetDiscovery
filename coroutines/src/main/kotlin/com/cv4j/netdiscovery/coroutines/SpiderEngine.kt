@@ -277,7 +277,7 @@ class SpiderEngine private constructor(@field:Getter
                         .runOn(Schedulers.io())
                         .map { spider ->
                             spider.run()
-                            null
+                            spider
                         }
                         .sequential()
                         .subscribe()
