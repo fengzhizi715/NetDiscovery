@@ -34,7 +34,7 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
             public Publisher<?> apply(Throwable throwable) throws Exception {
                 if (++retryCount <= maxRetries) {
 
-                    if (request!=null) {
+                    if (request != null) {
 
                         String url = request.getUrl();
 
@@ -54,6 +54,7 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
                                 .map(new Function<Long, Long>() {
                                     @Override
                                     public Long apply(Long aLong) throws Exception {
+
                                         Request.BeforeRequest beforeRequest = request.getBeforeRequest();
                                         if (beforeRequest != null) {
                                             beforeRequest.process(request);
@@ -62,6 +63,11 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
                                     }
                                 });
                     }
+                }
+
+                Request.OnErrorRequest onErrorRequest = request.getOnErrorRequest();
+                if (onErrorRequest != null) {
+                    onErrorRequest.process(request);
                 }
 
                 // Max retries hit. Just pass the error along.

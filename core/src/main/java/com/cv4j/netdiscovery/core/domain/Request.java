@@ -39,9 +39,9 @@ public class Request implements Serializable {
 
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
-    private Map<String,String> header = new NoEmptyHashMap<>();
+    private Map<String, String> header = new NoEmptyHashMap<>();
 
-    private Map<String,Object> extras; // extras 中的数据可以在pipeline中使用
+    private Map<String, Object> extras; // extras 中的数据可以在pipeline中使用
 
     private long priority = 0; // request的优先级，数字越大优先级越高
 
@@ -50,6 +50,8 @@ public class Request implements Serializable {
     private BeforeRequest beforeRequest;
 
     private AfterRequest afterRequest;
+
+    private OnErrorRequest onErrorRequest;
 
     public Request() {
     }
@@ -67,7 +69,7 @@ public class Request implements Serializable {
         autoUA();
     }
 
-    public Request(String url,String spiderName) {
+    public Request(String url, String spiderName) {
 
         this.url = url;
         try {
@@ -81,7 +83,7 @@ public class Request implements Serializable {
         autoUA();
     }
 
-    public Request(String url,String spiderName,HttpMethod httpMethod) {
+    public Request(String url, String spiderName, HttpMethod httpMethod) {
 
         this.url = url;
         try {
@@ -98,7 +100,7 @@ public class Request implements Serializable {
     public Request ua(String userAgent) {
 
         this.userAgent = userAgent;
-        header.put("User-Agent",userAgent);
+        header.put("User-Agent", userAgent);
         return this;
     }
 
@@ -106,12 +108,13 @@ public class Request implements Serializable {
 
         this.userAgent = UserAgent.getUserAgent();
         if (Preconditions.isNotBlank(userAgent)) {
-            header.put("User-Agent",userAgent);
+            header.put("User-Agent", userAgent);
         }
     }
 
     /**
      * request使用的代理，其优先级高于Spider所设置的autoProxy
+     *
      * @param proxy
      * @return
      */
@@ -123,6 +126,7 @@ public class Request implements Serializable {
 
     /**
      * 爬虫的名字
+     *
      * @param spiderName
      * @return
      */
@@ -134,6 +138,7 @@ public class Request implements Serializable {
 
     /**
      * http method
+     *
      * @param httpMethod
      * @return
      */
@@ -145,6 +150,7 @@ public class Request implements Serializable {
 
     /**
      * 网页使用的的字符集
+     *
      * @param charset
      * @return
      */
@@ -157,6 +163,7 @@ public class Request implements Serializable {
     /**
      * 检查url是否重复，默认情况下为true表示需要检查。
      * 如果设置为false表示不需要检测url是否重复，此时可以多次请求该url。
+     *
      * @param checkDuplicate
      * @return
      */
@@ -168,7 +175,7 @@ public class Request implements Serializable {
 
     /**
      * 是否保存cookie，默认情况下为false表示不保存cookie
-     * 
+     *
      * @param saveCookie
      * @return
      */
@@ -190,9 +197,9 @@ public class Request implements Serializable {
         return this;
     }
 
-    public Request header(String name,String value) {
+    public Request header(String name, String value) {
 
-        header.put(name,value);
+        header.put(name, value);
         return this;
     }
 
@@ -208,24 +215,25 @@ public class Request implements Serializable {
         return this;
     }
 
-    public Request putExtra(String key,Object value) {
+    public Request putExtra(String key, Object value) {
 
-        if (extras==null) {
+        if (extras == null) {
 
             extras = new NoEmptyHashMap<>();
         }
 
-        extras.put(key,value);
+        extras.put(key, value);
         return this;
     }
 
     public Object getExtra(String key) {
 
-        return extras != null?extras.get(key):null;
+        return extras != null ? extras.get(key) : null;
     }
 
     /**
      * 设置Request的优先级
+     *
      * @param priority
      * @return
      */
@@ -241,7 +249,7 @@ public class Request implements Serializable {
 
     public void clearHeader() {
         Iterator<Map.Entry<String, String>> it = this.header.entrySet().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             it.next();
             it.remove();
         }
@@ -265,11 +273,17 @@ public class Request implements Serializable {
         return this;
     }
 
+    public Request onErrorRequest(OnErrorRequest onErrorRequest) {
+
+        this.onErrorRequest = onErrorRequest;
+        return this;
+    }
+
     /**
      * 在request之前做的事情
      */
     @FunctionalInterface
-    public interface BeforeRequest{
+    public interface BeforeRequest {
 
         void process(Request request);
     }
@@ -278,8 +292,16 @@ public class Request implements Serializable {
      * 在request之后做的事情
      */
     @FunctionalInterface
-    public interface AfterRequest{
+    public interface AfterRequest {
 
         void process(Page page);
+    }
+
+    /**
+     * 在request发生异常做的事情
+     */
+    @FunctionalInterface
+    public interface OnErrorRequest {
+        void process(Request request);
     }
 }
