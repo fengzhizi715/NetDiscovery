@@ -19,6 +19,7 @@ import io.reactivex.schedulers.Schedulers
 import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
+import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -270,7 +271,7 @@ class SpiderEngine private constructor(@field:Getter
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
-            runBlocking(CommonPool) {
+            runBlocking(VertxUtils.getVertx().dispatcher()) {
 
                 Flowable.fromIterable(spiders.toMap().values)
                         .parallel(spiders.values.size)
