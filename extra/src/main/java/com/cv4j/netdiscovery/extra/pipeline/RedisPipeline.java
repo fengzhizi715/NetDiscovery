@@ -27,7 +27,7 @@ public class RedisPipeline implements Pipeline {
 
     public RedisPipeline(RedisOptions redisOptions, String key) {
 
-        this.redisClient = RedisClient.create(VertxUtils.vertx, redisOptions);
+        this.redisClient = RedisClient.create(VertxUtils.getVertx(), redisOptions);
         this.key = key;
     }
 

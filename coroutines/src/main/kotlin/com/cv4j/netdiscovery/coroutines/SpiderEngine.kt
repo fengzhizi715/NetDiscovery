@@ -120,9 +120,9 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun httpd(port: Int): SpiderEngine {
 
-        server = VertxUtils.vertx.createHttpServer()
+        server = VertxUtils.getVertx().createHttpServer()
 
-        val router = Router.router(VertxUtils.vertx)
+        val router = Router.router(VertxUtils.getVertx())
         router.route().handler(BodyHandler.create())
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
