@@ -25,7 +25,7 @@ class SpiderEngineWrapper {
         spiders.add(spider)
     }
 
-    fun getSpiders() = spiders
+    internal fun getSpiders() = spiders
 }
 
 fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
