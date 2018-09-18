@@ -9,6 +9,7 @@ import io.vertx.core.http.HttpMethod
 class RequestWrapper {
 
     private val headerContext = HeaderContext()
+    private val extrasContext = ExtrasContext()
 
     var url: String? = null
 
@@ -21,7 +22,14 @@ class RequestWrapper {
         headerContext.init()
     }
 
+    fun extras(init: ExtrasContext.() -> Unit) {
+
+        extrasContext.init()
+    }
+
     internal fun getHeaderContext() = headerContext
+
+    internal fun getExtrasContext() = extrasContext
 }
 
 class HeaderContext {
@@ -33,6 +41,17 @@ class HeaderContext {
     }
 
     internal fun forEach(action: (k: String, v: String) -> Unit) = map.forEach(action)
+}
+
+class ExtrasContext {
+
+    private val map: MutableMap<String, Any> = mutableMapOf()
+
+    infix fun String.to(v: Any) {
+        map[this] = v
+    }
+
+    internal fun forEach(action: (k: String, v: Any) -> Unit) = map.forEach(action)
 }
 
 fun request(init: RequestWrapper.() -> Unit): Request {
@@ -51,6 +70,11 @@ fun configRequest(wrap: RequestWrapper): Request {
     wrap.getHeaderContext().forEach { k, v ->
 
         request.header(k,v)
+    }
+
+    wrap.getExtrasContext().forEach { k, v ->
+
+        request.putExtra(k,v)
     }
 
     return request
