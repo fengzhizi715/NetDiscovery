@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.example
 
-import com.cv4j.netdiscovery.dsl.spider
 import com.cv4j.netdiscovery.dsl.spiderEngine
 
 /**

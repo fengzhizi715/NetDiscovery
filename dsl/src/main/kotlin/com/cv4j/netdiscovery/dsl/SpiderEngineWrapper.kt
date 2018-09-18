@@ -37,7 +37,7 @@ fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
     return configSpiderEngine(wrap)
 }
 
-fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
+internal fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
 
     val engine = SpiderEngine.create(wrap?.queue)
 
