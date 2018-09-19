@@ -16,7 +16,7 @@ public class TestMany {
     public static void main(String[] args) {
         Spider spider = Spider.create()
                 .downloader(new VertxDownloader())
-                .retryDelayMillis(1);
+                .maxRetries(1); // 重试次数
         for (int i = 0; i < 10000; i++) {
             Request request = new Request("https://www.google.com");
             request.checkDuplicate(false);

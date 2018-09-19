@@ -67,9 +67,9 @@ public class Spider {
 
     private long initialDelay = 0;
 
-    private int maxRetries = 3;
+    private int maxRetries = 3; // 重试次数
 
-    private int retryDelayMillis = 1000;
+    private int retryDelayMillis = 1000; // 重试等待的时间
 
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
