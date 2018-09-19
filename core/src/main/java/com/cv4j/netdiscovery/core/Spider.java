@@ -337,141 +337,140 @@ public class Spider {
 
         initialDelay();
 
-        try {
-            while (getSpiderStatus() != SPIDER_STATUS_STOPPED) {
+        while (getSpiderStatus() != SPIDER_STATUS_STOPPED && checkIfQueueEmpty()) {
 
-                //暂停抓取
-                if (pause) {
-                    try {
-                        this.pauseCountDown.await();
-                    } catch (InterruptedException e) {
-                        log.error("can't pause : ", e);
-                    }
-
-                    initialDelay();
+            //暂停抓取
+            if (pause) {
+                try {
+                    this.pauseCountDown.await();
+                } catch (InterruptedException e) {
+                    log.error("can't pause : ", e);
                 }
 
-                // 从消息队列中取出request
-                final Request request = queue.poll(name);
-
-                if (request != null) {
-
-                    if (request.getSleepTime() > 0) {
-
-                        try {
-                            Thread.sleep(request.getSleepTime());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
-                    if (autoProxy && request.getProxy() == null) {
-
-                        Proxy proxy = ProxyPool.getProxy();
-
-                        if (proxy != null && Utils.checkProxy(proxy)) {
-                            request.proxy(proxy);
-                        }
-                    }
-
-                    // request请求之前的处理
-                    if (request.getBeforeRequest() != null) {
-
-                        request.getBeforeRequest().process(request);
-                    }
-
-                    // request正在处理
-                    downloader.download(request)
-                            .retryWhen(new RetryWithDelay(maxRetries, retryDelayMillis, request)) // 对网络请求的重试机制
-                            .map(new Function<Response, Page>() {
-
-                                @Override
-                                public Page apply(Response response) throws Exception {
-
-                                    Page page = new Page();
-                                    page.setRequest(request);
-                                    page.setUrl(request.getUrl());
-                                    page.setStatusCode(response.getStatusCode());
-
-                                    if (Utils.isTextType(response.getContentType())) { // text/html
-
-                                        page.setHtml(new Html(response.getContent()));
-                                    } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
-
-                                        // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
-                                        page.putField(Constant.RESPONSE_JSON, new Json(new String(response.getContent())));
-                                    } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
-
-                                        // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
-                                        // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
-                                        page.putField(Constant.RESPONSE_JSONP, new String(response.getContent()));
-                                    } else {
-
-                                        page.putField(Constant.RESPONSE_RAW, response.getIs()); // 默认情况，保存InputStream
-                                    }
-
-
-                                    return page;
-                                }
-                            })
-                            .map(new Function<Page, Page>() {
-
-                                @Override
-                                public Page apply(Page page) throws Exception {
-
-                                    if (parser != null) {
-
-                                        parser.process(page);
-                                    }
-
-                                    return page;
-                                }
-                            })
-                            .map(new Function<Page, Page>() {
-
-                                @Override
-                                public Page apply(Page page) throws Exception {
-
-                                    if (Preconditions.isNotBlank(pipelines)) {
-
-                                        pipelines.stream()
-                                                .forEach(pipeline -> pipeline.process(page.getResultItems()));
-                                    }
-
-                                    return page;
-                                }
-                            })
-                            .observeOn(Schedulers.io())
-                            .subscribe(new Consumer<Page>() {
-
-                                @Override
-                                public void accept(Page page) throws Exception {
-
-                                    log.info(page.getUrl());
-
-                                    if (request.getAfterRequest() != null) {
-
-                                        request.getAfterRequest().process(page);
-                                    }
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-
-                                    log.error(throwable.getMessage(), throwable);
-                                }
-                            });
-                } else {
-
-                    break;
-                }
+                initialDelay();
             }
-        } finally {
 
-            stopSpider(downloader); // 爬虫停止
+            // 从消息队列中取出request
+            final Request request = queue.poll(name);
+
+            if (request != null) {
+
+                if (request.getSleepTime() > 0) {
+
+                    try {
+                        Thread.sleep(request.getSleepTime());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
+                if (autoProxy && request.getProxy() == null) {
+
+                    Proxy proxy = ProxyPool.getProxy();
+
+                    if (proxy != null && Utils.checkProxy(proxy)) {
+                        request.proxy(proxy);
+                    }
+                }
+
+                // request请求之前的处理
+                if (request.getBeforeRequest() != null) {
+
+                    request.getBeforeRequest().process(request);
+                }
+
+                // request正在处理
+                downloader.download(request)
+                        .retryWhen(new RetryWithDelay(maxRetries, retryDelayMillis, request)) // 对网络请求的重试机制
+                        .map(new Function<Response, Page>() {
+
+                            @Override
+                            public Page apply(Response response) throws Exception {
+
+                                Page page = new Page();
+                                page.setRequest(request);
+                                page.setUrl(request.getUrl());
+                                page.setStatusCode(response.getStatusCode());
+
+                                if (Utils.isTextType(response.getContentType())) { // text/html
+
+                                    page.setHtml(new Html(response.getContent()));
+                                } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
+
+                                    // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
+                                    page.putField(Constant.RESPONSE_JSON, new Json(new String(response.getContent())));
+                                } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
+
+                                    // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
+                                    // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
+                                    page.putField(Constant.RESPONSE_JSONP, new String(response.getContent()));
+                                } else {
+
+                                    page.putField(Constant.RESPONSE_RAW, response.getIs()); // 默认情况，保存InputStream
+                                }
+
+
+                                return page;
+                            }
+                        })
+                        .map(new Function<Page, Page>() {
+
+                            @Override
+                            public Page apply(Page page) throws Exception {
+
+                                if (parser != null) {
+
+                                    parser.process(page);
+                                }
+
+                                return page;
+                            }
+                        })
+                        .map(new Function<Page, Page>() {
+
+                            @Override
+                            public Page apply(Page page) throws Exception {
+
+                                if (Preconditions.isNotBlank(pipelines)) {
+
+                                    pipelines.stream()
+                                            .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                }
+
+                                return page;
+                            }
+                        })
+                        .observeOn(Schedulers.io())
+                        .subscribe(new Consumer<Page>() {
+
+                            @Override
+                            public void accept(Page page) throws Exception {
+
+                                log.info(page.getUrl());
+
+                                if (request.getAfterRequest() != null) {
+
+                                    request.getAfterRequest().process(page);
+                                }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+
+                                log.error(throwable.getMessage(), throwable);
+                            }
+                        });
+            } else {
+
+                break;
+            }
         }
+        stopSpider(downloader); // 爬虫停止
+    }
 
+    private boolean checkIfQueueEmpty() {
+        return !(queue.getLeftRequests(name) == 0);
     }
 
     private void checkIfRunning() {
