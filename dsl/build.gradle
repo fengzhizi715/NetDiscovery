@@ -22,6 +22,7 @@ dependencies {
     implementation project(":selenium")
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
+    implementation "io.vertx:vertx-core:${libs.vertx}"
 }
 
 compileKotlin {
@@ -35,7 +36,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-dsl'
-    publishVersion = '0.0.6'
+    publishVersion = '0.0.7'
     desc = 'this is a dsl library for netdiscovery use kotlin'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }

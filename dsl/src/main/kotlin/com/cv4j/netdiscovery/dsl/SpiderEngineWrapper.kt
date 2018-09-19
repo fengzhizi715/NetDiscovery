@@ -25,7 +25,7 @@ class SpiderEngineWrapper {
         spiders.add(spider)
     }
 
-    fun getSpiders() = spiders
+    internal fun getSpiders() = spiders
 }
 
 fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
@@ -37,7 +37,7 @@ fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
     return configSpiderEngine(wrap)
 }
 
-fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
+internal fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
 
     val engine = SpiderEngine.create(wrap?.queue)
 

@@ -154,9 +154,9 @@ public class SpiderEngine {
      */
     public SpiderEngine httpd(int port) {
 
-        server = VertxUtils.vertx.createHttpServer();
+        server = VertxUtils.getVertx().createHttpServer();
 
-        Router router = Router.router(VertxUtils.vertx);
+        Router router = Router.router(VertxUtils.getVertx());
         router.route().handler(BodyHandler.create());
 
         if (Preconditions.isNotBlank(spiders)) {
@@ -316,13 +316,14 @@ public class SpiderEngine {
             Flowable.fromIterable(spiders.values())
                     .parallel(spiders.values().size())
                     .runOn(Schedulers.io())
-                    .map(new Function<Spider, Void>() {
+                    .map(new Function<Spider, Spider>() {
 
                         @Override
-                        public Void apply(Spider spider) throws Exception {
+                        public Spider apply(Spider spider) throws Exception {
 
                             spider.run();
-                            return null;
+
+                            return spider;
                         }
                     })
                     .sequential()

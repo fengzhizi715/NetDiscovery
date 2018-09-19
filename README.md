@@ -33,32 +33,32 @@ repositories {
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.6'
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.7'
 
 ```
 
 netdiscovery-extra
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.6'
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.7'
 ```
 
 netdiscovery-selenium
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.6'
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.7'
 ```
 
 netdiscovery-dsl
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.6'
+implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.7'
 ```
 
 netdiscovery-coroutines
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.6'
+implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.7'
 ```
 
 # NetDiscovery 功能点：
@@ -144,23 +144,23 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
         val spiderEngine = spiderEngine {
 
             port = 7070
+
+            addSpider {
+
+                name = "tony1"
+            }
+
+            addSpider {
+
+                name = "tony2"
+                urls = listOf("https://www.baidu.com")
+            }
         }
 
-        val spider1 = spider {
+        val spider = spiderEngine.getSpider("tony1")
 
-            name = "tony1"
-        }
-
-        spider1.repeatRequest(10000,"http://www.163.com")
+        spider.repeatRequest(10000,"https://github.com/fengzhizi715")
                 .initialDelay(10000)
-
-        spiderEngine.addSpider(spider1)
-
-        spiderEngine.addSpider(spider {
-
-            name = "tony2"
-            urls = listOf("https://www.baidu.com")
-        })
 
         spiderEngine.runWithRepeat()
 ```

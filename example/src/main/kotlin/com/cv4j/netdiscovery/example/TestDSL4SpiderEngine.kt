@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.example
 
-import com.cv4j.netdiscovery.dsl.spider
 import com.cv4j.netdiscovery.dsl.spiderEngine
 
 /**
@@ -17,22 +16,22 @@ object TestDSL4SpiderEngine {
 
             addSpider {
 
+                name = "tony1"
+            }
+
+            addSpider {
+
                 name = "tony2"
                 urls = listOf("https://www.baidu.com")
             }
         }
 
-        val spider1 = spider {
+        val spider = spiderEngine.getSpider("tony1")
 
-            name = "tony1"
-        }
-
-        spider1.repeatRequest(10000,"https://github.com/fengzhizi715")
+        spider.repeatRequest(10000,"https://github.com/fengzhizi715")
                 .initialDelay(10000)
 
-        spiderEngine.addSpider(spider1)
-
-        spiderEngine.run()
+        spiderEngine.runWithRepeat()
     }
 
 }

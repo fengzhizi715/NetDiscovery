@@ -7,7 +7,7 @@ import io.vertx.core.Vertx;
  */
 public class VertxUtils {
 
-    public static Vertx vertx = Vertx.vertx();
+    private static Vertx vertx = Vertx.vertx();
 
     public static io.vertx.reactivex.core.Vertx reactivex_vertx = new io.vertx.reactivex.core.Vertx(vertx);
 

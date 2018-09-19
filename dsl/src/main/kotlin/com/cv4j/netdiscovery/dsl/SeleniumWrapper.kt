@@ -27,7 +27,7 @@ class SeleniumWrapper {
         }
     }
 
-    fun getActions() = actions
+    internal fun getActions() = actions
 }
 
 class ActionWrapper{

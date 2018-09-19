@@ -15,11 +15,13 @@ import com.cv4j.netdiscovery.core.queue.DefaultQueue
 import com.cv4j.netdiscovery.core.queue.Queue
 import com.cv4j.netdiscovery.core.utils.RetryWithDelay
 import com.cv4j.netdiscovery.core.utils.Utils
+import com.cv4j.netdiscovery.core.utils.VertxUtils
 import com.cv4j.proxy.ProxyPool
 import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
+import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
@@ -256,7 +258,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     fun run() {
 
-        runBlocking(CommonPool) {
+        runBlocking(VertxUtils.getVertx().dispatcher()) {
 
 
             checkRunningStat()
