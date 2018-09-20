@@ -461,9 +461,6 @@ public class Spider {
                                 log.error(throwable.getMessage(), throwable);
                             }
                         });
-            } else {
-
-                break;
             }
         }
         stopSpider(downloader); // 爬虫停止
