@@ -467,7 +467,7 @@ public class Spider {
     }
 
     private boolean checkIfQueueEmpty() {
-        return !(queue.getLeftRequests(name) == 0);
+        return queue.getLeftRequests(name) != 0;
     }
 
     private void checkIfRunning() {
