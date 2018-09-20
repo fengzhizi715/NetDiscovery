@@ -63,9 +63,9 @@ fun request(init: RequestWrapper.() -> Unit): Request {
     return configRequest(wrap)
 }
 
-fun configRequest(wrap: RequestWrapper): Request {
+private fun configRequest(wrap: RequestWrapper): Request {
 
-    val request =  Request(wrap.url).spiderName(wrap?.spiderName).httpMethod(wrap.httpMethod)
+    val request =  Request(wrap.url).spiderName(wrap.spiderName).httpMethod(wrap.httpMethod)
 
     wrap.getHeaderContext().forEach { k, v ->
 
