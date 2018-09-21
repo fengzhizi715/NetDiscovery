@@ -15,7 +15,7 @@ netdiscovery-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/mav
 netdiscovery-coroutines| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-coroutines/_latestVersion)
 
 
-NetDiscover 主要是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期的版本，很多细节正在不断地完善中。
+NetDiscover 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期版本，很多细节正在不断地完善中。
 
 对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
@@ -64,11 +64,11 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.7'
 # NetDiscovery 功能点：
 
 ## 1.Spider功能
-Spider可以单独使用，也可以添加到SpiderEngine中使用。
+Spider 可以单独使用，也可以添加到 SpiderEngine 中使用。
 
-Spider中内置了很多组件。例如downloader就已经支持了好几种，支持热插拔随时替换，或者编写自己的downloader。
+Spider 中内置了很多组件。例如 downloader 就已经支持了多种，支持热插拔随时替换或者编写自己的 downloader。
 
-queue、parser、pipeline也都类似。其中，支持多个pipeline按照顺序执行。
+queue、parser、pipeline 也都类似。其中，多个 pipeline 会按照顺序执行。
 
 ![](images/Spider.png)
 
