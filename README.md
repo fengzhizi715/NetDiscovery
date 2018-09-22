@@ -27,7 +27,6 @@ repositories {
 ```
 
 
-
 # 下载:
 
 netdiscovery-core
@@ -72,14 +71,15 @@ queue、parser、pipeline 也都类似。其中，多个 pipeline 会按照顺�
 
 ![](images/Spider.png)
 
-在调试的时候，可以使用ConsolePipeline或者DebugPipeline
+在调试的时候，可以使用 ConsolePipeline 或者 DebugPipeline
 
-DebugPipeline打印的日志效果如下
+DebugPipeline打印的日志效果如下:
 
 ![](images/DebugPipeline.jpg)
 
+
 ## 2.SpiderEngine功能
-SpiderEngine可以管理引擎中的爬虫，包括爬虫的生命周期。
+SpiderEngine 可以管理引擎中的爬虫，包括爬虫的生命周期。
 ![](images/SpiderEngine.png)
 
 
@@ -173,6 +173,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 ## 2.集群原理
 ![](images/cluster_principle.png)
 
+
 # 案例:
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
 * 在“Java与Android技术栈”公众号回复数字货币的关键字，获取最新的价格
@@ -180,12 +181,14 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 ![](images/spider_case2.jpeg)
 
-# Todo List:
+
+# TODO List:
 
 1. 增加 RabbitMQ 的支持
-2. 增加 Cooikes Pool
-3. 增加 elasticsearch 的支持
-4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+2. 增强 HtmlUnit 模块
+3. 增加 Cooikes Pool
+4. 增加 elasticsearch 的支持
+5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
 
 # 联系方式:
