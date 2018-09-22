@@ -14,7 +14,7 @@ import java.util.Collection;
  * Created by tony on 2018/2/4.
  */
 @Slf4j
-public class AnnotationParser implements Parser {
+public abstract class AnnotationParser implements Parser {
 
     protected ResultItems resultItems = null;
 
