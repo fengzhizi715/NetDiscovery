@@ -33,7 +33,7 @@ object TestDSL4Request {
             }
         }
 
-        Spider.create().request(request).pipeline(DebugPipeline()).run()
+        Spider.create().name("tony").request(request).pipeline(DebugPipeline()).run()
     }
 
 }
