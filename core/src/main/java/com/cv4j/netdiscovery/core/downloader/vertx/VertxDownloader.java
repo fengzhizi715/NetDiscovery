@@ -36,7 +36,7 @@ public class VertxDownloader implements Downloader {
 
     public VertxDownloader() {
 
-        this.vertx = VertxUtils.reactivex_vertx;
+        this.vertx = VertxUtils.getReactivexVertx();
         this.cookieSet = new LinkedHashSet<>();
     }
 
