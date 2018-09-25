@@ -14,8 +14,4 @@ public class VertxUtils {
     public static Vertx getVertx() {
         return vertx;
     }
-
-    public static void setVertx(Vertx vertx) {
-        VertxUtils.vertx = vertx;
-    }
 }
