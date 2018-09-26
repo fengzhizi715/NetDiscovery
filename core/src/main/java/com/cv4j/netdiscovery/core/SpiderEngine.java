@@ -118,8 +118,9 @@ public class SpiderEngine {
         return this;
     }
 
-    public void setUseMonitor(boolean useMonitor) {
+    public SpiderEngine setUseMonitor(boolean useMonitor) {
         this.useMonitor = useMonitor;
+        return this;
     }
 
     /**
