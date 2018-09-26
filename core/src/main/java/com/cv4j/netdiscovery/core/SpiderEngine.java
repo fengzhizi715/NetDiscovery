@@ -52,6 +52,8 @@ public class SpiderEngine {
 
     private HttpServer server;
 
+    private boolean useMonitor = false;
+
     private SpiderEngine() {
 
         this(null);
@@ -114,6 +116,10 @@ public class SpiderEngine {
 
         ProxyPool.addProxyList(proxies);
         return this;
+    }
+
+    public void setUseMonitor(boolean useMonitor) {
+        this.useMonitor = useMonitor;
     }
 
     /**
@@ -278,25 +284,28 @@ public class SpiderEngine {
                 response.end(JSON.toJSONString(spidersResponse));
             });
 
-            // The web server handler
-            router.route().handler(StaticHandler.create().setCachingEnabled(false));
+            if (useMonitor) {
 
-            // The proxy handler
-            WebClient client = WebClient.create(VertxUtils.getVertx());
-            HttpRequest<Buffer> get = client.get(8081, "localhost", "/netdiscovery/dashboard");
-            router.get("/dashboard").handler(ctx -> {
-                get.send(ar -> {
-                    if (ar.succeeded()) {
-                        HttpResponse<Buffer> result = ar.result();
-                        ctx.response()
-                                .setStatusCode(result.statusCode())
-                                .putHeader("Content-Type", "application/json")
-                                .end(result.body());
-                    } else {
-                        ctx.fail(ar.cause());
-                    }
+                // The web server handler
+                router.route().handler(StaticHandler.create().setCachingEnabled(false));
+
+                // The proxy handler
+                WebClient client = WebClient.create(VertxUtils.getVertx());
+                HttpRequest<Buffer> get = client.get(8081, "localhost", "/netdiscovery/dashboard");
+                router.get("/dashboard").handler(ctx -> {
+                    get.send(ar -> {
+                        if (ar.succeeded()) {
+                            HttpResponse<Buffer> result = ar.result();
+                            ctx.response()
+                                    .setStatusCode(result.statusCode())
+                                    .putHeader("Content-Type", "application/json")
+                                    .end(result.body());
+                        } else {
+                            ctx.fail(ar.cause());
+                        }
+                    });
                 });
-            });
+            }
         }
 
         server.requestHandler(router::accept).listen(port);
