@@ -17,11 +17,16 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.client.HttpRequest;
+import io.vertx.ext.web.client.HttpResponse;
+import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -271,6 +276,26 @@ public class SpiderEngine {
 
                 // 写入响应并结束处理
                 response.end(JSON.toJSONString(spidersResponse));
+            });
+
+            // The web server handler
+            router.route().handler(StaticHandler.create().setCachingEnabled(false));
+
+            // The proxy handler
+            WebClient client = WebClient.create(VertxUtils.getVertx());
+            HttpRequest<Buffer> get = client.get(8081, "localhost", "/netdiscovery/dashboard");
+            router.get("/dashboard").handler(ctx -> {
+                get.send(ar -> {
+                    if (ar.succeeded()) {
+                        HttpResponse<Buffer> result = ar.result();
+                        ctx.response()
+                                .setStatusCode(result.statusCode())
+                                .putHeader("Content-Type", "application/json")
+                                .end(result.body());
+                    } else {
+                        ctx.fail(ar.cause());
+                    }
+                });
             });
         }
 
