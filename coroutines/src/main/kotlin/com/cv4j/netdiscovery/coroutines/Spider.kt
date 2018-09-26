@@ -22,7 +22,6 @@ import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.vertx.kotlin.coroutines.dispatcher
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.rx2.await
@@ -260,7 +259,6 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
         runBlocking(VertxUtils.getVertx().dispatcher()) {
 
-
             checkRunningStat()
 
             initialDelay()
@@ -370,7 +368,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     private fun checkIfRunning() {
 
         if (spiderStatus == SPIDER_STATUS_RUNNING) {
-            throw SpiderException(String.format("Spider %s is already running!", name))
+            throw SpiderException("Spider $name is already running!")
         }
     }
 
@@ -380,7 +378,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             val statNow = spiderStatus
             if (statNow == SPIDER_STATUS_RUNNING) {
-                throw SpiderException(String.format("Spider %s is already running!", name))
+                throw SpiderException("Spider $name is already running!")
             }
 
             if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
@@ -401,7 +399,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     fun stop() {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            println(String.format("Spider %s stop success!", name))
+            println("Spider $name stop success!")
         }
     }
 
@@ -410,7 +408,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         compositeDisposable.clear()
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            println(String.format("Spider %s force stop success!", name))
+            println("Spider $name force stop success!")
         }
     }
 
@@ -439,7 +437,6 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
         if (initialDelay > 0) {
             delay(initialDelay,TimeUnit.MILLISECONDS)
-
         }
     }
 
