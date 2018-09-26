@@ -6,4 +6,5 @@ include 'selenium'
 include 'dsl'
 include 'htmlunit'
 include 'coroutines'
+include 'agent'
 
