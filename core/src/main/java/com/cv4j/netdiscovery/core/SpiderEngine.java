@@ -121,6 +121,7 @@ public class SpiderEngine {
     }
 
     public SpiderEngine setUseMonitor(boolean useMonitor) {
+
         this.useMonitor = useMonitor;
         return this;
     }
@@ -302,7 +303,7 @@ public class SpiderEngine {
                     e.printStackTrace();
                 }
 
-                HttpRequest<Buffer> get = client.get(8081, localhost.getHostAddress(), "/netdiscovery/dashboard");
+                HttpRequest<Buffer> get = client.get(8081, localhost.getHostAddress(), "/netdiscovery/dashboard/");
                 router.get("/dashboard").handler(ctx -> {
                     get.send(ar -> {
                         if (ar.succeeded()) {
