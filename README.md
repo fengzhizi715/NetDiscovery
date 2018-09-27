@@ -82,8 +82,7 @@ DebugPipeline打印的日志效果如下:
 SpiderEngine 可以管理引擎中的爬虫，包括爬虫的生命周期。
 ![](images/SpiderEngine.png)
 
-
-还可以对当前服务器的CPU和内存进行监控
+还可以对当前服务器的CPU和内存进行实时监控
 ![](images/metrics_dashboard.png)
 
 
