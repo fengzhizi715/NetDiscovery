@@ -112,6 +112,9 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 |3|让爬虫从暂停中恢复|
 |4|让爬虫停止|
 
+
+![](images/metrics_dashboard.png)
+
 ## 3. DSL 模块
 
 使用 DSL 来创建一个爬虫并运行:
