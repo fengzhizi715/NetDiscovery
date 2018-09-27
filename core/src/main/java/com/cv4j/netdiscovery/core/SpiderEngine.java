@@ -33,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -292,7 +294,15 @@ public class SpiderEngine {
 
                 // The proxy handler
                 WebClient client = WebClient.create(VertxUtils.getVertx());
-                HttpRequest<Buffer> get = client.get(8081, "localhost", "/netdiscovery/dashboard");
+
+                InetAddress localhost = null;
+                try {
+                    localhost = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+                HttpRequest<Buffer> get = client.get(8081, localhost.getHostAddress(), "/netdiscovery/dashboard");
                 router.get("/dashboard").handler(ctx -> {
                     get.send(ar -> {
                         if (ar.succeeded()) {
