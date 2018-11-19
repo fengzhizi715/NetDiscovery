@@ -15,16 +15,14 @@ import com.cv4j.netdiscovery.core.queue.DefaultQueue
 import com.cv4j.netdiscovery.core.queue.Queue
 import com.cv4j.netdiscovery.core.utils.RetryWithDelay
 import com.cv4j.netdiscovery.core.utils.Utils
-import com.cv4j.netdiscovery.core.utils.VertxUtils
 import com.cv4j.proxy.ProxyPool
 import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
-import io.vertx.kotlin.coroutines.dispatcher
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
-import kotlinx.coroutines.experimental.rx2.await
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.rx2.await
 import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -257,7 +255,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     fun run() {
 
-        runBlocking(VertxUtils.getVertx().dispatcher()) {
+        runBlocking {
 
             checkRunningStat()
 
@@ -283,7 +281,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                     if (request.sleepTime > 0) {
 
-                        delay(request.sleepTime,TimeUnit.MILLISECONDS)
+                        delay(request.sleepTime)
                     }
 
                     // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
@@ -436,7 +434,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     private suspend fun initialDelay() {
 
         if (initialDelay > 0) {
-            delay(initialDelay,TimeUnit.MILLISECONDS)
+            delay(initialDelay)
         }
     }
 

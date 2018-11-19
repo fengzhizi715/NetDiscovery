@@ -19,10 +19,9 @@ import io.reactivex.schedulers.Schedulers
 import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
-import io.vertx.kotlin.coroutines.dispatcher
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import lombok.Getter
 import java.util.*
 
@@ -130,7 +129,7 @@ class SpiderEngine private constructor(@field:Getter
 
             for ((_, spider) in spiders) {
 
-                router.route("/netdiscovery/spider/" + spider.name).handler({ routingContext ->
+                router.route("/netdiscovery/spider/" + spider.name).handler{ routingContext ->
 
                     // 所有的请求都会调用这个处理器处理
                     val response = routingContext.response()
@@ -152,9 +151,9 @@ class SpiderEngine private constructor(@field:Getter
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(spiderResponse))
-                })
+                }
 
-                router.post("/netdiscovery/spider/" + spider.name + "/status").handler({ routingContext ->
+                router.post("/netdiscovery/spider/" + spider.name + "/status").handler{ routingContext ->
 
                     // 所有的请求都会调用这个处理器处理
                     val response = routingContext.response()
@@ -197,10 +196,10 @@ class SpiderEngine private constructor(@field:Getter
 
                     // 写入响应并结束处理
                     response.end(JSON.toJSONString(spiderStatusResponse))
-                })
+                }
             }
 
-            router.route("/netdiscovery/spiders/").handler({ routingContext ->
+            router.route("/netdiscovery/spiders/").handler{ routingContext ->
 
                 // 所有的请求都会调用这个处理器处理
                 val response = routingContext.response()
@@ -233,7 +232,7 @@ class SpiderEngine private constructor(@field:Getter
 
                 // 写入响应并结束处理
                 response.end(JSON.toJSONString(spidersResponse))
-            })
+            }
         }
 
         server.requestHandler{ router.accept(it) }.listen(port)
@@ -256,7 +255,7 @@ class SpiderEngine private constructor(@field:Getter
 
             spiders.entries
                     .forEach{
-                        launch(CommonPool) {
+                        GlobalScope.launch {
                             it.value.run()
                         }
                     }
@@ -271,7 +270,7 @@ class SpiderEngine private constructor(@field:Getter
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
-            runBlocking(VertxUtils.getVertx().dispatcher()) {
+            runBlocking {
 
                 Flowable.fromIterable(spiders.toMap().values)
                         .parallel(spiders.values.size)
