@@ -36,18 +36,17 @@ fun spider(init: SpiderWrapper.() -> Unit):Spider {
 
 internal fun configSpider(wrap:SpiderWrapper):Spider {
 
-    val spider = Spider.create(wrap?.queue)
-            .name(wrap?.name)
+    val spider = Spider.create(wrap.queue).name(wrap.name)
 
-    wrap?.urls?.let {
+    wrap.urls?.let {
 
         spider.url(it)
     }
 
-    spider.downloader(wrap?.downloader)
-            .parser(wrap?.parser)
+    spider.downloader(wrap.downloader)
+            .parser(wrap.parser)
 
-    wrap?.pipelines?.let {
+    wrap.pipelines?.let {
 
         it.forEach { // 这里的it指wrap?.pipelines
 

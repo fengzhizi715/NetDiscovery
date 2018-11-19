@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.dsl
 
 import com.cv4j.netdiscovery.core.Spider
 import com.cv4j.netdiscovery.core.SpiderEngine
+import com.cv4j.netdiscovery.core.queue.DefaultQueue
 import com.cv4j.netdiscovery.core.queue.Queue
 import com.cv4j.proxy.domain.Proxy
 
@@ -39,9 +40,9 @@ fun spiderEngine(init: SpiderEngineWrapper.() -> Unit): SpiderEngine {
 
 internal fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
 
-    val engine = SpiderEngine.create(wrap?.queue)
+    val engine = SpiderEngine.create(wrap.queue?: DefaultQueue())
 
-    engine.proxyList(wrap?.proxyList)
+    engine.proxyList(wrap.proxyList)
 
     engine.httpd(wrap.port)
 
