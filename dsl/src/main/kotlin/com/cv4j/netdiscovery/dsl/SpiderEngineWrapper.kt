@@ -44,12 +44,12 @@ internal fun configSpiderEngine(wrap: SpiderEngineWrapper): SpiderEngine {
 
     engine.proxyList(wrap.proxyList)
 
-    engine.httpd(wrap.port)
-
     wrap.getSpiders().forEach {
 
         engine.addSpider(it)
     }
+
+    engine.httpd(wrap.port)
 
     return engine
 }
