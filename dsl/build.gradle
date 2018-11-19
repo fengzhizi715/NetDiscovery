@@ -36,7 +36,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-dsl'
-    publishVersion = '0.0.7'
+    publishVersion = '0.0.8'
     desc = 'this is a dsl library for netdiscovery use kotlin'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
