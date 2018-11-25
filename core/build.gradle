@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'org.jsoup:jsoup:1.10.3'
 
-    implementation 'com.lmax:disruptor:3.4.2'
+    implementation "com.lmax:disruptor:${libs.disruptor}"
 }
 
 publish{
