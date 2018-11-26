@@ -41,7 +41,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-extra'
-    publishVersion = '0.2.9'
+    publishVersion = '0.2.10'
     desc = 'this is an extra library for netdiscovery'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
