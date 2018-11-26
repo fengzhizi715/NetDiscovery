@@ -78,7 +78,7 @@ public class DisruptorQueue extends AbstractQueue {
     @Override
     public Request poll(String spiderName) {
 
-        Request request = ringBuffer.get(ringBuffer.getCursor()-getTotalRequests(spiderName)+1).getRequest();
+        Request request = ringBuffer.get(ringBuffer.getCursor() - producer.getCount() +1).getRequest();
         ringBuffer.next();
         consumerCount.incrementAndGet();
         return request;
@@ -87,12 +87,12 @@ public class DisruptorQueue extends AbstractQueue {
     @Override
     public int getLeftRequests(String spiderName) {
 
-        return getTotalRequests(spiderName)-consumerCount.get();
+        return producer.getCount()-consumerCount.get();
     }
 
     public int getTotalRequests(String spiderName) {
 
-        return producer.getCount();
+        return super.getTotalRequests(spiderName);
     }
 
     static class EventExceptionHandler implements ExceptionHandler {
