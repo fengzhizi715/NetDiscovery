@@ -10,4 +10,9 @@ import lombok.Data;
 public class RequestEvent {
 
     private Request request;
+
+    public String toString() {
+
+        return request.toString();
+    }
 }
