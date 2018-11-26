@@ -21,7 +21,6 @@ public class DisruptorQueue extends AbstractQueue {
     private Producer producer = null;
     private int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方；
 
-    private AtomicInteger count = new AtomicInteger(0);
     private AtomicInteger consumerCount = new AtomicInteger(0);
 
     private static final int CONSUME_NUM = 2;
@@ -69,7 +68,6 @@ public class DisruptorQueue extends AbstractQueue {
     protected void pushWhenNoDuplicate(Request request) {
 
         producer.pushData(request);
-        count.incrementAndGet();
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -94,7 +92,7 @@ public class DisruptorQueue extends AbstractQueue {
 
     public int getTotalRequests(String spiderName) {
 
-        return count.get();
+        return producer.getCount();
     }
 
     static class EventExceptionHandler implements ExceptionHandler {
