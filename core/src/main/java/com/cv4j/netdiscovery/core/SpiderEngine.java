@@ -85,7 +85,7 @@ public class SpiderEngine {
 
                         try {
                             input = this.getClass().getResourceAsStream(name);
-                            String inputString = IOUtils.inputStream2String(input);
+                            String inputString = IOUtils.inputStream2String(input); // input 流无须关闭，inputStream2String()方法里已经做了关闭流的操作
                             if (Preconditions.isNotBlank(inputString)) {
                                 String[] ss = inputString.split("\r\n");
                                 if (ss.length > 0) {
@@ -97,8 +97,6 @@ public class SpiderEngine {
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } finally {
-                            IOUtils.closeQuietly(input);
                         }
                     });
         }
