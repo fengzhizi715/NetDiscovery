@@ -17,25 +17,35 @@ public class DisruptorQueue extends AbstractQueue {
 
     private RingBuffer<RequestEvent> ringBuffer;
 
-    private Consumer[] consumers = new Consumer[2];
+    private Consumer[] consumers = null;
     private Producer producer = null;
     private int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方；
 
     private AtomicInteger count = new AtomicInteger(0);
     private AtomicInteger consumerCount = new AtomicInteger(0);
 
+    private static final int CONSUME_NUM = 2;
+    private static final int THREAD_NUM = 4;
+
     public DisruptorQueue() {
+
+        this(CONSUME_NUM,THREAD_NUM);
+    }
+
+    public DisruptorQueue(int consumerNum,int threadNum) {
+
+        consumers = new Consumer[consumerNum];
 
         //创建ringBuffer
         ringBuffer = RingBuffer.create(ProducerType.MULTI,
-                        new EventFactory<RequestEvent>() {
-                            @Override
-                            public RequestEvent newInstance() {
-                                return new RequestEvent();
-                            }
-                        },
-                        ringBufferSize ,
-                        new YieldingWaitStrategy());
+                new EventFactory<RequestEvent>() {
+                    @Override
+                    public RequestEvent newInstance() {
+                        return new RequestEvent();
+                    }
+                },
+                ringBufferSize ,
+                new YieldingWaitStrategy());
 
         SequenceBarrier barriers = ringBuffer.newBarrier();
 
@@ -50,7 +60,7 @@ public class DisruptorQueue extends AbstractQueue {
                         consumers);
 
         ringBuffer.addGatingSequences(workerPool.getWorkerSequences());
-        workerPool.start(Executors.newFixedThreadPool(4));
+        workerPool.start(Executors.newFixedThreadPool(threadNum));
 
         producer = new Producer(ringBuffer);
     }

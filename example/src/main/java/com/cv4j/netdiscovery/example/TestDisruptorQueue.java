@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.queue.PriorityQueue;
 import com.cv4j.netdiscovery.core.queue.disruptor.DisruptorQueue;
 
 /**
@@ -22,5 +21,7 @@ public class TestDisruptorQueue {
                 .name("tony")
                 .request(request1,request2,request3)
                 .run();
+
+
     }
 }
