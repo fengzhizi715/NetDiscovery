@@ -20,7 +20,9 @@ public class DisruptorQueue extends AbstractQueue {
     private Consumer[] consumers = new Consumer[2];
     private Producer producer = null;
     private int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方；
+
     private AtomicInteger count = new AtomicInteger(0);
+    private AtomicInteger consumerCount = new AtomicInteger(0);
 
     public DisruptorQueue() {
 
@@ -46,6 +48,7 @@ public class DisruptorQueue extends AbstractQueue {
                         barriers,
                         new EventExceptionHandler(),
                         consumers);
+
         ringBuffer.addGatingSequences(workerPool.getWorkerSequences());
         workerPool.start(Executors.newFixedThreadPool(4));
 
@@ -69,13 +72,14 @@ public class DisruptorQueue extends AbstractQueue {
 
         Request request = ringBuffer.get(ringBuffer.getCursor()-getTotalRequests(spiderName)+1).getRequest();
         ringBuffer.next();
-
+        consumerCount.incrementAndGet();
         return request;
     }
 
     @Override
     public int getLeftRequests(String spiderName) {
-        return getTotalRequests(spiderName) - count.get()+1;
+
+        return getTotalRequests(spiderName)-consumerCount.get();
     }
 
     public int getTotalRequests(String spiderName) {
