@@ -304,4 +304,21 @@ public class Request implements Serializable {
     public interface OnErrorRequest {
         void process(Request request);
     }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+
+        return sb.append("Request{")
+                .append("spiderName=").append(spiderName)
+                .append(", url='").append(url).append('\'')
+                .append(", method='").append(httpMethod).append('\'')
+                .append(", userAgent=").append(userAgent)
+                .append(", extras=").append(extras)
+                .append(", priority=").append(priority)
+                .append(", headers=").append(header.toString())
+                .append('}')
+                .toString();
+    }
 }
