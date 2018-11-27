@@ -12,7 +12,7 @@ public class Producer {
 
     private final RingBuffer<RequestEvent> ringBuffer;
 
-    private AtomicInteger count = new AtomicInteger(0);
+    private AtomicInteger count = new AtomicInteger(0); // 计数器
 
     public Producer(RingBuffer<RequestEvent> ringBuffer) {
         this.ringBuffer = ringBuffer;
@@ -30,6 +30,10 @@ public class Producer {
         }
     }
 
+    /**
+     * 发送到队列中到Request的数量
+     * @return
+     */
     public int getCount() {
 
         return count.get();
