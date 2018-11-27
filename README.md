@@ -188,11 +188,12 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 # TODO List:
 
-1. 增加 RabbitMQ 的支持
-2. 增强 HtmlUnit 模块
-3. 增加 Cooikes Pool
-4. 增加 elasticsearch 的支持
-5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+1. 增加 Cooikes Pool
+2. 使用 lettuce 替换现在使用的 redis 的库
+3. 增加 elasticsearch 的支持
+4. 增加 RabbitMQ 的支持
+5. 增强 HtmlUnit 模块
+6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
 # Contributors：
 * [bdqfork](https://github.com/bdqfork)
