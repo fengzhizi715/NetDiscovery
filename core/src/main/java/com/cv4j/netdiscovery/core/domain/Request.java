@@ -302,6 +302,7 @@ public class Request implements Serializable {
      */
     @FunctionalInterface
     public interface OnErrorRequest {
+
         void process(Request request);
     }
 
