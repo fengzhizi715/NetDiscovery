@@ -171,10 +171,14 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 
 # NetDiscovery 基本原理：
-## 1.基本原理
+
+## 1. core 模块的 uml 类图
+![](images/netdiscovery_core.png)
+
+## 2.基本原理
 ![](images/basic_principle.png)
 
-## 2.集群原理
+## 3.集群原理
 ![](images/cluster_principle.png)
 
 
