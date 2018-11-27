@@ -19,7 +19,8 @@ public class DisruptorQueue extends AbstractQueue {
 
     private Consumer[] consumers = null;
     private Producer producer = null;
-    private int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方；
+    private WorkerPool<RequestEvent> workerPool = null;
+    private int ringBufferSize = 1024*1024; // RingBuffer 大小，必须是 2 的 N 次方
 
     private AtomicInteger consumerCount = new AtomicInteger(0);
 
@@ -52,8 +53,7 @@ public class DisruptorQueue extends AbstractQueue {
             consumers[i] = new Consumer();
         }
 
-        WorkerPool<RequestEvent> workerPool =
-                new WorkerPool<RequestEvent>(ringBuffer,
+        workerPool = new WorkerPool<RequestEvent>(ringBuffer,
                         barriers,
                         new EventExceptionHandler(),
                         consumers);
