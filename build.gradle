@@ -4,6 +4,8 @@ ext {
 
             rxjava                    : "2.2.4",
 
+            kotlinx_coroutines        : "1.0.1",
+
             disruptor                 : "3.4.2",
 
             httpclient                : "4.5.2",
