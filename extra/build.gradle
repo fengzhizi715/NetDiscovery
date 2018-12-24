@@ -21,8 +21,7 @@ dependencies {
     implementation "org.apache.httpcomponents:httpclient:${libs.httpclient}"
     implementation "com.squareup.okhttp3:okhttp:${libs.okhttp}"
 
-    implementation "redis.clients:jedis:${libs.jedis}"
-    implementation "io.lettuce:lettuce-core:5.1.3.RELEASE"
+    implementation "io.lettuce:lettuce-core:${libs.lettuce}"
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
