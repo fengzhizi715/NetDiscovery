@@ -90,6 +90,7 @@ public class DisruptorQueue extends AbstractQueue {
         return producer.getCount()-consumerCount.get();
     }
 
+    @Override
     public int getTotalRequests(String spiderName) {
 
         return super.getTotalRequests(spiderName);

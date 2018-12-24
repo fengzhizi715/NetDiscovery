@@ -2,10 +2,14 @@ package com.cv4j.netdiscovery.extra.queue.redis;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
 import org.apache.commons.codec.digest.DigestUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,53 +29,55 @@ public class RedisPriorityQueue extends RedisQueue {
         super(host);
     }
 
-    public RedisPriorityQueue(JedisPool pool) {
-        super(pool);
+    public RedisPriorityQueue(RedisClient redisClient) {
+        super(redisClient);
     }
 
     @Override
     protected void pushWhenNoDuplicate(Request request) {
 
-        Jedis jedis = pool.getResource();
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
 
         try {
-            if (request.getPriority() > 0)
-                jedis.zadd(getZsetPriorityKey(request.getSpiderName()), request.getPriority(), request.getUrl());
-            else
-                jedis.lpush(getQueueNormalKey(request.getSpiderName()), request.getUrl());
+            if (request.getPriority() > 0) {
+                commands.zadd(getZsetPriorityKey(request.getSpiderName()), request.getPriority(), request.getUrl());
+            } else {
+                commands.lpush(getQueueNormalKey(request.getSpiderName()), request.getUrl());
+            }
 
-            setExtrasInItem(jedis, request);
+            setExtrasInItem(commands, request);
         } finally {
-            pool.returnResource(jedis);
+            connection.close();
         }
     }
 
     @Override
     public synchronized Request poll(String spiderName) {
-
-        Jedis jedis = pool.getResource();
-
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         try {
-            String url = getRequest(jedis, spiderName);
-            if (Preconditions.isBlank(url))
+            String url = getRequest(commands, spiderName);
+            if (Preconditions.isBlank(url)) {
                 return null;
+            }
 
-            return getExtrasInItem(jedis, url, spiderName);
+            return getExtrasInItem(commands, url, spiderName);
         } finally {
-            pool.returnResource(jedis);
+            connection.close();
         }
     }
 
-    private String getRequest(Jedis jedis, String spiderName) {
+    private String getRequest(RedisCommands<String, String> commands, String spiderName) {
 
         String url;
-        Set<String> urls = jedis.zrevrange(getZsetPriorityKey(spiderName), 0, 0);
+        List<String> urls = commands.zrevrange(getZsetPriorityKey(spiderName), 0, 0);
 
         if (urls.isEmpty()) {
-            url = jedis.lpop(getQueueNormalKey(spiderName));
+            url = commands.lpop(getQueueNormalKey(spiderName));
         } else {
             url = urls.toArray(new String[0])[0];
-            jedis.zrem(getZsetPriorityKey(spiderName), url);
+            commands.zrem(getZsetPriorityKey(spiderName), url);
         }
 
         return url;
@@ -85,22 +91,23 @@ public class RedisPriorityQueue extends RedisQueue {
         return QUEUE_PREFIX + spiderName + NORMAL_SUFFIX;
     }
 
-    private void setExtrasInItem(Jedis jedis, Request request) {
+    private void setExtrasInItem(RedisCommands<String, String> commands, Request request) {
 
         if (request.getExtras() != null) {
             String field = DigestUtils.shaHex(request.getUrl());
             String value = gson.toJson(request);
-            jedis.hset(getItemKey(request), field, value);
+            commands.hset(getItemKey(request), field, value);
         }
     }
 
-    private Request getExtrasInItem(Jedis jedis, String url, String spiderName) {
+    private Request getExtrasInItem(RedisCommands<String, String> commands, String url, String spiderName) {
 
         String key = getItemKey(url);
         String field = DigestUtils.shaHex(url);
-        byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
-        if (bytes != null)
-            return gson.fromJson(new String(bytes),Request.class);
+        String result = commands.hget(key, field);
+        if (result != null) {
+            return gson.fromJson(result, Request.class);
+        }
 
         return new Request(url);
     }

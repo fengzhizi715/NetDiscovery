@@ -5,15 +5,20 @@ import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
 import com.google.gson.Gson;
 import com.safframework.tony.common.utils.Preconditions;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.reactive.RedisHashReactiveCommands;
+import io.lettuce.core.api.reactive.RedisListReactiveCommands;
+import io.lettuce.core.api.reactive.RedisSetReactiveCommands;
+import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
+import io.lettuce.core.api.sync.RedisCommands;
 import org.apache.commons.codec.digest.DigestUtils;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by tony on 2018/1/1.
  */
-public class RedisQueue extends AbstractQueue implements DuplicateFilter{
+public class RedisQueue extends AbstractQueue implements DuplicateFilter {
 
     private static final String QUEUE_PREFIX = "queue_";
 
@@ -21,39 +26,37 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
     private static final String ITEM_PREFIX = "item_";
 
-    protected JedisPool pool;
+    protected RedisClient redisClient;
 
     protected Gson gson = new Gson();
 
     public RedisQueue(String host) {
 
-        this(new JedisPool(new JedisPoolConfig(), host));
+        this(RedisClient.create(RedisURI.create(host,6379)));
     }
 
-    public RedisQueue(JedisPool pool) {
+    public RedisQueue(RedisClient redisClient) {
 
-        this.pool = pool;
+        this.redisClient = redisClient;
         setFilter(this);
     }
 
     @Override
     public boolean isDuplicate(Request request) {
-
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         if (request.isCheckDuplicate()) {
-
-            Jedis jedis = pool.getResource();
             try {
-                return jedis.sadd(getSetKey(request), request.getUrl()) == 0;
+                return commands.sadd(getSetKey(request), request.getUrl()) == 0;
             } finally {
-                pool.returnResource(jedis);
+                connection.close();
             }
         } else {
 
-            Jedis jedis = pool.getResource();
             try {
-                jedis.sadd(getSetKey(request), request.getUrl());
+                commands.sadd(getSetKey(request), request.getUrl());
             } finally {
-                pool.returnResource(jedis);
+                connection.close();
             }
 
             return false;
@@ -63,20 +66,19 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
     @Override
     protected void pushWhenNoDuplicate(Request request) {
-
-        Jedis jedis = pool.getResource();
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         try {
-            jedis.rpush(getQueueKey(request.getSpiderName()), request.getUrl());
+            commands.lpush(request.getSpiderName(), request.getUrl());
 
             if (hasExtraRequestInfo(request)) {
-
-                String field = DigestUtils.shaHex(request.getUrl());
+                String field = DigestUtils.sha1Hex(request.getUrl());
                 String value = gson.toJson(request);
-                jedis.hset((ITEM_PREFIX + request.getUrl()), field, value);
+                commands.hset((ITEM_PREFIX + request.getUrl()), field, value);
             }
 
         } finally {
-            jedis.close();
+            connection.close();
         }
 
     }
@@ -99,7 +101,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
             return true;
         }
 
-        if (request.getPriority()>0) {
+        if (request.getPriority() > 0) {
             return true;
         }
 
@@ -108,54 +110,56 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter{
 
     @Override
     public synchronized Request poll(String spiderName) {
-
-        Jedis jedis = pool.getResource();
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         try {
-            String url = jedis.lpop(getQueueKey(spiderName));
+            String url = commands.lpop(getQueueKey(spiderName));
             if (url == null) {
                 return null;
             }
 
             String key = ITEM_PREFIX + url;
-            String field = DigestUtils.shaHex(url);
-            byte[] bytes = jedis.hget(key.getBytes(), field.getBytes());
+            String field = DigestUtils.sha1Hex(url);
+            String result = commands.hget(key, field);
 
-            if (bytes != null) {
+            if (result != null) {
 
-                return gson.fromJson(new String(bytes),Request.class);
+                return gson.fromJson(result, Request.class);
             }
 
             return new Request(url);
         } finally {
-            pool.returnResource(jedis);
+            connection.close();
         }
     }
 
     @Override
     public int getLeftRequests(String spiderName) {
-
-        Jedis jedis = pool.getResource();
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         try {
-            Long size = jedis.llen(getQueueKey(spiderName));
+            Long size = commands.llen(getQueueKey(spiderName));
             return size.intValue();
         } finally {
-            pool.returnResource(jedis);
+            connection.close();
         }
     }
 
     @Override
     public int getTotalRequests(String spiderName) {
-        Jedis jedis = pool.getResource();
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisCommands<String, String> commands = connection.sync();
         try {
-            Long size = jedis.scard(getSetKey(spiderName));
+            Long size = commands.scard(getSetKey(spiderName));
             return size.intValue();
         } finally {
-            pool.returnResource(jedis);
+            connection.close();
         }
     }
 
     /**
      * RedisQueue 无须使用该方法来获取Queue中总共的Request数量，所以返回0
+     *
      * @return
      */
     @Override

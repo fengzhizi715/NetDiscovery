@@ -3,9 +3,11 @@ package com.cv4j.netdiscovery.extra.pipeline;
 import com.cv4j.netdiscovery.core.domain.ResultItems;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.vertx.core.json.JsonObject;
-import io.vertx.redis.RedisClient;
-import io.vertx.redis.RedisOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -25,9 +27,9 @@ public class RedisPipeline implements Pipeline {
         this.key = key;
     }
 
-    public RedisPipeline(RedisOptions redisOptions, String key) {
+    public RedisPipeline(RedisURI redisURI, String key) {
 
-        this.redisClient = RedisClient.create(VertxUtils.getVertx(), redisOptions);
+        this.redisClient = RedisClient.create(redisURI);
         this.key = key;
     }
 
@@ -39,15 +41,11 @@ public class RedisPipeline implements Pipeline {
 
             jsonObject.put(entry.getKey(), entry.getValue());
         }
-
-        redisClient.setBinary(key, jsonObject.toBuffer(), res -> {
-            
-            if (res.succeeded()) {
-
-                log.info(String.format("saved key %s success!", key));
-            } else {
-                res.cause().printStackTrace();
-            }
-        });
+        StatefulRedisConnection<String, String> connection = redisClient.connect();
+        RedisStringReactiveCommands<String, String> commands = connection.reactive();
+        commands.set(key, jsonObject.toString())
+                .doFinally(signalType -> connection.close())
+                .subscribe(res -> log.info(String.format("saved key %s success!", key)),
+                        error -> error.getCause().printStackTrace());
     }
 }

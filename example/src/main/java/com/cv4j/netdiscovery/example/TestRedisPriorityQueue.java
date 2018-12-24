@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.pipeline.ConsolePipeline;
 import com.cv4j.netdiscovery.extra.queue.redis.RedisPriorityQueue;
 
 /**
