@@ -28,6 +28,9 @@ dependencies {
 
     implementation 'com.couchbase.client:java-client:2.5.5'
 
+    implementation('org.elasticsearch.client:transport:6.5.4',
+            { exclude group: 'org.apache.httpcomponents', module: 'httpcore' })
+
     implementation "io.vertx:vertx-redis-client:${libs.vertx}"
 
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
@@ -37,7 +40,7 @@ dependencies {
     implementation project(":core")
 }
 
-publish{
+publish {
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-extra'

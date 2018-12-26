@@ -23,6 +23,9 @@ dependencies {
     implementation project(":htmlunit")
     implementation project(":coroutines")
 
+    implementation('org.elasticsearch.client:transport:6.5.4',
+            { exclude group: 'org.apache.httpcomponents', module: 'httpcore' })
+
     implementation "io.lettuce:lettuce-core:${libs.lettuce}"
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
     implementation 'org.seleniumhq.selenium:selenium-java:3.8.1'
