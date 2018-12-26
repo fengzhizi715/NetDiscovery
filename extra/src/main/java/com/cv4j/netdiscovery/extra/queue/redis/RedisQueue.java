@@ -13,6 +13,7 @@ import io.lettuce.core.api.reactive.RedisListReactiveCommands;
 import io.lettuce.core.api.reactive.RedisSetReactiveCommands;
 import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.lettuce.core.api.sync.RedisCommands;
+import io.lettuce.core.resource.ClientResources;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -31,8 +32,16 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     protected Gson gson = new Gson();
 
     public RedisQueue(String host) {
+        this(host, null);
+    }
 
-        this(RedisClient.create(RedisURI.create(host,6379)));
+    public RedisQueue(String host, ClientResources resources) {
+        if (resources != null) {
+            this.redisClient = RedisClient.create(resources, RedisURI.create(host, 6379));
+        } else {
+            this.redisClient = RedisClient.create(RedisURI.create(host, 6379));
+        }
+
     }
 
     public RedisQueue(RedisClient redisClient) {

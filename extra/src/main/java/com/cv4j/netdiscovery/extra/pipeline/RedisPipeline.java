@@ -7,6 +7,7 @@ import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
+import io.lettuce.core.resource.ClientResources;
 import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +30,15 @@ public class RedisPipeline implements Pipeline {
 
     public RedisPipeline(RedisURI redisURI, String key) {
 
-        this.redisClient = RedisClient.create(redisURI);
+        this(null, redisURI, key);
+    }
+
+    public RedisPipeline(ClientResources resources, RedisURI redisURI, String key) {
+        if (null != resources) {
+            this.redisClient = RedisClient.create(resources, redisURI);
+        } else {
+            this.redisClient = RedisClient.create(redisURI);
+        }
         this.key = key;
     }
 
