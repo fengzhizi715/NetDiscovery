@@ -32,32 +32,32 @@ repositories {
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.2.10'
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.3.0'
 
 ```
 
 netdiscovery-extra
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.2.10'
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.3.0'
 ```
 
 netdiscovery-selenium
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.2.10'
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.3.0'
 ```
 
 netdiscovery-dsl
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.0.10'
+implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.3.0'
 ```
 
 netdiscovery-coroutines
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.0.10'
+implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.0'
 ```
 
 # NetDiscovery 功能点：
@@ -200,12 +200,13 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
 # Contributors：
+
 * [bdqfork](https://github.com/bdqfork)
 * [sinkinka](https://github.com/InsertKoinIO/koin)
 
 # 联系方式:
 
-QQ交流群：490882934
+Wechat：fengzhizi715
 
 > Java与Android技术栈：每周更新推送原创技术文章，欢迎扫描下方的公众号二维码并关注，期待与您的共同成长和进步。
 
