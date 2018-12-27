@@ -183,6 +183,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 
 # 案例:
+
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
 * 在“Java与Android技术栈”公众号回复数字货币的关键字，获取最新的价格
 ![](images/spider_case1.jpeg)
@@ -193,11 +194,9 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 # TODO List:
 
 1. 增加 Cooikes Pool
-2. 使用 lettuce 替换现在使用的 redis 的库
-3. 增加 elasticsearch 的支持
-4. 增加 RabbitMQ 的支持
-5. 增强 HtmlUnit 模块
-6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+2. 增加 RabbitMQ 的支持
+3. 增强 HtmlUnit 模块
+4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
 # Contributors：
 
