@@ -5,13 +5,10 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
-import io.lettuce.core.cluster.api.StatefulRedisClusterConnection;
 import io.lettuce.core.resource.ClientResources;
-import io.lettuce.core.support.ConnectionPoolSupport;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by tony on 2018/6/19.
@@ -32,6 +29,10 @@ public class RedisPriorityQueue extends RedisQueue {
 
     public RedisPriorityQueue(String host, ClientResources resources) {
         super(host, resources);
+    }
+
+    public RedisPriorityQueue(String host, int port,ClientResources resources) {
+        super(host, port,resources);
     }
 
     public RedisPriorityQueue(RedisClient redisClient) {

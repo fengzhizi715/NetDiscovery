@@ -8,10 +8,6 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.api.StatefulRedisConnection;
-import io.lettuce.core.api.reactive.RedisHashReactiveCommands;
-import io.lettuce.core.api.reactive.RedisListReactiveCommands;
-import io.lettuce.core.api.reactive.RedisSetReactiveCommands;
-import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.resource.ClientResources;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,12 +32,15 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     }
 
     public RedisQueue(String host, ClientResources resources) {
-        if (resources != null) {
-            this.redisClient = RedisClient.create(resources, RedisURI.create(host, 6379));
-        } else {
-            this.redisClient = RedisClient.create(RedisURI.create(host, 6379));
-        }
+        this(host,6379,resources);
+    }
 
+    public RedisQueue(String host, int port, ClientResources resources) {
+        if (resources != null) {
+            this.redisClient = RedisClient.create(resources, RedisURI.create(host, port));
+        } else {
+            this.redisClient = RedisClient.create(RedisURI.create(host, port));
+        }
     }
 
     public RedisQueue(RedisClient redisClient) {
