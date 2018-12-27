@@ -17,8 +17,10 @@ public class TestMany {
         Spider spider = Spider.create()
                 .downloader(new VertxDownloader())
                 .maxRetries(1); // 重试次数
+
+        Request request = null;
         for (int i = 0; i < 10000; i++) {
-            Request request = new Request("https://www.google.com");
+            request = new Request("https://www.google.com");
             request.checkDuplicate(false);
             request.onErrorRequest(new Request.OnErrorRequest() {
                 @Override
@@ -30,7 +32,6 @@ public class TestMany {
         }
         SpiderEngine spiderEngine = SpiderEngine.create();
         spiderEngine.addSpider(spider);
-        spiderEngine.httpd(9000)
-                .run();
+        spiderEngine.httpd(9000).run();
     }
 }
