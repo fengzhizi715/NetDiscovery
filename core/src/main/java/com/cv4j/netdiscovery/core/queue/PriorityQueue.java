@@ -63,6 +63,6 @@ public class PriorityQueue extends AbstractQueue {
     @Override
     public int getLeftRequests(String spiderName) {
 
-        return normalQueue.size();
+        return normalQueue.size() + priorityQueue.size();
     }
 }
