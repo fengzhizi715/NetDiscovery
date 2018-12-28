@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
+    implementation 'com.rabbitmq:amqp-client:5.5.1'
 
     implementation 'com.couchbase.client:java-client:2.5.5'
 

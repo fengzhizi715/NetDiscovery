@@ -1,0 +1,46 @@
+package com.cv4j.netdiscovery.example.rabbit;
+
+import com.cv4j.netdiscovery.core.Spider;
+import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
+import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueue;
+import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueueConfig;
+
+import java.util.Properties;
+
+/**
+ * @author bdq
+ * @date 2018-12-28
+ */
+public class TestRabbit {
+    public static void main(String[] args) {
+
+        Properties producerProperties = new Properties();
+        producerProperties.put("rabbitmq.username", "guest");
+        producerProperties.put("rabbitmq.password", "guest");
+        producerProperties.put("rabbitmq.virtual.host", "/");
+        producerProperties.put("rabbitmq.host", "localhost");
+        producerProperties.put("rabbitmq.port", "5672");
+
+        Properties consumeProperties = new Properties();
+        consumeProperties.put("rabbitmq.username", "guest");
+        consumeProperties.put("rabbitmq.password", "guest");
+        consumeProperties.put("rabbitmq.virtual.host", "/");
+        consumeProperties.put("rabbitmq.host", "localhost");
+        consumeProperties.put("rabbitmq.port", "5672");
+
+        RabbitQueueConfig config = new RabbitQueueConfig.RabbitQueueConfigBuilder(producerProperties, consumeProperties)
+                .exchange("tony")
+                .queueName("test")
+                .build();
+
+        RabbitQueue queue = new RabbitQueue(config);
+
+        Request request = new Request("https://www.baidu.com").checkDuplicate(false);
+
+        Spider.create(queue)
+                .name("tony")
+                .request(request)
+                .run();
+    }
+}

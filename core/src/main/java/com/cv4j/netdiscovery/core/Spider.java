@@ -337,7 +337,7 @@ public class Spider {
 
         initialDelay();
 
-        while (getSpiderStatus() != SPIDER_STATUS_STOPPED && checkIfQueueEmpty()) {
+        while (getSpiderStatus() != SPIDER_STATUS_STOPPED && queue.getLeftRequests(getName())!=0) {
 
             //暂停抓取
             if (pause) {
