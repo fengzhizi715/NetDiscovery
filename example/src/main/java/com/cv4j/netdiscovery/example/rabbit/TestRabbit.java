@@ -31,7 +31,7 @@ public class TestRabbit {
 
         RabbitQueueConfig config = new RabbitQueueConfig.RabbitQueueConfigBuilder(producerProperties, consumeProperties)
                 .exchange("tony")
-                .queueName("test")
+                .queueName("tony")
                 .build();
 
         RabbitQueue queue = new RabbitQueue(config);

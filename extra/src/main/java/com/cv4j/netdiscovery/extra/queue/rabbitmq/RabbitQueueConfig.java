@@ -10,6 +10,9 @@ public class RabbitQueueConfig {
     private Properties producerProperties;
     private Properties consumeProperties;
     private String exchange;
+    /**
+     * 必须与spiderName一致
+     */
     private String queueName;
 
     public RabbitQueueConfig(RabbitQueueConfigBuilder builder) {

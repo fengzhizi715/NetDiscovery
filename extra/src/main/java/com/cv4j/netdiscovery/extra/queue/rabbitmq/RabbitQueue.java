@@ -110,6 +110,11 @@ public class RabbitQueue extends AbstractQueue {
 
     @Override
     public int getLeftRequests(String spiderName) {
+        try {
+            return (int) consumer.messageCount(spiderName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 }
