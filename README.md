@@ -197,7 +197,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 2. 增加 RabbitMQ 的支持
 3. 增强 HtmlUnit 模块
 4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-5. 爬取速度控制（Pipline、Request、Domain、Ip、Download_Delay），5个纬度，后期可支持交叉
+5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
 
 # Contributors：
 
