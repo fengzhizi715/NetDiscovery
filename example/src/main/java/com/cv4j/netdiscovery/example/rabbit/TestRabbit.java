@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
 import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueue;
 import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueueConfig;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -30,8 +31,9 @@ public class TestRabbit {
         consumeProperties.put("rabbitmq.port", "5672");
 
         RabbitQueueConfig config = new RabbitQueueConfig.RabbitQueueConfigBuilder(producerProperties, consumeProperties)
-                .exchange("tony")
-                .queueName("tony")
+                .producerExchange("tony")
+                .consumerExchange("tony")
+                .queueNames(Arrays.asList("bdq"))
                 .build();
 
         RabbitQueue queue = new RabbitQueue(config);
@@ -39,7 +41,7 @@ public class TestRabbit {
         Request request = new Request("https://www.baidu.com").checkDuplicate(false);
 
         Spider.create(queue)
-                .name("tony")
+                .name("bdq")
                 .request(request)
                 .run();
     }

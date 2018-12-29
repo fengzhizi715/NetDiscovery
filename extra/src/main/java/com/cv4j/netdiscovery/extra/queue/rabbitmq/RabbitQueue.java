@@ -7,22 +7,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author bdq
  * @date 2018-12-28
  */
 public class RabbitQueue extends AbstractQueue {
-    private String exchange;
-    private String queueName;
+    private String producerExchange;
+    private String consumerExchange;
     private Channel producer;
     private Channel consumer;
+    private List<String> queueNames;
 
     public RabbitQueue(RabbitQueueConfig rabbitQueueConfig) {
-        exchange = rabbitQueueConfig.getExchange();
-        queueName = rabbitQueueConfig.getQueueName();
+        producerExchange = rabbitQueueConfig.getProducerExchange();
+        consumerExchange = rabbitQueueConfig.getConsumerExchange();
+        queueNames = rabbitQueueConfig.getQueueNames();
         initProducer(rabbitQueueConfig);
         initConsumer(rabbitQueueConfig);
     }
@@ -34,9 +36,7 @@ public class RabbitQueue extends AbstractQueue {
         try {
             connection = factory.newConnection();
             producer = connection.createChannel();
-            producer.exchangeDeclare(exchange, "direct");
-            producer.queueDeclare(queueName, false, false, false, null);
-            producer.queueBind(queueName, exchange, "");
+            producer.exchangeDeclare(producerExchange, "topic");
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
@@ -49,9 +49,11 @@ public class RabbitQueue extends AbstractQueue {
         try {
             connection = factory.newConnection();
             consumer = connection.createChannel();
-            consumer.exchangeDeclare(exchange, "direct");
-            consumer.queueDeclare(queueName, false, false, false, null);
-            consumer.queueBind(queueName, exchange, "");
+            consumer.exchangeDeclare(consumerExchange, "topic");
+            for (String queueName : queueNames) {
+                consumer.queueDeclare(queueName, false, false, false, null);
+                consumer.queueBind(queueName, consumerExchange, queueName);
+            }
         } catch (IOException | TimeoutException e) {
             e.printStackTrace();
         }
@@ -61,7 +63,7 @@ public class RabbitQueue extends AbstractQueue {
     @Override
     protected void pushWhenNoDuplicate(Request request) {
         try {
-            producer.basicPublish(exchange, "", null, serialize(request));
+            producer.basicPublish(producerExchange, request.getSpiderName(), null, serialize(request));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,28 +82,21 @@ public class RabbitQueue extends AbstractQueue {
 
     @Override
     public Request poll(String spiderName) {
-        AtomicReference<Request> request = new AtomicReference<>();
-        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            try {
-                request.set(deserialize(delivery));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
+        Request request = null;
         try {
-            consumer.basicConsume(queueName, true, deliverCallback, consumerTag -> {
-            });
+            GetResponse response = consumer.basicGet(spiderName, true);
+            request = deserialize(response.getBody());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return request.get();
+        return request;
     }
 
-    private Request deserialize(Delivery delivery) {
+    private Request deserialize(byte[] data) {
         ObjectMapper mapper = new ObjectMapper();
         Request request = null;
         try {
-            request = mapper.readValue(delivery.getBody(), Request.class);
+            request = mapper.readValue(data, Request.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
