@@ -198,6 +198,7 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 3. 增强 HtmlUnit 模块
 4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
+6. 增加可开启的http缓存配置
 
 # Contributors：
 
