@@ -26,7 +26,7 @@ ext {
 
             logback                   : "1.2.3",
 
-            proxypool                 : "1.1.10",
+            proxypool                 : "1.1.11",
 
             tony_common_utils         : "1.2.6"
     ]
