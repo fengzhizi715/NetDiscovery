@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class Cookie {
+public class Pair {
 
     private String name;
     private String value;

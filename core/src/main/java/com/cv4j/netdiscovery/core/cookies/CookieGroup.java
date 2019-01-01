@@ -2,9 +2,7 @@ package com.cv4j.netdiscovery.core.cookies;
 
 import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Set;
 public class CookieGroup {
 
     private String domain;
-    private Set<Cookie> cookies;
+    private Set<Pair> cookies;
 
     public CookieGroup(String domain) {
         this.domain = domain;
@@ -22,18 +20,18 @@ public class CookieGroup {
     }
 
     public void putCookie(String key, String value) {
-        this.getCookies().add(new Cookie(key.trim(), value.trim()));
+        this.getCookies().add(new Pair(key.trim(), value.trim()));
     }
 
-    public void putCookie(Cookie cookie) {
+    public void putCookie(Pair cookie) {
         this.getCookies().add(cookie);
     }
 
-    public void putAllCookies(Set<Cookie> cookieSet) {
+    public void putAllCookies(Set<Pair> cookieSet) {
         this.cookies.addAll(cookieSet);
     }
 
-    public void removeCookie(Cookie cookie) {
+    public void removeCookie(Pair cookie) {
         this.getCookies().remove(cookie);
     }
 

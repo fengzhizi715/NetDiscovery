@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.Cookie;
+import com.cv4j.netdiscovery.core.cookies.Pair;
 import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -26,7 +26,7 @@ import java.util.Set;
 public class HttpClientDownloader implements Downloader{
 
     HttpManager httpManager;
-    private Set<Cookie> cookieSet;
+    private Set<Pair> cookieSet;
 
     public HttpClientDownloader() {
 

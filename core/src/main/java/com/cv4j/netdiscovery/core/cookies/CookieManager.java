@@ -45,14 +45,14 @@ public class CookieManager {
 
         CookieGroup group = cookieGroups.remove(domain);
         if (group != null) {
-            Set<Cookie> cookies = group.getCookies();
+            Set<Pair> cookies = group.getCookies();
             if (cookies != null) {
                 cookies.clear();
             }
         }
     }
 
-    public void saveCookie(Request request,Set<Cookie> cookieSet,String cookieStr) {
+    public void saveCookie(Request request, Set<Pair> cookieSet, String cookieStr) {
 
         if (Preconditions.isNotBlank(cookieStr)) {
 
@@ -70,7 +70,7 @@ public class CookieManager {
                         String[] pairs = seg.trim().split("\\=");
                         if (pairs.length == 2) {
 
-                            cookieSet.add(new Cookie(pairs[0], pairs[1]));
+                            cookieSet.add(new Pair(pairs[0], pairs[1]));
                         }
                     }
                 }
@@ -88,7 +88,7 @@ public class CookieManager {
                         String[] pairs = seg.trim().split("\\=");
                         if (pairs.length == 2) {
 
-                            cookieSet.add(new Cookie(pairs[0], pairs[1]));
+                            cookieSet.add(new Pair(pairs[0], pairs[1]));
                         }
                     }
                 }
@@ -98,7 +98,7 @@ public class CookieManager {
         }
     }
 
-    public void saveCookie(Request request, Set<Cookie> cookieSet, List<String> cookies) {
+    public void saveCookie(Request request, Set<Pair> cookieSet, List<String> cookies) {
 
         if (Preconditions.isNotBlank(cookies)) {
 
@@ -118,7 +118,7 @@ public class CookieManager {
                             String[] pairs = seg.trim().split("\\=");
                             if (pairs.length==2) {
 
-                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                cookieSet.add(new Pair(pairs[0],pairs[1]));
                             }
                         }
                     }
@@ -139,7 +139,7 @@ public class CookieManager {
                             String[] pairs = seg.trim().split("\\=");
                             if (pairs.length==2) {
 
-                                cookieSet.add(new Cookie(pairs[0],pairs[1]));
+                                cookieSet.add(new Pair(pairs[0],pairs[1]));
                             }
                         }
                     }
