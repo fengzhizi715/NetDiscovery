@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Cookies的管理类，每一个域名对应一个CookieGroup
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 public class CookieManager {
 
-    private Map<String, CookieGroup> cookieGroups = new HashMap<>();
+    private Map<String, CookieGroup> cookieGroups = new ConcurrentHashMap<>();
 
     private static class Holder {
         private static final CookieManager instance = new CookieManager();
