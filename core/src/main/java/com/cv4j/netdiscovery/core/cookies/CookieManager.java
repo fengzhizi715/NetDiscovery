@@ -3,7 +3,6 @@ package com.cv4j.netdiscovery.core.cookies;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -94,7 +93,7 @@ public class CookieManager {
                     }
                 }
 
-                cookieGroup.putAllCookies(cookieSet);
+                cookieGroup.putAllCookies(cookieSet); // 添加额外的cookie
             }
         }
     }

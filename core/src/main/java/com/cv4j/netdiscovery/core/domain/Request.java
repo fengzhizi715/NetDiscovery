@@ -35,7 +35,7 @@ public class Request implements Serializable {
 
     private boolean checkDuplicate = true;
 
-    private boolean saveCookie = false;
+    private boolean saveCookie = false; // request 是否需要保存cookie
 
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
