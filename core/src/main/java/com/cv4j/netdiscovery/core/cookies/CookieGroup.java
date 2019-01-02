@@ -2,8 +2,9 @@ package com.cv4j.netdiscovery.core.cookies;
 
 import lombok.Getter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.net.HttpCookie;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tony on 2018/2/1.
@@ -12,23 +13,19 @@ import java.util.Set;
 public class CookieGroup {
 
     private String domain;
-    private Set<Pair> cookies;
+    private List<HttpCookie> cookies;
 
     public CookieGroup(String domain) {
         this.domain = domain;
-        this.cookies = new LinkedHashSet<>();
+        this.cookies = new ArrayList<>();
     }
 
-    public void putCookie(String key, String value) {
-        this.getCookies().add(new Pair(key.trim(), value.trim()));
-    }
-
-    public void putCookie(Pair cookie) {
+    public void putCookie(HttpCookie cookie) {
         this.getCookies().add(cookie);
     }
 
-    public void putAllCookies(Set<Pair> cookieSet) {
-        this.getCookies().addAll(cookieSet);
+    public void putAllCookies(List<HttpCookie>  cookies) {
+        this.getCookies().addAll(cookies);
     }
 
     public void removeCookie(Pair cookie) {

@@ -3,10 +3,8 @@ package com.cv4j.netdiscovery.core.cookies;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.net.HttpCookie;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +44,7 @@ public class CookieManager {
 
         CookieGroup group = cookieGroups.remove(domain);
         if (group != null) {
-            Set<Pair> cookies = group.getCookies();
+            List<HttpCookie> cookies = group.getCookies();
             if (cookies != null) {
                 cookies.clear();
             }
@@ -58,44 +56,22 @@ public class CookieManager {
         if (Preconditions.isNotBlank(cookieStr)) {
 
             CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
-            Set<Pair> cookieSet = new LinkedHashSet<>();
+            List<HttpCookie> httpCookieList = new ArrayList<>();
 
-            if (cookieGroup == null) {
+            if (cookieGroup==null) {
 
                 cookieGroup = new CookieGroup(request.getUrlParser().getHost());
 
-                String[] segs = cookieStr.split(";");
-                if (Preconditions.isNotBlank(segs)) {
+                httpCookieList.addAll(HttpCookie.parse(cookieStr));
 
-                    for (String seg : segs) {
-
-                        String[] pairs = seg.trim().split("\\=");
-                        if (pairs.length == 2) {
-
-                            cookieSet.add(new Pair(pairs[0], pairs[1]));
-                        }
-                    }
-                }
-
-                cookieGroup.putAllCookies(cookieSet);
+                cookieGroup.putAllCookies(httpCookieList);
 
                 CookieManager.getInsatance().addCookieGroup(cookieGroup);
             } else {
 
-                String[] segs = cookieStr.split(";");
-                if (Preconditions.isNotBlank(segs)) {
+                httpCookieList.addAll(HttpCookie.parse(cookieStr));
 
-                    for (String seg : segs) {
-
-                        String[] pairs = seg.trim().split("\\=");
-                        if (pairs.length == 2) {
-
-                            cookieSet.add(new Pair(pairs[0], pairs[1]));
-                        }
-                    }
-                }
-
-                cookieGroup.putAllCookies(cookieSet); // 添加额外的cookie
+                cookieGroup.putAllCookies(httpCookieList);
             }
         }
     }
@@ -105,7 +81,7 @@ public class CookieManager {
         if (Preconditions.isNotBlank(cookies)) {
 
             CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
-            Set<Pair> cookieSet = new LinkedHashSet<>();
+            List<HttpCookie> httpCookieList = new ArrayList<>();
 
             if (cookieGroup==null) {
 
@@ -113,42 +89,21 @@ public class CookieManager {
 
                 for (String cookieStr:cookies) {
 
-                    String[] segs = cookieStr.split(";");
-                    if (Preconditions.isNotBlank(segs)) {
-
-                        for (String seg:segs) {
-
-                            String[] pairs = seg.trim().split("\\=");
-                            if (pairs.length==2) {
-
-                                cookieSet.add(new Pair(pairs[0],pairs[1]));
-                            }
-                        }
-                    }
+                    httpCookieList.addAll(HttpCookie.parse(cookieStr));
                 }
 
-                cookieGroup.putAllCookies(cookieSet);
+                cookieGroup.putAllCookies(httpCookieList);
 
                 CookieManager.getInsatance().addCookieGroup(cookieGroup);
             } else {
 
                 for (String cookieStr:cookies) {
 
-                    String[] segs = cookieStr.split(";");
-                    if (Preconditions.isNotBlank(segs)) {
-
-                        for (String seg:segs) {
-
-                            String[] pairs = seg.trim().split("\\=");
-                            if (pairs.length==2) {
-
-                                cookieSet.add(new Pair(pairs[0],pairs[1]));
-                            }
-                        }
-                    }
+                    httpCookieList.addAll(HttpCookie.parse(cookieStr));
                 }
 
-                cookieGroup.putAllCookies(cookieSet);
+                cookieGroup.putAllCookies(httpCookieList);
+
             }
         }
     }

@@ -17,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -104,7 +106,9 @@ public class UrlConnectionDownloader implements Downloader {
                     if (request.isSaveCookie()) {
 
                         // save cookies
-                        CookieManager.getInsatance().saveCookie(request,httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER));
+                        Map<String, List<String>> maps = httpUrlConnection.getHeaderFields();
+                        List<String> cookies = maps.get(Constant.SET_COOKIES_HEADER);
+                        CookieManager.getInsatance().saveCookie(request,cookies);
                     }
 
                     return response;
