@@ -14,18 +14,18 @@ import java.util.List;
  *
  * Created by tony on 2018/2/1.
  */
-public class CookieManager {
+public class CookiePool {
 
     private static RxCache cache;
 
     private static class Holder {
-        private static final CookieManager instance = new CookieManager();
+        private static final CookiePool instance = new CookiePool();
     }
 
-    private CookieManager() {
+    private CookiePool() {
     }
 
-    public static final CookieManager getInsatance() {
+    public static final CookiePool getInsatance() {
         return Holder.instance;
     }
 
@@ -90,7 +90,7 @@ public class CookieManager {
 
         if (Preconditions.isNotBlank(cookie)) {
 
-            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            CookieGroup cookieGroup = CookiePool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
             if (cookieGroup==null) {
@@ -101,7 +101,7 @@ public class CookieManager {
 
                 cookieGroup.putAllCookies(httpCookieList);
 
-                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                CookiePool.getInsatance().addCookieGroup(cookieGroup);
             } else {
 
                 httpCookieList.addAll(HttpCookie.parse(cookie));
@@ -120,7 +120,7 @@ public class CookieManager {
 
         if (Preconditions.isNotBlank(cookies)) {
 
-            CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            CookieGroup cookieGroup = CookiePool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
             if (cookieGroup==null) {
@@ -134,7 +134,7 @@ public class CookieManager {
 
                 cookieGroup.putAllCookies(httpCookieList);
 
-                CookieManager.getInsatance().addCookieGroup(cookieGroup);
+                CookiePool.getInsatance().addCookieGroup(cookieGroup);
             } else {
 
                 for (String cookieStr:cookies) {

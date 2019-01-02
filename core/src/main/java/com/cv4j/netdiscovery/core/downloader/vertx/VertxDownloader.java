@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.CookieManager;
+import com.cv4j.netdiscovery.core.cookies.CookiePool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -123,7 +123,7 @@ public class VertxDownloader implements Downloader {
                         if (request.isSaveCookie()) {
 
                             // save cookies
-                            CookieManager.getInsatance().saveCookie(request, stringHttpResponse.cookies());
+                            CookiePool.getInsatance().saveCookie(request, stringHttpResponse.cookies());
                         }
 
                         return response;

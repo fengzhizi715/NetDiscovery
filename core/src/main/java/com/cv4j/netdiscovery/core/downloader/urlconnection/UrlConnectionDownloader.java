@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.CookieManager;
+import com.cv4j.netdiscovery.core.cookies.CookiePool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -108,7 +107,7 @@ public class UrlConnectionDownloader implements Downloader {
                         // save cookies
                         Map<String, List<String>> maps = httpUrlConnection.getHeaderFields();
                         List<String> cookies = maps.get(Constant.SET_COOKIES_HEADER);
-                        CookieManager.getInsatance().saveCookie(request,cookies);
+                        CookiePool.getInsatance().saveCookie(request,cookies);
                     }
 
                     return response;

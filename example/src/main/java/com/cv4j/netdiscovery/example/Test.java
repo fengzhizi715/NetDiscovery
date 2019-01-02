@@ -2,12 +2,6 @@ package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.SpiderEngine;
-import com.cv4j.netdiscovery.core.cookies.CookieGroup;
-import com.cv4j.netdiscovery.core.cookies.CookieManager;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader;
-import com.cv4j.netdiscovery.extra.downloader.httpclient.HttpClientDownloader;
-import com.cv4j.netdiscovery.extra.downloader.okhttp.OkHttpDownloader;
 
 /**
  * Created by tony on 2018/1/22.
