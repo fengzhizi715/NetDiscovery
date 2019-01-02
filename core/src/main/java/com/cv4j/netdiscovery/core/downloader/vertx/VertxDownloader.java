@@ -32,12 +32,10 @@ public class VertxDownloader implements Downloader {
     private WebClient webClient;
     private io.vertx.reactivex.core.Vertx vertx;
     private Map<String, String> header;
-    private Set<Pair> cookieSet;
 
     public VertxDownloader() {
 
         this.vertx = VertxUtils.getReactivexVertx();
-        this.cookieSet = new LinkedHashSet<>();
     }
 
     public Maybe<Response> download(Request request) {
@@ -128,7 +126,7 @@ public class VertxDownloader implements Downloader {
                         if (request.isSaveCookie()) {
 
                             // save cookies
-                            CookieManager.getInsatance().saveCookie(request, cookieSet, stringHttpResponse.cookies());
+                            CookieManager.getInsatance().saveCookie(request, stringHttpResponse.cookies());
                         }
 
                         return response;

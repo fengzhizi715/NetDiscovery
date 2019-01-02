@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.urlconnection;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.Pair;
 import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -21,9 +20,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by tony on 2018/3/2.
@@ -33,10 +30,8 @@ public class UrlConnectionDownloader implements Downloader {
 
     private URL url = null;
     private HttpURLConnection httpUrlConnection = null;
-    private Set<Pair> cookieSet;
 
     public UrlConnectionDownloader() {
-        this.cookieSet = new LinkedHashSet<>();
     }
 
     @Override
@@ -109,7 +104,7 @@ public class UrlConnectionDownloader implements Downloader {
                     if (request.isSaveCookie()) {
 
                         // save cookies
-                        CookieManager.getInsatance().saveCookie(request,cookieSet,httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER));
+                        CookieManager.getInsatance().saveCookie(request,httpUrlConnection.getHeaderField(Constant.SET_COOKIES_HEADER));
                     }
 
                     return response;

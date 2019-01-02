@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.cookies;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,11 +53,12 @@ public class CookieManager {
         }
     }
 
-    public void saveCookie(Request request, Set<Pair> cookieSet, String cookieStr) {
+    public void saveCookie(Request request, String cookieStr) {
 
         if (Preconditions.isNotBlank(cookieStr)) {
 
             CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            Set<Pair> cookieSet = new LinkedHashSet<>();
 
             if (cookieGroup == null) {
 
@@ -98,11 +100,12 @@ public class CookieManager {
         }
     }
 
-    public void saveCookie(Request request, Set<Pair> cookieSet, List<String> cookies) {
+    public void saveCookie(Request request, List<String> cookies) {
 
         if (Preconditions.isNotBlank(cookies)) {
 
             CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            Set<Pair> cookieSet = new LinkedHashSet<>();
 
             if (cookieGroup==null) {
 
