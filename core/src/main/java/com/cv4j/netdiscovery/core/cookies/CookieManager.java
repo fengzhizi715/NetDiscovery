@@ -51,9 +51,14 @@ public class CookieManager {
         }
     }
 
-    public void saveCookie(Request request, String cookieStr) {
+    /**
+     * 保存单个cookie字符串
+     * @param request
+     * @param cookie
+     */
+    public void saveCookie(Request request, String cookie) {
 
-        if (Preconditions.isNotBlank(cookieStr)) {
+        if (Preconditions.isNotBlank(cookie)) {
 
             CookieGroup cookieGroup = CookieManager.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
@@ -62,20 +67,25 @@ public class CookieManager {
 
                 cookieGroup = new CookieGroup(request.getUrlParser().getHost());
 
-                httpCookieList.addAll(HttpCookie.parse(cookieStr));
+                httpCookieList.addAll(HttpCookie.parse(cookie));
 
                 cookieGroup.putAllCookies(httpCookieList);
 
                 CookieManager.getInsatance().addCookieGroup(cookieGroup);
             } else {
 
-                httpCookieList.addAll(HttpCookie.parse(cookieStr));
+                httpCookieList.addAll(HttpCookie.parse(cookie));
 
                 cookieGroup.putAllCookies(httpCookieList);
             }
         }
     }
 
+    /**
+     * 保存cookie字符串列表
+     * @param request
+     * @param cookies
+     */
     public void saveCookie(Request request, List<String> cookies) {
 
         if (Preconditions.isNotBlank(cookies)) {
