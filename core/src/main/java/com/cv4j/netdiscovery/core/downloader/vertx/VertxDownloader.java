@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.Pair;
 import com.cv4j.netdiscovery.core.cookies.CookieManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
@@ -20,9 +19,7 @@ import io.vertx.reactivex.ext.web.client.HttpResponse;
 import io.vertx.reactivex.ext.web.client.WebClient;
 import io.vertx.reactivex.ext.web.codec.BodyCodec;
 
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by tony on 2017/12/23.
