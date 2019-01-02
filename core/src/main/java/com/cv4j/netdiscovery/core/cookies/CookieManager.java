@@ -1,11 +1,13 @@
 package com.cv4j.netdiscovery.core.cookies;
 
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.safframework.rxcache.RxCache;
+import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.net.HttpCookie;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Cookies的管理类，每一个域名对应一个CookieGroup
@@ -14,7 +16,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CookieManager {
 
-    private Map<String, CookieGroup> cookieGroups = new ConcurrentHashMap<>();
+    private static RxCache cache;
+
+    static {
+        RxCache.config(new RxCache.Builder());
+        cache = RxCache.getRxCache();
+    }
 
     private static class Holder {
         private static final CookieManager instance = new CookieManager();
@@ -30,25 +37,25 @@ public class CookieManager {
     public void addCookieGroup(CookieGroup group) {
 
         if (group!=null) {
-
-            cookieGroups.put(group.getDomain(), group);
+            cache.save(group.getDomain(), group);
         }
     }
 
     public CookieGroup getCookieGroup(String domain) {
 
-        return cookieGroups.get(domain);
+        if (cache.containsKey(domain)) {
+
+            Record<CookieGroup> record = cache.get(domain,CookieGroup.class);
+            return record!=null?record.getData():null;
+        } else {
+
+            return null;
+        }
     }
 
     public void removeCookieGroup(String domain) {
 
-        CookieGroup group = cookieGroups.remove(domain);
-        if (group != null) {
-            List<HttpCookie> cookies = group.getCookies();
-            if (cookies != null) {
-                cookies.clear();
-            }
-        }
+        cache.remove(domain);
     }
 
     /**
