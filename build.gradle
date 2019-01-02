@@ -30,7 +30,7 @@ ext {
 
             tony_common_utils         : "1.2.6",
 
-            rxcache                   : "1.1.0"
+            rxcache                   : "1.1.1"
     ]
 }
 

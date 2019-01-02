@@ -18,11 +18,6 @@ public class CookieManager {
 
     private static RxCache cache;
 
-    static {
-        RxCache.config(new RxCache.Builder());
-        cache = RxCache.getRxCache();
-    }
-
     private static class Holder {
         private static final CookieManager instance = new CookieManager();
     }
@@ -34,7 +29,19 @@ public class CookieManager {
         return Holder.instance;
     }
 
+    /**
+     * 爬虫在使用之前，可以先配置RxCache.Builder
+     * @param builder
+     */
+    public static void config(RxCache.Builder builder) {
+
+        RxCache.config(builder);
+        cache = RxCache.getRxCache();
+    }
+
     public void addCookieGroup(CookieGroup group) {
+
+        checkCache();
 
         if (group!=null) {
             cache.save(group.getDomain(), group);
@@ -42,6 +49,8 @@ public class CookieManager {
     }
 
     public CookieGroup getCookieGroup(String domain) {
+
+        checkCache();
 
         if (cache.containsKey(domain)) {
 
@@ -55,7 +64,21 @@ public class CookieManager {
 
     public void removeCookieGroup(String domain) {
 
+        checkCache();
+
         cache.remove(domain);
+    }
+
+    /**
+     * 检查cache是否可以
+     */
+    private void checkCache() {
+
+        if (cache==null || !cache.test()) { // 如果cache为空或者cache不可用，则使用默认的配置
+
+            RxCache.config(new RxCache.Builder());
+            cache = RxCache.getRxCache();
+        }
     }
 
     /**
