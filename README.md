@@ -199,6 +199,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
 6. 增加可开启的http缓存配置
+7. 在同一个Spider里的链式爬取，默认附带上Cookies或者其他Header信息
+8. 在Pipeline或者ResultItem里可向爬取队列里继续补充爬取任务
 
 # Contributors：
 
