@@ -28,7 +28,7 @@ public class CookieGroup {
         this.getCookies().addAll(cookies);
     }
 
-    public void removeCookie(Pair cookie) {
+    public void removeCookie(HttpCookie cookie) {
         this.getCookies().remove(cookie);
     }
 
