@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.cookies;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,9 @@ import java.util.List;
  * Created by tony on 2018/2/1.
  */
 @Getter
-public class CookieGroup {
+public class CookieGroup implements Serializable {
+
+    private static final long serialVersionUID = -4641596355459197507L;
 
     private String domain;
     private List<HttpCookie> cookies;
