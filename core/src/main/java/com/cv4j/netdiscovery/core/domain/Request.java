@@ -205,14 +205,12 @@ public class Request implements Serializable {
 
     public Request referer(String referer) {
 
-        this.header("Referer", referer);
-        return this;
+        return header("Referer", referer);
     }
 
     public Request addCookie(String cookie) {
 
-        this.header("Cookie", cookie);
-        return this;
+        return header("Cookie", cookie);
     }
 
     public Request putExtra(String key, Object value) {

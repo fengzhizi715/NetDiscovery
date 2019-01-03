@@ -16,7 +16,7 @@ public interface Pipeline {
     void process(ResultItems resultItems);
 
     /**
-     * 方便在 pipeline 中往队列中发起爬取任务
+     * 方便在 pipeline 中往队列中发起爬取任务(进行深度爬取)
      * @param spider
      * @param originalRequest 原始的request，新的request可以继承原始request的header信息
      * @param url
@@ -27,7 +27,7 @@ public interface Pipeline {
     }
 
     /**
-     * 方便在 pipeline 中往队列中发起爬取任务
+     * 方便在 pipeline 中往队列中发起爬取任务(进行深度爬取)
      * @param spider
      * @param queue 使用的queue
      * @param originalRequest 原始的request，新的request可以继承原始request的header信息
