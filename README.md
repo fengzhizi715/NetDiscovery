@@ -205,7 +205,8 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 # Contributors：
 
 * [bdqfork](https://github.com/bdqfork)
-* [sinkinka](https://github.com/InsertKoinIO/koin)
+* [homchou](https://github.com/homchou)
+* [sinkinka](https://github.com/sinkinka)
 
 # 联系方式:
 
