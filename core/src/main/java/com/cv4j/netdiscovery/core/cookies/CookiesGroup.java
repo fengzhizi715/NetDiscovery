@@ -11,14 +11,14 @@ import java.util.List;
  * Created by tony on 2018/2/1.
  */
 @Getter
-public class CookieGroup implements Serializable {
+public class CookiesGroup implements Serializable {
 
     private static final long serialVersionUID = -4641596355459197507L;
 
     private String domain;
     private List<HttpCookie> cookies;
 
-    public CookieGroup(String domain) {
+    public CookiesGroup(String domain) {
         this.domain = domain;
         this.cookies = new ArrayList<>();
     }
@@ -50,7 +50,7 @@ public class CookieGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "CookieGroup{" +
+        return "CookiesGroup{" +
                 "domain='" + domain + '\'' +
                 ", cookies=" + cookies +
                 '}';

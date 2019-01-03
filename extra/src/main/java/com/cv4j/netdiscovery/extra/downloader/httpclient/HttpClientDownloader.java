@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
 import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.CookiePool;
+import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
@@ -67,7 +67,7 @@ public class HttpClientDownloader implements Downloader{
 
                         for (Header header:headers) {
 
-                            CookiePool.getInsatance().saveCookie(request,header.getValue());
+                            CookiesPool.getInsatance().saveCookie(request,header.getValue());
                         }
                     }
                 }

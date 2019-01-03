@@ -2,7 +2,7 @@ package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.SpiderEngine;
-import com.cv4j.netdiscovery.core.cookies.CookiePool;
+import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader;
 
@@ -21,7 +21,7 @@ public class TestCookiePool {
 
         spiderEngine.addSpider(spider).run();
 
-        CookiePool.getInsatance()
+        CookiesPool.getInsatance()
                 .getCookieGroup(request.getUrlParser().getHost())
                 .getCookies()
                 .forEach(httpCookie -> {

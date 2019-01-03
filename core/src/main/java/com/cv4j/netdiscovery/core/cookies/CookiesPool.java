@@ -14,18 +14,18 @@ import java.util.List;
  *
  * Created by tony on 2018/2/1.
  */
-public class CookiePool {
+public class CookiesPool {
 
     private static RxCache cache;
 
     private static class Holder {
-        private static final CookiePool instance = new CookiePool();
+        private static final CookiesPool instance = new CookiesPool();
     }
 
-    private CookiePool() {
+    private CookiesPool() {
     }
 
-    public static final CookiePool getInsatance() {
+    public static final CookiesPool getInsatance() {
         return Holder.instance;
     }
 
@@ -39,7 +39,7 @@ public class CookiePool {
         cache = RxCache.getRxCache();
     }
 
-    public void addCookieGroup(CookieGroup group) {
+    public void addCookieGroup(CookiesGroup group) {
 
         checkCache();
 
@@ -48,13 +48,13 @@ public class CookiePool {
         }
     }
 
-    public CookieGroup getCookieGroup(String domain) {
+    public CookiesGroup getCookieGroup(String domain) {
 
         checkCache();
 
         if (cache.containsKey(domain)) {
 
-            Record<CookieGroup> record = cache.get(domain,CookieGroup.class);
+            Record<CookiesGroup> record = cache.get(domain, CookiesGroup.class);
             return record!=null?record.getData():null;
         } else {
 
@@ -90,23 +90,23 @@ public class CookiePool {
 
         if (Preconditions.isNotBlank(cookie)) {
 
-            CookieGroup cookieGroup = CookiePool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            CookiesGroup cookiesGroup = CookiesPool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
-            if (cookieGroup==null) {
+            if (cookiesGroup ==null) {
 
-                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+                cookiesGroup = new CookiesGroup(request.getUrlParser().getHost());
 
                 httpCookieList.addAll(HttpCookie.parse(cookie));
 
-                cookieGroup.putAllCookies(httpCookieList);
+                cookiesGroup.putAllCookies(httpCookieList);
 
-                CookiePool.getInsatance().addCookieGroup(cookieGroup);
+                CookiesPool.getInsatance().addCookieGroup(cookiesGroup);
             } else {
 
                 httpCookieList.addAll(HttpCookie.parse(cookie));
 
-                cookieGroup.putAllCookies(httpCookieList);
+                cookiesGroup.putAllCookies(httpCookieList);
             }
         }
     }
@@ -120,21 +120,21 @@ public class CookiePool {
 
         if (Preconditions.isNotBlank(cookies)) {
 
-            CookieGroup cookieGroup = CookiePool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
+            CookiesGroup cookiesGroup = CookiesPool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
-            if (cookieGroup==null) {
+            if (cookiesGroup ==null) {
 
-                cookieGroup = new CookieGroup(request.getUrlParser().getHost());
+                cookiesGroup = new CookiesGroup(request.getUrlParser().getHost());
 
                 for (String cookieStr:cookies) {
 
                     httpCookieList.addAll(HttpCookie.parse(cookieStr));
                 }
 
-                cookieGroup.putAllCookies(httpCookieList);
+                cookiesGroup.putAllCookies(httpCookieList);
 
-                CookiePool.getInsatance().addCookieGroup(cookieGroup);
+                CookiesPool.getInsatance().addCookieGroup(cookiesGroup);
             } else {
 
                 for (String cookieStr:cookies) {
@@ -142,7 +142,7 @@ public class CookiePool {
                     httpCookieList.addAll(HttpCookie.parse(cookieStr));
                 }
 
-                cookieGroup.putAllCookies(httpCookieList);
+                cookiesGroup.putAllCookies(httpCookieList);
 
             }
         }
