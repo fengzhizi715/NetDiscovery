@@ -32,32 +32,32 @@ repositories {
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.3.0'
+implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.3.1'
 
 ```
 
 netdiscovery-extra
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.3.0'
+implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.3.1'
 ```
 
 netdiscovery-selenium
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.3.0'
+implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.3.1'
 ```
 
 netdiscovery-dsl
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.3.0'
+implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.3.1'
 ```
 
 netdiscovery-coroutines
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.0'
+implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.1'
 ```
 
 # NetDiscovery 功能点：
@@ -193,14 +193,12 @@ http://localhost:{port}/netdiscovery/spider/{spiderName}/status
 
 # TODO List:
 
-1. 增加 Cooikes Pool
-2. 增加 RabbitMQ 的支持
-3. 增强 HtmlUnit 模块
-4. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
-6. 增加可开启的http缓存配置
-7. 在同一个Spider里的链式爬取，默认附带上Cookies或者其他Header信息
-8. 在Pipeline或者ResultItem里可向爬取队列里继续补充爬取任务
+1. 增强 HtmlUnit 模块
+2. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+3. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
+4. 增加可开启的 http 缓存配置
+5. 在同一个 Spider 里的链式爬取，默认附带上 Cookies 或者其他 Header 信息
+6. 在 Pipeline 或者 ResultItem 里可向爬取队列里继续补充爬取任务
 
 # Contributors：
 
