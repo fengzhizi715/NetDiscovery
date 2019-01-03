@@ -9,7 +9,7 @@ import com.cv4j.netdiscovery.core.downloader.urlconnection.UrlConnectionDownload
 /**
  * Created by tony on 2019-01-02.
  */
-public class TestCookiePool {
+public class TestCookiesPool {
 
     public static void main(String[] args) {
 
