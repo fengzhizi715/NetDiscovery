@@ -33,7 +33,7 @@ public class CookiesPool {
         checkCache();
 
         if (group!=null) {
-            RxCacheManager.getRxCache().save(group.getDomain(), group);
+            RxCacheManager.getInsatance().getRxCache().save(group.getDomain(), group);
         }
     }
 
@@ -41,9 +41,9 @@ public class CookiesPool {
 
         checkCache();
 
-        if (RxCacheManager.getRxCache().containsKey(domain)) {
+        if (RxCacheManager.getInsatance().getRxCache().containsKey(domain)) {
 
-            Record<CookiesGroup> record = RxCacheManager.getRxCache().get(domain, CookiesGroup.class);
+            Record<CookiesGroup> record = RxCacheManager.getInsatance().getRxCache().get(domain, CookiesGroup.class);
             return record!=null?record.getData():null;
         } else {
 
@@ -55,17 +55,17 @@ public class CookiesPool {
 
         checkCache();
 
-        RxCacheManager.getRxCache().remove(domain);
+        RxCacheManager.getInsatance().getRxCache().remove(domain);
     }
 
     /**
-     * 检查cache是否可以
+     * 检查cache是否可用
      */
     private void checkCache() {
 
-        if (RxCacheManager.getRxCache()==null || !RxCacheManager.getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
+        if (RxCacheManager.getInsatance().getRxCache()==null || !RxCacheManager.getInsatance().getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
 
-            RxCacheManager.config(new RxCache.Builder());
+            RxCacheManager.getInsatance().config(new RxCache.Builder());
         }
     }
 

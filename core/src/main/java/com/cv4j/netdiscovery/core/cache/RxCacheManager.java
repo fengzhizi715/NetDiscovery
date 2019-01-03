@@ -5,21 +5,32 @@ import com.safframework.rxcache.RxCache;
 /**
  * Created by tony on 2019-01-03.
  */
-public final class RxCacheManager {
+public class RxCacheManager {
 
-    private static RxCache cache = null;
+    private RxCache cache;
+
+    private static class Holder {
+        private static final RxCacheManager instance = new RxCacheManager();
+    }
+
+    private RxCacheManager() {
+    }
+
+    public static final RxCacheManager getInsatance() {
+        return RxCacheManager.Holder.instance;
+    }
 
     /**
      * 配置RxCache.Builder
      * @param builder
      */
-    public static void config(RxCache.Builder builder) {
+    public void config(RxCache.Builder builder) {
 
         RxCache.config(builder);
         cache = RxCache.getRxCache();
     }
 
-    public static RxCache getRxCache() {
+    public RxCache getRxCache() {
 
         return cache;
     }

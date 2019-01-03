@@ -14,7 +14,7 @@ public class RxCachePipeline implements Pipeline {
     public void process(ResultItems resultItems) {
 
         for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
-            RxCacheManager.getRxCache().save(entry.getKey(), entry.getValue()); // 缓存的对象需要实现序列化
+            RxCacheManager.getInsatance().getRxCache().save(entry.getKey(), entry.getValue()); // 缓存的对象需要实现序列化
         }
     }
 }
