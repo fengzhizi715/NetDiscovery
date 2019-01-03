@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class CookiesPool {
 
-//    private static RxCache cache;
-
     private static class Holder {
         private static final CookiesPool instance = new CookiesPool();
     }
@@ -29,16 +27,6 @@ public class CookiesPool {
     public static final CookiesPool getInsatance() {
         return Holder.instance;
     }
-
-//    /**
-//     * 爬虫在使用之前，可以先配置RxCache.Builder
-//     * @param builder
-//     */
-//    public static void config(RxCache.Builder builder) {
-//
-//        RxCache.config(builder);
-//        cache = RxCache.getRxCache();
-//    }
 
     public void addCookieGroup(CookiesGroup group) {
 
