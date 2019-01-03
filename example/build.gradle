@@ -47,4 +47,5 @@ dependencies {
 
     implementation 'tony-common:tony-common-utils:1.2.6'
     implementation 'com.cv4j.vertxs:vertxs:0.1.0'
+    implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
 }
