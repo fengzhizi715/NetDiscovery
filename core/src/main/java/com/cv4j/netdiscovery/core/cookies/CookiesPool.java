@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.cookies;
 
+import com.cv4j.netdiscovery.core.cache.RxCacheManager;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.safframework.rxcache.RxCache;
 import com.safframework.rxcache.domain.Record;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class CookiesPool {
 
-    private static RxCache cache;
+//    private static RxCache cache;
 
     private static class Holder {
         private static final CookiesPool instance = new CookiesPool();
@@ -29,22 +30,22 @@ public class CookiesPool {
         return Holder.instance;
     }
 
-    /**
-     * 爬虫在使用之前，可以先配置RxCache.Builder
-     * @param builder
-     */
-    public static void config(RxCache.Builder builder) {
-
-        RxCache.config(builder);
-        cache = RxCache.getRxCache();
-    }
+//    /**
+//     * 爬虫在使用之前，可以先配置RxCache.Builder
+//     * @param builder
+//     */
+//    public static void config(RxCache.Builder builder) {
+//
+//        RxCache.config(builder);
+//        cache = RxCache.getRxCache();
+//    }
 
     public void addCookieGroup(CookiesGroup group) {
 
         checkCache();
 
         if (group!=null) {
-            cache.save(group.getDomain(), group);
+            RxCacheManager.getRxCache().save(group.getDomain(), group);
         }
     }
 
@@ -52,9 +53,9 @@ public class CookiesPool {
 
         checkCache();
 
-        if (cache.containsKey(domain)) {
+        if (RxCacheManager.getRxCache().containsKey(domain)) {
 
-            Record<CookiesGroup> record = cache.get(domain, CookiesGroup.class);
+            Record<CookiesGroup> record = RxCacheManager.getRxCache().get(domain, CookiesGroup.class);
             return record!=null?record.getData():null;
         } else {
 
@@ -66,7 +67,7 @@ public class CookiesPool {
 
         checkCache();
 
-        cache.remove(domain);
+        RxCacheManager.getRxCache().remove(domain);
     }
 
     /**
@@ -74,10 +75,9 @@ public class CookiesPool {
      */
     private void checkCache() {
 
-        if (cache==null || !cache.test()) { // 如果cache为空或者cache不可用，则使用默认的配置
+        if (RxCacheManager.getRxCache()==null || !RxCacheManager.getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
 
-            RxCache.config(new RxCache.Builder());
-            cache = RxCache.getRxCache();
+            RxCacheManager.config(new RxCache.Builder());
         }
     }
 

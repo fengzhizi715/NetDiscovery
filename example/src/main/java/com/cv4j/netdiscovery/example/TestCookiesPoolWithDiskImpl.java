@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.SpiderEngine;
+import com.cv4j.netdiscovery.core.cache.RxCacheManager;
 import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader;
@@ -26,7 +27,7 @@ public class TestCookiesPoolWithDiskImpl {
 
         DiskImpl diskImpl = new DiskImpl(cacheDirectory); // 创建 RxCache 的 DiskImpl
 
-        CookiesPool.config(new RxCache.Builder().persistence(diskImpl)); // 配置 RxCache
+        RxCacheManager.config(new RxCache.Builder().persistence(diskImpl)); // 爬虫在使用之前，先配置 RxCache
 
         SpiderEngine spiderEngine = SpiderEngine.create();
 
