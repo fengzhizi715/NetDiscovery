@@ -90,8 +90,6 @@ public class Spider {
         } else {
             this.queue = new DefaultQueue();
         }
-
-        downloader = new VertxDownloader();
     }
 
     public static Spider create() {
@@ -337,6 +335,11 @@ public class Spider {
 
         initialDelay();
 
+        if (downloader == null) { // 如果downloader为空，则使用默认的VertxDownloader
+
+            downloader = new VertxDownloader();
+        }
+
         while (getSpiderStatus() != SPIDER_STATUS_STOPPED && queue.getLeftRequests(getName())!=0) {
 
             //暂停抓取
@@ -464,10 +467,6 @@ public class Spider {
             }
         }
         stopSpider(downloader); // 爬虫停止
-    }
-
-    private boolean checkIfQueueEmpty() {
-        return queue.getLeftRequests(name) != 0;
     }
 
     private void checkIfRunning() {
