@@ -500,6 +500,7 @@ public class Spider {
 
         if (downloader != null) {
             IOUtils.closeQuietly(downloader);
+            downloader = null;
         }
 
         stop();
