@@ -339,7 +339,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                     }?.apply {
 
-                        if (Preconditions.isNotBlank(pipelines)) {
+                        if (!this.resultItems.isSkip && Preconditions.isNotBlank(pipelines)) {
 
                             pipelines.stream()
                                     .forEach { pipeline -> pipeline.process(resultItems) }
