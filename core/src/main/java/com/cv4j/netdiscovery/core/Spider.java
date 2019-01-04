@@ -435,7 +435,7 @@ public class Spider {
                             @Override
                             public Page apply(Page page) throws Exception {
 
-                                if (Preconditions.isNotBlank(pipelines)) {
+                                if (!page.getResultItems().isSkip() && Preconditions.isNotBlank(pipelines)) {
 
                                     pipelines.stream()
                                             .forEach(pipeline -> pipeline.process(page.getResultItems()));

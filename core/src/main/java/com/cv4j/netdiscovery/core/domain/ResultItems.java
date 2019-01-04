@@ -17,6 +17,10 @@ public class ResultItems {
     @Setter
     private Request request;
 
+    @Getter
+    @Setter
+    private boolean skip; // 判断结果是否需要被 Pipeline 处理
+
     public <T> T get(String key) {
 
         return fields.get(key) != null ? (T) fields.get(key) : null;
