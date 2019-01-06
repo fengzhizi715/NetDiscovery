@@ -3,10 +3,11 @@ package com.cv4j.netdiscovery.core.downloader.file;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.safframework.tony.common.utils.FileUtils;
 import com.safframework.tony.common.utils.IOUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by tony on 2018/3/12.
@@ -30,15 +31,12 @@ public class FileDownloadAfterRequest implements Request.AfterRequest {
 
             try {
                 // 创建保存文件的目录
-                File savePath = new File(filePath);
-                if (!savePath.exists()) {
-                    savePath.mkdir();
+                File dir = new File(filePath);
+                if (!dir.exists() && dir.isDirectory()) {
+                    dir.mkdirs();
                 }
                 // 创建保存的文件
-                File file = new File(savePath + "/" + fileName);
-                if (FileUtils.exists(file)) {
-                    file.createNewFile();
-                }
+                File file = new File(filePath + File.separator + fileName);
 
                 IOUtils.writeToFile(is,file);
             } catch (IOException e) {
