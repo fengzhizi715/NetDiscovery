@@ -325,7 +325,12 @@ public class SpiderEngine {
         return this;
     }
 
-    public SpiderEngine register(RegisterConsumer register) {
+    /**
+     * 注册 eventBus 的消费者
+     * @param register
+     * @return
+     */
+    public SpiderEngine registerConsumers(RegisterConsumer register) {
 
         this.register = register;
         return this;
@@ -428,7 +433,7 @@ public class SpiderEngine {
     }
 
     /**
-     * 注册 eventBus 的消费者
+     * eventBus 的消费者
      */
     @FunctionalInterface
     public interface RegisterConsumer {
