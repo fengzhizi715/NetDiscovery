@@ -56,6 +56,8 @@ public class SpiderEngine {
 
     private boolean useMonitor = false;
 
+    private RegisterConsumer register;
+
     private SpiderEngine() {
 
         this(null);
@@ -323,6 +325,12 @@ public class SpiderEngine {
         return this;
     }
 
+    public SpiderEngine register(RegisterConsumer register) {
+
+        this.register = register;
+        return this;
+    }
+
     /**
      * 关闭HttpServer
      */
@@ -342,6 +350,10 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
+            if (register!=null) {
+                register.process();
+            }
+
             spiders.entrySet()
                     .parallelStream()
                     .forEach(entry -> entry.getValue().run());
@@ -356,6 +368,10 @@ public class SpiderEngine {
     public void runWithRepeat() {
 
         if (Preconditions.isNotBlank(spiders)) {
+
+            if (register!=null) {
+                register.process();
+            }
 
             Flowable.fromIterable(spiders.values())
                     .parallel(spiders.values().size())
@@ -409,5 +425,14 @@ public class SpiderEngine {
 
             spiders.forEach((s, spider) -> spider.stop());
         }
+    }
+
+    /**
+     * 注册 eventBus 的消费者
+     */
+    @FunctionalInterface
+    public interface RegisterConsumer {
+
+        void process();
     }
 }
