@@ -56,7 +56,7 @@ public class SpiderEngine {
 
     private boolean useMonitor = false;
 
-    private RegisterConsumer register;
+    private RegisterConsumer registerConsumer;
 
     private SpiderEngine() {
 
@@ -326,13 +326,13 @@ public class SpiderEngine {
     }
 
     /**
-     * 注册 eventBus 的消费者
-     * @param register
+     * 注册 Vert.x eventBus 的消费者
+     * @param registerConsumer
      * @return
      */
-    public SpiderEngine registerConsumers(RegisterConsumer register) {
+    public SpiderEngine registerConsumers(RegisterConsumer registerConsumer) {
 
-        this.register = register;
+        this.registerConsumer = registerConsumer;
         return this;
     }
 
@@ -355,8 +355,8 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            if (register!=null) {
-                register.process();
+            if (registerConsumer!=null) {
+                registerConsumer.process();
             }
 
             spiders.entrySet()
@@ -374,8 +374,8 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            if (register!=null) {
-                register.process();
+            if (registerConsumer!=null) {
+                registerConsumer.process();
             }
 
             Flowable.fromIterable(spiders.values())
@@ -433,7 +433,7 @@ public class SpiderEngine {
     }
 
     /**
-     * eventBus 的消费者
+     * 注册 Vert.x eventBus 的消费者
      */
     @FunctionalInterface
     public interface RegisterConsumer {
