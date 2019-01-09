@@ -36,11 +36,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     }
 
     public RedisQueue(String host, int port, ClientResources resources) {
-        if (resources != null) {
-            this.redisClient = RedisClient.create(resources, RedisURI.create(host, port));
-        } else {
-            this.redisClient = RedisClient.create(RedisURI.create(host, port));
-        }
+        this(resources != null? RedisClient.create(resources, RedisURI.create(host, port)) : RedisClient.create(RedisURI.create(host, port)));
     }
 
     public RedisQueue(RedisClient redisClient) {
