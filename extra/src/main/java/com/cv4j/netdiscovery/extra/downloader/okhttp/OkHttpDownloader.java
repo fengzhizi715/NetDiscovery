@@ -1,11 +1,13 @@
 package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
+import com.cv4j.netdiscovery.core.cache.RxCacheManager;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.proxy.domain.Proxy;
+import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
@@ -37,6 +39,16 @@ public class OkHttpDownloader implements Downloader{
 
     @Override
     public Maybe<Response> download(Request request) {
+
+        if (request.isDebug()) { // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+
+            if (RxCacheManager.getInsatance().getRxCache()!=null
+                    && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
+
+                Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
+                return Maybe.just(response.getData());
+            }
+        }
 
         okhttp3.Request.Builder requestBuilder = null;
 
@@ -92,6 +104,12 @@ public class OkHttpDownloader implements Downloader{
                 response.setContent(resp.body().bytes());
                 response.setStatusCode(resp.code());
                 response.setContentType(resp.header(Constant.CONTENT_TYPE));
+
+                if (request.isDebug()) { // request 在 debug 模式，则缓存response
+
+                    save(request.getUrl(),response);
+                }
+
                 return response;
             }
         });
