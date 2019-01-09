@@ -17,11 +17,11 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class RedisQueue extends AbstractQueue implements DuplicateFilter {
 
-    private static final String QUEUE_PREFIX = "queue_";
+    private String QUEUE_PREFIX = "queue_";
 
-    private static final String SET_PREFIX = "set_";
+    private String SET_PREFIX = "set_";
 
-    private static final String ITEM_PREFIX = "item_";
+    private String ITEM_PREFIX = "item_";
 
     protected RedisClient redisClient;
 
@@ -40,6 +40,18 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     }
 
     public RedisQueue(RedisClient redisClient) {
+
+        this(redisClient,null);
+    }
+
+    public RedisQueue(RedisClient redisClient,RedisKeyConfig redisKeyConfig) {
+
+        if (redisKeyConfig!=null) { // 便于自定义 redis key的前缀，以免跟自身业务的前缀不统一
+
+            this.QUEUE_PREFIX = redisKeyConfig.QUEUE_PREFIX;
+            this.SET_PREFIX = redisKeyConfig.SET_PREFIX;
+            this.ITEM_PREFIX = redisKeyConfig.ITEM_PREFIX;
+        }
 
         this.redisClient = redisClient;
         setFilter(this);
