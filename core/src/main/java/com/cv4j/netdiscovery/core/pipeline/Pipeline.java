@@ -39,9 +39,9 @@ public interface Pipeline {
             return;
         }
 
-        Request request = new Request(url);
+        Request request = new Request(url,spider.getName());     // 根据spider的名称来创建request
         Map<String,String> header = originalRequest.getHeader(); // 从原始request中获取header
-        if (Preconditions.isNotBlank(header)) {
+        if (Preconditions.isNotBlank(header)) {                  // 将原始request的header复制到新的request
 
             header.forEach((key,value)->{
 
