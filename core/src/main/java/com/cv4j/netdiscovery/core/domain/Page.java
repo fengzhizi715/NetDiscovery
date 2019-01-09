@@ -3,10 +3,14 @@ package com.cv4j.netdiscovery.core.domain;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created by tony on 2017/12/23.
  */
-public class Page {
+public class Page implements Serializable {
+
+    private static final long serialVersionUID = -3671492770100689214L;
 
     @Getter
     @Setter
