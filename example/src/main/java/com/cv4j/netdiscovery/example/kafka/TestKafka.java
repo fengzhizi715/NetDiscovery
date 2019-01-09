@@ -1,7 +1,10 @@
 package com.cv4j.netdiscovery.example.kafka;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.pipeline.ConsolePipeline;
+import com.cv4j.netdiscovery.example.jd.PricePipeline;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueueConfig;
 
@@ -30,11 +33,12 @@ public class TestKafka {
         consumeProperties.put("auto.offset.reset", "earliest");
         consumeProperties.put("enable.auto.commit", "true");
         consumeProperties.put("auto.commit.interval.ms", "1000");
+        consumeProperties.put("max.poll.records", "1");
         consumeProperties.put("session.timeout.ms", "30000");
         consumeProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         consumeProperties.put("value.deserializer", "com.cv4j.netdiscovery.extra.queue.kafka.RequestDeserializer");
 
-        KafkaQueueConfig config = new KafkaQueueConfig.KafkaQueueConfigBuilder(producerProperties,consumeProperties)
+        KafkaQueueConfig config = new KafkaQueueConfig.KafkaQueueConfigBuilder(producerProperties, consumeProperties)
                 .topicName("tony")
                 .build();
 
@@ -42,9 +46,12 @@ public class TestKafka {
 
         Request request = new Request("https://www.baidu.com").checkDuplicate(false);
 
+        System.out.println(JSONObject.toJSONString(request));
+
         Spider.create(queue)
                 .name("tony")
                 .request(request)
+                .pipeline(new ConsolePipeline())
                 .run();
     }
 }
