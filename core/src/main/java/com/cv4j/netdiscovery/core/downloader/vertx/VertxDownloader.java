@@ -1,11 +1,13 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
+import com.cv4j.netdiscovery.core.cache.RxCacheManager;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
+import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -36,6 +38,16 @@ public class VertxDownloader implements Downloader {
     }
 
     public Maybe<Response> download(Request request) {
+
+        if (request.isDebug()) { // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+
+            if (RxCacheManager.getInsatance().getRxCache()!=null
+                    && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
+
+                Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
+                return Maybe.just(response.getData());
+            }
+        }
 
         WebClientOptions options = initWebClientOptions(request);
 
@@ -121,9 +133,13 @@ public class VertxDownloader implements Downloader {
                         response.setContentType(stringHttpResponse.getHeader(Constant.CONTENT_TYPE));
 
                         if (request.isSaveCookie()) {
-
                             // save cookies
                             CookiesPool.getInsatance().saveCookie(request, stringHttpResponse.cookies());
+                        }
+
+                        if (request.isDebug()) { // request 在 debug 模式，则缓存response
+
+                            save(request.getUrl(),response);
                         }
 
                         return response;
