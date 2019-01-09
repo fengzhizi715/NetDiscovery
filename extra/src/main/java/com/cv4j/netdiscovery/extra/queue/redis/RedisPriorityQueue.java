@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class RedisPriorityQueue extends RedisQueue {
 
-    private static final String ZSET_PREFIX = "zset_";
+    private String ZSET_PREFIX = "zset_";
 
-    private static final String QUEUE_PREFIX = "queue_";
+    private String QUEUE_PREFIX = "queue_";
 
-    private static final String NORMAL_SUFFIX = "_normal";
+    private String NORMAL_SUFFIX = "_normal";
 
-    private static final String PRIORITY_SUFFIX = "_priority";
+    private String PRIORITY_SUFFIX = "_priority";
 
     public RedisPriorityQueue(String host) {
         super(host);
@@ -37,6 +37,17 @@ public class RedisPriorityQueue extends RedisQueue {
 
     public RedisPriorityQueue(RedisClient redisClient) {
         super(redisClient);
+    }
+
+    public RedisPriorityQueue(RedisClient redisClient,RedisKeyConfig redisKeyConfig) {
+        super(redisClient,redisKeyConfig);
+
+        if (redisKeyConfig!=null) { // 自定义 redis key 的前缀，以免跟自身业务的前缀不统一
+            this.ZSET_PREFIX = redisKeyConfig.ZSET_PREFIX;
+            this.QUEUE_PREFIX = redisKeyConfig.QUEUE_PREFIX;
+            this.NORMAL_SUFFIX = redisKeyConfig.NORMAL_SUFFIX;
+            this.PRIORITY_SUFFIX = redisKeyConfig.PRIORITY_SUFFIX;
+        }
     }
 
     @Override

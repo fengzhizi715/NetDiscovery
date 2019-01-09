@@ -46,7 +46,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
 
     public RedisQueue(RedisClient redisClient,RedisKeyConfig redisKeyConfig) {
 
-        if (redisKeyConfig!=null) { // 便于自定义 redis key的前缀，以免跟自身业务的前缀不统一
+        if (redisKeyConfig!=null) { // 自定义 redis key 的前缀，以免跟自身业务的前缀不统一
 
             this.QUEUE_PREFIX = redisKeyConfig.QUEUE_PREFIX;
             this.SET_PREFIX = redisKeyConfig.SET_PREFIX;
