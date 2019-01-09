@@ -25,7 +25,6 @@ public class KafkaQueue extends AbstractQueue {
     private KafkaConsumer<String, Request> consumer;
     private long timeout = 1000;
     private int partition = 0;
-    private List<PartitionInfo> partitionInfos = new ArrayList<>();
     private List<TopicPartition> topicPartitions;
     private long currentOffset = 0;
 
