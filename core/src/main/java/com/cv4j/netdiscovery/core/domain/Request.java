@@ -37,6 +37,8 @@ public class Request implements Serializable {
 
     private boolean saveCookie = false; // request 是否需要保存cookie
 
+    private boolean debug = false;      // 是否 debug 模式下测试 request，debug 模式下会缓存 response
+
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
     private Map<String, String> header = new NoEmptyHashMap<>();
@@ -182,6 +184,18 @@ public class Request implements Serializable {
     public Request saveCookie(boolean saveCookie) {
 
         this.saveCookie = saveCookie;
+        return this;
+    }
+
+    /**
+     * 是否 debug 模式下测试 request
+     *
+     * @param debug
+     * @return
+     */
+    public Request debug(boolean debug) {
+
+        this.debug = debug;
         return this;
     }
 
