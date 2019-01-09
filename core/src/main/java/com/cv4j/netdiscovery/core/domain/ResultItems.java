@@ -13,7 +13,7 @@ import java.util.Map;
 public class ResultItems implements Serializable {
 
     private static final long serialVersionUID = -3101363583427106343L;
-    
+
     private Map<String, Object> fields = new LinkedHashMap<String, Object>();
 
     @Getter
