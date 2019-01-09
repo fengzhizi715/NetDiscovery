@@ -19,7 +19,7 @@ public interface Downloader extends Closeable {
 
         if (RxCacheManager.getInsatance().getRxCache() == null) {
 
-            RxCache.config(new RxCache.Builder());
+            RxCacheManager.getInsatance().config(new RxCache.Builder());
         }
 
         RxCacheManager.getInsatance().getRxCache().save(key,response);

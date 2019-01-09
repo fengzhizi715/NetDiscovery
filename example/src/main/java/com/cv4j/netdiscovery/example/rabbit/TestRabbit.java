@@ -2,7 +2,6 @@ package com.cv4j.netdiscovery.example.rabbit;
 
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
 import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueue;
 import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueueConfig;
 
