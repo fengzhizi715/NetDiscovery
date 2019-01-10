@@ -49,7 +49,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-core'
-    publishVersion = '0.3.1'
+    publishVersion = '0.3.2'
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
