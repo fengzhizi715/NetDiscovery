@@ -15,8 +15,9 @@ public class ConsolePipeline implements Pipeline {
     public void process(ResultItems resultItems) {
 
         log.info("get page: " + resultItems.getRequest().getUrl());
-        for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
-            log.info(entry.getKey() + ":\t" + entry.getValue());
-        }
+
+        resultItems.getAll().forEach((key,value)->{
+            log.info(key + ":\t" + value);
+        });
     }
 }
