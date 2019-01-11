@@ -61,23 +61,17 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     public boolean isDuplicate(Request request) {
         StatefulRedisConnection<String, String> connection = redisClient.connect();
         RedisCommands<String, String> commands = connection.sync();
-        if (request.isCheckDuplicate()) {
-            try {
+
+        try {
+            if (request.isCheckDuplicate()) {
                 return commands.sadd(getSetKey(request), request.getUrl()) == 0;
-            } finally {
-                connection.close();
-            }
-        } else {
-
-            try {
+            } else {
                 commands.sadd(getSetKey(request), request.getUrl());
-            } finally {
-                connection.close();
+                return false;
             }
-
-            return false;
+        } finally {
+            connection.close();
         }
-
     }
 
     @Override
