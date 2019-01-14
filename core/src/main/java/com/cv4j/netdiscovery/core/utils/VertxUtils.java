@@ -32,6 +32,10 @@ public class VertxUtils {
         return vertx.eventBus().send(address,message);
     }
 
+    public static EventBus publish(String address, Object message) {
+        return vertx.eventBus().publish(address,message);
+    }
+
     public static <T> MessageConsumer<T> consumer(String address, Handler<Message<T>> handler) {
         return vertx.eventBus().consumer(address,handler);
     }
