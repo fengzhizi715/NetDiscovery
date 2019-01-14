@@ -41,9 +41,11 @@ public class CookiesPool {
 
         checkCache();
 
-        if (RxCacheManager.getInsatance().getRxCache().containsKey(domain)) {
+        RxCache rxCache = RxCacheManager.getInsatance().getRxCache();
 
-            Record<CookiesGroup> record = RxCacheManager.getInsatance().getRxCache().get(domain, CookiesGroup.class);
+        if (rxCache.containsKey(domain)) {
+
+            Record<CookiesGroup> record = rxCache.get(domain, CookiesGroup.class);
             return record!=null?record.getData():null;
         } else {
 
