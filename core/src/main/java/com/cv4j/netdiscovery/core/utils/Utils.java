@@ -88,22 +88,6 @@ public class Utils {
         return isSucess;
     }
 
-    public static ByteArrayOutputStream cloneInputStream(InputStream input) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = input.read(buffer)) > -1) {
-                baos.write(buffer, 0, len);
-            }
-            baos.flush();
-            return baos;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     /**
      * 返回验证码的内容
      * @param imageUrl 验证码的url

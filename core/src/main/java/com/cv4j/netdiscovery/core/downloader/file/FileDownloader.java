@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
 import com.cv4j.netdiscovery.core.utils.Utils;
+import com.safframework.tony.common.utils.IOUtils;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
@@ -53,7 +54,8 @@ public class FileDownloader implements Downloader{
                 @Override
                 public Response apply(InputStream inputStream) throws Exception {
 
-                    ByteArrayOutputStream baos = Utils.cloneInputStream(inputStream);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    IOUtils.copyStream(inputStream,baos);
                     InputStream is = new ByteArrayInputStream(baos.toByteArray());  // 只针对小的文件使用，大型的文件不建议这样使用
 
                     Response response = new Response();
