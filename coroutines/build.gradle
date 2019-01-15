@@ -27,6 +27,7 @@ dependencies {
     implementation "io.vertx:vertx-lang-kotlin-coroutines:${libs.vertx}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+    implementation "com.alibaba:fastjson:${libs.fastjson}"
 }
 
 compileKotlin {

@@ -28,7 +28,9 @@ ext {
 
             proxypool                 : "1.1.11",
 
-            tony_common_utils         : "1.2.6",
+            tony_common_utils         : "1.2.7",
+
+            fastjson                  : "1.2.54",
 
             rxcache                   : "1.1.5"
     ]
