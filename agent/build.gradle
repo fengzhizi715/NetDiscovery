@@ -27,4 +27,3 @@ shadowJar {
     mainClassName = 'com.cv4j.netdiscovery.agent.Agent'
     classifier = 'fat'
 }
-

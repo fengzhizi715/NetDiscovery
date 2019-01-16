@@ -1,7 +1,6 @@
 package com.cv4j.netdiscovery.extra.queue.kafka;
 
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.kafka.common.serialization.Serializer;
 

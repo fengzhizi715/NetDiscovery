@@ -50,3 +50,9 @@ publish {
     desc = 'this is an extra library for netdiscovery'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
+
+configurations{
+    compile.exclude module:'jackson-databind'
+    compile.exclude module:'jackson-core'
+    compile.exclude module:'jackson-annotations'
+}
