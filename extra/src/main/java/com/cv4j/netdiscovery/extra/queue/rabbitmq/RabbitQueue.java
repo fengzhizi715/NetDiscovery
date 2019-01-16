@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
@@ -70,14 +71,8 @@ public class RabbitQueue extends AbstractQueue {
     }
 
     private byte[] serialize(Request request) {
-        byte[] retVal = null;
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            retVal = objectMapper.writeValueAsString(request).getBytes();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return retVal;
+        Gson gson = new Gson();
+        return gson.toJson(request).getBytes();
     }
 
     @Override
@@ -93,14 +88,8 @@ public class RabbitQueue extends AbstractQueue {
     }
 
     private Request deserialize(byte[] data) {
-        ObjectMapper mapper = new ObjectMapper();
-        Request request = null;
-        try {
-            request = mapper.readValue(data, Request.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return request;
+        Gson gson = new Gson();
+        return gson.fromJson(new String(data), Request.class);
     }
 
     @Override

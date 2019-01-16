@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.kafka;
 
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
@@ -18,15 +18,8 @@ public class RequestDeserializer implements Deserializer<Request> {
 
     @Override
     public Request deserialize(String topic, byte[] data) {
-        ObjectMapper mapper = new ObjectMapper();
-        Request request = null;
-        try {
-            request = mapper.readValue(data, Request.class);
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-        return request;
+        Gson gson = new Gson();
+        return gson.fromJson(new String(data), Request.class);
     }
 
     @Override
