@@ -29,7 +29,7 @@ public class ElasticSearchPipline implements Pipeline {
                 .setSource(resultItems.getAll())
                 .get();
         RestStatus restStatus = response.status();
-        if (restStatus == RestStatus.CREATED) {
+        if (RestStatus.CREATED == restStatus) {
             log.info("key {} have already created!", response.getId());
         } else {
             log.error("an error occured with result id {}!", restStatus.getStatus());

@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.extra.queue.redis;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.google.gson.Gson;
 import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
@@ -24,8 +25,6 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
     private String ITEM_PREFIX = "item_";
 
     protected RedisClient redisClient;
-
-    protected Gson gson = new Gson();
 
     public RedisQueue(String host) {
         this(host, null);
@@ -83,7 +82,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
 
             if (hasExtraRequestInfo(request)) {
                 String field = DigestUtils.sha1Hex(request.getUrl());
-                String value = gson.toJson(request);
+                String value = SerializableUtils.toJson(request);
                 commands.hset((ITEM_PREFIX + request.getUrl()), field, value);
             }
 
@@ -134,7 +133,7 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
 
             if (result != null) {
 
-                return gson.fromJson(result, Request.class);
+                return SerializableUtils.fromJson(result, Request.class);
             }
 
             return new Request(url);

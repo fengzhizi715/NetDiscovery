@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.kafka;
 
 import com.cv4j.netdiscovery.core.domain.Request;
-import com.google.gson.Gson;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
@@ -18,8 +18,7 @@ public class RequestSerializer implements Serializer<Request> {
 
     @Override
     public byte[] serialize(String topic, Request data) {
-        Gson gson = new Gson();
-        return gson.toJson(data).getBytes();
+        return SerializableUtils.toJson(data).getBytes();
     }
 
     @Override

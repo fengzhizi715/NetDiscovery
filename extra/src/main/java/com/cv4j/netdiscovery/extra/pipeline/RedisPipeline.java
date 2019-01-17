@@ -45,9 +45,7 @@ public class RedisPipeline implements Pipeline {
     public void process(ResultItems resultItems) {
 
         JsonObject jsonObject = new JsonObject();
-        resultItems.getAll().forEach((key,value)->{
-            jsonObject.put(key, value);
-        });
+        resultItems.getAll().forEach(jsonObject::put);
 
         StatefulRedisConnection<String, String> connection = redisClient.connect();
         RedisStringReactiveCommands<String, String> commands = connection.reactive();

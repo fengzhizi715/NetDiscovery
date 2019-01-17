@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
@@ -111,8 +112,8 @@ public class RedisPriorityQueue extends RedisQueue {
     private void setExtrasInItem(RedisCommands<String, String> commands, Request request) {
 
         if (request.getExtras() != null) {
-            String field = DigestUtils.shaHex(request.getUrl());
-            String value = gson.toJson(request);
+            String field = DigestUtils.sha1Hex(request.getUrl());
+            String value = SerializableUtils.toJson(request);
             commands.hset(getItemKey(request), field, value);
         }
     }
@@ -120,10 +121,10 @@ public class RedisPriorityQueue extends RedisQueue {
     private Request getExtrasInItem(RedisCommands<String, String> commands, String url, String spiderName) {
 
         String key = getItemKey(url);
-        String field = DigestUtils.shaHex(url);
+        String field = DigestUtils.sha1Hex(url);
         String result = commands.hget(key, field);
         if (result != null) {
-            return gson.fromJson(result, Request.class);
+            return SerializableUtils.fromJson(result, Request.class);
         }
 
         return new Request(url);

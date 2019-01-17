@@ -2,7 +2,7 @@ package com.cv4j.netdiscovery.extra.queue.rabbitmq;
 
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
-import com.google.gson.Gson;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
@@ -69,8 +69,7 @@ public class RabbitQueue extends AbstractQueue {
     }
 
     private byte[] serialize(Request request) {
-        Gson gson = new Gson();
-        return gson.toJson(request).getBytes();
+        return SerializableUtils.toJson(request).getBytes();
     }
 
     @Override
@@ -86,8 +85,7 @@ public class RabbitQueue extends AbstractQueue {
     }
 
     private Request deserialize(byte[] data) {
-        Gson gson = new Gson();
-        return gson.fromJson(new String(data), Request.class);
+        return SerializableUtils.fromJson(new String(data), Request.class);
     }
 
     @Override
