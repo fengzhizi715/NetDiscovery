@@ -1,11 +1,8 @@
 package com.cv4j.netdiscovery.core.parser.selector;
 
 import com.cv4j.netdiscovery.core.utils.SerializableUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import us.codecraft.xsoup.XTokenQueue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
