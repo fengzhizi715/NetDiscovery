@@ -54,3 +54,7 @@ publish{
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
+
+configurations{
+    compile.exclude module:'fastjson'
+}

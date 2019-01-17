@@ -1,12 +1,12 @@
 package com.cv4j.netdiscovery.core;
 
-import com.alibaba.fastjson.JSON;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.cv4j.proxy.ProxyPool;
@@ -201,7 +201,7 @@ public class SpiderEngine {
                     spiderResponse.setData(entity);
 
                     // 写入响应并结束处理
-                    response.end(JSON.toJSONString(spiderResponse));
+                    response.end(SerializableUtils.toJson(spiderResponse));
                 });
 
                 router.post("/netdiscovery/spider/" + spider.getName() + "/status").handler(routingContext -> {
@@ -249,7 +249,7 @@ public class SpiderEngine {
                     spiderStatusResponse.setMessage(Constant.SUCCESS);
 
                     // 写入响应并结束处理
-                    response.end(JSON.toJSONString(spiderStatusResponse));
+                    response.end(SerializableUtils.toJson(spiderStatusResponse));
                 });
             }
 
@@ -285,7 +285,7 @@ public class SpiderEngine {
                 spidersResponse.setData(list);
 
                 // 写入响应并结束处理
-                response.end(JSON.toJSONString(spidersResponse));
+                response.end(SerializableUtils.toJson(spidersResponse));
             });
 
             if (useMonitor) {

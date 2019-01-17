@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.parser.selector;
 
-import com.alibaba.fastjson.JSON;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.jayway.jsonpath.JsonPath;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class JsonPathSelector implements Selector {
 
     private String toString(Object object) {
         if (object instanceof Map) {
-            return JSON.toJSONString(object);
+            return SerializableUtils.toJson(object);
         } else {
             return String.valueOf(object);
         }

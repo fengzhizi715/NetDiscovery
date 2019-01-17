@@ -1,8 +1,7 @@
 package com.cv4j.netdiscovery.core.pipeline.debug;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cv4j.netdiscovery.core.domain.Request;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,7 +54,7 @@ public class Printer {
 
     private static String[] getRequest(Request request, Level level) {
 
-        String header = JSON.toJSONString(request.getHeader(), SerializerFeature.PrettyFormat);
+        String header = SerializableUtils.toJson(request.getHeader());
         boolean loggableHeader = level == Level.HEADERS || level == Level.BASIC;
         String logStr = METHOD_TAG + request.getHttpMethod().name() + DOUBLE_SEPARATOR +
                 (isEmpty(header) ? "" : loggableHeader ? HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header) : "");

@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.core.domain;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.http.NameValuePair;
@@ -50,9 +50,9 @@ public class HttpRequestBody implements Serializable{
      * @param jsonObject
      * @return
      */
-    public static HttpRequestBody json(JSONObject jsonObject) {
+    public static HttpRequestBody json(JsonObject jsonObject) {
 
-        return json(jsonObject.toJSONString());
+        return json(jsonObject.toString());
     }
 
     public static HttpRequestBody json(String json) {

@@ -1,12 +1,16 @@
 package com.cv4j.netdiscovery.core.parser.selector;
 
-import com.alibaba.fastjson.JSON;
+import com.cv4j.netdiscovery.core.utils.SerializableUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import us.codecraft.xsoup.XTokenQueue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * parse json
+ *
  * @author code4crafter@gmail.com
  * @author tony
  */
@@ -22,6 +26,7 @@ public class Json extends PlainText {
 
     /**
      * remove padding for JSONP
+     *
      * @param padding padding
      * @return json after padding removed
      */
@@ -39,19 +44,19 @@ public class Json extends PlainText {
         if (getFirstSourceText() == null) {
             return null;
         }
-        return JSON.parseObject(getFirstSourceText(), clazz);
+        return SerializableUtils.fromJson(getFirstSourceText(), clazz);
     }
 
     public <T> List<T> toList(Class<T> clazz) {
         if (getFirstSourceText() == null) {
             return null;
         }
-        return JSON.parseArray(getFirstSourceText(), clazz);
+        return SerializableUtils.fromJsonToList(getFirstSourceText(), clazz);
     }
 
     @Override
     public Selectable jsonPath(String jsonPath) {
         JsonPathSelector jsonPathSelector = new JsonPathSelector(jsonPath);
-        return selectList(jsonPathSelector,getSourceTexts());
+        return selectList(jsonPathSelector, getSourceTexts());
     }
 }

@@ -1,9 +1,9 @@
 package com.cv4j.netdiscovery.core.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.proxy.domain.Proxy;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 
@@ -40,12 +40,12 @@ public class Utils {
 
     public static boolean isTextType(String contentType) {
 
-        return contentType!=null?contentType.startsWith("text"):false;
+        return contentType != null ? contentType.startsWith("text") : false;
     }
 
     public static boolean isApplicationJSONType(String contentType) {
 
-        return contentType!=null?contentType.startsWith("application/json"):false;
+        return contentType != null ? contentType.startsWith("application/json") : false;
     }
 
     public static boolean isApplicationJSONPType(String contentType) {
@@ -55,31 +55,32 @@ public class Utils {
 
     /**
      * 导出csv
+     *
      * @param file
      * @param dataList
      * @param charset
      * @return
      */
-    public static boolean exportCsv(File file, List<String> dataList, Charset charset){
+    public static boolean exportCsv(File file, List<String> dataList, Charset charset) {
 
-        boolean isSucess=false;
+        boolean isSucess = false;
 
-        FileOutputStream out=null;
-        OutputStreamWriter osw=null;
-        BufferedWriter bw=null;
+        FileOutputStream out = null;
+        OutputStreamWriter osw = null;
+        BufferedWriter bw = null;
         try {
             out = new FileOutputStream(file);
             osw = new OutputStreamWriter(out, charset);
-            bw =new BufferedWriter(osw);
-            if(Preconditions.isNotBlank(dataList)){
-                for(String data : dataList){
+            bw = new BufferedWriter(osw);
+            if (Preconditions.isNotBlank(dataList)) {
+                for (String data : dataList) {
                     bw.append(data).append("\r");
                 }
             }
-            isSucess=true;
+            isSucess = true;
         } catch (Exception e) {
-            isSucess=false;
-        }finally{
+            isSucess = false;
+        } finally {
             IOUtils.closeQuietly(bw);
             IOUtils.closeQuietly(osw);
             IOUtils.closeQuietly(out);
@@ -90,28 +91,30 @@ public class Utils {
 
     /**
      * 返回验证码的内容
+     *
      * @param imageUrl 验证码的url
      * @return
      */
     public static String getCaptcha(String imageUrl) {
 
-        return getCaptcha(imageUrl,null);
+        return getCaptcha(imageUrl, null);
     }
 
     /**
      * 返回验证码的内容
+     *
      * @param imageUrl 验证码的url
      * @param proxy
      * @return
      */
-    public static String getCaptcha(String imageUrl,Proxy proxy) {
+    public static String getCaptcha(String imageUrl, Proxy proxy) {
 
         try {
             URL url = new URL("http://47.97.7.119:8018/captcha");
             HttpURLConnection httpUrlConnection = null;
 
             // 设置Proxy
-            if (proxy!=null) {
+            if (proxy != null) {
 
                 httpUrlConnection = (HttpURLConnection) url.openConnection(proxy.toJavaNetProxy());
             } else {
@@ -124,8 +127,8 @@ public class Utils {
             httpUrlConnection.setRequestMethod("POST");
             httpUrlConnection.setUseCaches(false); // post 请求不用缓存
 
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("imageSource",imageUrl);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("imageSource", imageUrl);
             HttpRequestBody body = HttpRequestBody.json(jsonObject);
 
             httpUrlConnection.setRequestProperty("Content-Type", HttpRequestBody.ContentType.JSON);
@@ -140,9 +143,8 @@ public class Utils {
             String response = IOUtils.inputStream2String(httpUrlConnection.getInputStream());
 
             if (Preconditions.isNotBlank(response)) {
-
-                JSONObject json = JSON.parseObject(response);
-                return (String) json.get("text");
+                JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+                return json.get("text").getAsString();
             }
 
             return null;
