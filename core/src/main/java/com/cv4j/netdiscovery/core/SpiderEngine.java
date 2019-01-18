@@ -362,6 +362,11 @@ public class SpiderEngine {
             spiders.entrySet()
                     .parallelStream()
                     .forEach(entry -> entry.getValue().run());
+
+            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+                log.info("stop all spiders");
+                stopSpiders();
+            }));
         }
     }
 
@@ -393,6 +398,11 @@ public class SpiderEngine {
                     })
                     .sequential()
                     .subscribe();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+                log.info("stop all spiders");
+                stopSpiders();
+            }));
         }
     }
 
