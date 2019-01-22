@@ -32,7 +32,7 @@ ext {
 
             fastjson                  : "1.2.54",
 
-            rxcache                   : "1.1.6"
+            rxcache                   : "1.1.7"
     ]
 }
 
