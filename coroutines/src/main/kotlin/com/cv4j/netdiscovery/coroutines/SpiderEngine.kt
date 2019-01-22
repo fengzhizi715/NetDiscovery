@@ -259,6 +259,11 @@ class SpiderEngine private constructor(@field:Getter
                             it.value.run()
                         }
                     }
+
+            Runtime.getRuntime().addShutdownHook(Thread {
+                println("stop all spiders")
+                stopSpiders()
+            })
         }
     }
 
@@ -281,6 +286,11 @@ class SpiderEngine private constructor(@field:Getter
                         }
                         .sequential()
                         .subscribe()
+
+                Runtime.getRuntime().addShutdownHook(Thread {
+                    println("stop all spiders")
+                    stopSpiders()
+                })
             }
 
         }
