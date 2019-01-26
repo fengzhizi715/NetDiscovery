@@ -11,4 +11,9 @@ spider:
 
   downloader:
     type: vertx
+    vertx:
+      options:
+        keepAlive: true
+        reuseAddress: true
+        followRedirects: true
 

@@ -22,6 +22,21 @@ public class BooleanUtils {
         return false;
     }
 
+    public static boolean toBoolean(final String str,boolean defaultValue) {
+
+        if (Preconditions.isNotBlank(str)) {
+            if (str.equals("true")||str.equals("TRUE")) {
+                return Boolean.TRUE;
+            } else if (str.equals("false")||str.equals("FALSE")){
+                return Boolean.TRUE;
+            } else {
+                return defaultValue;
+            }
+        } else {
+            return defaultValue;
+        }
+    }
+
     public static boolean isTrue(final Boolean bool) {
         return Boolean.TRUE.equals(bool);
     }

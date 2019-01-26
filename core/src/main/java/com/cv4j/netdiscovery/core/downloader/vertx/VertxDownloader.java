@@ -1,11 +1,14 @@
 package com.cv4j.netdiscovery.core.downloader.vertx;
 
 import com.cv4j.netdiscovery.core.cache.RxCacheManager;
+import com.cv4j.netdiscovery.core.config.Configuration;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.utils.BooleanUtils;
+import com.cv4j.netdiscovery.core.utils.NumberUtils;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
@@ -150,8 +153,12 @@ public class VertxDownloader implements Downloader {
     private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
-        options.setKeepAlive(true).setReuseAddress(true).setFollowRedirects(true)
-                .setConnectTimeout(10000).setIdleTimeout(10).setMaxWaitQueueSize(10);
+        options.setKeepAlive(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.keepAlive",String.class),true))
+                .setReuseAddress(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.reuseAddress",String.class),true))
+                .setFollowRedirects(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.followRedirects",String.class),true))
+                .setConnectTimeout(10000)
+                .setIdleTimeout(10)
+                .setMaxWaitQueueSize(10);
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
