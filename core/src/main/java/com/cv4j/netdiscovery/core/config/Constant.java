@@ -33,7 +33,7 @@ public class Constant {
 
 
 
-    public static final String QUEUE_TYPE_DEFAULT = "defalut";
+    public static final String QUEUE_TYPE_DEFAULT = "default";
 
     public static final String QUEUE_TYPE_DISRUPTOR = "disruptor";
 
