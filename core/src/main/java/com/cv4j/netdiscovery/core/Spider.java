@@ -130,6 +130,7 @@ public class Spider {
             autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay",String.class));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
+            retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
         } catch (ClassCastException e) {
             log.error(e.getMessage());
         }
