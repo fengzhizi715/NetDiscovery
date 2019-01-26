@@ -1,0 +1,6 @@
+spider:
+  queue:
+    type: default
+
+  downloader:
+    type: vertx

@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core;
 
+import com.cv4j.netdiscovery.core.config.Configuration;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
@@ -13,6 +14,7 @@ import com.cv4j.netdiscovery.core.parser.selector.Json;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
+import com.cv4j.netdiscovery.core.queue.disruptor.DisruptorQueue;
 import com.cv4j.netdiscovery.core.utils.RetryWithDelay;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
@@ -77,7 +79,27 @@ public class Spider {
     private Downloader downloader;
 
     private Spider() {
-        this(new DefaultQueue());
+
+        String queueType = Configuration.getConfig("spider.queue.type",String.class);
+
+        if (Preconditions.isNotBlank(queueType)) {
+
+            switch (queueType) {
+                case Constant.QUEUE_TYPE_DEFAULT:
+                    this.queue = new DefaultQueue();
+                    break;
+                case Constant.QUEUE_TYPE_DISRUPTOR:
+                    this.queue = new DisruptorQueue();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (this.queue == null) {
+
+            this.queue = new DefaultQueue();
+        }
     }
 
     private Spider(Queue queue) {

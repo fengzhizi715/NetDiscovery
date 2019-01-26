@@ -30,4 +30,10 @@ public class Constant {
     public static final String SET_COOKIES_HEADER = "Set-Cookie";
 
     public static final String SUCCESS = "success";
+
+
+
+    public static final String QUEUE_TYPE_DEFAULT = "defalut";
+
+    public static final String QUEUE_TYPE_DISRUPTOR = "disruptor";
 }
