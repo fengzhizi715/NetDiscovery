@@ -102,6 +102,7 @@ public class Spider {
                 }
             }
         } catch (ClassCastException e) {
+            log.error(e.getMessage());
         }
 
         if (this.queue == null) {
@@ -128,7 +129,9 @@ public class Spider {
         try {
             autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay",String.class));
+            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
         } catch (ClassCastException e) {
+            log.error(e.getMessage());
         }
     }
 
