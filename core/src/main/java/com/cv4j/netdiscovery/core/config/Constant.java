@@ -36,4 +36,10 @@ public class Constant {
     public static final String QUEUE_TYPE_DEFAULT = "defalut";
 
     public static final String QUEUE_TYPE_DISRUPTOR = "disruptor";
+
+    public static final String DOWNLOAD_TYPE_VERTX = "vertx";
+
+    public static final String DOWNLOAD_TYPE_URL_CONNECTION = "urlConnection";
+
+    public static final String DOWNLOAD_TYPE_FILE = "file";
 }

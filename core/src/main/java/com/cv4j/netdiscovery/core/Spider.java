@@ -6,6 +6,8 @@ import com.cv4j.netdiscovery.core.domain.Page;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.downloader.file.FileDownloader;
+import com.cv4j.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader;
 import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader;
 import com.cv4j.netdiscovery.core.exception.SpiderException;
 import com.cv4j.netdiscovery.core.parser.Parser;
@@ -124,6 +126,9 @@ public class Spider {
         initSpiderConfig();
     }
 
+    /**
+     * 从 application.yaml 或 application.properties 中获取配置，并依据这些配置来初始化爬虫
+     */
     private void initSpiderConfig() {
 
         try {
@@ -131,6 +136,30 @@ public class Spider {
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay",String.class));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
             retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
+
+            String downloaderType = Configuration.getConfig("spider.downloader.type",String.class);
+
+            if (Preconditions.isNotBlank(downloaderType)) {
+
+                switch (downloaderType) {
+
+                    case Constant.DOWNLOAD_TYPE_VERTX:
+                        this.downloader = new VertxDownloader();
+                        break;
+
+                    case Constant.DOWNLOAD_TYPE_URL_CONNECTION:
+                        this.downloader = new UrlConnectionDownloader();
+                        break;
+
+                    case Constant.DOWNLOAD_TYPE_FILE:
+                        this.downloader = new FileDownloader();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
         } catch (ClassCastException e) {
             log.error(e.getMessage());
         }
