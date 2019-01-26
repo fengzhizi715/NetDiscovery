@@ -4,9 +4,11 @@ spider:
     initialDelay: 0
     maxRetries: 3
     retryDelayMillis: 1000
+    useConsolePipeline: true
 
   queue:
     type: default
 
   downloader:
     type: vertx
+

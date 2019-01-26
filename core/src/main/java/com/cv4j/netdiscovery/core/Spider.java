@@ -13,6 +13,7 @@ import com.cv4j.netdiscovery.core.exception.SpiderException;
 import com.cv4j.netdiscovery.core.parser.Parser;
 import com.cv4j.netdiscovery.core.parser.selector.Html;
 import com.cv4j.netdiscovery.core.parser.selector.Json;
+import com.cv4j.netdiscovery.core.pipeline.ConsolePipeline;
 import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
@@ -158,6 +159,13 @@ public class Spider {
                     default:
                         break;
                 }
+            }
+
+            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline",String.class));
+
+            if (useConsolePipeline) {
+
+                this.pipelines.add(new ConsolePipeline());
             }
 
         } catch (ClassCastException e) {
