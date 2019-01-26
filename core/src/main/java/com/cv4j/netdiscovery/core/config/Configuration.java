@@ -55,7 +55,7 @@ public class Configuration {
         return configs.get(key);
     }
 
-    public static <T> T getConfig(String key, Class<T> clazz) {
+    public static <T> T getConfig(String key, Class<T> clazz) throws ClassCastException {
 
         return (T)configs.get(key);
     }

@@ -80,21 +80,28 @@ public class Spider {
 
     private Spider() {
 
-        String queueType = Configuration.getConfig("spider.queue.type",String.class);
+        try {
+            String queueType = Configuration.getConfig("spider.queue.type",String.class);
 
-        if (Preconditions.isNotBlank(queueType)) {
+            if (Preconditions.isNotBlank(queueType)) {
 
-            switch (queueType) {
-                case Constant.QUEUE_TYPE_DEFAULT:
-                    this.queue = new DefaultQueue();
-                    break;
-                case Constant.QUEUE_TYPE_DISRUPTOR:
-                    this.queue = new DisruptorQueue();
-                    break;
-                default:
-                    break;
+                switch (queueType) {
+
+                    case Constant.QUEUE_TYPE_DEFAULT:
+                        this.queue = new DefaultQueue();
+                        break;
+
+                    case Constant.QUEUE_TYPE_DISRUPTOR:
+                        this.queue = new DisruptorQueue();
+                        break;
+
+                    default:
+                        break;
+                }
             }
+        } catch (ClassCastException e) {
         }
+
 
         if (this.queue == null) {
 
@@ -352,6 +359,8 @@ public class Spider {
 
         checkRunningStat();
 
+        initSpiderConfig();
+
         initialDelay();
 
         if (downloader == null) { // 如果downloader为空，则使用默认的VertxDownloader
@@ -486,6 +495,11 @@ public class Spider {
             }
         }
         stopSpider(downloader); // 爬虫停止
+    }
+
+    private void initSpiderConfig() {
+
+        boolean autoProxy = Configuration.getConfig("spider.config.autoProxy",Boolean.class);
     }
 
     private void checkIfRunning() {
