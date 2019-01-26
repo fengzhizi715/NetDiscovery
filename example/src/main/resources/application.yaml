@@ -16,4 +16,7 @@ spider:
         keepAlive: true
         reuseAddress: true
         followRedirects: true
+        connectTimeout: 10000
+        idleTimeout: 10
+        maxWaitQueueSize: 10
 

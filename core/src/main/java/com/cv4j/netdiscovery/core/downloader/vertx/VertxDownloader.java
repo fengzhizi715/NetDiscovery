@@ -156,9 +156,9 @@ public class VertxDownloader implements Downloader {
         options.setKeepAlive(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.keepAlive",String.class),true))
                 .setReuseAddress(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.reuseAddress",String.class),true))
                 .setFollowRedirects(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.followRedirects",String.class),true))
-                .setConnectTimeout(10000)
-                .setIdleTimeout(10)
-                .setMaxWaitQueueSize(10);
+                .setConnectTimeout(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.connectTimeout",String.class),10000))
+                .setIdleTimeout(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.idleTimeout",String.class),10))
+                .setMaxWaitQueueSize(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.maxWaitQueueSize",String.class),10));
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());
