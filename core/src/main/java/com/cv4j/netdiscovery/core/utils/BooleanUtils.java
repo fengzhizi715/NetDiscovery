@@ -1,5 +1,7 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.safframework.tony.common.utils.Preconditions;
+
 /**
  * Created by tony on 2019-01-17.
  */
@@ -11,10 +13,12 @@ public class BooleanUtils {
 
     public static boolean toBoolean(final String str) {
 
-        if (str.equals("true")||str.equals("TRUE")) {
-            return Boolean.TRUE;
+        if (Preconditions.isNotBlank(str)) {
+            if (str.equals("true")||str.equals("TRUE")) {
+                return Boolean.TRUE;
+            }
         }
-
+        
         return false;
     }
 
