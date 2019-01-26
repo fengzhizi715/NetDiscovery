@@ -26,6 +26,22 @@ repositories {
 }
 ```
 
+# 功能特点：
+
+* 轻量级爬虫
+* 约定大于配置：能够从配置文件中获取爬虫的配置信息
+* 模块化设计，便于扩展
+* 多线程、异步：底层使用 RxJava 的多线程机制
+* 支持JS渲染
+* 支持分布式
+* Request 支持自定义header信息
+* 支持失败重试的机制
+* 代理池的整合
+* 支持深度抓取：能够在Pipeline中发起深度抓取的事件。
+* 支持URL去重：使用布隆过滤器
+* 超时控制：支持设置爬虫请求的超时时间；
+* 爬虫的监控
+
 
 # 下载:
 
@@ -60,7 +76,8 @@ netdiscovery-coroutines
 implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.3'
 ```
 
-# NetDiscovery 功能点：
+
+# NetDiscovery 功能：
 
 ## 1.Spider功能
 Spider 可以单独使用，也可以添加到 SpiderEngine 中使用。
