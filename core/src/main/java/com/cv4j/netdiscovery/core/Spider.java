@@ -15,6 +15,8 @@ import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 import com.cv4j.netdiscovery.core.queue.DefaultQueue;
 import com.cv4j.netdiscovery.core.queue.Queue;
 import com.cv4j.netdiscovery.core.queue.disruptor.DisruptorQueue;
+import com.cv4j.netdiscovery.core.utils.BooleanUtils;
+import com.cv4j.netdiscovery.core.utils.NumberUtils;
 import com.cv4j.netdiscovery.core.utils.RetryWithDelay;
 import com.cv4j.netdiscovery.core.utils.Utils;
 import com.cv4j.proxy.ProxyPool;
@@ -102,11 +104,12 @@ public class Spider {
         } catch (ClassCastException e) {
         }
 
-
         if (this.queue == null) {
 
             this.queue = new DefaultQueue();
         }
+
+        initSpiderConfig();
     }
 
     private Spider(Queue queue) {
@@ -115,6 +118,17 @@ public class Spider {
             this.queue = queue;
         } else {
             this.queue = new DefaultQueue();
+        }
+
+        initSpiderConfig();
+    }
+
+    private void initSpiderConfig() {
+
+        try {
+            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
+            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay",String.class));
+        } catch (ClassCastException e) {
         }
     }
 
@@ -359,8 +373,6 @@ public class Spider {
 
         checkRunningStat();
 
-        initSpiderConfig();
-
         initialDelay();
 
         if (downloader == null) { // 如果downloader为空，则使用默认的VertxDownloader
@@ -495,11 +507,6 @@ public class Spider {
             }
         }
         stopSpider(downloader); // 爬虫停止
-    }
-
-    private void initSpiderConfig() {
-
-        boolean autoProxy = Configuration.getConfig("spider.config.autoProxy",Boolean.class);
     }
 
     private void checkIfRunning() {
