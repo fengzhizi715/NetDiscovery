@@ -81,6 +81,9 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.3'
 ```
 
 
+# 详细功能
+
+请查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
 # 案例:
 
