@@ -81,9 +81,8 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.3'
 ```
 
 
-# 详细功能
+# 详细功能查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
-请查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
 # 案例:
 
@@ -102,6 +101,7 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.3'
 4. 增加可开启的 http 缓存配置
 5. 在同一个 Spider 里的链式爬取，默认附带上 Cookies 或者其他 Header 信息
 6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+7. 完善wiki
 
 # Contributors：
 
