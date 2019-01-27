@@ -15,7 +15,7 @@ netdiscovery-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/mav
 netdiscovery-coroutines| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-coroutines/_latestVersion)
 
 
-NetDiscover 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期版本，很多细节正在不断地完善中。
+NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期版本，很多细节正在不断地完善中。
 
 对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
@@ -80,17 +80,6 @@ netdiscovery-coroutines
 implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.3'
 ```
 
-
-# NetDiscovery 基本原理：
-
-## 1. core 模块的 uml 类图
-![](images/netdiscovery_core.png)
-
-## 2.基本原理
-![](images/basic_principle.png)
-
-## 3.集群原理
-![](images/cluster_principle.png)
 
 
 # 案例:
