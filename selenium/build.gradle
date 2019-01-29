@@ -32,7 +32,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'com.cv4j.netdiscovery'
     artifactId = 'netdiscovery-selenium'
-    publishVersion = '0.3.3'
+    publishVersion = '0.3.4'
     desc = 'this is a library which is wrapped the selenium for netdiscovery'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
