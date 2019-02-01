@@ -99,9 +99,8 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.4'
 3. 增加 chromium 的支持
 4. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
 5. 增加可开启的 http 缓存配置
-6. 在同一个 Spider 里的链式爬取，默认附带上 Cookies 或者其他 Header 信息
-7. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-8. 完善wiki
+6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+7. 完善 wiki，增加各个模式的使用说明
 
 # Contributors：
 
