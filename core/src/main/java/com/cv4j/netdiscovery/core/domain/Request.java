@@ -37,7 +37,7 @@ public class Request implements Serializable {
 
     private boolean saveCookie = false; // request 是否需要保存cookie
 
-    private boolean debug = false;      // 是否 debug 模式下测试 request，debug 模式下会缓存 response
+    private boolean debug = false;      // 在 debug 模式下请求 request 会将 response 缓存到 RxCahce。(如果 RxCache 配置了 Persistence，可以把 response 持久化)
 
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
