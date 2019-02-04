@@ -4,27 +4,6 @@
 [![@Tony沈哲 on weibo](https://img.shields.io/badge/weibo-%40Tony%E6%B2%88%E5%93%B2-blue.svg)](http://www.weibo.com/fengzhizi715)
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-# 最新版本
-
-模块名|最新版本|
----|:-------------:
-netdiscovery-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)
-netdiscovery-extra|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)
-netdiscovery-selenium|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)
-netdiscovery-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
-netdiscovery-coroutines| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-coroutines/_latestVersion)
-
-
-NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前还处于早期版本，很多细节正在不断地完善中。
-
-对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
-
-```groovy
-repositories {
-    mavenCentral()
-    jcenter()
-}
-```
 
 # 功能特点：
 
@@ -45,6 +24,30 @@ repositories {
 * 超时控制：支持设置爬虫请求的超时时间；
 * 爬虫的监控
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
+
+
+# 最新版本
+
+模块名|最新版本|
+---|:-------------:
+netdiscovery-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)
+netdiscovery-extra|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-extra/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-extra/_latestVersion)
+netdiscovery-selenium|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-selenium/_latestVersion)
+netdiscovery-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-dsl/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-dsl/_latestVersion)
+netdiscovery-coroutines| [ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-coroutines/_latestVersion)
+
+
+NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前处于早期版本，很多细节正在不断地完善中。
+
+对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
+
+```groovy
+repositories {
+    mavenCentral()
+    jcenter()
+}
+```
+
 
 # 下载:
 
