@@ -2,7 +2,7 @@ ext {
     libraries = [
             vertx                     : "3.6.2",
 
-            rxjava                    : "2.2.4",
+            rxjava                    : "2.2.6",
 
             kotlinx_coroutines        : "1.0.1",
 
