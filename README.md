@@ -97,12 +97,13 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.4'
 
 # TODO List:
 
-1. 完善各个模块能够从配置文件中获取爬虫的配置
-2. 增强 HtmlUnit 模块
-3. 增加 chromium 的支持
-4. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
-5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-6. 完善 wiki，增加各个模式的使用说明
+1. 完善 wiki，增加各个模式的使用说明
+2. 各个模块能够从配置文件中获取爬虫相应的配置
+3. 增强 HtmlUnit 模块
+4. 增加 chromium 的支持
+5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
+6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+
 
 # Contributors：
 
