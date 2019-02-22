@@ -25,3 +25,4 @@ spider:
 spiderEngine:
   config:
     port: 8715
+    useMonitor: true

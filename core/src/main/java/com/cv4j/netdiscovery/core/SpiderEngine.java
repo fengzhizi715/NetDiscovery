@@ -7,10 +7,7 @@ import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
-import com.cv4j.netdiscovery.core.utils.NumberUtils;
-import com.cv4j.netdiscovery.core.utils.SerializableUtils;
-import com.cv4j.netdiscovery.core.utils.UserAgent;
-import com.cv4j.netdiscovery.core.utils.VertxUtils;
+import com.cv4j.netdiscovery.core.utils.*;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
@@ -110,9 +107,10 @@ public class SpiderEngine {
 
         try {
             defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port",String.class));
-            
+            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
+            useMonitor = false;
         }
     }
 
