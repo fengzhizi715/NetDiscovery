@@ -1,11 +1,13 @@
 package com.cv4j.netdiscovery.core;
 
+import com.cv4j.netdiscovery.core.config.Configuration;
 import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.SpiderEntity;
 import com.cv4j.netdiscovery.core.domain.response.SpiderResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse;
 import com.cv4j.netdiscovery.core.domain.response.SpidersResponse;
 import com.cv4j.netdiscovery.core.queue.Queue;
+import com.cv4j.netdiscovery.core.utils.NumberUtils;
 import com.cv4j.netdiscovery.core.utils.SerializableUtils;
 import com.cv4j.netdiscovery.core.utils.UserAgent;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
@@ -103,6 +105,14 @@ public class SpiderEngine {
                             e.printStackTrace();
                         }
                     });
+        }
+
+
+        try {
+            defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port",String.class));
+            
+        } catch (ClassCastException e) {
+            defaultHttpdPort = 8715;
         }
     }
 

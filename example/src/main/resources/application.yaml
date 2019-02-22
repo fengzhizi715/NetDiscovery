@@ -22,3 +22,6 @@ spider:
         idleTimeout: 10
         maxWaitQueueSize: 10
 
+spiderEngine:
+  config:
+    port: 8715
