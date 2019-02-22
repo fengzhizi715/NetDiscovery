@@ -58,6 +58,8 @@ public class SpiderEngine {
 
     private RegisterConsumer registerConsumer;
 
+    private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
+
     private SpiderEngine() {
 
         this(null);
@@ -159,6 +161,17 @@ public class SpiderEngine {
         }
 
         return null;
+    }
+
+    /**
+     * 对各个爬虫的状态进行监测，并返回json格式。
+     * 如果要使用此方法，须放在run()/runWithRepeat()之前
+     * 采用默认的端口号
+     * @return
+     */
+    public SpiderEngine httpd() {
+
+        return httpd(defaultHttpdPort);
     }
 
     /**
