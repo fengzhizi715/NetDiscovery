@@ -50,9 +50,9 @@ public class Configuration {
         return configs.keySet();
     }
 
-    public static Object getConfig(String key) {
+    public static String getConfig(String key) {
 
-        return configs.get(key);
+        return getConfig(key,String.class);
     }
 
     public static <T> T getConfig(String key, Class<T> clazz) throws ClassCastException {

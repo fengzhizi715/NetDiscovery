@@ -86,7 +86,7 @@ public class Spider {
     private Spider() {
 
         try {
-            String queueType = Configuration.getConfig("spider.queue.type",String.class);
+            String queueType = Configuration.getConfig("spider.queue.type");
 
             if (Preconditions.isNotBlank(queueType)) {
 
@@ -133,12 +133,12 @@ public class Spider {
     private void initSpiderConfig() {
 
         try {
-            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
-            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay",String.class));
-            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
-            retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries",String.class));
+            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"));
+            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
+            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
+            retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
 
-            String downloaderType = Configuration.getConfig("spider.downloader.type",String.class);
+            String downloaderType = Configuration.getConfig("spider.downloader.type");
 
             if (Preconditions.isNotBlank(downloaderType)) {
 
@@ -161,7 +161,7 @@ public class Spider {
                 }
             }
 
-            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline",String.class));
+            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"));
 
             if (useConsolePipeline) {
 
