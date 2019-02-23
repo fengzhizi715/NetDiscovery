@@ -421,6 +421,8 @@ public class Spider {
             downloader = new VertxDownloader();
         }
 
+        log.info("Spider {} started!",getName());
+
         while (getSpiderStatus() != SPIDER_STATUS_STOPPED && !queue.isEmpty(getName())) {
 
             //暂停抓取
@@ -590,7 +592,7 @@ public class Spider {
     public void stop() {
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info(String.format("Spider %s stop success!", name));
+            log.info("Spider {} stop success!", name);
         }
     }
 
@@ -603,7 +605,7 @@ public class Spider {
         compositeDisposable.clear();
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
-            log.info(String.format("Spider %s force stop success!", name));
+            log.info("Spider {} force stop success!", name);
         }
     }
 
