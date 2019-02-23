@@ -426,7 +426,7 @@ public class Spider {
         while (getSpiderStatus() != SPIDER_STATUS_STOPPED && !queue.isEmpty(getName())) {
 
             //暂停抓取
-            if (pause) {
+            if (pause && pauseCountDown!=null) {
                 try {
                     this.pauseCountDown.await();
                 } catch (InterruptedException e) {
@@ -624,9 +624,12 @@ public class Spider {
     public void resume() {
 
         if (stat.get() == SPIDER_STATUS_PAUSE) {
-            this.pauseCountDown.countDown();
-            this.pause = false;
-            stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
+
+            if (this.pauseCountDown!=null) {
+                this.pauseCountDown.countDown();
+                this.pause = false;
+                stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);
+            }
         }
     }
 
