@@ -173,17 +173,17 @@ class SpiderEngine private constructor(@field:Getter
 
                             Spider.SPIDER_STATUS_PAUSE -> {
                                 spider.pause()
-                                spiderStatusResponse.data = String.format("SpiderEngine pause Spider %s success", spider.name)
+                                spiderStatusResponse.data = "SpiderEngine pause Spider ${spider.name} success"
                             }
 
                             Spider.SPIDER_STATUS_RESUME -> {
                                 spider.resume()
-                                spiderStatusResponse.data = String.format("SpiderEngine resume Spider %s success", spider.name)
+                                spiderStatusResponse.data = "SpiderEngine resume Spider ${spider.name} success"
                             }
 
                             Spider.SPIDER_STATUS_STOPPED -> {
                                 spider.forceStop()
-                                spiderStatusResponse.data = String.format("SpiderEngine stop Spider %s success", spider.name)
+                                spiderStatusResponse.data = "SpiderEngine stop Spider ${spider.name} success"
                             }
 
                             else -> {
