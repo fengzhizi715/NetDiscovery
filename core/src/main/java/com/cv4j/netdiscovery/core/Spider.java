@@ -210,8 +210,9 @@ public class Spider {
                         Request request = new Request(url, name);
                         request.charset(charset.name());
                         queue.push(request);
-                        signalNewRequest();
                     });
+
+            signalNewRequest();
         }
 
         return this;
@@ -227,8 +228,9 @@ public class Spider {
                     .stream()
                     .forEach(url -> {
                         queue.push(new Request(url, name));
-                        signalNewRequest();
                     });
+
+            signalNewRequest();
         }
 
         return this;
@@ -244,8 +246,9 @@ public class Spider {
                 Request request = new Request(url, name);
                 request.charset(charset.name());
                 queue.push(request);
-                signalNewRequest();
             });
+
+            signalNewRequest();
         }
 
         return this;
@@ -259,8 +262,9 @@ public class Spider {
 
             urls.forEach(url -> {
                 queue.push(new Request(url, name));
-                signalNewRequest();
             });
+
+            signalNewRequest();
         }
 
         return this;
@@ -276,8 +280,9 @@ public class Spider {
                     .stream()
                     .forEach(request -> {
                         queue.push(request.spiderName(name));
-                        signalNewRequest();
                     });
+
+            signalNewRequest();
         }
 
         return this;
@@ -321,6 +326,7 @@ public class Spider {
                                     request.sleep(period);
                                     request.charset(charset);
                                     queue.push(request);
+                                    
                                     signalNewRequest();
                                 }
 
