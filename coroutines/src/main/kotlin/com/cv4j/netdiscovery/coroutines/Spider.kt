@@ -41,7 +41,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private var parser: Parser? = null
 
-    private val pipelines = LinkedHashSet<Pipeline>()
+    private val pipelines = LinkedList<Pipeline>()
 
     var queue: Queue
 

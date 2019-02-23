@@ -106,8 +106,8 @@ public class SpiderEngine {
 
 
         try {
-            defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port",String.class));
-            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy",String.class));
+            defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
+            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"));
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
