@@ -39,6 +39,8 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Spider可以单独使用，每个Spider只能处理一种Parser，不同的Parser需要不同的Spider
@@ -77,6 +79,8 @@ public class Spider {
 
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
+    private ReentrantLock newRequestLock = new ReentrantLock();
+    private Condition newRequestCondition = newRequestLock.newCondition();
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -206,6 +210,7 @@ public class Spider {
                         Request request = new Request(url, name);
                         request.charset(charset.name());
                         queue.push(request);
+                        signalNewRequest();
                     });
         }
 
@@ -220,7 +225,10 @@ public class Spider {
 
             Arrays.asList(urls)
                     .stream()
-                    .forEach(url -> queue.push(new Request(url, name)));
+                    .forEach(url -> {
+                        queue.push(new Request(url, name));
+                        signalNewRequest();
+                    });
         }
 
         return this;
@@ -236,6 +244,7 @@ public class Spider {
                 Request request = new Request(url, name);
                 request.charset(charset.name());
                 queue.push(request);
+                signalNewRequest();
             });
         }
 
@@ -248,7 +257,10 @@ public class Spider {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach(url -> queue.push(new Request(url, name)));
+            urls.forEach(url -> {
+                queue.push(new Request(url, name));
+                signalNewRequest();
+            });
         }
 
         return this;
@@ -262,7 +274,10 @@ public class Spider {
 
             Arrays.asList(requests)
                     .stream()
-                    .forEach(request -> queue.push(request.spiderName(name)));
+                    .forEach(request -> {
+                        queue.push(request.spiderName(name));
+                        signalNewRequest();
+                    });
         }
 
         return this;
@@ -306,6 +321,7 @@ public class Spider {
                                     request.sleep(period);
                                     request.charset(charset);
                                     queue.push(request);
+                                    signalNewRequest();
                                 }
 
                             }
@@ -410,6 +426,26 @@ public class Spider {
         return this;
     }
 
+    private void waitNewRequest() {
+        newRequestLock.lock();
+        try {
+            newRequestCondition.await();
+        } catch (InterruptedException e) {
+            log.error("waitNewRequest - interrupted, error {}", e);
+        } finally {
+            newRequestLock.unlock();
+        }
+    }
+
+    private void signalNewRequest() {
+        try {
+            newRequestLock.lock();
+            newRequestCondition.signalAll();
+        } finally {
+            newRequestLock.unlock();
+        }
+    }
+
     public void run() {
 
         checkRunningStat();
@@ -423,7 +459,7 @@ public class Spider {
 
         log.info("Spider {} started!",getName());
 
-        while (getSpiderStatus() != SPIDER_STATUS_STOPPED && !queue.isEmpty(getName())) {
+        while (getSpiderStatus() != SPIDER_STATUS_STOPPED) {
 
             //暂停抓取
             if (pause && pauseCountDown!=null) {
@@ -439,7 +475,10 @@ public class Spider {
             // 从消息队列中取出request
             final Request request = queue.poll(name);
 
-            if (request != null) {
+            if (request == null) {
+
+                waitNewRequest();
+            } else {
 
                 if (request.getSleepTime() > 0) {
 
