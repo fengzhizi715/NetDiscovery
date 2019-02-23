@@ -16,6 +16,7 @@ public class Test {
                 .addSpider(Spider.create().name("tony1").url("http://www.163.com"))
                 .addSpider(Spider.create().name("tony2").url("http://www.126.com"))
                 .addSpider(Spider.create().name("tony3").url("https://www.baidu.com"))
+                .httpd()
                 .run();
     }
 }

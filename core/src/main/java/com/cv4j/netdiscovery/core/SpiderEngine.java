@@ -368,35 +368,34 @@ public class SpiderEngine {
         }
     }
 
-    /**
-     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
-     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
-     */
-    public void run() {
-
-        if (Preconditions.isNotBlank(spiders)) {
-
-            if (registerConsumer!=null) {
-                registerConsumer.process();
-            }
-
-            spiders.entrySet()
-                    .parallelStream()
-                    .forEach(entry -> entry.getValue().run());
-
-            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
-                log.info("stop all spiders");
-                stopSpiders();
-            }));
-        }
-    }
+//    /**
+//     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
+//     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
+//     */
+//    public void run() {
+//
+//        if (Preconditions.isNotBlank(spiders)) {
+//
+//            if (registerConsumer!=null) {
+//                registerConsumer.process();
+//            }
+//
+//            spiders.entrySet()
+//                    .parallelStream()
+//                    .forEach(entry -> entry.getValue().run());
+//
+//            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+//                log.info("stop all spiders");
+//                stopSpiders();
+//            }));
+//        }
+//    }
 
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来。
-     * 只适用于SpiderEngine中有Spider使用了repeateRequest()
      *
      */
-    public void runWithRepeat() {
+    public void run() {
 
         if (Preconditions.isNotBlank(spiders)) {
 

@@ -31,7 +31,7 @@ object TestDSL4SpiderEngine {
         spider.repeatRequest(10000,"https://github.com/fengzhizi715")
                 .initialDelay(10000)
 
-        spiderEngine.runWithRepeat()
+        spiderEngine.run()
     }
 
 }
