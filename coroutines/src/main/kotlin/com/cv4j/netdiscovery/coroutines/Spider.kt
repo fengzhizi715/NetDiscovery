@@ -28,6 +28,7 @@ import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.locks.ReentrantLock
 
 /**
  * Created by tony on 2018/8/8.
@@ -51,6 +52,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private var pause: Boolean = false
     private lateinit var pauseCountDown: CountDownLatch
+    private val newRequestLock = ReentrantLock()
+    private val newRequestCondition = newRequestLock.newCondition()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -93,6 +96,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         queue.push(Request(it, name).charset(charset.name()))
                     }
+
+            signalNewRequest()
         }
 
         return this
@@ -107,6 +112,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
             Arrays.asList(*urls)
                     .stream()
                     .forEach { queue.push(Request(it, name)) }
+
+            signalNewRequest()
         }
 
         return this
@@ -122,6 +129,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                 queue.push(Request(it, name).charset(charset.name()))
             }
+
+            signalNewRequest()
         }
 
         return this
@@ -134,6 +143,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach { queue.push(Request(it, name)) }
+
+            signalNewRequest()
         }
 
         return this
@@ -148,6 +159,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
             Arrays.asList(*requests)
                     .stream()
                     .forEach { queue.push(it.spiderName(name)) }
+
+            signalNewRequest()
         }
 
         return this
@@ -183,6 +196,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                                 request.sleep(period)
                                 request.charset(charset)
                                 queue.push(request)
+                                signalNewRequest()
                             }
                         })
 
@@ -253,6 +267,25 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         return this
     }
 
+    private fun waitNewRequest() {
+        newRequestLock.lock()
+        try {
+            newRequestCondition.await()
+        } catch (e: InterruptedException) {
+        } finally {
+            newRequestLock.unlock()
+        }
+    }
+
+    private fun signalNewRequest() {
+        try {
+            newRequestLock.lock()
+            newRequestCondition.signalAll()
+        } finally {
+            newRequestLock.unlock()
+        }
+    }
+
     fun run() {
 
         runBlocking {
@@ -261,7 +294,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
             initialDelay()
 
-            while (spiderStatus != SPIDER_STATUS_STOPPED && checkIfQueueEmpty()) {
+            while (spiderStatus != SPIDER_STATUS_STOPPED) {
 
                 //暂停抓取
                 if (pause) {
@@ -277,7 +310,10 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                 // 从消息队列中取出request
                 val request = queue.poll(name)
 
-                if (request != null) {
+                if (request == null) {
+
+                    waitNewRequest()
+                } else {
 
                     if (request.sleepTime > 0) {
 
@@ -360,8 +396,6 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
             stopSpider(downloader) // 爬虫停止
         }
     }
-
-    private fun checkIfQueueEmpty() = queue.getLeftRequests(name) != 0
 
     private fun checkIfRunning() {
 
