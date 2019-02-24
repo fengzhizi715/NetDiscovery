@@ -15,5 +15,5 @@ fun main(args: Array<String>) {
             .addSpider(Spider.create().name("tony2").repeatRequest(1000,"http://www.126.com").initialDelay(1200))
             .addSpider(Spider.create().name("tony3").repeatRequest(1000,"https://www.baidu.com").initialDelay(1200))
             .httpd(8080)
-            .runWithRepeat()
+            .run()
 }

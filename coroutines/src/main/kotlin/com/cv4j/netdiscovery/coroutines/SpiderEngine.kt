@@ -245,33 +245,33 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun closeHttpServer() = server?.close()
 
-    /**
-     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
-     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
-     */
-    fun run() {
-
-        if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
-
-            spiders.entries
-                    .forEach{
-                        GlobalScope.launch {
-                            it.value.run()
-                        }
-                    }
-
-            Runtime.getRuntime().addShutdownHook(Thread {
-                println("stop all spiders")
-                stopSpiders()
-            })
-        }
-    }
+//    /**
+//     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
+//     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
+//     */
+//    fun run() {
+//
+//        if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
+//
+//            spiders.entries
+//                    .forEach{
+//                        GlobalScope.launch {
+//                            it.value.run()
+//                        }
+//                    }
+//
+//            Runtime.getRuntime().addShutdownHook(Thread {
+//                println("stop all spiders")
+//                stopSpiders()
+//            })
+//        }
+//    }
 
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来。
-     * 只适用于SpiderEngine中有Spider使用了repeateRequest()
+     *
      */
-    fun runWithRepeat() {
+    fun run() {
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
