@@ -37,9 +37,4 @@ public interface Queue {
      * @return
      */
     int getTotalRequests(String spiderName);
-
-    default boolean isEmpty(String spiderName) {
-
-        return this.getLeftRequests(spiderName) == 0;
-    }
 }
