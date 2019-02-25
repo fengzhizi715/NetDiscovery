@@ -269,6 +269,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private fun waitNewRequest() {
         newRequestLock.lock()
+        
         try {
             newRequestCondition.await()
         } catch (e: InterruptedException) {
@@ -278,8 +279,9 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
     }
 
     private fun signalNewRequest() {
+        newRequestLock.lock()
+
         try {
-            newRequestLock.lock()
             newRequestCondition.signalAll()
         } finally {
             newRequestLock.unlock()

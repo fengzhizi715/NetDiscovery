@@ -35,7 +35,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -434,6 +436,7 @@ public class Spider {
 
     private void waitNewRequest() {
         newRequestLock.lock();
+
         try {
             newRequestCondition.await();
         } catch (InterruptedException e) {
@@ -444,8 +447,9 @@ public class Spider {
     }
 
     private void signalNewRequest() {
+        newRequestLock.lock();
+
         try {
-            newRequestLock.lock();
             newRequestCondition.signalAll();
         } finally {
             newRequestLock.unlock();
