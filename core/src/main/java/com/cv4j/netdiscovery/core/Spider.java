@@ -588,6 +588,8 @@ public class Spider {
 
                                     request.getAfterRequest().process(page);
                                 }
+
+                                signalNewRequest();
                             }
                         }, new Consumer<Throwable>() {
                             @Override
