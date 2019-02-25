@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.ResultItems;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * Created by tony on 2017/12/22.
@@ -13,6 +14,21 @@ import java.util.Map;
 public interface Pipeline {
 
     void process(ResultItems resultItems);
+
+    /**
+     * 方便在 pipeline 中往队列中发起爬取任务(进行深度爬取)
+     * @param spider
+     * @param url
+     */
+    default void push(Spider spider, String url) {
+
+        if (spider==null || Preconditions.isBlank(url)) {
+            return;
+        }
+
+        Request request = new Request(url,spider.getName());     // 根据spider的名称来创建request
+        spider.getQueue().push(request);
+    }
 
     /**
      * 方便在 pipeline 中往队列中发起爬取任务(进行深度爬取)
@@ -36,6 +52,6 @@ public interface Pipeline {
             });
         }
 
-        spider.request(request);
+        spider.getQueue().push(request);
     }
 }
