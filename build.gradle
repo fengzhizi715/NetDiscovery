@@ -4,7 +4,7 @@ ext {
 
             rxjava                    : "2.2.6",
 
-            kotlinx_coroutines        : "1.0.1",
+            kotlinx_coroutines        : "1.1.1",
 
             disruptor                 : "3.4.2",
 
