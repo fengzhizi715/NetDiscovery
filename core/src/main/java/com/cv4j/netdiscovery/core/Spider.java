@@ -338,6 +338,42 @@ public class Spider {
         return this;
     }
 
+    /**
+     * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
+     * @param period
+     * @param request
+     * @return
+     */
+    public Spider repeatRequest(long period, Request request) {
+
+        checkIfRunning();
+
+        if (request!=null) {
+
+            compositeDisposable
+                    .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
+                            .onBackpressureBuffer()
+                            .subscribe(new Consumer<Long>() {
+                                @Override
+                                public void accept(Long aLong) throws Exception {
+
+                                    if (!pause) {
+
+                                        if (request.getSleepTime()==0 || request.getSleepTime()!=period) {
+                                            request.sleep(period);
+                                        }
+                                        queue.push(request);
+
+                                        signalNewRequest();
+                                    }
+
+                                }
+                            }));
+        }
+
+        return this;
+    }
+
     public Spider initialDelay(long initialDelay) {
 
         checkIfRunning();
