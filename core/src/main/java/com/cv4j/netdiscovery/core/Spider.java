@@ -484,7 +484,7 @@ public class Spider {
         }
     }
 
-    private void signalNewRequest() {
+    public void signalNewRequest() {
         newRequestLock.lock();
 
         try {

@@ -1,11 +1,23 @@
 package com.cv4j.netdiscovery.core.queue;
 
+import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
 
 /**
  * Created by tony on 2018/1/1.
  */
 public interface Queue {
+
+    /**
+     * 把Request请求添加到正在运行爬虫的Queue中
+     *
+     * @param request request
+     */
+    default void pushToRunninSpider(Request request, Spider spider) {
+
+        push(request);
+        spider.signalNewRequest();
+    }
 
     /**
      * 把Request请求添加到Queue
