@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class OkHttpDownloader implements Downloader{
 
-    OkHttpClient client;
+    private OkHttpClient client;
 
     public OkHttpDownloader() {
         client = new OkHttpClient.Builder().retryOnConnectionFailure(true).addInterceptor(new RedirectInterceptor()).build();

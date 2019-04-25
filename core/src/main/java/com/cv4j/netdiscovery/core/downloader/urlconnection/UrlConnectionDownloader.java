@@ -31,7 +31,6 @@ import java.util.Map;
 @Slf4j
 public class UrlConnectionDownloader implements Downloader {
 
-    private URL url = null;
     private HttpURLConnection httpUrlConnection = null;
 
     public UrlConnectionDownloader() {
@@ -50,7 +49,7 @@ public class UrlConnectionDownloader implements Downloader {
         }
 
         try {
-            url = new URL(request.getUrl());
+            URL url = new URL(request.getUrl());
 
             // 设置Proxy
             if (request.getProxy()!=null) {

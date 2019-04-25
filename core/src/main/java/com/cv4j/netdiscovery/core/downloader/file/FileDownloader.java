@@ -24,14 +24,13 @@ import java.net.URL;
  */
 public class FileDownloader implements Downloader{
 
-    private URL url = null;
     private HttpURLConnection httpUrlConnection = null;
 
     @Override
     public Maybe<Response> download(final Request request) {
 
         try {
-            url = new URL(request.getUrl());
+            URL url = new URL(request.getUrl());
             // 将url以open方法返回的urlConnection连接强转为HttpURLConnection连接(标识一个url所引用的远程对象连接)
             // 此时cnnection只是为一个连接对象,待连接中
             httpUrlConnection = (HttpURLConnection) url.openConnection();
