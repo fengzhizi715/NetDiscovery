@@ -3,8 +3,6 @@ package com.cv4j.netdiscovery.core.pipeline;
 import com.cv4j.netdiscovery.core.domain.ResultItems;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
-
 /**
  * Created by tony on 2017/12/23.
  */

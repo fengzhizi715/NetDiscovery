@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 public class Printer {
 
-    private static final int JSON_INDENT = 3;
+//    private static final int JSON_INDENT = 3;
 
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private static final String DOUBLE_SEPARATOR = LINE_SEPARATOR + LINE_SEPARATOR;

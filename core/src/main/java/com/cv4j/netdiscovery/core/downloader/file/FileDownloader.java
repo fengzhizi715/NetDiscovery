@@ -3,7 +3,6 @@ package com.cv4j.netdiscovery.core.downloader.file;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
-import com.cv4j.netdiscovery.core.utils.Utils;
 import com.safframework.tony.common.utils.IOUtils;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;

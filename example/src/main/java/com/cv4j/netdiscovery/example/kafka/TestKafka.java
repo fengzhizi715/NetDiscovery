@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.cv4j.netdiscovery.core.Spider;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.pipeline.ConsolePipeline;
-import com.cv4j.netdiscovery.example.jd.PricePipeline;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueueConfig;
 
