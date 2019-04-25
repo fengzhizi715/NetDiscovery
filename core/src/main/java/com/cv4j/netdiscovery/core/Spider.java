@@ -364,6 +364,8 @@ public class Spider {
                                         if (request.getSleepTime()==0 || request.getSleepTime()!=period) {
                                             request.sleep(period);
                                         }
+
+                                        request.spiderName(name);
                                         queue.push(request);
 
                                         signalNewRequest();
