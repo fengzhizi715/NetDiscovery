@@ -104,7 +104,6 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.3.7'
 4. 增加 chromium 的支持
 5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
 6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
-7. 增加 MDC 的使用
 
 
 # Contributors：
