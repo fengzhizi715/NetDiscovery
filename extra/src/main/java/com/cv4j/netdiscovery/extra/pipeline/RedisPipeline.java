@@ -10,8 +10,6 @@ import io.lettuce.core.resource.ClientResources;
 import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
-
 /**
  * Created by tony on 2018/3/22.
  */

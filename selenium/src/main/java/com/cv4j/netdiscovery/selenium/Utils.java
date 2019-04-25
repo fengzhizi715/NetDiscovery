@@ -40,7 +40,6 @@ public class Utils {
      * @param driver
      */
     public static void loadAll(WebDriver driver){
-        Dimension od= driver.manage().window().getSize();
         int width=driver.manage().window().getSize().width;
         //尝试性解决：https://github.com/ariya/phantomjs/issues/11526问题
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
