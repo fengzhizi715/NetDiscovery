@@ -4,13 +4,11 @@ import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.cv4j.proxy.http.HttpManager;
-import com.safframework.tony.common.utils.Preconditions;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.openqa.selenium.WebDriver;
 
-import java.util.List;
 import java.util.Set;
 
 /**

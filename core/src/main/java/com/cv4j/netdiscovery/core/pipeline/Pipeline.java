@@ -6,7 +6,6 @@ import com.cv4j.netdiscovery.core.domain.ResultItems;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.util.Map;
-import java.util.Queue;
 
 /**
  * Created by tony on 2017/12/22.

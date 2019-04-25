@@ -4,7 +4,6 @@ import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.queue.filter.DuplicateFilter;
 import com.cv4j.netdiscovery.core.utils.SerializableUtils;
-import com.google.gson.Gson;
 import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;

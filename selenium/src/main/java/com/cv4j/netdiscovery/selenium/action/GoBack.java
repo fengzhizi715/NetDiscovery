@@ -1,6 +1,5 @@
 package com.cv4j.netdiscovery.selenium.action;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 /**
