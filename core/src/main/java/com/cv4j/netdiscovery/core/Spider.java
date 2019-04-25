@@ -79,6 +79,8 @@ public class Spider {
 
     private int retryDelayMillis = 1000; // 重试等待的时间
 
+    private int emptySleepTime = 30000;
+
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
     private ReentrantLock newRequestLock = new ReentrantLock();
@@ -474,7 +476,7 @@ public class Spider {
         newRequestLock.lock();
 
         try {
-            newRequestCondition.await();
+            newRequestCondition.await(emptySleepTime, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             log.error("waitNewRequest - interrupted, error {}", e);
         } finally {
