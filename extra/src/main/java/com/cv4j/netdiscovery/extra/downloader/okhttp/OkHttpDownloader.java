@@ -40,14 +40,13 @@ public class OkHttpDownloader implements Downloader{
     @Override
     public Maybe<Response> download(Request request) {
 
-        if (request.isDebug()) { // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        if (request.isDebug()
+                && RxCacheManager.getInsatance().getRxCache()!=null
+                && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
 
-            if (RxCacheManager.getInsatance().getRxCache()!=null
-                    && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
-
-                Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
-                return Maybe.just(response.getData());
-            }
+            Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
+            return Maybe.just(response.getData());
         }
 
         okhttp3.Request.Builder requestBuilder = null;
@@ -78,12 +77,11 @@ public class OkHttpDownloader implements Downloader{
         }
 
         // 针对post请求，需要对header添加一些信息
-        if (request.getHttpMethod()==HttpMethod.POST) {
+        if (request.getHttpMethod()==HttpMethod.POST
+                && Preconditions.isNotBlank(request.getHttpRequestBody())
+                && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-            if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
-
-                requestBuilder.addHeader(Constant.CONTENT_TYPE,request.getHttpRequestBody().getContentType());
-            }
+            requestBuilder.addHeader(Constant.CONTENT_TYPE,request.getHttpRequestBody().getContentType());
         }
 
         okhttp3.Request okrequest = requestBuilder.build();

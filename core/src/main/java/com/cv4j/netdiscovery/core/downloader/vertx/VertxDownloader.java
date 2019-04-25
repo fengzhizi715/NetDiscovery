@@ -42,14 +42,13 @@ public class VertxDownloader implements Downloader {
 
     public Maybe<Response> download(Request request) {
 
-        if (request.isDebug()) { // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        if (request.isDebug()
+                && RxCacheManager.getInsatance().getRxCache()!=null
+                && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
 
-            if (RxCacheManager.getInsatance().getRxCache()!=null
-                    && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
-
-                Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
-                return Maybe.just(response.getData());
-            }
+            Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
+            return Maybe.just(response.getData());
         }
 
         WebClientOptions options = initWebClientOptions(request);
@@ -89,12 +88,11 @@ public class VertxDownloader implements Downloader {
         }
 
         // 针对post请求，需要对header添加一些信息
-        if (request.getHttpMethod() == HttpMethod.POST) {
+        if (request.getHttpMethod() == HttpMethod.POST
+                && Preconditions.isNotBlank(request.getHttpRequestBody())
+                && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
 
-            if (Preconditions.isNotBlank(request.getHttpRequestBody()) && Preconditions.isNotBlank(request.getHttpRequestBody().getContentType())) {
-
-                httpRequest.putHeader(Constant.CONTENT_TYPE, request.getHttpRequestBody().getContentType());
-            }
+            httpRequest.putHeader(Constant.CONTENT_TYPE, request.getHttpRequestBody().getContentType());
         }
 
         String charset = null;

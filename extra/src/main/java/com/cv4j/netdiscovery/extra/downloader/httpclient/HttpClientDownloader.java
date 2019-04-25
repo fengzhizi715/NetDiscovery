@@ -33,14 +33,13 @@ public class HttpClientDownloader implements Downloader{
     @Override
     public Maybe<Response> download(final Request request) {
 
-        if (request.isDebug()) { // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        // request 在 debug 模式下，并且缓存中包含了数据，则使用缓存中的数据
+        if (request.isDebug()
+                && RxCacheManager.getInsatance().getRxCache()!=null
+                && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
 
-            if (RxCacheManager.getInsatance().getRxCache()!=null
-                    && RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class)!=null) {
-
-                Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
-                return Maybe.just(response.getData());
-            }
+            Record<Response> response = RxCacheManager.getInsatance().getRxCache().get(request.getUrl(),Response.class);
+            return Maybe.just(response.getData());
         }
 
         return Maybe.create(new MaybeOnSubscribe<CloseableHttpResponse>(){
