@@ -18,15 +18,6 @@ import java.util.Map;
  */
 public class HttpRequestBody implements Serializable{
 
-    public static abstract class ContentType {
-
-        public static final String JSON = "application/json";
-
-        public static final String FORM = "application/x-www-form-urlencoded";
-
-        public static final String MULTIPART = "multipart/form-data";
-    }
-
     @Setter
     @Getter
     private byte[] body;
@@ -86,4 +77,12 @@ public class HttpRequestBody implements Serializable{
         }
     }
 
+    public static abstract class ContentType {
+
+        public static final String JSON = "application/json";
+
+        public static final String FORM = "application/x-www-form-urlencoded";
+
+        public static final String MULTIPART = "multipart/form-data";
+    }
 }
