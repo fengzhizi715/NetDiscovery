@@ -79,7 +79,7 @@ public class Spider {
 
     private int retryDelayMillis = 1000; // 重试等待的时间
 
-    private int emptySleepTime = 30000;
+    private int sleepTime = 30000;  // 默认30s
 
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
@@ -411,6 +411,17 @@ public class Spider {
         return this;
     }
 
+    public Spider sleepTime(int sleepTime) {
+
+        checkIfRunning();
+
+        if (sleepTime > 0) {
+            this.sleepTime = sleepTime;
+        }
+
+        return this;
+    }
+
     public Spider downloader(Downloader downloader) {
 
         checkIfRunning();
@@ -478,7 +489,7 @@ public class Spider {
         newRequestLock.lock();
 
         try {
-            newRequestCondition.await(emptySleepTime, TimeUnit.MILLISECONDS);
+            newRequestCondition.await(sleepTime, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             log.error("waitNewRequest - interrupted, error {}", e);
         } finally {
