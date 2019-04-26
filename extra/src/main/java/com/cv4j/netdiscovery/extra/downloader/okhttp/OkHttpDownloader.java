@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
@@ -93,7 +94,9 @@ public class OkHttpDownloader implements Downloader{
 
                 emitter.onSuccess(client.newCall(okrequest).execute());
             }
-        }).map(new Function<okhttp3.Response, Response>() {
+        })
+        .compose(new DownloaderDelayTransformer(request))
+        .map(new Function<okhttp3.Response, Response>() {
 
             @Override
             public Response apply(okhttp3.Response resp) throws Exception {

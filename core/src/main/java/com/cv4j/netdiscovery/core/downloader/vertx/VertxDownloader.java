@@ -7,6 +7,7 @@ import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.netdiscovery.core.utils.BooleanUtils;
 import com.cv4j.netdiscovery.core.utils.NumberUtils;
 import com.cv4j.netdiscovery.core.utils.VertxUtils;
@@ -123,6 +124,7 @@ public class VertxDownloader implements Downloader {
 
         return httpResponseSingle
                 .toMaybe()
+                .compose(new DownloaderDelayTransformer(request))
                 .map(new Function<HttpResponse<String>, Response>() {
                     @Override
                     public Response apply(HttpResponse<String> stringHttpResponse) throws Exception {

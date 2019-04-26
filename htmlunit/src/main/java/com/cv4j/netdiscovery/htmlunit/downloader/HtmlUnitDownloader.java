@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -82,7 +83,9 @@ public class HtmlUnitDownloader implements Downloader {
 
                 emitter.onSuccess(page.getWebResponse());
             }
-        }).map(new Function<WebResponse, Response>() {
+        })
+        .compose(new DownloaderDelayTransformer(request))
+        .map(new Function<WebResponse, Response>() {
 
             @Override
             public Response apply(WebResponse webResponse) throws Exception {

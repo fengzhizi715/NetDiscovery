@@ -41,6 +41,8 @@ public class Request implements Serializable {
 
     private long sleepTime = 0;// 每次请求url之前先sleep一段时间
 
+    private long downloadDelay = 0;
+
     private Map<String, String> header = new NoEmptyHashMap<>();
 
     private Map<String, Object> extras; // extras 中的数据可以在pipeline中使用
@@ -207,6 +209,18 @@ public class Request implements Serializable {
 
         if (sleepTime > 0) {
             this.sleepTime = sleepTime;
+        }
+        return this;
+    }
+
+    /**
+     * @param downloadDelay 每次下载时先delay一段时间，单位是milliseconds
+     * @return
+     */
+    public Request downloadDelay(long downloadDelay) {
+
+        if (downloadDelay > 0) {
+            this.downloadDelay = downloadDelay;
         }
         return this;
     }

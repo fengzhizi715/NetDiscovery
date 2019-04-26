@@ -4,6 +4,7 @@ import com.cv4j.netdiscovery.core.config.Constant;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.netdiscovery.selenium.action.SeleniumAction;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
 import com.safframework.tony.common.utils.Preconditions;
@@ -63,7 +64,9 @@ public class SeleniumDownloader implements Downloader {
                     emitter.onSuccess(webDriver.getPageSource());
                 }
             }
-        }).map(new Function<String, Response>() {
+        })
+        .compose(new DownloaderDelayTransformer(request))
+        .map(new Function<String, Response>() {
 
             @Override
             public Response apply(String html) throws Exception {

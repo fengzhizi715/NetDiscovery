@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
@@ -49,7 +50,9 @@ public class HttpClientDownloader implements Downloader{
 
                 emitter.onSuccess(httpManager.getResponse(request));
             }
-        }).map(new Function<CloseableHttpResponse, Response>() {
+        })
+         .compose(new DownloaderDelayTransformer(request))
+         .map(new Function<CloseableHttpResponse, Response>() {
 
             @Override
             public Response apply(CloseableHttpResponse closeableHttpResponse) throws Exception {

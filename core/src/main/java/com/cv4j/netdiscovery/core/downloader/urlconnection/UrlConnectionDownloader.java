@@ -6,6 +6,7 @@ import com.cv4j.netdiscovery.core.cookies.CookiesPool;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
@@ -102,7 +103,9 @@ public class UrlConnectionDownloader implements Downloader {
 
                     emitter.onSuccess(httpUrlConnection.getInputStream());
                 }
-            }).map(new Function<InputStream, Response>() {
+            })
+             .compose(new DownloaderDelayTransformer(request))
+             .map(new Function<InputStream, Response>() {
 
                 @Override
                 public Response apply(InputStream inputStream) throws Exception {

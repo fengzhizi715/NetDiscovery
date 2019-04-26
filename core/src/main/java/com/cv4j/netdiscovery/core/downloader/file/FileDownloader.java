@@ -3,6 +3,7 @@ package com.cv4j.netdiscovery.core.downloader.file;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.domain.Response;
 import com.cv4j.netdiscovery.core.downloader.Downloader;
+import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.safframework.tony.common.utils.IOUtils;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
@@ -48,7 +49,9 @@ public class FileDownloader implements Downloader{
 
                     emitter.onSuccess(httpUrlConnection.getInputStream());
                 }
-            }).map(new Function<InputStream, Response>() {
+            })
+            .compose(new DownloaderDelayTransformer(request))
+            .map(new Function<InputStream, Response>() {
                 @Override
                 public Response apply(InputStream inputStream) throws Exception {
 
