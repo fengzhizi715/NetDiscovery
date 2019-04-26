@@ -11,7 +11,7 @@ public class TestSeleniumAction extends SeleniumAction {
     public SeleniumAction perform(WebDriver driver) {
         try {
             //浏览器窗口最大化
-            driver.manage().window().maximize();
+//            driver.manage().window().maximize();
             //停顿2秒
             Thread.sleep(2000);
 

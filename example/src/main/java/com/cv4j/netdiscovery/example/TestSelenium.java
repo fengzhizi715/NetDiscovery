@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.example;
 
 import com.cv4j.netdiscovery.core.Spider;
+import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
@@ -23,7 +24,7 @@ public class TestSelenium {
         //设置并启动爬虫
         Spider.create()
                 .name("testseleinum")
-                .url("https://www.jianshu.com/u/4f2c483c12d8")
+                .request(new Request("https://www.jianshu.com/u/4f2c483c12d8","testseleinum").downloadDelay(2000))
                 .downloader(seleniumDownloader)
                 .run();
     }
