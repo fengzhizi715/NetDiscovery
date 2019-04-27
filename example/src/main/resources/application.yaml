@@ -6,6 +6,9 @@ spider:
     retryDelayMillis: 1000
     useConsolePipeline: true
 
+  request:
+    downloadDelay: 0
+
   queue:
     # default、disruptor
     type: default
