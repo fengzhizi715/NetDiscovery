@@ -81,6 +81,8 @@ public class Spider {
 
     private int sleepTime = 30000;  // 默认30s
 
+    private int downloadDelay = 0;  // 默认0s
+
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
     private ReentrantLock newRequestLock = new ReentrantLock();
@@ -145,6 +147,7 @@ public class Spider {
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
             retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
+            downloadDelay = NumberUtils.toInt(Configuration.getConfig("spider.request.downloadDelay"));
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
 
@@ -213,6 +216,7 @@ public class Spider {
                     .forEach(url -> {
                         Request request = new Request(url, name);
                         request.charset(charset.name());
+                        request.downloadDelay(downloadDelay);
                         queue.push(request);
                     });
 
@@ -231,7 +235,9 @@ public class Spider {
             Arrays.asList(urls)
                     .stream()
                     .forEach(url -> {
-                        queue.push(new Request(url, name));
+                        Request request = new Request(url, name);
+                        request.downloadDelay(downloadDelay);
+                        queue.push(request);
                     });
 
             signalNewRequest();
@@ -249,6 +255,7 @@ public class Spider {
             urls.forEach(url -> {
                 Request request = new Request(url, name);
                 request.charset(charset.name());
+                request.downloadDelay(downloadDelay);
                 queue.push(request);
             });
 
