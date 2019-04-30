@@ -272,7 +272,9 @@ public class Spider {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach(url -> {
-                queue.push(new Request(url, name));
+                Request request = new Request(url, name);
+                request.downloadDelay(downloadDelay);
+                queue.push(request);
             });
 
             signalNewRequest();
@@ -336,6 +338,7 @@ public class Spider {
                                     request.spiderName(name);
                                     request.sleep(period);
                                     request.charset(charset);
+                                    request.downloadDelay(downloadDelay);
                                     queue.push(request);
                                     
                                     signalNewRequest();
