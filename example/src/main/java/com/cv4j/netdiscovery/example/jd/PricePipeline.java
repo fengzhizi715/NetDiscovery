@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
  * Created by tony on 2018/6/12.
  */
 @Slf4j
-public class PricePipeline implements Pipeline {
+public class PricePipeline extends Pipeline {
 
     @Override
     public void process(ResultItems resultItems) {

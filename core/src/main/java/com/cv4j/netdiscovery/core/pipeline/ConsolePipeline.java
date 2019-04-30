@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * Created by tony on 2017/12/23.
  */
 @Slf4j
-public class ConsolePipeline implements Pipeline {
+public class ConsolePipeline extends Pipeline {
 
     @Override
     public void process(ResultItems resultItems) {

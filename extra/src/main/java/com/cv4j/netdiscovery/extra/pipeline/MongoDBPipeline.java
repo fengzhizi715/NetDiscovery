@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by tony on 2018/1/25.
  */
 @Slf4j
-public class MongoDBPipeline implements Pipeline {
+public class MongoDBPipeline extends Pipeline {
 
     private MongoClient mongoClient;
     private String collectionName;

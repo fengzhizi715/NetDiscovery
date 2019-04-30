@@ -27,6 +27,7 @@ import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -631,7 +632,15 @@ public class Spider {
                                 if (!page.getResultItems().isSkip() && Preconditions.isNotBlank(pipelines)) {
 
                                     pipelines.stream()
-                                            .forEach(pipeline -> pipeline.process(page.getResultItems()));
+                                            .forEach(pipeline -> {
+
+                                                if (pipeline.getPipelineDelay()>0) {
+
+                                                    Observable.just("pipeline delay").delay(pipeline.getPipelineDelay(),TimeUnit.MILLISECONDS).blockingFirst();
+                                                }
+
+                                                pipeline.process(page.getResultItems());
+                                            });
                                 }
 
                                 return page;

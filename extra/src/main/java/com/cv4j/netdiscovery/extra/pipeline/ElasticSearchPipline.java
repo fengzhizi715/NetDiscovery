@@ -12,7 +12,7 @@ import org.elasticsearch.rest.RestStatus;
  * @date 2018-12-26
  */
 @Slf4j
-public class ElasticSearchPipline implements Pipeline {
+public class ElasticSearchPipline extends Pipeline {
     private TransportClient client;
     private String index;
     private String type;

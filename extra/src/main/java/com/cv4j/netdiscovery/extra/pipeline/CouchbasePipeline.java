@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by tony on 2018/2/17.
  */
-public class CouchbasePipeline implements Pipeline{
+public class CouchbasePipeline extends Pipeline{
 
     private CouchbaseCluster cluster;
     private Bucket bucket;

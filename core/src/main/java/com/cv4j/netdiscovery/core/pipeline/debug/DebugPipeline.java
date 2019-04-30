@@ -6,7 +6,7 @@ import com.cv4j.netdiscovery.core.pipeline.Pipeline;
 /**
  * Created by tony on 2018/2/5.
  */
-public class DebugPipeline implements Pipeline {
+public class DebugPipeline extends Pipeline {
 
     @Override
     public void process(ResultItems resultItems) {

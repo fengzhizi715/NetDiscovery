@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by tony on 2018/2/22.
  */
-public class CSVPipeline implements Pipeline{
+public class CSVPipeline extends Pipeline{
 
     private File csvFile = null;
 

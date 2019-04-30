@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * Created by tony on 2018/3/22.
  */
 @Slf4j
-public class RedisPipeline implements Pipeline {
+public class RedisPipeline extends Pipeline {
 
     private RedisClient redisClient;
     private String key;

@@ -7,7 +7,7 @@ import com.safframework.rxcache.RxCache;
 /**
  * Created by tony on 2019-01-03.
  */
-public class RxCachePipeline implements Pipeline {
+public class RxCachePipeline extends Pipeline {
 
     @Override
     public void process(ResultItems resultItems) {

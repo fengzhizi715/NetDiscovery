@@ -2,6 +2,7 @@ package com.cv4j.netdiscovery.core.utils;
 
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.eventbus.MessageConsumer;
@@ -15,8 +16,9 @@ public class VertxUtils {
     private static io.vertx.reactivex.core.Vertx reactivex_vertx;
 
     static{
-
-        vertx = Vertx.vertx();
+        VertxOptions options = new VertxOptions();
+        options.setMaxEventLoopExecuteTime(Long.MAX_VALUE);
+        vertx = Vertx.vertx(options);
         reactivex_vertx = new io.vertx.reactivex.core.Vertx(vertx);
     }
 
