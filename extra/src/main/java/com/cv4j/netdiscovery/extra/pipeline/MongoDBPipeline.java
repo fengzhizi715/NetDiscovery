@@ -19,6 +19,12 @@ public class MongoDBPipeline extends Pipeline {
 
     public MongoDBPipeline(MongoClient mongoClient,String collectionName){
 
+        this(mongoClient,collectionName,0);
+    }
+
+    public MongoDBPipeline(MongoClient mongoClient,String collectionName,int pipelineDelay){
+
+        super(pipelineDelay);
         this.mongoClient = mongoClient;
         this.collectionName = collectionName;
     }

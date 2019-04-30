@@ -9,6 +9,14 @@ import com.safframework.rxcache.RxCache;
  */
 public class RxCachePipeline extends Pipeline {
 
+    public RxCachePipeline() {
+        this(0);
+    }
+
+    public RxCachePipeline(int pipelineDelay) {
+        super(pipelineDelay);
+    }
+
     @Override
     public void process(ResultItems resultItems) {
 

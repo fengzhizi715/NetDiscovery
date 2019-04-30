@@ -9,6 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConsolePipeline extends Pipeline {
 
+    public ConsolePipeline() {
+        this(0);
+    }
+
+    public ConsolePipeline(int pipelineDelay) {
+        super(pipelineDelay);
+    }
+
     @Override
     public void process(ResultItems resultItems) {
 

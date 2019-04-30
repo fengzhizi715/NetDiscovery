@@ -18,6 +18,13 @@ public class ElasticSearchPipline extends Pipeline {
     private String type;
 
     public ElasticSearchPipline(TransportClient client, String index, String type) {
+
+        this(client,index,type,0);
+    }
+
+    public ElasticSearchPipline(TransportClient client, String index, String type,int pipelineDelay) {
+
+        super(pipelineDelay);
         this.client = client;
         this.index = index;
         this.type = type;

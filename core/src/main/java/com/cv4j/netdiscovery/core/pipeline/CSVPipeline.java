@@ -20,6 +20,12 @@ public class CSVPipeline extends Pipeline{
 
     public CSVPipeline(String filePath,String fileName) {
 
+        this(filePath,fileName,0);
+    }
+
+    public CSVPipeline(String filePath,String fileName,int pipelineDelay) {
+
+        super(pipelineDelay);
         csvFile = new File(filePath + fileName + ".csv");
 
         if (!csvFile.exists()) {

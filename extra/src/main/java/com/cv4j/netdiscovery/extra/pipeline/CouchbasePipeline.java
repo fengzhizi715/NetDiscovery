@@ -19,12 +19,26 @@ public class CouchbasePipeline extends Pipeline{
     private String documentId;
 
     public CouchbasePipeline(CouchbaseCluster cluster,Bucket bucket,String documentId){
+
+        this(cluster,bucket,documentId,0);
+    }
+
+    public CouchbasePipeline(CouchbaseCluster cluster,Bucket bucket,String documentId,int pipelineDelay){
+
+        super(pipelineDelay);
         this.cluster = cluster;
         this.bucket = bucket;
         this.documentId = documentId;
     }
 
     public CouchbasePipeline(CouchbaseCluster cluster,String bucketName,String documentId){
+
+        this(cluster,bucketName,documentId,0);
+    }
+
+    public CouchbasePipeline(CouchbaseCluster cluster,String bucketName,String documentId,int pipelineDelay){
+
+        super(pipelineDelay);
         this.cluster = cluster;
         this.bucket = cluster.openBucket(bucketName);
         this.documentId = documentId;
