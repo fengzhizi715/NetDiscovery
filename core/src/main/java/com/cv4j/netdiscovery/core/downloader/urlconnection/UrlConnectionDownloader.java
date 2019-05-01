@@ -34,9 +34,6 @@ public class UrlConnectionDownloader implements Downloader {
 
     private HttpURLConnection httpUrlConnection = null;
 
-    public UrlConnectionDownloader() {
-    }
-
     @Override
     public Maybe<Response> download(Request request) {
 

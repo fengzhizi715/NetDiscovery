@@ -14,14 +14,6 @@ public class PriorityQueue extends AbstractQueue {
 
     private ConcurrentLinkedQueue<Request> normalQueue = new ConcurrentLinkedQueue<>();
 
-    public PriorityQueue() {
-    }
-
-    public PriorityQueue(int capacity) {
-
-        this.capacity = capacity;
-    }
-
     private PriorityBlockingQueue<Request> priorityQueue = new PriorityBlockingQueue<>(capacity, (Request o1, Request o2) -> {
         if (o1.getPriority() > o2.getPriority()) {
 
@@ -35,6 +27,14 @@ public class PriorityQueue extends AbstractQueue {
         }
     });
 
+    public PriorityQueue() {
+    }
+
+    public PriorityQueue(int capacity) {
+
+        this.capacity = capacity;
+    }
+    
     @Override
     protected void pushWhenNoDuplicate(Request request) {
 
