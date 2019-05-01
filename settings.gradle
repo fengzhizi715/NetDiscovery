@@ -30,5 +30,6 @@ include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
 include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
-
+include 'pipeline:redis'
+findProject(':pipeline:redis')?.name = 'redis'
 
