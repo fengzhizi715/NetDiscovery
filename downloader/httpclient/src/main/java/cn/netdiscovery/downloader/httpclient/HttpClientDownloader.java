@@ -13,7 +13,6 @@ import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -21,7 +20,6 @@ import org.apache.http.util.EntityUtils;
 /**
  * Created by tony on 2018/1/20.
  */
-@Slf4j
 public class HttpClientDownloader implements Downloader{
 
     private HttpManager httpManager;
