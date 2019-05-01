@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.core.utils;
 
+import com.cv4j.netdiscovery.core.exception.SpiderException;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.Serializable;
@@ -48,7 +49,7 @@ public class URLParser implements Serializable {
      * @throws MalformedURLException
      */
     public URLParser(final String url, final String charset) throws MalformedURLException {
-        checkNull(url, "url");
+        Preconditions.checkNotNull(url);
         if (charset != null && !Charset.isSupported(charset)) {
             throw new IllegalArgumentException("charset is not supported: " + charset);
         }
@@ -98,9 +99,9 @@ public class URLParser implements Serializable {
     }
 
     public void updateParams(String name, String... values) {
-        checkNull(name, "name");
+        Preconditions.checkNotNull(name);
         if (values.length == 0) {
-            throw new IllegalArgumentException("values should not be empty");
+            throw new SpiderException("values should not be empty");
         }
         List<String> list = getOrCreate(params, name);
         list.clear();
@@ -110,7 +111,7 @@ public class URLParser implements Serializable {
     }
 
     public List<String> getRawParams(String name) {
-        checkNull(name, "name");
+        Preconditions.checkNotNull(name);
         return this.params.get(name);
     }
 
@@ -215,37 +216,31 @@ public class URLParser implements Serializable {
     }
 
     private String decode(String value) {
-        checkNull(value, "value to decode");
+        Preconditions.checkNotNull(value);
         try {
             return charset == null ? value : URLDecoder.decode(value, charset);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
     private String encode(String value) {
-        checkNull(value, "value to encode");
+        Preconditions.checkNotNull(value);
         try {
             return charset == null ? value : URLEncoder.encode(value, charset);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
     private static List<String> getOrCreate(Map<String, List<String>> map, String name) {
-        checkNull(name, "name");
+        Preconditions.checkNotNull(name);
         List<String> list = map.get(name);
         if (list == null) {
             list = new ArrayList<String>();
             map.put(name, list);
         }
         return list;
-    }
-
-    private static void checkNull(Object value, String fieldName) {
-        if (value == null) {
-            throw new IllegalArgumentException(fieldName + " should not be null");
-        }
     }
 
     private static LinkedHashMap<String, List<String>> parseQueryString(String query) {
