@@ -17,10 +17,10 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
 
     private int retryCount = 0;
     private int maxRetries;
-    private int retryDelayMillis;
+    private long retryDelayMillis;
     private Request request;
 
-    public RetryWithDelay(int maxRetries, int retryDelayMillis, Request request) {
+    public RetryWithDelay(int maxRetries, long retryDelayMillis, Request request) {
 
         this.maxRetries = maxRetries;
         this.retryDelayMillis = retryDelayMillis;

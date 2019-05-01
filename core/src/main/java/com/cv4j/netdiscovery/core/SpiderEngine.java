@@ -144,11 +144,9 @@ public class SpiderEngine {
      */
     public SpiderEngine addSpider(Spider spider) {
 
-        if (spider != null) {
+        if (spider != null && !spiders.containsKey(spider.getName())) {
 
-            if (!spiders.containsKey(spider.getName())) {
-                spiders.put(spider.getName(), spider);
-            }
+            spiders.put(spider.getName(), spider);
         }
         return this;
     }

@@ -78,9 +78,9 @@ public class Spider {
 
     private int maxRetries = 3; // 重试次数
 
-    private int retryDelayMillis = 1000; // 重试等待的时间
+    private long retryDelayMillis = 1000; // 重试等待的时间
 
-    private int sleepTime = 30000;  // 默认30s
+    private long sleepTime = 30000;  // 默认30s
 
     private long downloadDelay = 0;  // 默认0s
 
@@ -147,7 +147,7 @@ public class Spider {
             autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"));
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
-            retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
+            retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"));
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
@@ -411,7 +411,7 @@ public class Spider {
         return this;
     }
 
-    public Spider retryDelayMillis(int retryDelayMillis) {
+    public Spider retryDelayMillis(long retryDelayMillis) {
 
         checkIfRunning();
 
@@ -422,7 +422,7 @@ public class Spider {
         return this;
     }
 
-    public Spider sleepTime(int sleepTime) {
+    public Spider sleepTime(long sleepTime) {
 
         checkIfRunning();
 
