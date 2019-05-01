@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.coroutines
+package cn.netdiscovery.kotlin.coroutines
 
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.domain.Page

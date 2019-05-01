@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.example
 
-import com.cv4j.netdiscovery.coroutines.Spider
+import cn.netdiscovery.kotlin.coroutines.Spider
 
 /**
  * Created by tony on 2018/8/14.

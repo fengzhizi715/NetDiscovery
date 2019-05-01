@@ -1,9 +1,8 @@
 rootProject.name = 'netdiscovery'
 include 'core'
 include 'extra'
-include 'example'
-include 'coroutines'
 include 'agent'
+include 'example'
 
 include 'downloader'
 include 'downloader:httpclient'
@@ -25,8 +24,9 @@ findProject(':queue:rabbitmq')?.name = 'rabbitmq'
 
 
 
-
 include 'kotlin'
 include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
+include 'kotlin:coroutines'
+findProject(':kotlin:coroutines')?.name = 'coroutines'
 

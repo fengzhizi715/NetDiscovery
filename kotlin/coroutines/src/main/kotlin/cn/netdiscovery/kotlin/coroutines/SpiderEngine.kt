@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.coroutines
+package cn.netdiscovery.kotlin.coroutines
 
 import com.alibaba.fastjson.JSON
 import cn.netdiscovery.core.config.Constant

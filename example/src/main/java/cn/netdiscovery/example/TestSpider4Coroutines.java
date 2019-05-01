@@ -1,7 +1,7 @@
 package cn.netdiscovery.example;
 
-import com.cv4j.netdiscovery.coroutines.Spider;
-import com.cv4j.netdiscovery.coroutines.SpiderEngine;
+import cn.netdiscovery.kotlin.coroutines.Spider;
+import cn.netdiscovery.kotlin.coroutines.SpiderEngine;
 
 /**
  * Created by tony on 2018/8/14.
