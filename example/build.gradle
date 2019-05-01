@@ -18,7 +18,7 @@ dependencies {
 
     implementation project(":core")
     implementation project(":extra")
-    implementation project(":selenium")
+    implementation project(":downloader:selenium")
     implementation project(":dsl")
     implementation project(":htmlunit")
     implementation project(":coroutines")

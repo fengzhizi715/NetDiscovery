@@ -72,4 +72,4 @@ tasks.getByPath(":core:bintrayUpload").enabled = true
 tasks.getByPath(":dsl:bintrayUpload").enabled = true
 tasks.getByPath(":coroutines:bintrayUpload").enabled = true
 tasks.getByPath(":extra:bintrayUpload").enabled = true
-tasks.getByPath(":selenium:bintrayUpload").enabled = true
+//tasks.getByPath(":selenium:bintrayUpload").enabled = true

@@ -1,11 +1,11 @@
 package com.cv4j.netdiscovery.example.jd;
 
 import cn.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.selenium.Browser;
-import com.cv4j.netdiscovery.selenium.action.SeleniumAction;
-import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
-import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
-import com.cv4j.netdiscovery.selenium.pool.WebDriverPoolConfig;
+import cn.netdiscovery.downloader.selenium.Browser;
+import cn.netdiscovery.downloader.selenium.action.SeleniumAction;
+import cn.netdiscovery.downloader.selenium.downloader.SeleniumDownloader;
+import cn.netdiscovery.downloader.selenium.pool.WebDriverPool;
+import cn.netdiscovery.downloader.selenium.pool.WebDriverPoolConfig;
 
 import java.util.ArrayList;
 import java.util.List;

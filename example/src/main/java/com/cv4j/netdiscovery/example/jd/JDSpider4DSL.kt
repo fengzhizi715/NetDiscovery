@@ -2,7 +2,7 @@ package com.cv4j.netdiscovery.example.jd
 
 import com.cv4j.netdiscovery.dsl.seleniumDownloader
 import com.cv4j.netdiscovery.dsl.spider
-import com.cv4j.netdiscovery.selenium.Browser
+import cn.netdiscovery.downloader.selenium.Browser
 
 /**
  * Created by tony on 2018/9/14.

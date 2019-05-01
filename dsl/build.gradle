@@ -19,7 +19,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation project(":core")
-    implementation project(":selenium")
+    implementation project(":downloader:selenium")
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
     implementation "io.vertx:vertx-core:${libs.vertx}"

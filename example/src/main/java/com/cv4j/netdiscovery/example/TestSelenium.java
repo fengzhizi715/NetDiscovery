@@ -2,10 +2,11 @@ package com.cv4j.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.selenium.Browser;
-import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
-import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;
-import com.cv4j.netdiscovery.selenium.pool.WebDriverPoolConfig;
+import cn.netdiscovery.downloader.selenium.Browser;
+import cn.netdiscovery.downloader.selenium.downloader.SeleniumDownloader;
+import cn.netdiscovery.downloader.selenium.pool.WebDriverPool;
+import cn.netdiscovery.downloader.selenium.pool.WebDriverPoolConfig;
+
 /**
  * Created by tony on 2018/3/3.
  */
