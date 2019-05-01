@@ -96,24 +96,11 @@ public class RedisQueue extends AbstractQueue implements DuplicateFilter {
         if (request == null) {
             return false;
         }
-
-        if (Preconditions.isNotBlank(request.getHeader())) {
-            return true;
-        }
-
-        if (Preconditions.isNotBlank(request.getCharset())) {
-            return true;
-        }
-
-        if (Preconditions.isNotBlank(request.getExtras())) {
-            return true;
-        }
-
-        if (request.getPriority() > 0) {
-            return true;
-        }
-
-        return false;
+        
+        return Preconditions.isNotBlank(request.getHeader())
+                || Preconditions.isNotBlank(request.getCharset())
+                || Preconditions.isNotBlank(request.getExtras())
+                || request.getPriority() > 0;
     }
 
     @Override

@@ -22,8 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DisruptorQueue extends AbstractQueue {
 
     private RingBuffer<RequestEvent> ringBuffer;
-
-    private Consumer[] consumers = null;
     private Producer producer = null;
     private WorkerPool<RequestEvent> workerPool = null;
 
@@ -51,7 +49,7 @@ public class DisruptorQueue extends AbstractQueue {
      */
     public DisruptorQueue(int consumerNum,int threadNum,int ringBufferSize) {
 
-        consumers = new Consumer[consumerNum];
+        Consumer[] consumers = new Consumer[consumerNum];
 
         //创建ringBuffer
         ringBuffer = RingBuffer.create(ProducerType.MULTI,

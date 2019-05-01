@@ -29,7 +29,7 @@ public class WebDriverPool {
         try {
             webDriverPool.preparePool();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
