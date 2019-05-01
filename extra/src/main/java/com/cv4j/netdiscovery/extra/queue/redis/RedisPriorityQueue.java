@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.redis;
 
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;

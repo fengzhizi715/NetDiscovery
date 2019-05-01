@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.pipeline;
 
-import com.cv4j.netdiscovery.core.domain.ResultItems;
-import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import cn.netdiscovery.core.domain.ResultItems;
+import cn.netdiscovery.core.pipeline.Pipeline;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;

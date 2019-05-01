@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.pipeline;
 
-import com.cv4j.netdiscovery.core.domain.ResultItems;
-import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import cn.netdiscovery.core.domain.ResultItems;
+import cn.netdiscovery.core.pipeline.Pipeline;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.api.StatefulRedisConnection;

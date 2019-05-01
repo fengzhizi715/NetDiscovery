@@ -1,8 +1,8 @@
 package com.cv4j.netdiscovery.extra.queue.rabbitmq;
 
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.queue.AbstractQueue;
-import com.cv4j.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.queue.AbstractQueue;
+import cn.netdiscovery.core.utils.SerializableUtils;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;

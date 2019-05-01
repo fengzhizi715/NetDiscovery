@@ -4,8 +4,8 @@ import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonObject;
-import com.cv4j.netdiscovery.core.domain.ResultItems;
-import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import cn.netdiscovery.core.domain.ResultItems;
+import cn.netdiscovery.core.pipeline.Pipeline;
 
 import java.util.Map;
 

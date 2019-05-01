@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.kafka;
 
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.utils.SerializableUtils;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;

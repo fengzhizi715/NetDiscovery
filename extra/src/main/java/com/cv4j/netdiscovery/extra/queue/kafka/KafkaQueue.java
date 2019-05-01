@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.queue.kafka;
 
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.queue.AbstractQueue;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.queue.AbstractQueue;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

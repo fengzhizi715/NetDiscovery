@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
-import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
-import com.cv4j.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.domain.HttpRequestBody;
+import cn.netdiscovery.core.domain.Request;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.http.HttpMethod;

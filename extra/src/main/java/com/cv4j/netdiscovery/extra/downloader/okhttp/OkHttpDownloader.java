@@ -1,12 +1,12 @@
 package com.cv4j.netdiscovery.extra.downloader.okhttp;
 
-import com.cv4j.netdiscovery.core.cache.RxCacheManager;
-import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.domain.HttpRequestBody;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.domain.Response;
-import com.cv4j.netdiscovery.core.downloader.Downloader;
-import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
+import cn.netdiscovery.core.cache.RxCacheManager;
+import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.HttpRequestBody;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.domain.Response;
+import cn.netdiscovery.core.downloader.Downloader;
+import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;

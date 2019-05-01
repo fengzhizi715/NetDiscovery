@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.selenium.pool;
 
-import com.cv4j.netdiscovery.core.exception.SpiderException;
+import cn.netdiscovery.core.exception.SpiderException;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.openqa.selenium.WebDriver;
 

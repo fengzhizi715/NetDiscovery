@@ -1,12 +1,12 @@
 package com.cv4j.netdiscovery.extra.downloader.httpclient;
 
-import com.cv4j.netdiscovery.core.cache.RxCacheManager;
-import com.cv4j.netdiscovery.core.config.Constant;
-import com.cv4j.netdiscovery.core.cookies.CookiesPool;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.domain.Response;
-import com.cv4j.netdiscovery.core.downloader.Downloader;
-import com.cv4j.netdiscovery.core.transformer.DownloaderDelayTransformer;
+import cn.netdiscovery.core.cache.RxCacheManager;
+import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.cookies.CookiesPool;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.domain.Response;
+import cn.netdiscovery.core.downloader.Downloader;
+import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;

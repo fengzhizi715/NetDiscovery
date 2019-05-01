@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.extra.pipeline;
 
-import com.cv4j.netdiscovery.core.domain.ResultItems;
-import com.cv4j.netdiscovery.core.pipeline.Pipeline;
+import cn.netdiscovery.core.domain.ResultItems;
+import cn.netdiscovery.core.pipeline.Pipeline;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClient;
 import lombok.extern.slf4j.Slf4j;
