@@ -82,7 +82,7 @@ public class Spider {
 
     private int sleepTime = 30000;  // 默认30s
 
-    private int downloadDelay = 0;  // 默认0s
+    private long downloadDelay = 0;  // 默认0s
 
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
@@ -148,7 +148,7 @@ public class Spider {
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
             retryDelayMillis = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
-            downloadDelay = NumberUtils.toInt(Configuration.getConfig("spider.request.downloadDelay"));
+            downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
 
@@ -636,6 +636,7 @@ public class Spider {
 
                                                 if (pipeline.getPipelineDelay()>0) {
 
+                                                    // Pipeline Delay
                                                     Observable.just("pipeline delay").delay(pipeline.getPipelineDelay(),TimeUnit.MILLISECONDS).blockingFirst();
                                                 }
 

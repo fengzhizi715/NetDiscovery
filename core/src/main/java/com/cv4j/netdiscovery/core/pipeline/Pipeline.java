@@ -14,12 +14,12 @@ import java.util.Map;
 public abstract class Pipeline {
 
     @Getter
-    private int pipelineDelay = 0;  // 默认0s
+    private long pipelineDelay = 0;  // 默认0s
 
     public Pipeline() {
     }
 
-    public Pipeline(int pipelineDelay) {
+    public Pipeline(long pipelineDelay) {
 
         if (pipelineDelay>0) {
             this.pipelineDelay = pipelineDelay;
