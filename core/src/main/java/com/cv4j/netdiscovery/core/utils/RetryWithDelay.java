@@ -32,37 +32,34 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
         return attempts.flatMap(new Function<Throwable, Publisher<?>>() {
             @Override
             public Publisher<?> apply(Throwable throwable) throws Exception {
-                if (++retryCount <= maxRetries) {
+                if (++retryCount <= maxRetries && request!=null) {
 
-                    if (request != null) {
+                    String url = request.getUrl();
 
-                        String url = request.getUrl();
+                    if (Preconditions.isNotBlank(url)) {
 
-                        if (Preconditions.isNotBlank(url)) {
+                        log.info("url:" + url + " get error, it will try after " + retryDelayMillis
+                                + " millisecond, retry count " + retryCount);
+                    } else {
 
-                            log.info("url:" + url + " get error, it will try after " + retryDelayMillis
-                                    + " millisecond, retry count " + retryCount);
-                        } else {
+                        log.info("get error, it will try after " + retryDelayMillis
+                                + " millisecond, retry count " + retryCount);
 
-                            log.info("get error, it will try after " + retryDelayMillis
-                                    + " millisecond, retry count " + retryCount);
-
-                            return Flowable.error(throwable);
-                        }
-
-                        return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS)
-                                .map(new Function<Long, Long>() {
-                                    @Override
-                                    public Long apply(Long aLong) throws Exception {
-
-                                        Request.BeforeRequest beforeRequest = request.getBeforeRequest();
-                                        if (beforeRequest != null) {
-                                            beforeRequest.process(request);
-                                        }
-                                        return aLong;
-                                    }
-                                });
+                        return Flowable.error(throwable);
                     }
+
+                    return Flowable.timer(retryDelayMillis, TimeUnit.MILLISECONDS)
+                            .map(new Function<Long, Long>() {
+                                @Override
+                                public Long apply(Long aLong) throws Exception {
+
+                                    Request.BeforeRequest beforeRequest = request.getBeforeRequest();
+                                    if (beforeRequest != null) {
+                                        beforeRequest.process(request);
+                                    }
+                                    return aLong;
+                                }
+                            });
                 }
 
                 Request.OnErrorRequest onErrorRequest = request.getOnErrorRequest();

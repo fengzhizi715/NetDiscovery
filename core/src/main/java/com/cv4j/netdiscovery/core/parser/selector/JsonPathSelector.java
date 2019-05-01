@@ -16,13 +16,10 @@ import java.util.Map;
  */
 public class JsonPathSelector implements Selector {
 
-    private String jsonPathStr;
-
     private JsonPath jsonPath;
 
     public JsonPathSelector(String jsonPathStr) {
-        this.jsonPathStr = jsonPathStr;
-        this.jsonPath = JsonPath.compile(this.jsonPathStr);
+        this.jsonPath = JsonPath.compile(jsonPathStr);
     }
 
     @Override

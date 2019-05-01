@@ -1,7 +1,8 @@
 package com.cv4j.netdiscovery.core.domain;
 
 import com.cv4j.netdiscovery.core.parser.selector.Html;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
