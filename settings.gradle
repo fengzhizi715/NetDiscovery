@@ -2,7 +2,6 @@ rootProject.name = 'netdiscovery'
 include 'core'
 include 'extra'
 include 'example'
-include 'dsl'
 include 'coroutines'
 include 'agent'
 
@@ -23,4 +22,11 @@ include 'queue:kafka'
 findProject(':queue:kafka')?.name = 'kafka'
 include 'queue:rabbitmq'
 findProject(':queue:rabbitmq')?.name = 'rabbitmq'
+
+
+
+
+include 'kotlin'
+include 'kotlin:dsl'
+findProject(':kotlin:dsl')?.name = 'dsl'
 
