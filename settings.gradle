@@ -10,5 +10,9 @@ include 'agent'
 include 'downloader'
 include 'downloader:httpclient'
 findProject(':downloader:httpclient')?.name = 'httpclient'
+include 'downloader:okhttp'
+findProject(':downloader:okhttp')?.name = 'okhttp'
 include 'downloader:selenium'
 findProject(':downloader:selenium')?.name = 'selenium'
+
+
