@@ -2,7 +2,7 @@ rootProject.name = 'netdiscovery'
 include 'core'
 include 'extra'
 include 'example'
-include 'selenium'
+
 include 'dsl'
 include 'htmlunit'
 include 'coroutines'
