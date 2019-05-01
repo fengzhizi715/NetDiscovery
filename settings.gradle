@@ -21,4 +21,6 @@ include 'queue:redis'
 findProject(':queue:redis')?.name = 'redis'
 include 'queue:kafka'
 findProject(':queue:kafka')?.name = 'kafka'
+include 'queue:rabbitmq'
+findProject(':queue:rabbitmq')?.name = 'rabbitmq'
 

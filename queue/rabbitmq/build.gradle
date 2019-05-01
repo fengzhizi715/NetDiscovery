@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'com.cv4j.netdiscovery'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+def libs = rootProject.ext.libraries // 库
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation 'com.rabbitmq:amqp-client:5.5.1'
+    implementation "org.projectlombok:lombok:${libs.lombok}"
+
+    implementation project(":core")
+}
