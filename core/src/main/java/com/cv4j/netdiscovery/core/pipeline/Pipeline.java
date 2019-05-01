@@ -21,7 +21,9 @@ public abstract class Pipeline {
 
     public Pipeline(int pipelineDelay) {
 
-        this.pipelineDelay = pipelineDelay;
+        if (pipelineDelay>0) {
+            this.pipelineDelay = pipelineDelay;
+        }
     }
 
     public abstract void process(ResultItems resultItems);
