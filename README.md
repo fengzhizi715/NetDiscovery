@@ -18,6 +18,7 @@
 * Request 支持自定义header信息
 * Request 支持 debug 功能：在调试时可以使用 RxCache，从而避免多次请求同一个网页。
 * 支持失败重试的机制
+* 从多个纬度控制爬取速度（Pipeline、Request、Download）等等
 * 代理池的整合
 * 支持 User Agaent 池、Cookies 池
 * 支持爬虫的深度抓取：能够在 Pipeline 中发起深度抓取的事件。
@@ -102,8 +103,7 @@ implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.4.0'
 2. 各个模块能够从配置文件中获取爬虫相应的配置
 3. 增强 HtmlUnit 模块
 4. 增加 chromium 的支持
-5. 从五个纬度控制爬取速度（Pipeline、Request、Domain、IP、Download_Delay），后期可支持交叉
-6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
 
 # Contributors：
