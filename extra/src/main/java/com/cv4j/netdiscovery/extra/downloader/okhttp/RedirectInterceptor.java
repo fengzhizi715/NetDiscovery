@@ -22,7 +22,7 @@ public class RedirectInterceptor implements Interceptor {
         //1.根据url判断是否是重定向
         if(!beforeUrl.equals(afterUrl)) {
             //处理两种情况 1、跨协议 2、原先不是GET请求。
-            if (!beforeUrl.scheme().equals(afterUrl.scheme())||!request.method().equals("GET")) {
+            if (!beforeUrl.scheme().equals(afterUrl.scheme())||!"GET".equals(request.method())) {
                 //重新请求
                 Request newRequest = request.newBuilder().url(response.request().url()).build();
                 response = chain.proceed(newRequest);

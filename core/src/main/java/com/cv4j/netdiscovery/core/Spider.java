@@ -744,7 +744,7 @@ public class Spider {
 
         if (stat.get() == SPIDER_STATUS_PAUSE
                 && this.pauseCountDown!=null) {
-            
+
             this.pauseCountDown.countDown();
             this.pause = false;
             stat.compareAndSet(SPIDER_STATUS_PAUSE, SPIDER_STATUS_RUNNING);

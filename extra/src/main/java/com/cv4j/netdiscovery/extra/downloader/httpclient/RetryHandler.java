@@ -54,9 +54,6 @@ public class RetryHandler implements HttpRequestRetryHandler {
         HttpRequest request = clientContext.getRequest();
 
         // 如果请求是幂等的，就再次尝试
-        if (!(request instanceof HttpEntityEnclosingRequest)) {
-            return true;
-        }
-        return false;
+        return !(request instanceof HttpEntityEnclosingRequest);
     }
 }
