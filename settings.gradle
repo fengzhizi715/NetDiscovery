@@ -16,3 +16,7 @@ findProject(':downloader:selenium')?.name = 'selenium'
 include 'downloader:htmlunit'
 findProject(':downloader:htmlunit')?.name = 'htmlunit'
 
+include 'queue'
+include 'queue:redis'
+findProject(':queue:redis')?.name = 'redis'
+
