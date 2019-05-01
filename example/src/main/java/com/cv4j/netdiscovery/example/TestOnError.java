@@ -1,8 +1,8 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader;
+import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.downloader.vertx.VertxDownloader;
 
 /**
  * @author bdq

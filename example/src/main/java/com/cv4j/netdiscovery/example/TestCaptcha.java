@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.utils.Utils;
+import cn.netdiscovery.core.utils.Utils;
 
 /**
  * Created by tony on 2018/3/25.

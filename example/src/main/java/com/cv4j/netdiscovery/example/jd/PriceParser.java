@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.example.jd;
 
-import com.cv4j.netdiscovery.core.domain.Page;
-import com.cv4j.netdiscovery.core.parser.Parser;
+import cn.netdiscovery.core.domain.Page;
+import cn.netdiscovery.core.parser.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

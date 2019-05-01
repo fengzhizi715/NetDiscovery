@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.domain.ResultItems;
+import cn.netdiscovery.core.domain.ResultItems;
 import com.cv4j.netdiscovery.extra.pipeline.ElasticSearchPipline;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;

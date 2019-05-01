@@ -1,9 +1,9 @@
 package com.cv4j.netdiscovery.example.kafka;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cv4j.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.pipeline.ConsolePipeline;
+import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.pipeline.ConsolePipeline;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueue;
 import com.cv4j.netdiscovery.extra.queue.kafka.KafkaQueueConfig;
 

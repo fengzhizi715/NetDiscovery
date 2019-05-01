@@ -1,9 +1,9 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.core.SpiderEngine;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.downloader.vertx.VertxDownloader;
+import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.SpiderEngine;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.downloader.vertx.VertxDownloader;
 
 /**
  * 测试在大量请求下，因为爬虫提前的关闭而队列剩余大量请求无法消费的问题

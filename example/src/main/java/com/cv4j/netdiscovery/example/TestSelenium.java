@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.selenium.Browser;
 import com.cv4j.netdiscovery.selenium.downloader.SeleniumDownloader;
 import com.cv4j.netdiscovery.selenium.pool.WebDriverPool;

@@ -1,9 +1,9 @@
 package com.cv4j.netdiscovery.example;
 
-import com.cv4j.netdiscovery.core.Spider;
-import com.cv4j.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.core.downloader.file.FileDownloadAfterRequest;
-import com.cv4j.netdiscovery.core.downloader.file.FileDownloader;
+import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.downloader.file.FileDownloadAfterRequest;
+import cn.netdiscovery.core.downloader.file.FileDownloader;
 
 /**
  * Created by tony on 2018/7/21.
