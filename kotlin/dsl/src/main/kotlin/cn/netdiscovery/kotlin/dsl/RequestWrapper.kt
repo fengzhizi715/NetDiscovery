@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.dsl
+package cn.netdiscovery.kotlin.dsl
 
 import cn.netdiscovery.core.domain.Request
 import io.vertx.core.http.HttpMethod

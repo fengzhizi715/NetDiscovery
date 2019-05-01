@@ -2,7 +2,8 @@ package com.cv4j.netdiscovery.example
 
 import cn.netdiscovery.core.Spider
 import cn.netdiscovery.core.pipeline.debug.DebugPipeline
-import com.cv4j.netdiscovery.dsl.request
+import cn.netdiscovery.kotlin.dsl.request
+
 import io.vertx.core.http.HttpMethod
 
 /**

@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.example
 
 import cn.netdiscovery.core.pipeline.ConsolePipeline
-import com.cv4j.netdiscovery.dsl.spider
+import cn.netdiscovery.kotlin.dsl.spider
 
 
 /**

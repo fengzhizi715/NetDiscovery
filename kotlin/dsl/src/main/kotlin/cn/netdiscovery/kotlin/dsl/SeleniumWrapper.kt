@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.dsl
+package cn.netdiscovery.kotlin.dsl
 
 import cn.netdiscovery.downloader.selenium.Browser
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction

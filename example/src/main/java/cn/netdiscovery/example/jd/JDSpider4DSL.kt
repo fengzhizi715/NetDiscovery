@@ -1,8 +1,8 @@
 package cn.netdiscovery.example.jd
 
 import cn.netdiscovery.downloader.selenium.Browser
-import com.cv4j.netdiscovery.dsl.seleniumDownloader
-import com.cv4j.netdiscovery.dsl.spider
+import cn.netdiscovery.kotlin.dsl.seleniumDownloader
+import cn.netdiscovery.kotlin.dsl.spider
 
 /**
  * Created by tony on 2018/9/14.

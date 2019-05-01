@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.dsl
+package cn.netdiscovery.kotlin.dsl
 
 import cn.netdiscovery.core.Spider
 import cn.netdiscovery.core.downloader.Downloader

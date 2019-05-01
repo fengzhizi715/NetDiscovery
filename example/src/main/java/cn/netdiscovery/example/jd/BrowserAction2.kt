@@ -1,7 +1,7 @@
 package com.cv4j.netdiscovery.example.jd
 
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction
-import com.cv4j.netdiscovery.dsl.elementByXpath
+import cn.netdiscovery.kotlin.dsl.elementByXpath
 import org.openqa.selenium.WebDriver
 
 /**

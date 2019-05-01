@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.dsl
+package cn.netdiscovery.kotlin.dsl
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver

@@ -1,6 +1,7 @@
 package com.cv4j.netdiscovery.example
 
-import com.cv4j.netdiscovery.dsl.spiderEngine
+import cn.netdiscovery.kotlin.dsl.spiderEngine
+
 
 /**
  * Created by tony on 2018/6/12.
