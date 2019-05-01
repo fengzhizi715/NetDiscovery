@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'com.cv4j.netdiscovery'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+def libs = rootProject.ext.libraries // 库
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
+    implementation "com.codeborne:phantomjsdriver:${libs.phantomjsdriver}"
+
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+    implementation "org.apache.commons:commons-pool2:${libs.commons_pool2}"
+    implementation "org.projectlombok:lombok:${libs.lombok}"
+
+    implementation project(":core")
+}

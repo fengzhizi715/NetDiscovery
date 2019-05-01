@@ -13,4 +13,6 @@ include 'downloader:httpclient'
 findProject(':downloader:httpclient')?.name = 'netdiscovery-downloader-httpclient'
 include 'downloader:okhttp'
 findProject(':downloader:okhttp')?.name = 'netdiscovery-downloader-okhttp'
+include 'downloader:selenium'
+findProject(':downloader:selenium')?.name = 'netdiscovery-downloader-selenium'
 
