@@ -34,7 +34,7 @@ public class PriorityQueue extends AbstractQueue {
 
         this.capacity = capacity;
     }
-    
+
     @Override
     protected void pushWhenNoDuplicate(Request request) {
 

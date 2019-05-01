@@ -1,5 +1,6 @@
 package com.cv4j.netdiscovery.selenium.pool;
 
+import com.cv4j.netdiscovery.core.exception.SpiderException;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.openqa.selenium.WebDriver;
 
@@ -39,7 +40,7 @@ public class WebDriverPool {
             try {
                 return webDriverPool.borrowObject();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new SpiderException(e);
             }
         }
 

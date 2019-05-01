@@ -703,10 +703,7 @@ public class Spider {
 
     private void stopSpider(Downloader downloader) {
 
-        if (downloader != null) {
-            IOUtils.closeQuietly(downloader);
-            downloader = null;
-        }
+        IOUtils.closeQuietly(downloader);
 
         stop();
     }
