@@ -14,9 +14,6 @@ import java.util.List;
  */
 public class SmartContentSelector implements Selector {
 
-    public SmartContentSelector() {
-    }
-
     @Override
     public String select(String html) {
         html = html.replaceAll("(?is)<!DOCTYPE.*?>", "");

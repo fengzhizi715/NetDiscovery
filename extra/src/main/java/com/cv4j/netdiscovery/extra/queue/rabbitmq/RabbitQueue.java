@@ -3,7 +3,11 @@ package com.cv4j.netdiscovery.extra.queue.rabbitmq;
 import com.cv4j.netdiscovery.core.domain.Request;
 import com.cv4j.netdiscovery.core.queue.AbstractQueue;
 import com.cv4j.netdiscovery.core.utils.SerializableUtils;
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.ConnectionFactoryConfigurator;
+import com.rabbitmq.client.GetResponse;
 
 import java.io.IOException;
 import java.util.List;
