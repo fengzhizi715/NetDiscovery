@@ -3,7 +3,6 @@ include 'core'
 include 'extra'
 include 'example'
 include 'dsl'
-include 'htmlunit'
 include 'coroutines'
 include 'agent'
 
@@ -14,5 +13,6 @@ include 'downloader:okhttp'
 findProject(':downloader:okhttp')?.name = 'okhttp'
 include 'downloader:selenium'
 findProject(':downloader:selenium')?.name = 'selenium'
-
+include 'downloader:htmlunit'
+findProject(':downloader:htmlunit')?.name = 'htmlunit'
 

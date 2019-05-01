@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.htmlunit.downloader;
+package cn.netdiscovery.downloader.htmlunit;
 
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.Request;
@@ -6,13 +6,7 @@ import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;
-
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.HttpMethod;
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;

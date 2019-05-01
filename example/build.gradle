@@ -19,8 +19,8 @@ dependencies {
     implementation project(":core")
     implementation project(":extra")
     implementation project(":downloader:selenium")
+    implementation project(":downloader:htmlunit")
     implementation project(":dsl")
-    implementation project(":htmlunit")
     implementation project(":coroutines")
 
     implementation('org.elasticsearch.client:transport:6.5.4',
