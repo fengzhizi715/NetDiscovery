@@ -23,6 +23,10 @@ include 'queue:rabbitmq'
 findProject(':queue:rabbitmq')?.name = 'rabbitmq'
 
 include 'pipeline'
+include 'pipeline:redis'
+findProject(':pipeline:redis')?.name = 'redis'
+include 'pipeline:mongoDB'
+findProject(':pipeline:mongoDB')?.name = 'mongoDB'
 
 
 include 'kotlin'
@@ -30,6 +34,5 @@ include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
 include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
-include 'pipeline:redis'
-findProject(':pipeline:redis')?.name = 'redis'
+
 
