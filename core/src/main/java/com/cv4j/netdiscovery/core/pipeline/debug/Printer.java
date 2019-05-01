@@ -36,7 +36,7 @@ public class Printer {
         return Preconditions.isBlank(line) || N.equals(line) || T.equals(line);
     }
 
-    static void printJsonRequest(Request request) {
+    protected static void printJsonRequest(Request request) {
 
         log.info(REQUEST_UP_LINE);
 

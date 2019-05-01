@@ -23,7 +23,6 @@ public class DisruptorQueue extends AbstractQueue {
 
     private RingBuffer<RequestEvent> ringBuffer;
     private Producer producer = null;
-    private WorkerPool<RequestEvent> workerPool = null;
 
     private AtomicInteger consumerCount = new AtomicInteger(0);
 
@@ -68,7 +67,7 @@ public class DisruptorQueue extends AbstractQueue {
             consumers[i] = new Consumer();
         }
 
-        workerPool = new WorkerPool<RequestEvent>(ringBuffer,
+        WorkerPool<RequestEvent> workerPool = new WorkerPool<RequestEvent>(ringBuffer,
                         barriers,
                         new EventExceptionHandler(),
                         consumers);
