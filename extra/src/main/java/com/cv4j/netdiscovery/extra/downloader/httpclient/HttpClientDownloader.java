@@ -24,7 +24,7 @@ import org.apache.http.util.EntityUtils;
 @Slf4j
 public class HttpClientDownloader implements Downloader{
 
-    HttpManager httpManager;
+    private HttpManager httpManager;
 
     public HttpClientDownloader() {
 

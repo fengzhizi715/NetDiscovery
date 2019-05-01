@@ -22,14 +22,14 @@ public class TestSeleniumAction extends SeleniumAction {
             }
 
             WebElement queryInput = Utils.getWebElementByXpath(driver, "//*[@id='q']");
-            queryInput.sendKeys("sinkinka");
+            queryInput.sendKeys("fengzhizi715");
 
             Utils.clickElement(driver, By.xpath("//*[@id='menu']/ul/li[3]/form/a"));
 
             Thread.sleep(2000);
 
             //对当前网页截屏
-            Utils.taskScreenShot(driver, "D:\\work\\test.png");
+            Utils.taskScreenShot(driver, "test.png");
             
         } catch(InterruptedException e) {
         }

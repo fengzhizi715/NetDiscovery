@@ -81,9 +81,7 @@ public class Utils {
         } catch (Exception e) {
             isSucess = false;
         } finally {
-            IOUtils.closeQuietly(bw);
-            IOUtils.closeQuietly(osw);
-            IOUtils.closeQuietly(out);
+            IOUtils.closeQuietly(bw,osw,out);
         }
 
         return isSucess;

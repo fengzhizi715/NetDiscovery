@@ -7,9 +7,6 @@ import org.openqa.selenium.WebDriver;
  */
 public class GoBack extends SeleniumAction{
 
-    public GoBack() {
-    }
-
     @Override
     public SeleniumAction perform(WebDriver driver) {
 

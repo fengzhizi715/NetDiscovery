@@ -10,9 +10,6 @@ import java.util.List;
  */
 public class CloseTab extends SeleniumAction{
 
-    public CloseTab() {
-    }
-
     @Override
     public SeleniumAction perform(WebDriver driver) {
 

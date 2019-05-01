@@ -11,26 +11,29 @@ public class WebDriverFactory {
 
     public static WebDriver getWebDriver(String path, Browser browser, Proxy proxy) {
 
+        WebDriver webDriver = null;
         switch (browser) {
 
             case CHROME:
-
-                return Browser.CHROME.init(path,proxy);
+                webDriver =  Browser.CHROME.init(path, proxy);
+                break;
 
             case FIREFOX:
-
-                return Browser.FIREFOX.init(path,proxy);
+                webDriver = Browser.FIREFOX.init(path, proxy);
+                break;
 
             case IE:
-
-                return Browser.IE.init(path,proxy);
+                webDriver = Browser.IE.init(path, proxy);
+                break;
 
             case PHANTOMJS:
+                webDriver = Browser.PHANTOMJS.init(path, proxy);
+                break;
 
-                return Browser.PHANTOMJS.init(path,proxy);
+            default:
+                break;
         }
 
-        return null;
-
+        return webDriver;
     }
 }
