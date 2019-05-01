@@ -1,10 +1,10 @@
 package com.cv4j.netdiscovery.dsl
 
-import com.cv4j.netdiscovery.core.Spider
-import com.cv4j.netdiscovery.core.downloader.Downloader
-import com.cv4j.netdiscovery.core.parser.Parser
-import com.cv4j.netdiscovery.core.pipeline.Pipeline
-import com.cv4j.netdiscovery.core.queue.Queue
+import cn.netdiscovery.core.Spider
+import cn.netdiscovery.core.downloader.Downloader
+import cn.netdiscovery.core.parser.Parser
+import cn.netdiscovery.core.pipeline.Pipeline
+import cn.netdiscovery.core.queue.Queue
 
 /**
  * Created by tony on 2018/5/27.

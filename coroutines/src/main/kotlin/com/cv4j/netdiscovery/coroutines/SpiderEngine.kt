@@ -1,14 +1,14 @@
 package com.cv4j.netdiscovery.coroutines
 
 import com.alibaba.fastjson.JSON
-import com.cv4j.netdiscovery.core.config.Constant
-import com.cv4j.netdiscovery.core.domain.SpiderEntity
-import com.cv4j.netdiscovery.core.domain.response.SpiderResponse
-import com.cv4j.netdiscovery.core.domain.response.SpiderStatusResponse
-import com.cv4j.netdiscovery.core.domain.response.SpidersResponse
-import com.cv4j.netdiscovery.core.queue.Queue
-import com.cv4j.netdiscovery.core.utils.UserAgent
-import com.cv4j.netdiscovery.core.utils.VertxUtils
+import cn.netdiscovery.core.config.Constant
+import cn.netdiscovery.core.domain.SpiderEntity
+import cn.netdiscovery.core.domain.response.SpiderResponse
+import cn.netdiscovery.core.domain.response.SpiderStatusResponse
+import cn.netdiscovery.core.domain.response.SpidersResponse
+import cn.netdiscovery.core.queue.Queue
+import cn.netdiscovery.core.utils.UserAgent
+import cn.netdiscovery.core.utils.VertxUtils
 import com.cv4j.proxy.ProxyPool
 import com.cv4j.proxy.domain.Proxy
 import com.safframework.tony.common.collection.NoEmptyHashMap

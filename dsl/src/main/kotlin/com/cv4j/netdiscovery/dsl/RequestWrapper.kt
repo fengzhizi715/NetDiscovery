@@ -1,6 +1,6 @@
 package com.cv4j.netdiscovery.dsl
 
-import com.cv4j.netdiscovery.core.domain.Request
+import cn.netdiscovery.core.domain.Request
 import io.vertx.core.http.HttpMethod
 
 /**

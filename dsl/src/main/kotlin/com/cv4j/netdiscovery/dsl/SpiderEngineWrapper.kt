@@ -1,9 +1,9 @@
 package com.cv4j.netdiscovery.dsl
 
-import com.cv4j.netdiscovery.core.Spider
-import com.cv4j.netdiscovery.core.SpiderEngine
-import com.cv4j.netdiscovery.core.queue.DefaultQueue
-import com.cv4j.netdiscovery.core.queue.Queue
+import cn.netdiscovery.core.Spider
+import cn.netdiscovery.core.SpiderEngine
+import cn.netdiscovery.core.queue.DefaultQueue
+import cn.netdiscovery.core.queue.Queue
 import com.cv4j.proxy.domain.Proxy
 
 /**
