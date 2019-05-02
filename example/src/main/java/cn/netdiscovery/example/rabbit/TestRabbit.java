@@ -2,8 +2,8 @@ package cn.netdiscovery.example.rabbit;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueue;
-import com.cv4j.netdiscovery.extra.queue.rabbitmq.RabbitQueueConfig;
+import cn.netdiscovery.queue.rabbitmq.RabbitQueue;
+import cn.netdiscovery.queue.rabbitmq.RabbitQueueConfig;
 
 import java.util.Arrays;
 import java.util.Properties;

@@ -23,6 +23,9 @@ dependencies {
     implementation project(":pipeline:elasticsearch")
     implementation project(":pipeline:redis")
     implementation project(":pipeline:mongoDB")
+    implementation project(":queue:redis")
+    implementation project(":queue:kafka")
+    implementation project(":queue:rabbitmq")
     implementation project(":kotlin:dsl")
     implementation project(":kotlin:coroutines")
 

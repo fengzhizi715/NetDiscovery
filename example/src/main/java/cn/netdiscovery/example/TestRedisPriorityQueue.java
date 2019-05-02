@@ -2,7 +2,7 @@ package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
-import com.cv4j.netdiscovery.extra.queue.redis.RedisPriorityQueue;
+import cn.netdiscovery.queue.redis.RedisPriorityQueue;
 
 /**
  * Created by tony on 2018/6/19.

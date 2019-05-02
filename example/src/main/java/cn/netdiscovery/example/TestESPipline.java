@@ -1,7 +1,7 @@
 package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.domain.ResultItems;
-import com.cv4j.netdiscovery.extra.pipeline.ElasticSearchPipline;
+import cn.netdiscovery.pipeline.elasticsearch.ElasticSearchPipline;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
