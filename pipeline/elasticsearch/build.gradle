@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'com.cv4j.netdiscovery'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+def libs = rootProject.ext.libraries // 库
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation "org.apache.httpcomponents:httpclient:${libs.httpclient}"
+    implementation('org.elasticsearch.client:transport:6.5.4',
+            { exclude group: 'org.apache.httpcomponents', module: 'httpcore' })
+
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+
+    implementation project(":core")
+}
