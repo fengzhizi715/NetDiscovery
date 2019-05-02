@@ -17,9 +17,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation project(":core")
-    implementation project(":extra")
     implementation project(":downloader:selenium")
     implementation project(":downloader:htmlunit")
+    implementation project(":pipeline:couchbase")
+    implementation project(":pipeline:elasticsearch")
+    implementation project(":pipeline:redis")
+    implementation project(":pipeline:mongoDB")
     implementation project(":kotlin:dsl")
     implementation project(":kotlin:coroutines")
 
