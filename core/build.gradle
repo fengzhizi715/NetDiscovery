@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.jayway.jsonpath:json-path:2.4.0'
     implementation 'org.jsoup:jsoup:1.10.3'
 
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation "com.lmax:disruptor:${libs.disruptor}"
 }
 

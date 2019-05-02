@@ -19,6 +19,7 @@ dependencies {
 
     implementation 'org.apache.kafka:kafka-clients:1.0.0'
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     implementation project(":core")
 }
