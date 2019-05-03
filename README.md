@@ -174,12 +174,17 @@ implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.0.0'
 4. 增加 chromium 的支持
 5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
-
 # Contributors：
 
 * [bdqfork](https://github.com/bdqfork)
 * [homchou](https://github.com/homchou)
 * [sinkinka](https://github.com/sinkinka)
+
+# Contributing
+
+[Pull requests](https://help.github.com/categories/collaborating-with-issues-and-pull-requests/) are welcome
+
+
 
 # 联系方式:
 
