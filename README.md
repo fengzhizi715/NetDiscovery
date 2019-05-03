@@ -44,6 +44,9 @@ netdiscovery-pipeline-couchbase|[ ![Download](https://api.bintray.com/packages/f
 netdiscovery-pipeline-elasticsearch|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-elasticsearch/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-elasticsearch/_latestVersion)
 netdiscovery-pipeline-mongo|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-mongo/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-mongo/_latestVersion)
 netdiscovery-pipeline-redis|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-redis/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-redis/_latestVersion)
+netdiscovery-queue-kafka|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-queue-kafka/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-queue-kafka/_latestVersion)
+netdiscovery-queue-rabbitmq|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-queue-rabbitmq/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-queue-rabbitmq/_latestVersion)
+netdiscovery-queue-redis|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-queue-redis/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-queue-redis/_latestVersion)
 netdiscovery-kotlin-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 netdiscovery-kotlin-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 
