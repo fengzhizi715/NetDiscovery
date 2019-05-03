@@ -65,6 +65,30 @@ implementation 'cn.netdiscovery:netdiscovery-core:1.0.0'
 
 ## downloader
 
+netdiscovery-downloader-htmlunit
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-downloader-htmlunit:1.0.0'
+```
+
+netdiscovery-downloader-httpclient
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-downloader-httpclient:1.0.0'
+```
+
+netdiscovery-downloader-okhttp
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-downloader-okhttp:1.0.0'
+```
+
+netdiscovery-downloader-selenium
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.0.0'
+```
+
 ## pipeline
 
 netdiscovery-pipeline-couchbase
