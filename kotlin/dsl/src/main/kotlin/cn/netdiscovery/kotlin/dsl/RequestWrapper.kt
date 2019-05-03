@@ -17,6 +17,10 @@ class RequestWrapper {
 
     var httpMethod: HttpMethod = HttpMethod.GET
 
+    var sleepTime: Long = 0
+
+    var downloadDelay: Long = 0
+
     fun header(init: HeaderContext.() -> Unit) {
 
         headerContext.init()
@@ -65,7 +69,11 @@ fun request(init: RequestWrapper.() -> Unit): Request {
 
 private fun configRequest(wrap: RequestWrapper): Request {
 
-    val request =  Request(wrap.url).spiderName(wrap.spiderName).httpMethod(wrap.httpMethod)
+    val request =  Request(wrap.url)
+            .spiderName(wrap.spiderName)
+            .httpMethod(wrap.httpMethod)
+            .sleep(wrap.sleepTime)
+            .downloadDelay(wrap.downloadDelay)
 
     wrap.getHeaderContext().forEach { k, v ->
 

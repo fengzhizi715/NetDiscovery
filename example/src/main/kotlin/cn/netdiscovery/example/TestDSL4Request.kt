@@ -22,6 +22,8 @@ object TestDSL4Request {
 
             spiderName = "tony"
 
+            downloadDelay = 2000
+
             header {
 
                 "111" to "2222"
