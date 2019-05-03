@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.novoda.bintray-release'
 }
 
 group 'com.cv4j.netdiscovery'
@@ -21,4 +22,13 @@ dependencies {
     implementation "io.lettuce:lettuce-core:${libs.lettuce}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation project(":core")
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery'
+    artifactId = 'netdiscovery-pipeline-redis'
+    publishVersion = '1.0.0'
+    desc = 'this is a universal crawler library'
+    website = 'https://github.com/fengzhizi715/NetDiscovery'
 }

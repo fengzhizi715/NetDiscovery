@@ -1,8 +1,10 @@
+plugins {
+    id 'java'
+    id 'com.novoda.bintray-release'
+}
+
 group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = 1.8
 
@@ -48,9 +50,9 @@ dependencies {
 
 publish{
     userOrg = 'fengzhizi715'
-    groupId = 'com.cv4j.netdiscovery'
+    groupId = 'cn.netdiscovery'
     artifactId = 'netdiscovery-core'
-    publishVersion = '0.4.0'
+    publishVersion = '1.0.0'
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }

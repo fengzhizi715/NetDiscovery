@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.novoda.bintray-release'
 }
 
 group 'com.cv4j.netdiscovery'
@@ -26,4 +27,13 @@ dependencies {
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation project(":core")
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery'
+    artifactId = 'netdiscovery-downloader-okhttp'
+    publishVersion = '1.0.0'
+    desc = 'this is a universal crawler library'
+    website = 'https://github.com/fengzhizi715/NetDiscovery'
 }

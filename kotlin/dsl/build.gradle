@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'kotlin'
+    id 'com.novoda.bintray-release'
 }
 
 group 'com.cv4j.netdiscovery'
@@ -24,4 +25,13 @@ dependencies {
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"
     implementation "io.vertx:vertx-core:${libs.vertx}"
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery'
+    artifactId = 'netdiscovery-kotlin-dsl'
+    publishVersion = '1.0.0'
+    desc = 'this is a universal crawler library'
+    website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
