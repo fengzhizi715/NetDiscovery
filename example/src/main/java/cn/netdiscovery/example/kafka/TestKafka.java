@@ -24,7 +24,7 @@ public class TestKafka {
         producerProperties.put("linger.ms", 1);
         producerProperties.put("buffer.memory", 33554432);
         producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        producerProperties.put("value.serializer", "com.cv4j.netdiscovery.extra.queue.kafka.RequestSerializer");
+        producerProperties.put("value.serializer", "cn.netdiscovery.queue.kafka.RequestSerializer");
 
         Properties consumeProperties = new Properties();
         consumeProperties.put("bootstrap.servers", "localhost:9092");
@@ -35,7 +35,7 @@ public class TestKafka {
         consumeProperties.put("max.poll.records", "1");
         consumeProperties.put("session.timeout.ms", "30000");
         consumeProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        consumeProperties.put("value.deserializer", "com.cv4j.netdiscovery.extra.queue.kafka.RequestDeserializer");
+        consumeProperties.put("value.deserializer", "cn.netdiscovery.queue.kafka.RequestDeserializer");
 
         KafkaQueueConfig config = new KafkaQueueConfig.KafkaQueueConfigBuilder(producerProperties, consumeProperties)
                 .topicName("tony")
@@ -50,7 +50,6 @@ public class TestKafka {
         Spider.create(queue)
                 .name("tony")
                 .request(request)
-                .pipeline(new ConsolePipeline())
                 .run();
     }
 }
