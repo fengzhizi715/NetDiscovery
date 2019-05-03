@@ -12,14 +12,14 @@
 * 约定大于配置
 * 模块化设计，便于扩展：支持多种消息队列、多种网络框架，也支持自己实现。
 * 多线程、异步化：底层使用 RxJava 的多线程机制
-* 支持把 Request 添加到正在运行爬虫的Queue中
+* 支持 Request 添加到正在运行爬虫的Queue中
 * 支持 Kotlin 协程
 * 支持 JS 渲染
 * 支持分布式
 * Request 支持自定义header信息
 * Request 支持 debug 功能：在调试时可以使用 RxCache，从而避免多次请求同一个网页。
 * 支持失败重试的机制
-* 从多个纬度控制爬取速度（Pipeline、Request、Download）等等
+* 多纬度控制爬取速度（Pipeline、Request、Download）等等
 * 代理池的整合
 * 支持 User Agent 池、Cookies 池
 * 支持爬虫的深度抓取：能够在 Pipeline 中发起深度抓取的事件。
@@ -50,7 +50,7 @@ netdiscovery-queue-redis|[ ![Download](https://api.bintray.com/packages/fengzhiz
 netdiscovery-kotlin-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 netdiscovery-kotlin-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 
-NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前很多细节正在不断地完善中。
+NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前很多细节在不断地完善中，未来会考虑做成一个更通用的爬虫框架。
 
 对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
@@ -174,13 +174,13 @@ implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.0.0'
 4. 增加 chromium 的支持
 5. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 
-# Contributors：
+# Contributors:
 
 * [bdqfork](https://github.com/bdqfork)
 * [homchou](https://github.com/homchou)
 * [sinkinka](https://github.com/sinkinka)
 
-# Contributing
+# Contributing:
 
 [Pull requests](https://help.github.com/categories/collaborating-with-issues-and-pull-requests/) are welcome
 
