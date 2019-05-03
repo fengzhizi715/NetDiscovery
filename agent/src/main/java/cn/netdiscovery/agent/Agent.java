@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.agent;
+package cn.netdiscovery.agent;
 
 import com.sun.management.OperatingSystemMXBean;
 import io.vertx.core.AbstractVerticle;

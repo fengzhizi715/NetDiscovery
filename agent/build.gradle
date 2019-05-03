@@ -4,7 +4,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
-mainClassName = 'com.cv4j.netdiscovery.agent.Agent'
+mainClassName = 'cn.netdiscovery.agent.Agent'
 
 group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
@@ -24,6 +24,6 @@ dependencies {
 }
 
 shadowJar {
-    mainClassName = 'com.cv4j.netdiscovery.agent.Agent'
+    mainClassName = 'cn.netdiscovery.agent.Agent'
     classifier = 'fat'
 }
