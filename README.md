@@ -54,35 +54,49 @@ repositories {
 
 # 下载:
 
+## core
+
 netdiscovery-core
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-core:0.4.0'
+implementation 'cn.netdiscovery:netdiscovery-core:1.0.0'
 
 ```
 
-netdiscovery-extra
+## downloader
+
+## pipeline
+
+## queue
+
+netdiscovery-queue-kafka
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-extra:0.4.0'
+implementation 'cn.netdiscovery:netdiscovery-queue-kafka:1.0.0'
 ```
 
-netdiscovery-selenium
+netdiscovery-queue-rabbitmq
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-selenium:0.4.0'
+implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:1.0.0'
 ```
 
-netdiscovery-dsl
-
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-dsl:0.4.0'
+implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.0.0'
 ```
 
-netdiscovery-coroutines
+## kotlin
+
+netdiscovery-kotlin-coroutines
 
 ```groovy
-implementation 'com.cv4j.netdiscovery:netdiscovery-coroutines:0.4.0'
+implementation 'cn.netdiscovery:netdiscovery-kotlin-coroutines:1.0.0'
+```
+
+netdiscovery-kotlin-dsl
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.0.0'
 ```
 
 
