@@ -22,7 +22,7 @@ dependencies {
     implementation project(":pipeline:couchbase")
     implementation project(":pipeline:elasticsearch")
     implementation project(":pipeline:redis")
-    implementation project(":pipeline:mongoDB")
+    implementation project(":pipeline:mongo")
     implementation project(":queue:redis")
     implementation project(":queue:kafka")
     implementation project(":queue:rabbitmq")
