@@ -23,7 +23,7 @@ public class CouchbasePipeline extends Pipeline{
         this(cluster,bucket,documentId,0);
     }
 
-    public CouchbasePipeline(CouchbaseCluster cluster, Bucket bucket, String documentId, int pipelineDelay){
+    public CouchbasePipeline(CouchbaseCluster cluster, Bucket bucket, String documentId, long pipelineDelay){
 
         super(pipelineDelay);
         this.cluster = cluster;
@@ -36,7 +36,7 @@ public class CouchbasePipeline extends Pipeline{
         this(cluster,bucketName,documentId,0);
     }
 
-    public CouchbasePipeline(CouchbaseCluster cluster, String bucketName, String documentId, int pipelineDelay){
+    public CouchbasePipeline(CouchbaseCluster cluster, String bucketName, String documentId, long pipelineDelay){
 
         super(pipelineDelay);
         this.cluster = cluster;

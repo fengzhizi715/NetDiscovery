@@ -13,7 +13,7 @@ public class RxCachePipeline extends Pipeline {
         this(0);
     }
 
-    public RxCachePipeline(int pipelineDelay) {
+    public RxCachePipeline(long pipelineDelay) {
         super(pipelineDelay);
     }
 

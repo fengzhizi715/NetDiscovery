@@ -84,6 +84,8 @@ public class Spider {
 
     private long downloadDelay = 0;  // 默认0s
 
+    private long pipelineDelay = 0;  // 默认0s
+
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
     private ReentrantLock newRequestLock = new ReentrantLock();
@@ -149,6 +151,7 @@ public class Spider {
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
             retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"));
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
+            pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
 
@@ -177,7 +180,7 @@ public class Spider {
 
             if (useConsolePipeline) {
 
-                this.pipelines.add(new ConsolePipeline());
+                this.pipelines.add(new ConsolePipeline(pipelineDelay));
             }
 
         } catch (ClassCastException e) {

@@ -24,7 +24,7 @@ public class RedisPipeline extends Pipeline {
         this(redisClient,key,0);
     }
 
-    public RedisPipeline(RedisClient redisClient, String key, int pipelineDelay) {
+    public RedisPipeline(RedisClient redisClient, String key, long pipelineDelay) {
 
         super(pipelineDelay);
         this.redisClient = redisClient;
@@ -41,7 +41,7 @@ public class RedisPipeline extends Pipeline {
         this(resources,redisURI,key,0);
     }
 
-    public RedisPipeline(ClientResources resources, RedisURI redisURI, String key, int pipelineDelay) {
+    public RedisPipeline(ClientResources resources, RedisURI redisURI, String key, long pipelineDelay) {
 
         super(pipelineDelay);
         if (null != resources) {

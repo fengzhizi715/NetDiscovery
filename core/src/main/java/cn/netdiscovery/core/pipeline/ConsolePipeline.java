@@ -13,7 +13,7 @@ public class ConsolePipeline extends Pipeline {
         this(0);
     }
 
-    public ConsolePipeline(int pipelineDelay) {
+    public ConsolePipeline(long pipelineDelay) {
         super(pipelineDelay);
     }
 

@@ -108,6 +108,9 @@ public class Request implements Serializable {
         return this;
     }
 
+    /**
+     * 从 UserAgent 类中随机获取User-Agent
+     */
     private void autoUA() {
 
         this.userAgent = UserAgent.getUserAgent();

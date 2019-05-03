@@ -12,7 +12,7 @@ public class DebugPipeline extends Pipeline {
         this(0);
     }
 
-    public DebugPipeline(int pipelineDelay) {
+    public DebugPipeline(long pipelineDelay) {
         super(pipelineDelay);
     }
 

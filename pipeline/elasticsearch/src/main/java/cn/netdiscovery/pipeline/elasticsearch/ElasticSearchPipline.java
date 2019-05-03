@@ -22,7 +22,7 @@ public class ElasticSearchPipline extends Pipeline {
         this(client,index,type,0);
     }
 
-    public ElasticSearchPipline(TransportClient client, String index, String type, int pipelineDelay) {
+    public ElasticSearchPipline(TransportClient client, String index, String type, long pipelineDelay) {
 
         super(pipelineDelay);
         this.client = client;

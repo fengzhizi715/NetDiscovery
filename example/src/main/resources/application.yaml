@@ -13,6 +13,9 @@ spider:
     # default、disruptor
     type: default
 
+  pipeline:
+    pipelineDelay: 0
+
   downloader:
     # vertx、urlConnection、file
     type: vertx

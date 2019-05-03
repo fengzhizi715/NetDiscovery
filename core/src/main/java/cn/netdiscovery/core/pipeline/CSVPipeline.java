@@ -23,7 +23,7 @@ public class CSVPipeline extends Pipeline {
         this(filePath,fileName,0);
     }
 
-    public CSVPipeline(String filePath,String fileName,int pipelineDelay) {
+    public CSVPipeline(String filePath,String fileName,long pipelineDelay) {
 
         super(pipelineDelay);
         csvFile = new File(filePath + fileName + ".csv");

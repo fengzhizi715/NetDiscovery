@@ -22,7 +22,7 @@ public class MongoDBPipeline extends Pipeline {
         this(mongoClient,collectionName,0);
     }
 
-    public MongoDBPipeline(MongoClient mongoClient, String collectionName, int pipelineDelay){
+    public MongoDBPipeline(MongoClient mongoClient, String collectionName, long pipelineDelay){
 
         super(pipelineDelay);
         this.mongoClient = mongoClient;
