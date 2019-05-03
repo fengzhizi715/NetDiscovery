@@ -40,6 +40,12 @@ netdiscovery-downloader-htmlunit|[ ![Download](https://api.bintray.com/packages/
 netdiscovery-downloader-httpclient|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-httpclient/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-httpclient/_latestVersion)
 netdiscovery-downloader-okhttp|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-okhttp/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-okhttp/_latestVersion)
 netdiscovery-downloader-selenium|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-selenium/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-selenium/_latestVersion)
+netdiscovery-pipeline-couchbase|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-couchbase/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-couchbase/_latestVersion)
+netdiscovery-pipeline-elasticsearch|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-elasticsearch/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-elasticsearch/_latestVersion)
+netdiscovery-pipeline-mongo|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-mongo/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-mongo/_latestVersion)
+netdiscovery-pipeline-redis|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-pipeline-redis/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-pipeline-redis/_latestVersion)
+netdiscovery-kotlin-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
+netdiscovery-kotlin-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 
 NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前很多细节正在不断地完善中。
 
