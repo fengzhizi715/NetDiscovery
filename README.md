@@ -67,6 +67,30 @@ implementation 'cn.netdiscovery:netdiscovery-core:1.0.0'
 
 ## pipeline
 
+netdiscovery-pipeline-couchbase
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-pipeline-couchbase:1.0.0'
+```
+
+netdiscovery-pipeline-elasticsearch
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-pipeline-elasticsearch:1.0.0'
+```
+
+netdiscovery-pipeline-mongo
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-pipeline-mongo:1.0.0'
+```
+
+netdiscovery-pipeline-redis
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.0.0'
+```
+
 ## queue
 
 netdiscovery-queue-kafka
@@ -80,6 +104,7 @@ netdiscovery-queue-rabbitmq
 ```groovy
 implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:1.0.0'
 ```
+netdiscovery-queue-redis
 
 ```groovy
 implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.0.0'
