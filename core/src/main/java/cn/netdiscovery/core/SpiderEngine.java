@@ -7,7 +7,12 @@ import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
 import cn.netdiscovery.core.queue.Queue;
-import cn.netdiscovery.core.utils.*;
+
+import cn.netdiscovery.core.utils.BooleanUtils;
+import cn.netdiscovery.core.utils.NumberUtils;
+import cn.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.utils.UserAgent;
+import cn.netdiscovery.core.utils.VertxUtils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;
