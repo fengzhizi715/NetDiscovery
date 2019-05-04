@@ -7,6 +7,7 @@ spider:
     useConsolePipeline: true
 
   request:
+    sleepTime: 0
     downloadDelay: 0
 
   queue:
