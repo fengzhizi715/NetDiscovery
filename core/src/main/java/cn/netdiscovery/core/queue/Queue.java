@@ -9,7 +9,7 @@ import cn.netdiscovery.core.domain.Request;
 public interface Queue {
 
     /**
-     * 把Request请求添加到正在运行爬虫的Queue中
+     * 把Request请求添加到正在运行爬虫的Queue中，无需阻塞爬虫的运行
      *
      * @param request request
      */

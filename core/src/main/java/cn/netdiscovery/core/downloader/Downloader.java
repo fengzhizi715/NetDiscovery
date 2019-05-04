@@ -15,6 +15,11 @@ public interface Downloader extends Closeable {
 
     Maybe<Response> download(Request request);
 
+    /**
+     * 将爬取的内容，存到 RxCache 中
+     * @param key
+     * @param response
+     */
     default void save(String key, Response response) {
 
         if (RxCacheManager.getInsatance().getRxCache()==null || !RxCacheManager.getInsatance().getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
