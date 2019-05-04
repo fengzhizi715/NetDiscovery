@@ -379,6 +379,10 @@ public class Spider {
                                             request.sleep(period);
                                         }
 
+                                        if (request.getDownloadDelay()==0) {
+                                            request.downloadDelay(downloadDelay);
+                                        }
+
                                         request.spiderName(name);
                                         queue.push(request);
 
