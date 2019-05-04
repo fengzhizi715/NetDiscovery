@@ -3,7 +3,11 @@ package cn.netdiscovery.queue.rabbitmq;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.ConnectionFactoryConfigurator;
+import com.rabbitmq.client.GetResponse;
 
 import java.io.IOException;
 import java.util.List;
