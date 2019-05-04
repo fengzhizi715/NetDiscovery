@@ -179,10 +179,11 @@ public class Spider {
                 }
             }
 
-            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"));
+            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"),true);
 
             if (useConsolePipeline) {
 
+                // 默认使用 ConsolePipeline
                 this.pipelines.add(new ConsolePipeline(pipelineDelay));
             }
 

@@ -28,8 +28,6 @@
 * 爬虫的监控
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
 
-![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/Spider.png)
-
 
 # 最新版本
 
