@@ -8,6 +8,7 @@ spider:
 
   request:
     sleepTime: 0
+    autoSleepTime: false
     downloadDelay: 0
 
   queue:

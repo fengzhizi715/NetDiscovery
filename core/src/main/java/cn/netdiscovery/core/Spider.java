@@ -84,6 +84,8 @@ public class Spider {
 
     private long requestSleepTime = 0; // 默认0s
 
+    private boolean autoSleepTime = false;
+
     private long downloadDelay = 0;  // 默认0s
 
     private long pipelineDelay = 0;  // 默认0s
@@ -148,11 +150,12 @@ public class Spider {
     private void initSpiderConfig() {
 
         try {
-            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"));
+            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"),false);
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
             retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"));
             requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"));
+            autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"),false);
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
             pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
 
@@ -224,7 +227,11 @@ public class Spider {
                     .forEach(url -> {
                         Request request = new Request(url, name);
                         request.charset(charset.name());
-                        request.sleep(requestSleepTime);
+                        if (autoSleepTime) {
+                            request.autoSleepTime();
+                        } else {
+                            request.sleep(requestSleepTime);
+                        }
                         request.downloadDelay(downloadDelay);
                         queue.push(request);
                     });
@@ -245,7 +252,11 @@ public class Spider {
                     .stream()
                     .forEach(url -> {
                         Request request = new Request(url, name);
-                        request.sleep(requestSleepTime);
+                        if (autoSleepTime) {
+                            request.autoSleepTime();
+                        } else {
+                            request.sleep(requestSleepTime);
+                        }
                         request.downloadDelay(downloadDelay);
                         queue.push(request);
                     });
@@ -265,7 +276,11 @@ public class Spider {
             urls.forEach(url -> {
                 Request request = new Request(url, name);
                 request.charset(charset.name());
-                request.sleep(requestSleepTime);
+                if (autoSleepTime) {
+                    request.autoSleepTime();
+                } else {
+                    request.sleep(requestSleepTime);
+                }
                 request.downloadDelay(downloadDelay);
                 queue.push(request);
             });
@@ -284,7 +299,11 @@ public class Spider {
 
             urls.forEach(url -> {
                 Request request = new Request(url, name);
-                request.sleep(requestSleepTime);
+                if (autoSleepTime) {
+                    request.autoSleepTime();
+                } else {
+                    request.sleep(requestSleepTime);
+                }
                 request.downloadDelay(downloadDelay);
                 queue.push(request);
             });
