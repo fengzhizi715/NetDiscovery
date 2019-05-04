@@ -7,11 +7,13 @@ import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.http.HttpMethod;
 import lombok.Getter;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by tony on 2017/12/23.
@@ -213,6 +215,12 @@ public class Request implements Serializable {
         if (sleepTime > 0) {
             this.sleepTime = sleepTime;
         }
+        return this;
+    }
+
+    public Request autoSleepTime() {
+
+        this.sleepTime = RandomUtils.nextLong(1000,6000);
         return this;
     }
 

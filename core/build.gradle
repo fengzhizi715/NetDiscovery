@@ -46,6 +46,8 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "com.lmax:disruptor:${libs.disruptor}"
+
+    implementation 'org.apache.commons:commons-lang3:3.9'
 }
 
 publish{
