@@ -13,20 +13,15 @@ public class BooleanUtils {
 
     public static boolean toBoolean(final String str) {
 
-        if (Preconditions.isNotBlank(str) && (str.equals("true")||str.equals("TRUE"))) {
-
-            return Boolean.TRUE;
-        }
-        
-        return false;
+        return Preconditions.isNotBlank(str) && ("true".equals(str)||"TRUE".equals(str));
     }
 
     public static boolean toBoolean(final String str,boolean defaultValue) {
 
         if (Preconditions.isNotBlank(str)) {
-            if (str.equals("true")||str.equals("TRUE")) {
+            if ("true".equals(str)||"TRUE".equals(str)) {
                 return Boolean.TRUE;
-            } else if (str.equals("false")||str.equals("FALSE")){
+            } else if ("false".equals(str)||"FALSE".equals(str)){
                 return Boolean.TRUE;
             } else {
                 return defaultValue;
