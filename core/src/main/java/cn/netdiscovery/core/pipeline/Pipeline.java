@@ -5,6 +5,7 @@ import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.ResultItems;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 public abstract class Pipeline {
 
+    @Setter
     @Getter
     private long pipelineDelay = 0;  // 默认0s
 

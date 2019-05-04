@@ -463,6 +463,11 @@ public class Spider {
         checkIfRunning();
 
         if (pipeline != null) {
+
+            if (pipeline.getPipelineDelay()==0) {
+                pipeline.setPipelineDelay(pipelineDelay); // 使用默认的 pipelineDelay
+            }
+
             this.pipelines.add(pipeline);
         }
 
