@@ -218,6 +218,10 @@ public class Request implements Serializable {
         return this;
     }
 
+    /**
+     * 每次请求url时先随机sleep一段时间，单位是milliseconds
+     * @return
+     */
     public Request autoSleepTime() {
 
         this.sleepTime = RandomUtils.nextLong(1000,6000);

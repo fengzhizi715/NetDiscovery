@@ -367,7 +367,7 @@ public class Spider {
                                     Request request = new Request(url);
                                     request.checkDuplicate(false);
                                     request.spiderName(name);
-                                    request.sleep(period);
+                                    request.sleep(period); // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
                                     request.charset(charset);
                                     request.downloadDelay(downloadDelay);
                                     queue.push(request);
@@ -403,7 +403,7 @@ public class Spider {
                                     if (!pause) {
 
                                         if (request.getSleepTime()==0 || request.getSleepTime()!=period) {
-                                            request.sleep(period);
+                                            request.sleep(period); // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
                                         }
 
                                         if (request.getDownloadDelay()==0) {
