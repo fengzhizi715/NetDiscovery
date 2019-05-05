@@ -88,6 +88,8 @@ public class Spider {
 
     private long downloadDelay = 0;  // 默认0s
 
+    private boolean autoDownloadDelay = false;
+
     private long pipelineDelay = 0;  // 默认0s
 
     private volatile boolean pause;
@@ -157,6 +159,7 @@ public class Spider {
             requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"));
             autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"),false);
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
+            autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"),false);
             pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
@@ -232,7 +235,11 @@ public class Spider {
                         } else {
                             request.sleep(requestSleepTime);
                         }
-                        request.downloadDelay(downloadDelay);
+                        if (autoDownloadDelay) {
+                            request.autoDownloadDelay();
+                        } else {
+                            request.downloadDelay(downloadDelay);
+                        }
                         queue.push(request);
                     });
 
@@ -257,7 +264,11 @@ public class Spider {
                         } else {
                             request.sleep(requestSleepTime);
                         }
-                        request.downloadDelay(downloadDelay);
+                        if (autoDownloadDelay) {
+                            request.autoDownloadDelay();
+                        } else {
+                            request.downloadDelay(downloadDelay);
+                        }
                         queue.push(request);
                     });
 
@@ -281,7 +292,11 @@ public class Spider {
                 } else {
                     request.sleep(requestSleepTime);
                 }
-                request.downloadDelay(downloadDelay);
+                if (autoDownloadDelay) {
+                    request.autoDownloadDelay();
+                } else {
+                    request.downloadDelay(downloadDelay);
+                }
                 queue.push(request);
             });
 
@@ -304,7 +319,11 @@ public class Spider {
                 } else {
                     request.sleep(requestSleepTime);
                 }
-                request.downloadDelay(downloadDelay);
+                if (autoDownloadDelay) {
+                    request.autoDownloadDelay();
+                } else {
+                    request.downloadDelay(downloadDelay);
+                }
                 queue.push(request);
             });
 
@@ -369,7 +388,11 @@ public class Spider {
                                     request.spiderName(name);
                                     request.sleep(period); // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
                                     request.charset(charset);
-                                    request.downloadDelay(downloadDelay);
+                                    if (autoDownloadDelay) {
+                                        request.autoDownloadDelay();
+                                    } else {
+                                        request.downloadDelay(downloadDelay);
+                                    }
                                     queue.push(request);
                                     
                                     signalNewRequest();
@@ -407,7 +430,11 @@ public class Spider {
                                         }
 
                                         if (request.getDownloadDelay()==0) {
-                                            request.downloadDelay(downloadDelay);
+                                            if (autoDownloadDelay) {
+                                                request.autoDownloadDelay();
+                                            } else {
+                                                request.downloadDelay(downloadDelay);
+                                            }
                                         }
 
                                         request.spiderName(name);

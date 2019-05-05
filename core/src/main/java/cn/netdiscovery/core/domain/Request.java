@@ -240,6 +240,16 @@ public class Request implements Serializable {
         return this;
     }
 
+    /**
+     * 每次下载时先随机delay一段时间，单位是milliseconds
+     * @return
+     */
+    public Request autoDownloadDelay() {
+
+        this.downloadDelay = RandomUtils.nextLong(1000,6000);
+        return this;
+    }
+
     public Request header(String name, String value) {
 
         header.put(name, value);

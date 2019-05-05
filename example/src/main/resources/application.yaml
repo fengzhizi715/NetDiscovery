@@ -10,6 +10,7 @@ spider:
     sleepTime: 0
     autoSleepTime: false
     downloadDelay: 0
+    autoDownloadDelay: false
 
   queue:
     # default、disruptor
