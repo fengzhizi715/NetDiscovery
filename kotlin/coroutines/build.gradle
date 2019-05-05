@@ -46,7 +46,7 @@ publish{
     userOrg = 'fengzhizi715'
     groupId = 'cn.netdiscovery'
     artifactId = 'netdiscovery-kotlin-coroutines'
-    publishVersion = '1.0.0'
+    publishVersion = "$netdiscovery_version"
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
