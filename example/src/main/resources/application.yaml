@@ -18,6 +18,7 @@ spider:
 
   pipeline:
     pipelineDelay: 0
+    autoPipelineDelay: false
 
   downloader:
     # vertx、urlConnection、file

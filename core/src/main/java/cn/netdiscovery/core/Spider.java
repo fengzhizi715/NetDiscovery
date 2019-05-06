@@ -34,6 +34,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -91,6 +92,8 @@ public class Spider {
     private boolean autoDownloadDelay = false;
 
     private long pipelineDelay = 0;  // 默认0s
+
+    private boolean autoPipelineDelay = false;
 
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
@@ -161,6 +164,7 @@ public class Spider {
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
             autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"),false);
             pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
+            autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"),false);
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
 
@@ -523,7 +527,10 @@ public class Spider {
         if (pipeline != null) {
 
             if (pipeline.getPipelineDelay()==0) {
-                pipeline.setPipelineDelay(pipelineDelay); // 使用默认的 pipelineDelay
+                if (autoPipelineDelay) {
+                    pipelineDelay = RandomUtils.nextLong(1000,6000);
+                }
+                pipeline.setPipelineDelay(pipelineDelay);
             }
 
             this.pipelines.add(pipeline);
