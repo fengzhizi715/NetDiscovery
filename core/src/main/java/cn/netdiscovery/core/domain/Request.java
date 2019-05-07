@@ -44,6 +44,8 @@ public class Request implements Serializable {
 
     private long downloadDelay = 0;
 
+    private long domainDelay = 0;
+
     private Map<String, String> header = new NoEmptyHashMap<>();
 
     private Map<String, Object> extras; // extras 中的数据可以在pipeline中使用
@@ -246,6 +248,14 @@ public class Request implements Serializable {
     public Request autoDownloadDelay() {
 
         this.downloadDelay = RandomUtils.nextLong(1000,6000);
+        return this;
+    }
+
+    public Request domainDelay(long domainDelay) {
+
+        if (domainDelay > 0) {
+            this.domainDelay = domainDelay;
+        }
         return this;
     }
 
