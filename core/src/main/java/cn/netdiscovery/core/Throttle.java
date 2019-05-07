@@ -46,6 +46,8 @@ public class Throttle {
                     e.printStackTrace();
                 }
             }
+
+            domains.put(domain,System.currentTimeMillis());
         }
     }
 }
