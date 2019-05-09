@@ -1,4 +1,4 @@
-package cn.netdiscovery.core;
+package cn.netdiscovery.core.utils;
 
 import cn.netdiscovery.core.domain.Request;
 

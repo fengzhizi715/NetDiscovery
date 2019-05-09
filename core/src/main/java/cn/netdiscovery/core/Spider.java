@@ -18,10 +18,7 @@ import cn.netdiscovery.core.pipeline.Pipeline;
 import cn.netdiscovery.core.queue.DefaultQueue;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue;
-import cn.netdiscovery.core.utils.BooleanUtils;
-import cn.netdiscovery.core.utils.NumberUtils;
-import cn.netdiscovery.core.utils.RetryWithDelay;
-import cn.netdiscovery.core.utils.Utils;
+import cn.netdiscovery.core.utils.*;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
@@ -633,6 +630,8 @@ public class Spider {
                         e.printStackTrace();
                     }
                 }
+
+                Throttle.getInsatance().wait(request);
 
                 // 如果autoProxy打开并且request.getProxy()==null时，则从ProxyPool中取Proxy
                 if (autoProxy && request.getProxy() == null) {
