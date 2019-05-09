@@ -1,9 +1,7 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.domain.Request;
-import cn.netdiscovery.core.utils.URLParser;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,14 +25,7 @@ public class Throttle {
 
     public void wait(Request request) {
 
-        String domain = null;
-        try {
-            URLParser urlParser = new URLParser(request.getUrl());
-            domain = urlParser.getHost();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
+        String domain = request.getUrlParser().getHost();
         Long lastAccessed = domains.get(domain);
 
         if (lastAccessed!=null && lastAccessed>0) {
