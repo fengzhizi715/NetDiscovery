@@ -479,6 +479,17 @@ public class SpiderEngine {
         }
     }
 
+    public void addJob(String spiderName, String url, String cron) {
+
+        Spider spider = spiders.get(spiderName);
+
+        if (spider!=null){
+
+            Request request = new Request(url,spiderName);
+            QuartzManager.addJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron,spider,request);
+        }
+    }
+
     /**
      * 注册 Vert.x eventBus 的消费者
      */
