@@ -1,5 +1,6 @@
 package cn.netdiscovery.downloader.selenium;
 
+import cn.netdiscovery.downloader.selenium.utils.ProxyUtils;
 import com.cv4j.proxy.domain.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

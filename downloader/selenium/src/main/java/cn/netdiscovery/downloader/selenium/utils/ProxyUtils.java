@@ -1,4 +1,4 @@
-package cn.netdiscovery.downloader.selenium;
+package cn.netdiscovery.downloader.selenium.utils;
 
 import org.openqa.selenium.Proxy;
 

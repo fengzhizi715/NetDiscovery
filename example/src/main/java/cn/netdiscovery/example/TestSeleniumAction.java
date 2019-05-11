@@ -1,6 +1,6 @@
 package cn.netdiscovery.example;
 
-import cn.netdiscovery.downloader.selenium.Utils;
+import cn.netdiscovery.downloader.selenium.utils.SeleniumUtils;
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,19 +17,19 @@ public class TestSeleniumAction extends SeleniumAction {
 
             //往下滚动500px，滚10次
             for (int i = 0; i < 10; i++) {
-                Utils.scrollBy(driver, 500);
+                SeleniumUtils.scrollBy(driver, 500);
                 Thread.sleep(2000);
             }
 
-            WebElement queryInput = Utils.getWebElementByXpath(driver, "//*[@id='q']");
+            WebElement queryInput = SeleniumUtils.getWebElementByXpath(driver, "//*[@id='q']");
             queryInput.sendKeys("fengzhizi715");
 
-            Utils.clickElement(driver, By.xpath("//*[@id='menu']/ul/li[3]/form/a"));
+            SeleniumUtils.clickElement(driver, By.xpath("//*[@id='menu']/ul/li[3]/form/a"));
 
             Thread.sleep(2000);
 
             //对当前网页截屏
-            Utils.taskScreenShot(driver, "test.png");
+            SeleniumUtils.taskScreenShot(driver, "test.png");
             
         } catch(InterruptedException e) {
         }

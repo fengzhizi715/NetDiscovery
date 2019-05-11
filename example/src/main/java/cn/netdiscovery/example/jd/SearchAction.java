@@ -1,6 +1,6 @@
 package cn.netdiscovery.example.jd;
 
-import cn.netdiscovery.downloader.selenium.Utils;
+import cn.netdiscovery.downloader.selenium.utils.SeleniumUtils;
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +15,7 @@ public class SearchAction extends SeleniumAction {
 
         try {
             String searchBtn = "/html/body/div[2]/form/input[4]";
-            Utils.clickElement(driver, By.xpath(searchBtn));
+            SeleniumUtils.clickElement(driver, By.xpath(searchBtn));
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();

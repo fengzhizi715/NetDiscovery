@@ -1,6 +1,6 @@
 package cn.netdiscovery.example.jd;
 
-import cn.netdiscovery.downloader.selenium.Utils;
+import cn.netdiscovery.downloader.selenium.utils.SeleniumUtils;
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,7 +16,7 @@ public class BrowserAction extends SeleniumAction{
         try {
             String searchText = "RxJava 2.x 实战";
             String searchInput = "//*[@id=\"keyword\"]";
-            WebElement userInput = Utils.getWebElementByXpath(driver, searchInput);
+            WebElement userInput = SeleniumUtils.getWebElementByXpath(driver, searchInput);
             userInput.sendKeys(searchText);
             Thread.sleep(3000);
         } catch (InterruptedException e) {

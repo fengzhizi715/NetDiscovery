@@ -1,4 +1,4 @@
-package cn.netdiscovery.downloader.selenium;
+package cn.netdiscovery.downloader.selenium.utils;
 
 import com.safframework.tony.common.utils.IOUtils;
 
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by tony on 2018/3/4.
  */
-public class Utils {
+public class SeleniumUtils {
 
     /**
      * 滚动窗口到目的位置
