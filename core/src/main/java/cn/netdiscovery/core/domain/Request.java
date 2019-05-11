@@ -259,6 +259,12 @@ public class Request implements Serializable {
         return this;
     }
 
+    public Request autoDomainDelay() {
+
+        this.domainDelay = RandomUtils.nextLong(1000,6000);
+        return this;
+    }
+
     public Request header(String name, String value) {
 
         header.put(name, value);

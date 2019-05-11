@@ -92,6 +92,10 @@ public class Spider {
 
     private boolean autoPipelineDelay = false;
 
+    private long domainDelay = 0;  // 默认0s
+
+    private boolean autoDomainDelay = false;
+
     private volatile boolean pause;
     private CountDownLatch pauseCountDown;
     private ReentrantLock newRequestLock = new ReentrantLock();
@@ -156,10 +160,14 @@ public class Spider {
             initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
             maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
             retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"));
+
             requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"));
             autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"),false);
             downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
             autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"),false);
+            domainDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.domainDelay"));
+            autoDomainDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDomainDelay"),false);
+
             pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
             autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"),false);
 
@@ -241,6 +249,11 @@ public class Spider {
                         } else {
                             request.downloadDelay(downloadDelay);
                         }
+                        if (autoDomainDelay) {
+                            request.autoDomainDelay();
+                        } else {
+                            request.domainDelay(domainDelay);
+                        }
                         queue.push(request);
                     });
 
@@ -270,6 +283,11 @@ public class Spider {
                         } else {
                             request.downloadDelay(downloadDelay);
                         }
+                        if (autoDomainDelay) {
+                            request.autoDomainDelay();
+                        } else {
+                            request.domainDelay(domainDelay);
+                        }
                         queue.push(request);
                     });
 
@@ -298,6 +316,11 @@ public class Spider {
                 } else {
                     request.downloadDelay(downloadDelay);
                 }
+                if (autoDomainDelay) {
+                    request.autoDomainDelay();
+                } else {
+                    request.domainDelay(domainDelay);
+                }
                 queue.push(request);
             });
 
@@ -324,6 +347,11 @@ public class Spider {
                     request.autoDownloadDelay();
                 } else {
                     request.downloadDelay(downloadDelay);
+                }
+                if (autoDomainDelay) {
+                    request.autoDomainDelay();
+                } else {
+                    request.domainDelay(domainDelay);
                 }
                 queue.push(request);
             });
@@ -394,6 +422,11 @@ public class Spider {
                                     } else {
                                         request.downloadDelay(downloadDelay);
                                     }
+                                    if (autoDomainDelay) {
+                                        request.autoDomainDelay();
+                                    } else {
+                                        request.domainDelay(domainDelay);
+                                    }
                                     queue.push(request);
                                     
                                     signalNewRequest();
@@ -435,6 +468,14 @@ public class Spider {
                                                 request.autoDownloadDelay();
                                             } else {
                                                 request.downloadDelay(downloadDelay);
+                                            }
+                                        }
+
+                                        if (request.getDomainDelay()==0) {
+                                            if (autoDomainDelay) {
+                                                request.autoDomainDelay();
+                                            } else {
+                                                request.domainDelay(domainDelay);
                                             }
                                         }
 
