@@ -679,7 +679,7 @@ public class Spider {
 
                     Proxy proxy = ProxyPool.getProxy();
 
-                    if (proxy != null && Utils.checkProxy(proxy)) {
+                    if (proxy != null && SpiderUtils.checkProxy(proxy)) {
                         request.proxy(proxy);
                     }
                 }
@@ -703,14 +703,14 @@ public class Spider {
                                 page.setUrl(request.getUrl());
                                 page.setStatusCode(response.getStatusCode());
 
-                                if (Utils.isTextType(response.getContentType())) { // text/html
+                                if (SpiderUtils.isTextType(response.getContentType())) { // text/html
 
                                     page.setHtml(new Html(response.getContent()));
-                                } else if (Utils.isApplicationJSONType(response.getContentType())) { // application/json
+                                } else if (SpiderUtils.isApplicationJSONType(response.getContentType())) { // application/json
 
                                     // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
                                     page.putField(Constant.RESPONSE_JSON, new Json(new String(response.getContent())));
-                                } else if (Utils.isApplicationJSONPType(response.getContentType())) { // application/javascript
+                                } else if (SpiderUtils.isApplicationJSONPType(response.getContentType())) { // application/javascript
 
                                     // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                                     // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。

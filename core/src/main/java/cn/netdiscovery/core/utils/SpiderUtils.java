@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by tony on 2018/1/9.
  */
-public class Utils {
+public class SpiderUtils {
 
     public static boolean checkProxy(Proxy proxy) {
 

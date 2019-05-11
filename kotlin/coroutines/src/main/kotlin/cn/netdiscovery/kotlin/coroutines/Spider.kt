@@ -14,7 +14,7 @@ import cn.netdiscovery.core.pipeline.Pipeline
 import cn.netdiscovery.core.queue.DefaultQueue
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.utils.RetryWithDelay
-import cn.netdiscovery.core.utils.Utils
+import cn.netdiscovery.core.utils.SpiderUtils
 import com.cv4j.proxy.ProxyPool
 import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
@@ -327,7 +327,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         val proxy = ProxyPool.getProxy()
 
-                        if (proxy != null && Utils.checkProxy(proxy)) {
+                        if (proxy != null && SpiderUtils.checkProxy(proxy)) {
                             request.proxy(proxy)
                         }
                     }
@@ -350,14 +350,14 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                         page.url = request.url
                         page.statusCode = statusCode
 
-                        if (Utils.isTextType(contentType)) { // text/html
+                        if (SpiderUtils.isTextType(contentType)) { // text/html
 
                             page.html = Html(content)
-                        } else if (Utils.isApplicationJSONType(contentType)) { // application/json
+                        } else if (SpiderUtils.isApplicationJSONType(contentType)) { // application/json
 
                             // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
                             page.putField(Constant.RESPONSE_JSON, Json(String(content)))
-                        } else if (Utils.isApplicationJSONPType(contentType)) { // application/javascript
+                        } else if (SpiderUtils.isApplicationJSONPType(contentType)) { // application/javascript
 
                             // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                             // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。

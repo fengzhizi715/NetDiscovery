@@ -1,7 +1,7 @@
 package cn.netdiscovery.core.pipeline;
 
 import cn.netdiscovery.core.domain.ResultItems;
-import cn.netdiscovery.core.utils.Utils;
+import cn.netdiscovery.core.utils.SpiderUtils;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class CSVPipeline extends Pipeline {
         if (Preconditions.isNotBlank(ss)) {
 
             List<String> dataList = Arrays.asList(ss);
-            Utils.exportCsv(csvFile,dataList, Charset.forName("GBK"));
+            SpiderUtils.exportCsv(csvFile,dataList, Charset.forName("GBK"));
         }
     }
 
