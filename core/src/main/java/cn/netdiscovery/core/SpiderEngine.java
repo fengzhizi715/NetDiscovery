@@ -2,10 +2,13 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.SpiderEntity;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
+import cn.netdiscovery.core.quartz.QuartzManager;
+import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
 
 import cn.netdiscovery.core.utils.BooleanUtils;
@@ -43,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static cn.netdiscovery.core.config.Constant.*;
 
 /**
  * 可以管理多个Spider的容器
@@ -462,6 +467,15 @@ public class SpiderEngine {
         if (Preconditions.isNotBlank(spiders)) {
 
             spiders.forEach((s, spider) -> spider.stop());
+        }
+    }
+
+    public void addJob(String spiderName, Request request, String cron) {
+
+        Spider spider = spiders.get(spiderName);
+
+        if (spider!=null){
+            QuartzManager.addJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron,spider,request);
         }
     }
 

@@ -42,4 +42,13 @@ public class Constant {
     public static final String DOWNLOAD_TYPE_URL_CONNECTION = "urlConnection";
 
     public static final String DOWNLOAD_TYPE_FILE = "file";
+
+
+    public static final String JOB_NAME = "spider_job";
+
+    public static final String TRIGGER_NAME = "trigger";
+
+    public static final String JOB_GROUP_NAME = "netdiscovery";
+
+    public static final String TRIGGER_GROUP_NAME = "netdiscovery";
 }
