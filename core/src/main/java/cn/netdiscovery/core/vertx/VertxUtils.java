@@ -13,21 +13,15 @@ import io.vertx.core.eventbus.MessageConsumer;
 public class VertxUtils {
 
     private static Vertx vertx;
-    private static io.vertx.reactivex.core.Vertx reactivex_vertx;
 
     static{
         VertxOptions options = new VertxOptions();
         options.setMaxEventLoopExecuteTime(Long.MAX_VALUE);
         vertx = Vertx.vertx(options);
-        reactivex_vertx = new io.vertx.reactivex.core.Vertx(vertx);
     }
 
     public static Vertx getVertx() {
         return vertx;
-    }
-
-    public static io.vertx.reactivex.core.Vertx getReactivexVertx() {
-        return reactivex_vertx;
     }
 
     public static EventBus send(String address, Object message) {

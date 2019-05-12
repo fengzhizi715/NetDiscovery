@@ -38,7 +38,7 @@ public class VertxDownloader implements Downloader {
 
     public VertxDownloader() {
 
-        this.vertx = VertxUtils.getReactivexVertx();
+        this.vertx = new io.vertx.reactivex.core.Vertx(VertxUtils.getVertx());
     }
 
     public Maybe<Response> download(Request request) {
