@@ -24,6 +24,10 @@ public class VertxUtils {
         return vertx;
     }
 
+    public static void configVertx(VertxOptions options) {
+        vertx = Vertx.vertx(options);
+    }
+
     public static EventBus send(String address, Object message) {
         return vertx.eventBus().send(address,message);
     }
