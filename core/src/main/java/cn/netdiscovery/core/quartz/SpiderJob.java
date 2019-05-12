@@ -18,6 +18,8 @@ public class SpiderJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("定时任务开始");
 
+        log.info("jobName="+context.getJobDetail().getKey().getName());
+
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         Spider spider = (Spider) dataMap.get("spider");
         log.info("spiderName="+spider.getName());

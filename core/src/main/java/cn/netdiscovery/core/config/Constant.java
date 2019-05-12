@@ -44,7 +44,7 @@ public class Constant {
     public static final String DOWNLOAD_TYPE_FILE = "file";
 
 
-    public static final String JOB_NAME = "spider_job";
+    public static final String JOB_NAME = "spider_job_";
 
     public static final String TRIGGER_NAME = "trigger";
 

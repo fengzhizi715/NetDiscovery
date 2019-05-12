@@ -46,8 +46,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static cn.netdiscovery.core.config.Constant.*;
+import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
+import static cn.netdiscovery.core.config.Constant.JOB_NAME;
+import static cn.netdiscovery.core.config.Constant.TRIGGER_GROUP_NAME;
+import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
 
 /**
  * 可以管理多个Spider的容器
@@ -68,6 +72,8 @@ public class SpiderEngine {
     private RegisterConsumer registerConsumer;
 
     private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
+
+    private AtomicInteger count = new AtomicInteger(0);
 
     private SpiderEngine() {
 
@@ -113,7 +119,6 @@ public class SpiderEngine {
                         }
                     });
         }
-
 
         try {
             defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
@@ -430,6 +435,7 @@ public class SpiderEngine {
             Runtime.getRuntime().addShutdownHook(new Thread(()-> {
                 log.info("stop all spiders");
                 stopSpiders();
+                QuartzManager.shutdownJobs();
             }));
         }
     }
@@ -475,7 +481,8 @@ public class SpiderEngine {
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
-            QuartzManager.addJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron,spider,request);
+
+            QuartzManager.addJob(JOB_NAME + count.incrementAndGet() , JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron, spider, request);
         }
     }
 
@@ -486,7 +493,7 @@ public class SpiderEngine {
         if (spider!=null){
 
             Request request = new Request(url,spiderName);
-            QuartzManager.addJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron,spider,request);
+            QuartzManager.addJob(JOB_NAME + count.incrementAndGet(), JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron, spider, request);
         }
     }
 
