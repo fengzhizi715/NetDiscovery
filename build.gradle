@@ -32,7 +32,11 @@ ext {
 
             fastjson                  : "1.2.56",
 
-            rxcache                   : "1.4.0"
+            rxcache                   : "1.4.0",
+
+            commons_lang3             : "3.9",
+
+            quartz                    : "2.3.1"
     ]
 }
 
