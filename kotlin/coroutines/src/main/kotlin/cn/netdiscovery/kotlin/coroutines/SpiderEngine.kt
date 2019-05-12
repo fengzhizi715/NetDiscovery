@@ -8,7 +8,7 @@ import cn.netdiscovery.core.domain.response.SpiderStatusResponse
 import cn.netdiscovery.core.domain.response.SpidersResponse
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.utils.UserAgent
-import cn.netdiscovery.core.utils.VertxUtils
+import cn.netdiscovery.core.vertx.VertxUtils
 import com.cv4j.proxy.ProxyPool
 import com.cv4j.proxy.domain.Proxy
 import com.safframework.tony.common.collection.NoEmptyHashMap
@@ -19,8 +19,6 @@ import io.reactivex.schedulers.Schedulers
 import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import lombok.Getter
 import java.util.*

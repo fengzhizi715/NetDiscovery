@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.utils;
+package cn.netdiscovery.core.vertx;
 
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;

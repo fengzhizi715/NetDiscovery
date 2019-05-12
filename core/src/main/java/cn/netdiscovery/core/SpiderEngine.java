@@ -15,7 +15,7 @@ import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import cn.netdiscovery.core.utils.UserAgent;
-import cn.netdiscovery.core.utils.VertxUtils;
+import cn.netdiscovery.core.vertx.VertxUtils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.collection.NoEmptyHashMap;

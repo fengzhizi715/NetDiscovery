@@ -10,7 +10,7 @@ import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
-import cn.netdiscovery.core.utils.VertxUtils;
+import cn.netdiscovery.core.vertx.VertxUtils;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
