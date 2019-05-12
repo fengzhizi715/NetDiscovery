@@ -3,6 +3,7 @@ package cn.netdiscovery.core.quartz;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 
+import cn.netdiscovery.core.exception.SpiderException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -57,7 +58,7 @@ public class QuartzManager {
                 sched.start();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
@@ -100,7 +101,7 @@ public class QuartzManager {
                 sched.start();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
@@ -113,8 +114,8 @@ public class QuartzManager {
      * @param triggerGroupName 触发器组名
      * @param cron   时间设置，参考quartz说明文档
      */
-    public static void modifyJobTime(String jobName,
-                                     String jobGroupName, String triggerName, String triggerGroupName, String cron) {
+    public static void modifyJobTime(String jobName, String jobGroupName,
+                                     String triggerName, String triggerGroupName, String cron) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
@@ -138,7 +139,7 @@ public class QuartzManager {
                 sched.rescheduleJob(triggerKey, trigger);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
@@ -161,7 +162,7 @@ public class QuartzManager {
             sched.unscheduleJob(triggerKey);// 移除触发器
             sched.deleteJob(JobKey.jobKey(jobName, jobGroupName));// 删除任务
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
@@ -173,7 +174,7 @@ public class QuartzManager {
             Scheduler sched = schedulerFactory.getScheduler();
             sched.start();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 
@@ -187,7 +188,7 @@ public class QuartzManager {
                 sched.shutdown();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpiderException(e);
         }
     }
 }
