@@ -476,6 +476,12 @@ public class SpiderEngine {
         }
     }
 
+    /**
+     * 给 Spider 发起定时任务
+     * @param spiderName
+     * @param request
+     * @param cron cron表达式
+     */
     public void addJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
@@ -486,6 +492,12 @@ public class SpiderEngine {
         }
     }
 
+    /**
+     * 给 Spider 发起定时任务
+     * @param spiderName
+     * @param url
+     * @param cron cron表达式
+     */
     public void addJob(String spiderName, String url, String cron) {
 
         Spider spider = spiders.get(spiderName);
