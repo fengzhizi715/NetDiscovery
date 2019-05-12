@@ -186,7 +186,7 @@ public class SpiderEngine {
 
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
-     * 如果要使用此方法，须放在run()/runWithRepeat()之前
+     * 如果要使用此方法，须放在run()之前
      * 采用默认的端口号
      * @return
      */
@@ -197,7 +197,7 @@ public class SpiderEngine {
 
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
-     * 如果要使用此方法，须放在run()/runWithRepeat()之前
+     * 如果要使用此方法，须放在run()之前
      *
      * @param port
      */
@@ -380,29 +380,6 @@ public class SpiderEngine {
             server.close();
         }
     }
-
-//    /**
-//     * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来
-//     * 如果在SpiderEngine中某个Spider使用了repeateRequest()，则须使用runWithRepeat()
-//     */
-//    public void run() {
-//
-//        if (Preconditions.isNotBlank(spiders)) {
-//
-//            if (registerConsumer!=null) {
-//                registerConsumer.process();
-//            }
-//
-//            spiders.entrySet()
-//                    .parallelStream()
-//                    .forEach(entry -> entry.getValue().run());
-//
-//            Runtime.getRuntime().addShutdownHook(new Thread(()-> {
-//                log.info("stop all spiders");
-//                stopSpiders();
-//            }));
-//        }
-//    }
 
     /**
      * 启动SpiderEngine中所有的spider，让每个爬虫并行运行起来。
