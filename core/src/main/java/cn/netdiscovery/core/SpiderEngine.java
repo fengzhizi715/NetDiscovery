@@ -2,8 +2,10 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.JobEntity;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.SpiderEntity;
+import cn.netdiscovery.core.domain.response.JobsResponse;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
@@ -18,7 +20,6 @@ import cn.netdiscovery.core.utils.UserAgent;
 import cn.netdiscovery.core.vertx.VertxUtils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
-import com.safframework.tony.common.collection.NoEmptyHashMap;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
@@ -46,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
@@ -60,8 +62,6 @@ import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
 @Slf4j
 public class SpiderEngine {
 
-    private Map<String, Spider> spiders = new NoEmptyHashMap<>();
-
     @Getter
     private Queue queue;
 
@@ -74,6 +74,10 @@ public class SpiderEngine {
     private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
 
     private AtomicInteger count = new AtomicInteger(0);
+
+    private Map<String, Spider> spiders = new ConcurrentHashMap<>();
+
+    private Map<String, JobEntity> jobs = new ConcurrentHashMap<>();
 
     private SpiderEngine() {
 
@@ -322,6 +326,25 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(spidersResponse));
             });
 
+            router.route("/netdiscovery/jobs/").handler(routingContext -> {
+
+                // 所有的请求都会调用这个处理器处理
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                List<JobEntity> list = new ArrayList<>();
+
+                list.addAll(jobs.values());
+
+                JobsResponse jobsResponse = new JobsResponse();
+                jobsResponse.setCode(Constant.OK_STATUS_CODE);
+                jobsResponse.setMessage(Constant.SUCCESS);
+                jobsResponse.setData(list);
+
+                // 写入响应并结束处理
+                response.end(SerializableUtils.toJson(jobsResponse));
+            });
+
             if (useMonitor) {
 
                 // The web server handler
@@ -459,14 +482,28 @@ public class SpiderEngine {
      * @param request
      * @param cron cron表达式
      */
-    public void addJob(String spiderName, Request request, String cron) {
+    public JobEntity addJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
+            String jobName = JOB_NAME + count.incrementAndGet();
 
-            QuartzManager.addJob(JOB_NAME + count.incrementAndGet() , JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron, spider, request);
+            JobEntity jobEntity = new JobEntity();
+            jobEntity.setJobName(jobName);
+            jobEntity.setJobGroupName(JOB_GROUP_NAME);
+            jobEntity.setTriggerName(TRIGGER_NAME);
+            jobEntity.setTriggerGroupName(TRIGGER_GROUP_NAME);
+            jobEntity.setCron(cron);
+            jobEntity.setUrl(request.getUrl());
+
+            jobs.put(jobName,jobEntity);
+            QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+
+            return jobEntity;
         }
+
+        return null;
     }
 
     /**
@@ -475,15 +512,30 @@ public class SpiderEngine {
      * @param url
      * @param cron cron表达式
      */
-    public void addJob(String spiderName, String url, String cron) {
+    public JobEntity addJob(String spiderName, String url, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
 
             Request request = new Request(url,spiderName);
-            QuartzManager.addJob(JOB_NAME + count.incrementAndGet(), JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, SpiderJob.class, cron, spider, request);
+            String jobName = JOB_NAME + count.incrementAndGet();
+
+            JobEntity jobEntity = new JobEntity();
+            jobEntity.setJobName(jobName);
+            jobEntity.setJobGroupName(JOB_GROUP_NAME);
+            jobEntity.setTriggerName(TRIGGER_NAME);
+            jobEntity.setTriggerGroupName(TRIGGER_GROUP_NAME);
+            jobEntity.setCron(cron);
+            jobEntity.setUrl(request.getUrl());
+
+            jobs.put(jobName,jobEntity);
+            QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+
+            return jobEntity;
         }
+
+        return null;
     }
 
     /**
