@@ -5,6 +5,7 @@ import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.JobEntity;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.SpiderEntity;
+import cn.netdiscovery.core.domain.response.JobsResponse;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
@@ -323,6 +324,25 @@ public class SpiderEngine {
 
                 // 写入响应并结束处理
                 response.end(SerializableUtils.toJson(spidersResponse));
+            });
+
+            router.route("/netdiscovery/jobs/").handler(routingContext -> {
+
+                // 所有的请求都会调用这个处理器处理
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                List<JobEntity> list = new ArrayList<>();
+
+                list.addAll(jobs.values());
+
+                JobsResponse jobsResponse = new JobsResponse();
+                jobsResponse.setCode(Constant.OK_STATUS_CODE);
+                jobsResponse.setMessage(Constant.SUCCESS);
+                jobsResponse.setData(list);
+
+                // 写入响应并结束处理
+                response.end(SerializableUtils.toJson(jobsResponse));
             });
 
             if (useMonitor) {
