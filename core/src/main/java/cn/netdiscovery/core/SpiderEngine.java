@@ -462,7 +462,7 @@ public class SpiderEngine {
      * @param request
      * @param cron cron表达式
      */
-    public void addJob(String spiderName, Request request, String cron) {
+    public JobEntity addJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
@@ -479,7 +479,11 @@ public class SpiderEngine {
 
             jobs.put(jobName,jobEntity);
             QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+
+            return jobEntity;
         }
+
+        return null;
     }
 
     /**
@@ -488,7 +492,7 @@ public class SpiderEngine {
      * @param url
      * @param cron cron表达式
      */
-    public void addJob(String spiderName, String url, String cron) {
+    public JobEntity addJob(String spiderName, String url, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
@@ -507,7 +511,11 @@ public class SpiderEngine {
 
             jobs.put(jobName,jobEntity);
             QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+
+            return jobEntity;
         }
+
+        return null;
     }
 
     /**
