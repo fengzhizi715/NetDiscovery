@@ -21,6 +21,8 @@ class RequestWrapper {
 
     var downloadDelay: Long = 0
 
+    var domainDelay: Long = 0
+
     fun header(init: HeaderContext.() -> Unit) {
 
         headerContext.init()
@@ -74,6 +76,7 @@ private fun configRequest(wrap: RequestWrapper): Request {
             .httpMethod(wrap.httpMethod)
             .sleep(wrap.sleepTime)
             .downloadDelay(wrap.downloadDelay)
+            .domainDelay(wrap.domainDelay)
 
     wrap.getHeaderContext().forEach { k, v ->
 
