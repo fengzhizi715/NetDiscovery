@@ -3,6 +3,7 @@ package cn.netdiscovery.core.quartz;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 
+import cn.netdiscovery.core.domain.bean.JobBean;
 import cn.netdiscovery.core.exception.SpiderException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -64,21 +65,18 @@ public class QuartzManager {
 
     /**
      * 添加一个定时任务
-     *
-     * @param jobName 任务名
-     * @param jobGroupName  任务组名
-     * @param triggerName 触发器名
-     * @param triggerGroupName 触发器组名
-     * @param jobClass  任务
-     * @param cron   时间设置，参考quartz说明文档
+     * @param jobBean
+     * @param jobClass
+     * @param cron
+     * @param spider
+     * @param request
      */
-    public static void addJob(String jobName, String jobGroupName,
-                              String triggerName, String triggerGroupName, Class jobClass, String cron,
-                              Spider spider, Request request) {
+    public static void addJob(JobBean jobBean, Class jobClass, String cron, Spider spider, Request request) {
+
         try {
             Scheduler sched = schedulerFactory.getScheduler();
             // 任务名，任务组，任务执行类
-            JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
+            JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobBean.getJobName(), jobBean.getJobGroupName()).build();
 
             jobDetail.getJobDataMap().put("spider", spider);
             jobDetail.getJobDataMap().put("request", request);
@@ -86,7 +84,7 @@ public class QuartzManager {
             // 触发器
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
             // 触发器名,触发器组
-            triggerBuilder.withIdentity(triggerName, triggerGroupName);
+            triggerBuilder.withIdentity(jobBean.getTriggerName(), jobBean.getTriggerGroupName());
             triggerBuilder.startNow();
             // 触发器时间设定
             triggerBuilder.withSchedule(CronScheduleBuilder.cronSchedule(cron));

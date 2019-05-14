@@ -510,7 +510,7 @@ public class SpiderEngine {
             jobBean.setUrl(request.getUrl());
 
             jobs.put(jobName, jobBean);
-            QuartzManager.addJob(jobBean.getJobName(), jobBean.getJobGroupName(), jobBean.getTriggerName(), jobBean.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+            QuartzManager.addJob(jobBean, SpiderJob.class, cron, spider, request);
 
             return jobBean;
         }
