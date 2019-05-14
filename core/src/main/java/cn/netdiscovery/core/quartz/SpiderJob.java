@@ -22,11 +22,14 @@ public class SpiderJob implements Job {
 
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         Spider spider = (Spider) dataMap.get("spider");
-        log.info("spiderName="+spider.getName());
-
         Request request = (Request) dataMap.get("request");
-        log.info("request="+request.toString());
 
-        spider.getQueue().pushToRunninSpider(request,spider);
+        if (spider!=null && request!=null) {
+
+            log.info("spiderName="+spider.getName());
+            log.info("request="+request.toString());
+
+            spider.getQueue().pushToRunninSpider(request,spider);
+        }
     }
 }

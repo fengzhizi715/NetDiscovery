@@ -65,6 +65,7 @@ public class QuartzManager {
 
     /**
      * 添加一个定时任务
+     *
      * @param jobBean
      * @param jobClass
      * @param cron
