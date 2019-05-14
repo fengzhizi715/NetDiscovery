@@ -42,7 +42,8 @@ public class SmartContentSelector implements Selector {
         }
 
         start = -1; end = -1;
-        boolean boolstart = false, boolend = false;
+        boolean boolstart = false,
+                boolend = false;
         text.setLength(0);
 
         for (int i = 0; i < indexDistribution.size() - 1; i++) {
