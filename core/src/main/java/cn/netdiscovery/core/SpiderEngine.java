@@ -480,6 +480,17 @@ public class SpiderEngine {
     /**
      * 给 Spider 发起定时任务
      * @param spiderName
+     * @param url
+     * @param cron cron表达式
+     */
+    public JobBean addJob(String spiderName, String url, String cron) {
+
+        return spiders.get(spiderName)!=null ? addJob(spiderName,new Request(url,spiderName),cron) : null;
+    }
+
+    /**
+     * 给 Spider 发起定时任务
+     * @param spiderName
      * @param request
      * @param cron cron表达式
      */
@@ -488,38 +499,6 @@ public class SpiderEngine {
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
-            String jobName = JOB_NAME + count.incrementAndGet();
-
-            JobBean jobBean = new JobBean();
-            jobBean.setJobName(jobName);
-            jobBean.setJobGroupName(JOB_GROUP_NAME);
-            jobBean.setTriggerName(TRIGGER_NAME);
-            jobBean.setTriggerGroupName(TRIGGER_GROUP_NAME);
-            jobBean.setCron(cron);
-            jobBean.setUrl(request.getUrl());
-
-            jobs.put(jobName, jobBean);
-            QuartzManager.addJob(jobBean.getJobName(), jobBean.getJobGroupName(), jobBean.getTriggerName(), jobBean.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
-
-            return jobBean;
-        }
-
-        return null;
-    }
-
-    /**
-     * 给 Spider 发起定时任务
-     * @param spiderName
-     * @param url
-     * @param cron cron表达式
-     */
-    public JobBean addJob(String spiderName, String url, String cron) {
-
-        Spider spider = spiders.get(spiderName);
-
-        if (spider!=null){
-
-            Request request = new Request(url,spiderName);
             String jobName = JOB_NAME + count.incrementAndGet();
 
             JobBean jobBean = new JobBean();
