@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.domain;
+package cn.netdiscovery.core.domain.bean;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by tony on 2019-05-13.
  */
 @Data
-public class JobEntity {
+public class JobBean {
 
     private String jobName;
     private String jobGroupName;

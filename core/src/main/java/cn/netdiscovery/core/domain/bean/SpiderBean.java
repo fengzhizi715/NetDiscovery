@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.domain;
+package cn.netdiscovery.core.domain.bean;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by tony on 2018/1/15.
  */
 @Data
-public class SpiderEntity {
+public class SpiderBean {
 
     private String spiderName;
     private int spiderStatus;

@@ -2,7 +2,7 @@ package cn.netdiscovery.kotlin.coroutines
 
 import com.alibaba.fastjson.JSON
 import cn.netdiscovery.core.config.Constant
-import cn.netdiscovery.core.domain.SpiderEntity
+import cn.netdiscovery.core.domain.bean.SpiderBean
 import cn.netdiscovery.core.domain.response.SpiderResponse
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse
 import cn.netdiscovery.core.domain.response.SpidersResponse
@@ -133,7 +133,7 @@ class SpiderEngine private constructor(@field:Getter
                     val response = routingContext.response()
                     response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON)
 
-                    val entity = SpiderEntity()
+                    val entity = SpiderBean()
                     entity.spiderName = spider.name
                     entity.spiderStatus = spider.spiderStatus
                     entity.leftRequestSize = spider.queue.getLeftRequests(spider.name)
@@ -203,16 +203,16 @@ class SpiderEngine private constructor(@field:Getter
                 val response = routingContext.response()
                 response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON)
 
-                val list = ArrayList<SpiderEntity>()
+                val list = ArrayList<SpiderBean>()
 
                 var spider: Spider? = null
-                var entity: SpiderEntity? = null
+                var entity: SpiderBean? = null
 
                 for ((_, value) in spiders) {
 
                     spider = value
 
-                    entity = SpiderEntity()
+                    entity = SpiderBean()
                     entity.spiderName = spider.name
                     entity.spiderStatus = spider.spiderStatus
                     entity.leftRequestSize = spider.queue.getLeftRequests(spider.name)

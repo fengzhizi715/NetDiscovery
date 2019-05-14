@@ -2,9 +2,9 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.domain.JobEntity;
+import cn.netdiscovery.core.domain.bean.JobBean;
 import cn.netdiscovery.core.domain.Request;
-import cn.netdiscovery.core.domain.SpiderEntity;
+import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.response.JobsResponse;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
@@ -77,7 +77,7 @@ public class SpiderEngine {
 
     private Map<String, Spider> spiders = new ConcurrentHashMap<>();
 
-    private Map<String, JobEntity> jobs = new ConcurrentHashMap<>();
+    private Map<String, JobBean> jobs = new ConcurrentHashMap<>();
 
     private SpiderEngine() {
 
@@ -224,7 +224,7 @@ public class SpiderEngine {
                     HttpServerResponse response = routingContext.response();
                     response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
 
-                    SpiderEntity entity = new SpiderEntity();
+                    SpiderBean entity = new SpiderBean();
                     entity.setSpiderName(spider.getName());
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
@@ -297,16 +297,16 @@ public class SpiderEngine {
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
 
-                List<SpiderEntity> list = new ArrayList<>();
+                List<SpiderBean> list = new ArrayList<>();
 
                 Spider spider = null;
-                SpiderEntity entity = null;
+                SpiderBean entity = null;
 
                 for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
 
                     spider = entry.getValue();
 
-                    entity = new SpiderEntity();
+                    entity = new SpiderBean();
                     entity.setSpiderName(spider.getName());
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
@@ -332,7 +332,7 @@ public class SpiderEngine {
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
 
-                List<JobEntity> list = new ArrayList<>();
+                List<JobBean> list = new ArrayList<>();
 
                 list.addAll(jobs.values());
 
@@ -345,6 +345,7 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(jobsResponse));
             });
 
+            // 是否使用 agent
             if (useMonitor) {
 
                 // The web server handler
@@ -482,25 +483,25 @@ public class SpiderEngine {
      * @param request
      * @param cron cron表达式
      */
-    public JobEntity addJob(String spiderName, Request request, String cron) {
+    public JobBean addJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
             String jobName = JOB_NAME + count.incrementAndGet();
 
-            JobEntity jobEntity = new JobEntity();
-            jobEntity.setJobName(jobName);
-            jobEntity.setJobGroupName(JOB_GROUP_NAME);
-            jobEntity.setTriggerName(TRIGGER_NAME);
-            jobEntity.setTriggerGroupName(TRIGGER_GROUP_NAME);
-            jobEntity.setCron(cron);
-            jobEntity.setUrl(request.getUrl());
+            JobBean jobBean = new JobBean();
+            jobBean.setJobName(jobName);
+            jobBean.setJobGroupName(JOB_GROUP_NAME);
+            jobBean.setTriggerName(TRIGGER_NAME);
+            jobBean.setTriggerGroupName(TRIGGER_GROUP_NAME);
+            jobBean.setCron(cron);
+            jobBean.setUrl(request.getUrl());
 
-            jobs.put(jobName,jobEntity);
-            QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+            jobs.put(jobName, jobBean);
+            QuartzManager.addJob(jobBean.getJobName(), jobBean.getJobGroupName(), jobBean.getTriggerName(), jobBean.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
 
-            return jobEntity;
+            return jobBean;
         }
 
         return null;
@@ -512,7 +513,7 @@ public class SpiderEngine {
      * @param url
      * @param cron cron表达式
      */
-    public JobEntity addJob(String spiderName, String url, String cron) {
+    public JobBean addJob(String spiderName, String url, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
@@ -521,18 +522,18 @@ public class SpiderEngine {
             Request request = new Request(url,spiderName);
             String jobName = JOB_NAME + count.incrementAndGet();
 
-            JobEntity jobEntity = new JobEntity();
-            jobEntity.setJobName(jobName);
-            jobEntity.setJobGroupName(JOB_GROUP_NAME);
-            jobEntity.setTriggerName(TRIGGER_NAME);
-            jobEntity.setTriggerGroupName(TRIGGER_GROUP_NAME);
-            jobEntity.setCron(cron);
-            jobEntity.setUrl(request.getUrl());
+            JobBean jobBean = new JobBean();
+            jobBean.setJobName(jobName);
+            jobBean.setJobGroupName(JOB_GROUP_NAME);
+            jobBean.setTriggerName(TRIGGER_NAME);
+            jobBean.setTriggerGroupName(TRIGGER_GROUP_NAME);
+            jobBean.setCron(cron);
+            jobBean.setUrl(request.getUrl());
 
-            jobs.put(jobName,jobEntity);
-            QuartzManager.addJob(jobEntity.getJobName(), jobEntity.getJobGroupName(), jobEntity.getTriggerName(), jobEntity.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
+            jobs.put(jobName, jobBean);
+            QuartzManager.addJob(jobBean.getJobName(), jobBean.getJobGroupName(), jobBean.getTriggerName(), jobBean.getTriggerGroupName(), SpiderJob.class, cron, spider, request);
 
-            return jobEntity;
+            return jobBean;
         }
 
         return null;
