@@ -3,7 +3,7 @@ package cn.netdiscovery.core.quartz;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 
-import cn.netdiscovery.core.domain.bean.JobBean;
+import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.exception.SpiderException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -72,7 +72,7 @@ public class QuartzManager {
      * @param spider
      * @param request
      */
-    public static void addJob(JobBean jobBean, Class jobClass, String cron, Spider spider, Request request) {
+    public static void addJob(SpiderJobBean jobBean, Class jobClass, String cron, Spider spider, Request request) {
 
         try {
             Scheduler sched = schedulerFactory.getScheduler();

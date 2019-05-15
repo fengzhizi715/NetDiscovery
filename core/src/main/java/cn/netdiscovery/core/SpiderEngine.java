@@ -2,7 +2,7 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.domain.bean.JobBean;
+import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.response.JobsResponse;
@@ -78,7 +78,7 @@ public class SpiderEngine {
 
     private Map<String, Spider> spiders = new ConcurrentHashMap<>();
 
-    private Map<String, JobBean> jobs = new ConcurrentHashMap<>();
+    private Map<String, SpiderJobBean> jobs = new ConcurrentHashMap<>();
 
     private SpiderEngine() {
 
@@ -335,7 +335,7 @@ public class SpiderEngine {
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
 
-                List<JobBean> list = new ArrayList<>();
+                List<SpiderJobBean> list = new ArrayList<>();
 
                 list.addAll(jobs.values());
 
@@ -486,7 +486,7 @@ public class SpiderEngine {
      * @param url
      * @param cron cron表达式
      */
-    public JobBean addJob(String spiderName, String url, String cron) {
+    public SpiderJobBean addJob(String spiderName, String url, String cron) {
 
         return spiders.get(spiderName)!=null ? addJob(spiderName,new Request(url,spiderName),cron) : null;
     }
@@ -497,14 +497,14 @@ public class SpiderEngine {
      * @param request
      * @param cron cron表达式
      */
-    public JobBean addJob(String spiderName, Request request, String cron) {
+    public SpiderJobBean addJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
             String jobName = JOB_NAME + count.incrementAndGet();
 
-            JobBean jobBean = new JobBean();
+            SpiderJobBean jobBean = new SpiderJobBean();
             jobBean.setJobName(jobName);
             jobBean.setJobGroupName(JOB_GROUP_NAME);
             jobBean.setTriggerName(TRIGGER_NAME);
