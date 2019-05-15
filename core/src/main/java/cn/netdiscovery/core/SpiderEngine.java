@@ -18,6 +18,7 @@ import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import cn.netdiscovery.core.utils.UserAgent;
 import cn.netdiscovery.core.vertx.VertxUtils;
+import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
@@ -516,6 +517,15 @@ public class SpiderEngine {
         }
 
         return null;
+    }
+
+    /**
+     * 需要在启动 SpiderEngine 之前，启动
+     */
+    public void startProxyPool() {
+
+        ProxyManager proxyManager = ProxyManager.get();
+        proxyManager.start();
     }
 
     /**

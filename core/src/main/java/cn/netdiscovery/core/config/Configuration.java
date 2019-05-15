@@ -1,7 +1,6 @@
 package cn.netdiscovery.core.config;
 
 import cn.netdiscovery.core.utils.PropertyParser;
-import cn.netdiscovery.core.utils.YamlParser;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.IOException;
