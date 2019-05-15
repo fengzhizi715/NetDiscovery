@@ -123,6 +123,8 @@ public class SpiderEngine {
                             e.printStackTrace();
                         }
                     });
+
+            com.cv4j.proxy.config.Constant.setUas(UserAgent.uas); // 让代理池也能够共享ua
         }
 
         try {

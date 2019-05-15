@@ -1,5 +1,6 @@
 package cn.netdiscovery.core.utils;
 
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class UserAgent {
 
-    public static CopyOnWriteArrayList<String> uas = new CopyOnWriteArrayList<>();
+    public static List<String> uas = new CopyOnWriteArrayList<>();
 
     public static String getUserAgent() {
 
