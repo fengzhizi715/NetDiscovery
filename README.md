@@ -19,10 +19,9 @@
 * Request 支持 debug 功能：在调试时可以使用 RxCache，从而避免多次请求同一个网页。
 * 支持失败重试的机制
 * 多纬度控制爬取速度（Pipeline、Request、Download、Domain）等等
-* 支持代理池的整合、支持 User Agent 池、Cookies 池
+* 支持代理池、User Agent 池、Cookies 池
 * 支持爬虫的深度抓取：能够在 Pipeline 中发起深度抓取
 * 支持 URL 去重：使用布隆过滤器
-* 超时控制：支持设置爬虫请求的超时时间
 * 爬虫的监控
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
 * 整合 Quartz
