@@ -520,10 +520,11 @@ public class SpiderEngine {
     }
 
     /**
-     * 需要在启动 SpiderEngine 之前，启动
+     * 需要在启动 SpiderEngine 之前，启动 ProxyPool
      */
-    public void startProxyPool() {
+    public void startProxyPool(Map<String, Class> proxyMap) {
 
+        ProxyPool.proxyMap = proxyMap;
         ProxyManager proxyManager = ProxyManager.get();
         proxyManager.start();
     }
