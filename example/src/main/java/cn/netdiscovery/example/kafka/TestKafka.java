@@ -4,7 +4,6 @@ import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.queue.kafka.KafkaQueue;
 import cn.netdiscovery.queue.kafka.KafkaQueueConfig;
-import com.alibaba.fastjson.JSONObject;
 
 import java.util.Properties;
 
@@ -44,7 +43,7 @@ public class TestKafka {
 
         Request request = new Request("https://www.baidu.com").checkDuplicate(false);
 
-        System.out.println(JSONObject.toJSONString(request));
+        System.out.println(request);
 
         Spider.create(queue)
                 .name("tony")
