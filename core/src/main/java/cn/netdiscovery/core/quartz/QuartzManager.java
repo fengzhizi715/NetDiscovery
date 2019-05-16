@@ -115,6 +115,7 @@ public class QuartzManager {
      * @param triggerGroupName 触发器组名
      * @param jobClass  任务
      * @param cron   时间设置，参考quartz说明文档
+     * @param proxyMap
      */
     public static void addJob(String jobName, String jobGroupName,
                               String triggerName, String triggerGroupName,

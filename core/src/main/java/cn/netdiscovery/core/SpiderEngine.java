@@ -524,7 +524,7 @@ public class SpiderEngine {
     }
 
     /**
-     * 给 ProxyPoolJ 发起定时任务
+     * 给 ProxyPool 发起定时任务
      * @param proxyMap
      * @param cron cron表达式
      * @return
