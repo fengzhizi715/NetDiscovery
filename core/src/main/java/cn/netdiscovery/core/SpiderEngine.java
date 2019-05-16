@@ -9,6 +9,7 @@ import cn.netdiscovery.core.domain.response.JobsResponse;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
+import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
@@ -522,11 +523,24 @@ public class SpiderEngine {
     }
 
     /**
+     * 给 ProxyPoolJ 发起定时任务
+     * @param proxyMap
+     * @param cron cron表达式
+     * @return
+     */
+    public void addProxyPoolJob(Map<String, Class> proxyMap, String cron) {
+
+        QuartzManager.addJob("ProxyPool_"+count.incrementAndGet(),JOB_GROUP_NAME,TRIGGER_NAME,TRIGGER_GROUP_NAME, ProxyPoolJob.class, cron, proxyMap);
+    }
+
+    /**
      * 需要在启动 SpiderEngine 之前，启动 ProxyPool
      */
     public void startProxyPool(Map<String, Class> proxyMap) {
 
-        ProxyPool.proxyMap = proxyMap;
+        if (proxyMap!=null) {
+            ProxyPool.proxyMap = proxyMap;
+        }
         ProxyManager proxyManager = ProxyManager.get();
         proxyManager.start();
     }

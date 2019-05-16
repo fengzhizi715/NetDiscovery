@@ -17,6 +17,8 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.util.Map;
+
 /**
  * Created by tony on 2019-05-11.
  */
@@ -72,7 +74,7 @@ public class QuartzManager {
      * @param spider
      * @param request
      */
-    public static void addJob(SpiderJobBean jobBean, Class jobClass, String cron, Spider spider, Request request) {
+    public static void addJob(SpiderJobBean jobBean, Class<SpiderJob> jobClass, String cron, Spider spider, Request request) {
 
         try {
             Scheduler sched = schedulerFactory.getScheduler();
@@ -86,6 +88,49 @@ public class QuartzManager {
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
             // 触发器名,触发器组
             triggerBuilder.withIdentity(jobBean.getTriggerName(), jobBean.getTriggerGroupName());
+            triggerBuilder.startNow();
+            // 触发器时间设定
+            triggerBuilder.withSchedule(CronScheduleBuilder.cronSchedule(cron));
+            // 创建Trigger对象
+            CronTrigger trigger = (CronTrigger) triggerBuilder.build();
+
+            // 调度容器设置JobDetail和Trigger
+            sched.scheduleJob(jobDetail, trigger);
+
+            // 启动
+            if (!sched.isShutdown()) {
+                sched.start();
+            }
+        } catch (Exception e) {
+            throw new SpiderException(e);
+        }
+    }
+
+    /**
+     * 添加一个定时任务
+     *
+     * @param jobName 任务名
+     * @param jobGroupName  任务组名
+     * @param triggerName 触发器名
+     * @param triggerGroupName 触发器组名
+     * @param jobClass  任务
+     * @param cron   时间设置，参考quartz说明文档
+     */
+    public static void addJob(String jobName, String jobGroupName,
+                              String triggerName, String triggerGroupName,
+                              Class<ProxyPoolJob> jobClass, String cron,
+                              Map<String, Class> proxyMap) {
+        try {
+            Scheduler sched = schedulerFactory.getScheduler();
+            // 任务名，任务组，任务执行类
+            JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
+
+            jobDetail.getJobDataMap().put("proxyMap", proxyMap);
+
+            // 触发器
+            TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
+            // 触发器名,触发器组
+            triggerBuilder.withIdentity(triggerName, triggerGroupName);
             triggerBuilder.startNow();
             // 触发器时间设定
             triggerBuilder.withSchedule(CronScheduleBuilder.cronSchedule(cron));
