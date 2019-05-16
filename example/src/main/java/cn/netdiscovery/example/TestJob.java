@@ -20,6 +20,6 @@ public class TestJob {
                 .httpd()
                 .run();
 
-        spiderEngine.addJob("tony1",request,"0 * * * * ?");
+        spiderEngine.addSpiderJob("tony1",request,"0 * * * * ?");
     }
 }

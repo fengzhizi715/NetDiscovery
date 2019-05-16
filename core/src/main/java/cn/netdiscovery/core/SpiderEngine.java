@@ -486,9 +486,9 @@ public class SpiderEngine {
      * @param url
      * @param cron cron表达式
      */
-    public SpiderJobBean addJob(String spiderName, String url, String cron) {
+    public SpiderJobBean addSpiderJob(String spiderName, String url, String cron) {
 
-        return spiders.get(spiderName)!=null ? addJob(spiderName,new Request(url,spiderName),cron) : null;
+        return spiders.get(spiderName)!=null ? addSpiderJob(spiderName,new Request(url,spiderName),cron) : null;
     }
 
     /**
@@ -497,7 +497,7 @@ public class SpiderEngine {
      * @param request
      * @param cron cron表达式
      */
-    public SpiderJobBean addJob(String spiderName, Request request, String cron) {
+    public SpiderJobBean addSpiderJob(String spiderName, Request request, String cron) {
 
         Spider spider = spiders.get(spiderName);
 
