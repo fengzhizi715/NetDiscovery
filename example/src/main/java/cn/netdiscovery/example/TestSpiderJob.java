@@ -7,7 +7,7 @@ import cn.netdiscovery.core.domain.Request;
 /**
  * Created by tony on 2019-05-12.
  */
-public class TestJob {
+public class TestSpiderJob {
 
     public static void main(String[] args) {
 

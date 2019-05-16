@@ -44,7 +44,9 @@ public class Constant {
     public static final String DOWNLOAD_TYPE_FILE = "file";
 
 
-    public static final String JOB_NAME = "spider_job_";
+    public static final String SPIDER_JOB_NAME = "spider_job_";
+
+    public static final String PROXY_POOL_JOB_NAME = "proxy_pool_job_";
 
     public static final String TRIGGER_NAME = "trigger";
 

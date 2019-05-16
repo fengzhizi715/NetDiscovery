@@ -53,7 +53,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
-import static cn.netdiscovery.core.config.Constant.JOB_NAME;
+import static cn.netdiscovery.core.config.Constant.PROXY_POOL_JOB_NAME;
+import static cn.netdiscovery.core.config.Constant.SPIDER_JOB_NAME;
 import static cn.netdiscovery.core.config.Constant.TRIGGER_GROUP_NAME;
 import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
 
@@ -503,7 +504,7 @@ public class SpiderEngine {
         Spider spider = spiders.get(spiderName);
 
         if (spider!=null){
-            String jobName = JOB_NAME + count.incrementAndGet();
+            String jobName = SPIDER_JOB_NAME + count.incrementAndGet();
 
             SpiderJobBean jobBean = new SpiderJobBean();
             jobBean.setJobName(jobName);
@@ -530,7 +531,9 @@ public class SpiderEngine {
      */
     public void addProxyPoolJob(Map<String, Class> proxyMap, String cron) {
 
-        QuartzManager.addJob("ProxyPool_"+count.incrementAndGet(),JOB_GROUP_NAME,TRIGGER_NAME,TRIGGER_GROUP_NAME, ProxyPoolJob.class, cron, proxyMap);
+        String jobName = PROXY_POOL_JOB_NAME + count.incrementAndGet();
+
+        QuartzManager.addJob(jobName, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, ProxyPoolJob.class, cron, proxyMap);
     }
 
     /**
