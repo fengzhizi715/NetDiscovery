@@ -7,10 +7,30 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compileOnly "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
+
+    implementation "io.vertx:vertx-core:${libs.vertx}"
+    implementation "io.vertx:vertx-web:${libs.vertx}"
+    implementation "io.vertx:vertx-web-client:${libs.vertx}"
+    implementation ("io.vertx:vertx-rx-java2:${libs.vertx}",{
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    })
+
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation "ch.qos.logback:logback-classic:${libs.logback}"
+    implementation "ch.qos.logback:logback-core:${libs.logback}"
+    implementation "ch.qos.logback:logback-access:${libs.logback}"
+    implementation "org.projectlombok:lombok:${libs.lombok}"
+
+    implementation project(":core")
 }

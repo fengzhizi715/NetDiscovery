@@ -21,6 +21,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation project(":core")
+    implementation project(":engine")
     implementation project(":downloader:selenium")
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "org.seleniumhq.selenium:selenium-java:${libs.selenium_java}"

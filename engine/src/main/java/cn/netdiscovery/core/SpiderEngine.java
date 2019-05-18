@@ -2,9 +2,9 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
+import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.domain.response.JobsResponse;
 import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
@@ -13,7 +13,6 @@ import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
-
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
@@ -52,11 +51,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
-import static cn.netdiscovery.core.config.Constant.PROXY_POOL_JOB_NAME;
-import static cn.netdiscovery.core.config.Constant.SPIDER_JOB_NAME;
-import static cn.netdiscovery.core.config.Constant.TRIGGER_GROUP_NAME;
-import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
+import static cn.netdiscovery.core.config.Constant.*;
 
 /**
  * 可以管理多个Spider的容器
