@@ -20,7 +20,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation project(":core")
+    implementation project(":core:core")
     implementation project(":engine")
     implementation project(":downloader:selenium")
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"

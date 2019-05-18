@@ -26,7 +26,7 @@ dependencies {
     implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
-    implementation project(":core")
+    implementation project(":core:core")
 }
 
 publish{

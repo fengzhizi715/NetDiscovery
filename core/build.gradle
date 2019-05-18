@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'com.novoda.bintray-release'
 }
 
 group 'com.cv4j.netdiscovery'
@@ -8,53 +7,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-def libs = rootProject.ext.libraries // 库
-
 repositories {
-    jcenter()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-
-    compileOnly "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
-
-    implementation "io.vertx:vertx-core:${libs.vertx}"
-    implementation "io.vertx:vertx-web:${libs.vertx}"
-    implementation "io.vertx:vertx-web-client:${libs.vertx}"
-    implementation ("io.vertx:vertx-rx-java2:${libs.vertx}",{
-        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
-    })
-
-    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
-    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
-    implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
-
-    implementation "ch.qos.logback:logback-classic:${libs.logback}"
-    implementation "ch.qos.logback:logback-core:${libs.logback}"
-    implementation "ch.qos.logback:logback-access:${libs.logback}"
-    implementation "org.projectlombok:lombok:${libs.lombok}"
-
-    implementation 'com.google.guava:guava:23.6-jre'
-    implementation ("us.codecraft:xsoup:0.3.1",{
-        exclude group: 'org.jsoup', module: 'jsoup'
-    })
-    implementation 'com.jayway.jsonpath:json-path:2.4.0'
-    implementation 'org.jsoup:jsoup:1.10.3'
-
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation "com.lmax:disruptor:${libs.disruptor}"
-
-    implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
-}
-
-publish{
-    userOrg = 'fengzhizi715'
-    groupId = 'cn.netdiscovery'
-    artifactId = 'netdiscovery-core'
-    publishVersion = "$netdiscovery_version"
-    desc = 'this is a universal crawler library'
-    website = 'https://github.com/fengzhizi715/NetDiscovery'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }

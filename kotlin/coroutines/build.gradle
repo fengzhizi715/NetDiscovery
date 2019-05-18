@@ -21,11 +21,10 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation project(":core")
+    implementation project(":core:core")
 
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines}"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${libs.kotlinx_coroutines}"
-    implementation project(":core")
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation "io.vertx:vertx-web:${libs.vertx}"

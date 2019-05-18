@@ -27,7 +27,7 @@ dependencies {
     implementation "org.apache.commons:commons-pool2:${libs.commons_pool2}"
     implementation "org.projectlombok:lombok:${libs.lombok}"
 
-    implementation project(":core")
+    implementation project(":core:core")
 }
 
 publish{

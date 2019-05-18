@@ -25,7 +25,7 @@ dependencies {
     implementation "io.vertx:vertx-web:${libs.vertx}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
 
-    implementation project(":core")
+    implementation project(":core:core")
 }
 
 publish{

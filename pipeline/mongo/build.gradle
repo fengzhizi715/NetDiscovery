@@ -20,7 +20,7 @@ dependencies {
 
     implementation "io.vertx:vertx-mongo-client:${libs.vertx}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
-    implementation project(":core")
+    implementation project(":core:core")
 }
 
 publish{

@@ -22,7 +22,7 @@ dependencies {
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation 'commons-codec:commons-codec:1.12'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation project(":core")
+    implementation project(":core:core")
 }
 
 publish{

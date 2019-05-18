@@ -16,7 +16,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    implementation project(":core")
+    implementation project(":core:core")
     implementation project(":engine")
     implementation project(":downloader:selenium")
     implementation project(":downloader:htmlunit")
