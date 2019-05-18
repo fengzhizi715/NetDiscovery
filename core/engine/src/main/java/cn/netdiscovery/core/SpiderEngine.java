@@ -51,7 +51,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static cn.netdiscovery.core.config.Constant.*;
+import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
+import static cn.netdiscovery.core.config.Constant.PROXY_POOL_JOB_NAME;
+import static cn.netdiscovery.core.config.Constant.SPIDER_JOB_NAME;
+import static cn.netdiscovery.core.config.Constant.TRIGGER_GROUP_NAME;
+import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
 
 /**
  * 可以管理多个Spider的容器
