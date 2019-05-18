@@ -1,8 +1,12 @@
 rootProject.name = 'netdiscovery'
-include 'core'
+
 include 'agent'
 include 'example'
 include 'engine'
+
+include 'core'
+include 'core:core'
+findProject(':core:core')?.name = 'core'
 
 include 'downloader'
 include 'downloader:httpclient'
@@ -37,5 +41,3 @@ include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
 include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
-
-
