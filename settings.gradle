@@ -2,6 +2,7 @@ rootProject.name = 'netdiscovery'
 include 'core'
 include 'agent'
 include 'example'
+include 'engine'
 
 include 'downloader'
 include 'downloader:httpclient'
