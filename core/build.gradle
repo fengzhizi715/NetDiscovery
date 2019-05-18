@@ -48,8 +48,6 @@ dependencies {
     implementation "com.lmax:disruptor:${libs.disruptor}"
 
     implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
-
-    implementation "org.quartz-scheduler:quartz:${libs.quartz}"
 }
 
 publish{

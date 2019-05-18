@@ -32,5 +32,7 @@ dependencies {
     implementation "ch.qos.logback:logback-access:${libs.logback}"
     implementation "org.projectlombok:lombok:${libs.lombok}"
 
+    implementation "org.quartz-scheduler:quartz:${libs.quartz}"
+
     implementation project(":core")
 }
