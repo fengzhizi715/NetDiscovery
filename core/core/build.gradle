@@ -53,7 +53,7 @@ dependencies {
 publish{
     userOrg = 'fengzhizi715'
     groupId = 'cn.netdiscovery'
-    artifactId = 'netdiscovery-core'
+    artifactId = 'netdiscovery-core-core'
     publishVersion = "$netdiscovery_version"
     desc = 'this is a universal crawler library'
     website = 'https://github.com/fengzhizi715/NetDiscovery'
