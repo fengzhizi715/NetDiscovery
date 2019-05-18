@@ -31,7 +31,8 @@
 
 模块名|最新版本|
 ---|:-------------:
-netdiscovery-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core/_latestVersion)
+netdiscovery-core-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core-core/_latestVersion)
+netdiscovery-core-engine|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core-engine/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core-engine/_latestVersion)
 netdiscovery-downloader-htmlunit|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-htmlunit/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-htmlunit/_latestVersion)
 netdiscovery-downloader-httpclient|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-httpclient/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-httpclient/_latestVersion)
 netdiscovery-downloader-okhttp|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-okhttp/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-okhttp/_latestVersion)
@@ -62,11 +63,17 @@ repositories {
 
 ## core
 
-netdiscovery-core
+netdiscovery-core-core
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core:1.1.2'
+implementation 'cn.netdiscovery:netdiscovery-core-core:1.2.0'
 
+```
+
+netdiscovery-core-engine
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-core-engine:1.2.0'
 ```
 
 ## downloader
