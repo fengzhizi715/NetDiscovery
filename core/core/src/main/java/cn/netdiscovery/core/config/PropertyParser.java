@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.utils;
+package cn.netdiscovery.core.config;
 
 import com.safframework.tony.common.utils.IOUtils;
 
