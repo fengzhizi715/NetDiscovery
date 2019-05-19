@@ -1,6 +1,5 @@
 package cn.netdiscovery.core.config;
 
-import cn.netdiscovery.core.utils.PropertyParser;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.io.IOException;
