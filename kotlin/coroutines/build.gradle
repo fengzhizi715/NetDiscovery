@@ -22,6 +22,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation project(":core:core")
+    implementation project(":core:engine")
 
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.kotlinx_coroutines}"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${libs.kotlinx_coroutines}"
