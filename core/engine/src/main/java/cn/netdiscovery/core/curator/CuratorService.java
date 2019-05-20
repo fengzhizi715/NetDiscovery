@@ -55,7 +55,7 @@ public class CuratorService implements Watcher {
         //System.out.println("process执行了哦。。。。");
         List<String> newZodeInfos = null;
         try {
-            newZodeInfos = client.getChildren().usingWatcher(this).forPath("/curators");
+            newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
             //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前爬虫集群的状态：新增，宕机，变更...
 
             //思想：哪个容器中元素多，就循环遍历哪个容器。
