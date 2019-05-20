@@ -35,6 +35,9 @@ dependencies {
 
     implementation "org.quartz-scheduler:quartz:${libs.quartz}"
 
+    implementation 'org.apache.zookeeper:zookeeper:3.4.14'
+    implementation 'org.apache.curator:curator-framework:2.13.0'
+
     implementation project(":core:core")
 }
 

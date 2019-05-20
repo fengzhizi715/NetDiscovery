@@ -38,6 +38,11 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.curator.RetryPolicy;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.CreateMode;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -417,6 +422,8 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
+            registerZK();
+
             if (registerConsumer!=null) {
                 registerConsumer.process();
             }
@@ -442,6 +449,30 @@ public class SpiderEngine {
                 stopSpiders();
                 QuartzManager.shutdownJobs();
             }));
+        }
+    }
+
+    /**
+     * 将当前 SpiderEngine 注册到 zookeeper 指定的目录 /netdiscovery 下
+     */
+    private void registerZK() {
+
+        String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
+
+        if (Preconditions.isNotBlank(zkStr)) {
+
+            RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
+            CuratorFramework client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
+            client.start();
+            try {
+                String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + System.currentTimeMillis();
+                String nowCrawlerZNode = "/netdiscovery/" + ipAddr;
+                client.create().withMode(CreateMode.EPHEMERAL).forPath(nowCrawlerZNode,nowCrawlerZNode.getBytes());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
