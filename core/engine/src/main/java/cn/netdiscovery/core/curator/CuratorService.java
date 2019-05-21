@@ -1,6 +1,7 @@
 package cn.netdiscovery.core.curator;
 
 import cn.netdiscovery.core.config.Configuration;
+import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -30,17 +31,19 @@ public class CuratorService implements Watcher {
 
         String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
 
-        RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
-        client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
-        //注意：在start方法之后书写具体的操作
-        client.start();
+        if (Preconditions.isNotBlank(zkStr)) {
 
-        try {
-            initAllZnodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
-        } catch (Exception e) {
-            e.printStackTrace();
+            RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
+            client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
+            //注意：在start方法之后书写具体的操作
+            client.start();
+
+            try {
+                initAllZnodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     /**
@@ -65,7 +68,6 @@ public class CuratorService implements Watcher {
                 //明确显示新增了哪个爬虫节点
                 for (String nowZNode:newZodeInfos) {
                     if (!newZodeInfos.contains(nowZNode)){
-                        // System.out.printf("新增爬虫节点【%s】%n", nowZNode);
                         log.info("新增爬虫节点{}", nowZNode);
                     }
                 }
