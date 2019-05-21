@@ -23,7 +23,7 @@ public class CuratorService implements Watcher {
     private CuratorFramework client;
 
     /**
-     * 容器，用于存储指定zNode下所有子zNode的名字
+     * 容器，用于存储指定 zNode 下所有子 zNode 的名字
      */
     private List<String> initAllZnodes;
 
@@ -47,7 +47,7 @@ public class CuratorService implements Watcher {
     }
 
     /**
-     * 当前所监控的父的zNode下若是子zNode发生了变化：新增，删除，修改
+     * 当前所监控的父的 zNode 下若是子 zNode 发生了变化：新增，删除，修改
      * <p>
      * 下述方法都会触发执行
      *
@@ -59,7 +59,7 @@ public class CuratorService implements Watcher {
         List<String> newZodeInfos = null;
         try {
             newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
-            //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前爬虫集群的状态：新增，宕机，变更...
+            //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机，变更...
 
             //思想：哪个容器中元素多，就循环遍历哪个容器。
 
@@ -68,7 +68,7 @@ public class CuratorService implements Watcher {
                 //明确显示新增了哪个爬虫节点
                 for (String nowZNode:newZodeInfos) {
                     if (!newZodeInfos.contains(nowZNode)){
-                        log.info("新增爬虫节点{}", nowZNode);
+                        log.info("新增 SpiderEngine 节点{}", nowZNode);
                     }
                 }
             }else if (newZodeInfos.size()<initAllZnodes.size()){
@@ -76,7 +76,7 @@ public class CuratorService implements Watcher {
                 //明确显示哪个爬虫节点宕机了
                 for (String initZNode : initAllZnodes) {
                     if (!newZodeInfos.contains(initZNode)) {
-                        log.info("爬虫节点【{}】宕机了哦！", initZNode);
+                        log.info("SpiderEngine 节点【{}】宕机了哦！", initZNode);
 
 //                        //分布式爬虫的HA
 //                        Process ps = Runtime.getRuntime().exec("/opt/crawler/crawler.sh");
