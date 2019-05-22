@@ -172,7 +172,7 @@ implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.2.1'
 # TODO List:
 
 1. 完善 wiki，增加各个模式的使用说明
-2. 增加注册中心
+2. zookeeper 监控 SpiderEngine 集群
 3. 各个模块能够从配置文件中获取爬虫相应的配置
 4. 增强 HtmlUnit 模块
 5. 增加 chromium 的支持
