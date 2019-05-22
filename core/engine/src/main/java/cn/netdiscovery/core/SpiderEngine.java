@@ -466,8 +466,8 @@ public class SpiderEngine {
             client.start();
             try {
                 String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + System.currentTimeMillis();
-                String nowCrawlerZNode = "/netdiscovery/" + ipAddr;
-                client.create().withMode(CreateMode.EPHEMERAL).forPath(nowCrawlerZNode,nowCrawlerZNode.getBytes());
+                String nowSpiderEngineZNode = "/netdiscovery/" + ipAddr;
+                client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             } catch (Exception e) {
