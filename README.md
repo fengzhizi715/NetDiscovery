@@ -24,7 +24,7 @@
 * 支持 URL 去重：使用布隆过滤器
 * 爬虫的监控
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
-* 整合 Quartz
+* SpiderEngine 整合 Quartz
 
 
 # 最新版本
