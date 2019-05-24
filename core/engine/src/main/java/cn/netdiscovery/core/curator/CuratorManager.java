@@ -10,15 +10,13 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
 
 /**
  * Created by tony on 2019-05-21.
  */
 @Slf4j
-public class CuratorService implements Watcher {
+public class CuratorManager implements Watcher {
 
     private CuratorFramework client;
 
@@ -29,7 +27,7 @@ public class CuratorService implements Watcher {
 
     private DownTimeProcess downTimeProcess;
 
-    public CuratorService() {
+    public CuratorManager() {
 
         String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
         log.info("zkStr: {}", zkStr);
@@ -49,7 +47,7 @@ public class CuratorService implements Watcher {
         }
     }
 
-    public CuratorService downTimeProcess(DownTimeProcess downTimeProcess) {
+    public CuratorManager downTimeProcess(DownTimeProcess downTimeProcess) {
         this.downTimeProcess = downTimeProcess;
         return this;
     }
@@ -86,14 +84,10 @@ public class CuratorService implements Watcher {
                     if (!newZodeInfos.contains(initZNode)) {
                         log.info("SpiderEngine 节点【{}】宕机了！", initZNode);
 
-//                        //分布式爬虫的HA
-//                        Process ps = Runtime.getRuntime().exec("/opt/crawler/crawler.sh");
-//                        ps.waitFor();
-//                        BufferedReader br = new BufferedReader(new InputStreamReader(ps.getInputStream()));
-//                        String line = null;
-//                        while ((line = br.readLine()) != null) {
-//                            log.info(line);
-//                        }
+                        // 宕机的处理
+                        if (downTimeProcess!=null) {
+                            downTimeProcess.process();
+                        }
                     }
                 }
 
@@ -126,6 +120,6 @@ public class CuratorService implements Watcher {
 
     public static void main(String[] args) {
         //监控服务启动
-        new CuratorService().start();
+        new CuratorManager().start();
     }
 }
