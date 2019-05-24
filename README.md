@@ -47,7 +47,7 @@ netdiscovery-queue-redis|[ ![Download](https://api.bintray.com/packages/fengzhiz
 netdiscovery-kotlin-coroutines|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 netdiscovery-kotlin-dsl|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-kotlin-coroutines/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-kotlin-coroutines/_latestVersion)
 
-NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。更多细节在不断地完善中，未来会考虑做成一个更通用的爬虫框架。
+NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前正在不断地完善中，未来会做成一个更为通用的爬虫框架。
 
 对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
