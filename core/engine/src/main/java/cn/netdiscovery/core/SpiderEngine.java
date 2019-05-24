@@ -458,9 +458,9 @@ public class SpiderEngine {
     private void registerZK() {
 
         String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
-        log.info("zkStr: {}", zkStr);
 
         if (Preconditions.isNotBlank(zkStr)) {
+            log.info("zkStr: {}", zkStr);
 
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
             CuratorFramework client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
