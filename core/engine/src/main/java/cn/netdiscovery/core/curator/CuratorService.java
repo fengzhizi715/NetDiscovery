@@ -27,9 +27,12 @@ public class CuratorService implements Watcher {
      */
     private List<String> initAllZnodes;
 
+    private DownTimeProcess downTimeProcess;
+
     public CuratorService() {
 
         String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
+        log.info("zkStr: {}", zkStr);
 
         if (Preconditions.isNotBlank(zkStr)) {
 
@@ -46,6 +49,11 @@ public class CuratorService implements Watcher {
         }
     }
 
+    public CuratorService downTimeProcess(DownTimeProcess downTimeProcess) {
+        this.downTimeProcess = downTimeProcess;
+        return this;
+    }
+
     /**
      * 当前所监控的父的 zNode 下若是子 zNode 发生了变化：新增，删除，修改
      * <p>
@@ -55,7 +63,7 @@ public class CuratorService implements Watcher {
      */
     @Override
     public void process(WatchedEvent event) {
-        //System.out.println("process执行了哦。。。。");
+
         List<String> newZodeInfos = null;
         try {
             newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
@@ -65,7 +73,7 @@ public class CuratorService implements Watcher {
 
             //新增
             if (newZodeInfos.size()>initAllZnodes.size()){
-                //明确显示新增了哪个爬虫节点
+                //明确显示新增了哪个 SpiderEngine 节点
                 for (String nowZNode:newZodeInfos) {
                     if (!newZodeInfos.contains(nowZNode)){
                         log.info("新增 SpiderEngine 节点{}", nowZNode);
@@ -73,10 +81,10 @@ public class CuratorService implements Watcher {
                 }
             }else if (newZodeInfos.size()<initAllZnodes.size()){
                 //宕机
-                //明确显示哪个爬虫节点宕机了
+                //明确显示哪个 SpiderEngine 节点宕机了
                 for (String initZNode : initAllZnodes) {
                     if (!newZodeInfos.contains(initZNode)) {
-                        log.info("SpiderEngine 节点【{}】宕机了哦！", initZNode);
+                        log.info("SpiderEngine 节点【{}】宕机了！", initZNode);
 
 //                        //分布式爬虫的HA
 //                        Process ps = Runtime.getRuntime().exec("/opt/crawler/crawler.sh");
@@ -90,7 +98,7 @@ public class CuratorService implements Watcher {
                 }
 
             }else {
-                //容器中爬虫的个数未发生变化（不用处理）
+                // SpiderEngine 的个数未发生变化（不用处理）
                 //①爬虫集群正常运行
                 //②宕机了，当时马上重启了，总的爬虫未发生变化
             }
@@ -105,6 +113,15 @@ public class CuratorService implements Watcher {
         while (true){
 
         }
+    }
+
+    /**
+     * SpiderEngine 节点宕机的处理
+     */
+    @FunctionalInterface
+    public interface DownTimeProcess  {
+
+        void process();
     }
 
     public static void main(String[] args) {

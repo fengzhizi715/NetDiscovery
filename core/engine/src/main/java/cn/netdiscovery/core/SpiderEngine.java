@@ -457,10 +457,9 @@ public class SpiderEngine {
      */
     private void registerZK() {
 
-//        String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
-
-        String zkStr = "localhost:2181";
+        String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
         log.info("zkStr: {}", zkStr);
+
         if (Preconditions.isNotBlank(zkStr)) {
 
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
