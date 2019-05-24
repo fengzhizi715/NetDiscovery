@@ -160,11 +160,9 @@ public class YamlParser {
                 // New keyPath from current line.
                 keyPath = mKeyPathFactory.createKeyPath(index, key);
 
-                // Add key-value if not only key.
+//                // Add key-value if not only key.
                 if (str.length > 1) {
-                    // Remove unnecessary strings.
-                    String value = str[1].trim().replaceAll("\"", "");
-                    hash.put(keyPath, value);
+                    hash.put(keyPath, line.substring(key.length()+1).trim());
                 }
             }
         }
