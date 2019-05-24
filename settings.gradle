@@ -8,6 +8,8 @@ include 'core:core'
 findProject(':core:core')?.name = 'core'
 include 'core:engine'
 findProject(':core:engine')?.name = 'engine'
+include 'core:monitor'
+findProject(':core:monitor')?.name = 'monitor'
 
 include 'downloader'
 include 'downloader:httpclient'
@@ -42,5 +44,3 @@ include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
 include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
-
-
