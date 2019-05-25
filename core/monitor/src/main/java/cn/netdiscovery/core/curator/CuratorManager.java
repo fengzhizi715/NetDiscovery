@@ -21,7 +21,7 @@ public class CuratorManager implements Watcher {
     private CuratorFramework client;
 
     /**
-     * 容器，用于存储指定 zNode 下所有子 zNode 的名字
+     * 用于存储指定 zNode 下所有子 zNode 的名字
      */
     private List<String> initAllZnodes;
 
@@ -68,13 +68,9 @@ public class CuratorManager implements Watcher {
         List<String> newZodeInfos = null;
         try {
             newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
-            //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
-
-            //思想：哪个容器中元素多，就循环遍历哪个容器。
-
+            //根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
+            //哪个容器中元素多，就循环遍历哪个容器。
             if (Preconditions.isNotBlank(newZodeInfos)) {
-
-                //新增
                 if (newZodeInfos.size()>initAllZnodes.size()){
                     //明确显示新增了哪个 SpiderEngine 节点
                     for (String nowZNode:newZodeInfos) {
@@ -89,15 +85,14 @@ public class CuratorManager implements Watcher {
                         if (!newZodeInfos.contains(initZNode)) {
                             log.info("SpiderEngine 节点【{}】下线了！", initZNode);
 
-                            // 下线的处理
+                            // 如果有下线的处理，则处理(例如发邮件、短信等)
                             if (serverOfflineProcess!=null) {
                                 serverOfflineProcess.process();
                             }
                         }
                     }
                 }else {
-                    // SpiderEngine 的个数未发生变化（不用处理）
-                    // SpiderEngine 集群正常运行
+                    // SpiderEngine 集群正常运行;
                     // 宕机/下线了，当时马上重启了，总的爬虫未发生变化
                 }
             }
@@ -105,7 +100,6 @@ public class CuratorManager implements Watcher {
             e.printStackTrace();
         }
 
-        //要达到每次都是与上一次比较的效果，需要动态替换：initAllZnodes
         initAllZnodes = newZodeInfos;
     }
 
