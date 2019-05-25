@@ -76,6 +76,10 @@ public class SpiderEngine {
 
     private boolean useMonitor = false;
 
+    private boolean useZk = false;
+
+    private String zkStr;
+
     private RegisterConsumer registerConsumer;
 
     private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
@@ -135,10 +139,13 @@ public class SpiderEngine {
 
         try {
             defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
-            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"));
+            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"));
+            zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
+            useZk = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useZk"));
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
+            useZk = false;
         }
     }
 
@@ -457,9 +464,7 @@ public class SpiderEngine {
      */
     private void registerZK() {
 
-        String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
-
-        if (Preconditions.isNotBlank(zkStr)) {
+        if (Preconditions.isNotBlank(zkStr) && useZk) {
             log.info("zkStr: {}", zkStr);
 
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
