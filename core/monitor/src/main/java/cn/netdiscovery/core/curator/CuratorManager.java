@@ -65,7 +65,7 @@ public class CuratorManager implements Watcher {
         List<String> newZodeInfos = null;
         try {
             newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
-            //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机，变更...
+            //概述：根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
 
             //思想：哪个容器中元素多，就循环遍历哪个容器。
 
@@ -94,8 +94,8 @@ public class CuratorManager implements Watcher {
                     }
                 }else {
                     // SpiderEngine 的个数未发生变化（不用处理）
-                    //①爬虫集群正常运行
-                    //②宕机/下线了，当时马上重启了，总的爬虫未发生变化
+                    // SpiderEngine 集群正常运行
+                    // 宕机/下线了，当时马上重启了，总的爬虫未发生变化
                 }
             }
         } catch (Exception e) {
@@ -106,7 +106,7 @@ public class CuratorManager implements Watcher {
         initAllZnodes = newZodeInfos;
     }
 
-    private void start(){
+    public void start(){
         while (true){
 
         }
@@ -119,12 +119,5 @@ public class CuratorManager implements Watcher {
     public interface ServerOfflineProcess  {
 
         void process();
-    }
-
-    public static void main(String[] args) {
-        //监控服务启动
-        new CuratorManager().serverOfflineProcess(()->{
-            log.info("111111111");
-        }).start();
     }
 }

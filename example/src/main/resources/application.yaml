@@ -38,4 +38,4 @@ spiderEngine:
   config:
     port: 8715
     useMonitor: true
-    zkStr: localhost:2181
+    zkStr: "localhost:2181"

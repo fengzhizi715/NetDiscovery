@@ -162,7 +162,7 @@ public class YamlParser {
 
 //                // Add key-value if not only key.
                 if (str.length > 1) {
-                    hash.put(keyPath, line.substring(key.length()+1).trim());
+                    hash.put(keyPath, line.substring(key.length()+1).replace("\"","").trim());
                 }
             }
         }
