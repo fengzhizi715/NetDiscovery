@@ -22,7 +22,7 @@
 * 支持代理池、User Agent 池、Cookies 池
 * 支持爬虫的深度抓取：能够在 Pipeline 中发起深度抓取
 * 支持 URL 去重：使用布隆过滤器
-* Spider 的监控、SpiderEngine 的监控(基于Zookeeper)
+* Spider 的监控、SpiderEngine 的监控 (基于Zookeeper)
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
 * SpiderEngine 整合 Quartz
 
@@ -66,14 +66,14 @@ repositories {
 netdiscovery-core-core
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core-core:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-core-core:1.2.2'
 
 ```
 
 netdiscovery-core-engine
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core-engine:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-core-engine:1.2.2'
 ```
 
 ## downloader
@@ -81,25 +81,25 @@ implementation 'cn.netdiscovery:netdiscovery-core-engine:1.2.1'
 netdiscovery-downloader-htmlunit
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-htmlunit:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-downloader-htmlunit:1.2.2'
 ```
 
 netdiscovery-downloader-httpclient
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-httpclient:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-downloader-httpclient:1.2.2'
 ```
 
 netdiscovery-downloader-okhttp
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-okhttp:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-downloader-okhttp:1.2.2'
 ```
 
 netdiscovery-downloader-selenium
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.2.2'
 ```
 
 ## pipeline
@@ -107,25 +107,25 @@ implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.2.1'
 netdiscovery-pipeline-couchbase
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-couchbase:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-couchbase:1.2.2'
 ```
 
 netdiscovery-pipeline-elasticsearch
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-elasticsearch:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-elasticsearch:1.2.2'
 ```
 
 netdiscovery-pipeline-mongo
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-mongo:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-mongo:1.2.2'
 ```
 
 netdiscovery-pipeline-redis
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.2.2'
 ```
 
 ## queue
@@ -133,18 +133,18 @@ implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.2.1'
 netdiscovery-queue-kafka
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-kafka:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-queue-kafka:1.2.2'
 ```
 
 netdiscovery-queue-rabbitmq
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:1.2.2'
 ```
 netdiscovery-queue-redis
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.2.2'
 ```
 
 ## kotlin
@@ -152,13 +152,13 @@ implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.2.1'
 netdiscovery-kotlin-coroutines
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-kotlin-coroutines:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-kotlin-coroutines:1.2.2'
 ```
 
 netdiscovery-kotlin-dsl
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.2.1'
+implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.2.2'
 ```
 
 
