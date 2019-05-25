@@ -458,6 +458,7 @@ public class SpiderEngine {
     private void registerZK() {
 
         String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
+//        zkStr = "localhost:2181";
 
         if (Preconditions.isNotBlank(zkStr)) {
             log.info("zkStr: {}", zkStr);

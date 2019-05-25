@@ -69,32 +69,34 @@ public class CuratorManager implements Watcher {
 
             //思想：哪个容器中元素多，就循环遍历哪个容器。
 
-            //新增
-            if (newZodeInfos.size()>initAllZnodes.size()){
-                //明确显示新增了哪个 SpiderEngine 节点
-                for (String nowZNode:newZodeInfos) {
-                    if (!newZodeInfos.contains(nowZNode)){
-                        log.info("新增 SpiderEngine 节点{}", nowZNode);
-                    }
-                }
-            }else if (newZodeInfos.size()<initAllZnodes.size()){
-                //宕机
-                //明确显示哪个 SpiderEngine 节点宕机了
-                for (String initZNode : initAllZnodes) {
-                    if (!newZodeInfos.contains(initZNode)) {
-                        log.info("SpiderEngine 节点【{}】宕机了！", initZNode);
+            if (Preconditions.isNotBlank(newZodeInfos)) {
 
-                        // 宕机的处理
-                        if (downTimeProcess!=null) {
-                            downTimeProcess.process();
+                //新增
+                if (newZodeInfos.size()>initAllZnodes.size()){
+                    //明确显示新增了哪个 SpiderEngine 节点
+                    for (String nowZNode:newZodeInfos) {
+                        if (!initAllZnodes.contains(nowZNode)){
+                            log.info("新增 SpiderEngine 节点{}", nowZNode);
                         }
                     }
-                }
+                }else if (newZodeInfos.size()<initAllZnodes.size()){
+                    //宕机
+                    //明确显示哪个 SpiderEngine 节点宕机了
+                    for (String initZNode : initAllZnodes) {
+                        if (!newZodeInfos.contains(initZNode)) {
+                            log.info("SpiderEngine 节点【{}】宕机了！", initZNode);
 
-            }else {
-                // SpiderEngine 的个数未发生变化（不用处理）
-                //①爬虫集群正常运行
-                //②宕机了，当时马上重启了，总的爬虫未发生变化
+                            // 宕机的处理
+                            if (downTimeProcess!=null) {
+                                downTimeProcess.process();
+                            }
+                        }
+                    }
+                }else {
+                    // SpiderEngine 的个数未发生变化（不用处理）
+                    //①爬虫集群正常运行
+                    //②宕机了，当时马上重启了，总的爬虫未发生变化
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,6 +122,8 @@ public class CuratorManager implements Watcher {
 
     public static void main(String[] args) {
         //监控服务启动
-        new CuratorManager().start();
+        new CuratorManager().downTimeProcess(()->{
+            log.info("111111111");
+        }).start();
     }
 }
