@@ -25,7 +25,7 @@ public class CuratorManager implements Watcher {
      */
     private List<String> initAllZnodes;
 
-    private DownTimeProcess downTimeProcess;
+    private ServerOfflineProcess serverOfflineProcess;
 
     public CuratorManager() {
 
@@ -47,8 +47,8 @@ public class CuratorManager implements Watcher {
         }
     }
 
-    public CuratorManager downTimeProcess(DownTimeProcess downTimeProcess) {
-        this.downTimeProcess = downTimeProcess;
+    public CuratorManager serverOfflineProcess(ServerOfflineProcess serverOfflineProcess) {
+        this.serverOfflineProcess = serverOfflineProcess;
         return this;
     }
 
@@ -80,27 +80,28 @@ public class CuratorManager implements Watcher {
                         }
                     }
                 }else if (newZodeInfos.size()<initAllZnodes.size()){
-                    //宕机
-                    //明确显示哪个 SpiderEngine 节点宕机了
+                    // 宕机/下线
+                    // 明确显示哪个 SpiderEngine 节点宕机/下线了
                     for (String initZNode : initAllZnodes) {
                         if (!newZodeInfos.contains(initZNode)) {
-                            log.info("SpiderEngine 节点【{}】宕机了！", initZNode);
+                            log.info("SpiderEngine 节点【{}】下线了！", initZNode);
 
-                            // 宕机的处理
-                            if (downTimeProcess!=null) {
-                                downTimeProcess.process();
+                            // 下线的处理
+                            if (serverOfflineProcess!=null) {
+                                serverOfflineProcess.process();
                             }
                         }
                     }
                 }else {
                     // SpiderEngine 的个数未发生变化（不用处理）
                     //①爬虫集群正常运行
-                    //②宕机了，当时马上重启了，总的爬虫未发生变化
+                    //②宕机/下线了，当时马上重启了，总的爬虫未发生变化
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         //要达到每次都是与上一次比较的效果，需要动态替换：initAllZnodes
         initAllZnodes = newZodeInfos;
     }
@@ -112,17 +113,17 @@ public class CuratorManager implements Watcher {
     }
 
     /**
-     * SpiderEngine 节点宕机的处理
+     * SpiderEngine 节点下线的处理
      */
     @FunctionalInterface
-    public interface DownTimeProcess  {
+    public interface ServerOfflineProcess  {
 
         void process();
     }
 
     public static void main(String[] args) {
         //监控服务启动
-        new CuratorManager().downTimeProcess(()->{
+        new CuratorManager().serverOfflineProcess(()->{
             log.info("111111111");
         }).start();
     }
