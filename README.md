@@ -172,11 +172,11 @@ implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.2.2'
 # TODO List:
 
 1. 完善 wiki，增加各个模式的使用说明
-2. zookeeper 监控 SpiderEngine 集群
+2. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 3. 各个模块能够从配置文件中获取爬虫相应的配置
 4. 增强 HtmlUnit 模块
 5. 增加 chromium 的支持
-6. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
+
 
 # Contributors:
 
