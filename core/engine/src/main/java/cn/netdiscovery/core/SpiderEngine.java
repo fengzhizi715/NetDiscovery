@@ -471,7 +471,7 @@ public class SpiderEngine {
             CuratorFramework client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
             client.start();
             try {
-                String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + System.currentTimeMillis();
+                String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + defaultHttpdPort + "-" + System.currentTimeMillis();
                 String nowSpiderEngineZNode = "/netdiscovery/" + ipAddr;
                 client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
             } catch (UnknownHostException e) {

@@ -23,7 +23,7 @@ public class CuratorManager implements Watcher {
     /**
      * 用于存储指定 zNode 下所有子 zNode 的名字
      */
-    private List<String> initAllZnodes;
+    private List<String> allZnodes;
 
     private ServerOfflineProcess serverOfflineProcess;
 
@@ -39,11 +39,11 @@ public class CuratorManager implements Watcher {
 
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
             client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
-            //注意：在start方法之后书写具体的操作
+            // 在start方法之后书写具体的操作
             client.start();
 
             try {
-                initAllZnodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
+                allZnodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -71,17 +71,17 @@ public class CuratorManager implements Watcher {
             //根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
             //哪个容器中元素多，就循环遍历哪个容器。
             if (Preconditions.isNotBlank(newZodeInfos)) {
-                if (newZodeInfos.size()>initAllZnodes.size()){
+                if (newZodeInfos.size()>allZnodes.size()){
                     //明确显示新增了哪个 SpiderEngine 节点
                     for (String nowZNode:newZodeInfos) {
-                        if (!initAllZnodes.contains(nowZNode)){
+                        if (!allZnodes.contains(nowZNode)){
                             log.info("新增 SpiderEngine 节点{}", nowZNode);
                         }
                     }
-                }else if (newZodeInfos.size()<initAllZnodes.size()){
+                }else if (newZodeInfos.size()<allZnodes.size()){
                     // 宕机/下线
                     // 明确显示哪个 SpiderEngine 节点宕机/下线了
-                    for (String initZNode : initAllZnodes) {
+                    for (String initZNode : allZnodes) {
                         if (!newZodeInfos.contains(initZNode)) {
                             log.info("SpiderEngine 节点【{}】下线了！", initZNode);
 
@@ -100,7 +100,7 @@ public class CuratorManager implements Watcher {
             e.printStackTrace();
         }
 
-        initAllZnodes = newZodeInfos;
+        allZnodes = newZodeInfos;
     }
 
     public void start(){
