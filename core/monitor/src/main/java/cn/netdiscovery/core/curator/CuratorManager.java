@@ -29,7 +29,10 @@ public class CuratorManager implements Watcher {
 
     public CuratorManager() {
 
-        String zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
+        this(Configuration.getConfig("spiderEngine.config.zkStr"));
+    }
+
+    public CuratorManager(String zkStr) {
 
         if (Preconditions.isNotBlank(zkStr)) {
             log.info("zkStr: {}", zkStr);
