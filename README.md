@@ -33,6 +33,7 @@
 ---|:-------------:
 netdiscovery-core-core|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core-core/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core-core/_latestVersion)
 netdiscovery-core-engine|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core-engine/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core-engine/_latestVersion)
+netdiscovery-core-engine-monitor|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-core-engine-monitor/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-core-engine-monitor/_latestVersion)
 netdiscovery-downloader-htmlunit|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-htmlunit/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-htmlunit/_latestVersion)
 netdiscovery-downloader-httpclient|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-httpclient/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-httpclient/_latestVersion)
 netdiscovery-downloader-okhttp|[ ![Download](https://api.bintray.com/packages/fengzhizi715/maven/netdiscovery-downloader-okhttp/images/download.svg) ](https://bintray.com/fengzhizi715/maven/netdiscovery-downloader-okhttp/_latestVersion)
@@ -74,6 +75,12 @@ netdiscovery-core-engine
 
 ```groovy
 implementation 'cn.netdiscovery:netdiscovery-core-engine:1.2.2'
+```
+
+netdiscovery-core-engine-monitor
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-core-engine-monitor:1.2.2'
 ```
 
 ## downloader
