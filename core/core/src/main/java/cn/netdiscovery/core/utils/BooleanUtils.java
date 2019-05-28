@@ -22,7 +22,7 @@ public class BooleanUtils {
             if ("true".equals(str)||"TRUE".equals(str)) {
                 return Boolean.TRUE;
             } else if ("false".equals(str)||"FALSE".equals(str)){
-                return Boolean.TRUE;
+                return Boolean.FALSE;
             } else {
                 return defaultValue;
             }
