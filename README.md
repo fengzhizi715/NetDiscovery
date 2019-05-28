@@ -182,8 +182,9 @@ implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.2.3'
 2. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 3. 完善协程的模块
 4. 各个模块能够从配置文件中获取爬虫相应的配置
-5. 增强 HtmlUnit 模块
-6. 增加 chromium 的支持
+5. 通过注解获取配置文件信息
+6. 增强 HtmlUnit 模块
+7. 增加 chromium 的支持
 
 
 # Contributors:
