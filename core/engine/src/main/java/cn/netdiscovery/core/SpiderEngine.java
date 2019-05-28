@@ -577,9 +577,9 @@ public class SpiderEngine {
      */
     public void startProxyPool(Map<String, Class> proxyMap) {
 
-        if (proxyMap!=null) {
-            ProxyPool.proxyMap = proxyMap;
-        }
+        if (proxyMap == null) return;
+
+        ProxyPool.proxyMap = proxyMap;
         ProxyManager proxyManager = ProxyManager.get();
         proxyManager.start();
     }

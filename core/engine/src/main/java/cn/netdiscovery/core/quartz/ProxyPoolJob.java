@@ -25,9 +25,9 @@ public class ProxyPoolJob  implements Job {
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         Map<String, Class> proxyMap = (Map<String, Class>) dataMap.get("proxyMap");
 
-        if (proxyMap!=null) {
-            ProxyPool.proxyMap = proxyMap;
-        }
+        if (proxyMap == null) return;
+
+        ProxyPool.proxyMap = proxyMap;
         ProxyManager proxyManager = ProxyManager.get();
         proxyManager.start();
     }
