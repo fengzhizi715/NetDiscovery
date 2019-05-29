@@ -385,6 +385,9 @@ public class Request implements Serializable {
                 .append(", extras=").append(extras)
                 .append(", priority=").append(priority)
                 .append(", headers=").append(header.toString())
+                .append(", sleepTime=").append(sleepTime)
+                .append(", downloadDelay=").append(downloadDelay)
+                .append(", domainDelay=").append(domainDelay)
                 .append('}')
                 .toString();
     }
