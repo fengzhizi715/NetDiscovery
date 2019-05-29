@@ -4,15 +4,16 @@ spider:
     initialDelay: 0
     maxRetries: 3
     retryDelayMillis: 1000
+    usePrintRequestPipeline: true
     useConsolePipeline: true
 
   request:
     sleepTime: 0
-    autoSleepTime: false
+    autoSleepTime: true
     downloadDelay: 0
-    autoDownloadDelay: false
+    autoDownloadDelay: true
     domainDelay: 0
-    autoDomainDelay: false
+    autoDomainDelay: true
 
   queue:
     # default、disruptor
@@ -38,6 +39,6 @@ spiderEngine:
   config:
     port: 8715
     useMonitor: false
-    useZk: true
+    useZk: false
     zkStr: "localhost:2181"
 

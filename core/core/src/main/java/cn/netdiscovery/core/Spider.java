@@ -15,6 +15,7 @@ import cn.netdiscovery.core.parser.selector.Html;
 import cn.netdiscovery.core.parser.selector.Json;
 import cn.netdiscovery.core.pipeline.ConsolePipeline;
 import cn.netdiscovery.core.pipeline.Pipeline;
+import cn.netdiscovery.core.pipeline.PrintRequestPipeline;
 import cn.netdiscovery.core.queue.DefaultQueue;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue;
@@ -198,12 +199,18 @@ public class Spider {
                 }
             }
 
+            boolean usePrintRequestPipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.usePrintRequestPipeline"),true);
+
+            if (usePrintRequestPipeline) {
+                // 默认使用 PrintRequestPipeline
+                this.pipelines.add(new PrintRequestPipeline());
+            }
+
             boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"),true);
 
             if (useConsolePipeline) {
-
                 // 默认使用 ConsolePipeline
-                this.pipelines.add(new ConsolePipeline(pipelineDelay));
+                this.pipelines.add(new ConsolePipeline());
             }
 
         } catch (ClassCastException e) {
