@@ -1,6 +1,8 @@
 package cn.netdiscovery.core.utils;
 
 import cn.netdiscovery.core.domain.Request;
+import com.cv4j.proxy.ProxyPool;
+import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
@@ -40,6 +42,8 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
 
                         log.info("url:" + url + " get error, it will try after " + retryDelayMillis
                                 + " millisecond, retry count " + retryCount);
+
+                        log.info(request.toString());
                     } else {
 
                         log.info("get error, it will try after " + retryDelayMillis
@@ -54,6 +58,13 @@ public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publishe
                                 public Long apply(Long aLong) throws Exception {
 
                                     Request.BeforeRequest beforeRequest = request.getBeforeRequest();
+
+                                    Proxy proxy = ProxyPool.getProxy();
+
+                                    if (proxy != null && SpiderUtils.checkProxy(proxy)) { // 如果存在代理，则重试时切换一下代理
+                                        request.proxy(proxy);
+                                    }
+
                                     if (beforeRequest != null) {
                                         beforeRequest.process(request);
                                     }

@@ -377,7 +377,7 @@ public class Request implements Serializable {
 
         StringBuilder sb = new StringBuilder();
 
-        return sb.append("Request{")
+        sb.append("Request{")
                 .append("spiderName=").append(spiderName)
                 .append(", url='").append(url).append('\'')
                 .append(", method='").append(httpMethod).append('\'')
@@ -387,8 +387,13 @@ public class Request implements Serializable {
                 .append(", headers=").append(header.toString())
                 .append(", sleepTime=").append(sleepTime)
                 .append(", downloadDelay=").append(downloadDelay)
-                .append(", domainDelay=").append(domainDelay)
-                .append('}')
-                .toString();
+                .append(", domainDelay=").append(domainDelay);
+
+        if (proxy!=null) {
+
+            sb.append(", proxy=").append(proxy.getProxyStr());
+        }
+
+        return sb.append('}').toString();
     }
 }

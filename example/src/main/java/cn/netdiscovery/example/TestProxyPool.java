@@ -1,9 +1,6 @@
 package cn.netdiscovery.example;
 
-import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
-import com.cv4j.proxy.ProxyPool;
-import com.cv4j.proxy.site.ProxyDbProxyListPageParser;
 import com.cv4j.proxy.site.XiaoHeXiaProxyListPageParser;
 
 import java.util.HashMap;
