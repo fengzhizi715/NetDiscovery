@@ -33,6 +33,7 @@ public class SpiderJob implements Job {
 
             Stream.of(requests)
                     .forEach(request -> {
+
                         spider.getQueue().pushToRunninSpider(request,spider);
                     });
         }

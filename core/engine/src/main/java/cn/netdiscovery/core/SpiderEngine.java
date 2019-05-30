@@ -533,7 +533,7 @@ public class SpiderEngine {
 
             for (int i=0;i<urls.length;i++) {
 
-                requests[i] = new Request(urls[i],spiderName);
+                requests[i] = new Request(urls[i],spiderName).checkDuplicate(false);
             }
 
             return  addSpiderJob(spiderName,cron,requests);
@@ -562,6 +562,11 @@ public class SpiderEngine {
             jobBean.setTriggerGroupName(TRIGGER_GROUP_NAME);
             jobBean.setCron(cron);
             jobBean.setRequests(requests);
+
+            Stream.of(requests)
+                    .forEach(request -> {
+                        request.checkDuplicate(false);
+                    });
 
             jobs.put(jobName, jobBean);
             QuartzManager.addJob(jobBean, SpiderJob.class, cron, spider, requests);
