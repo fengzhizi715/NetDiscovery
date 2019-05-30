@@ -16,8 +16,7 @@ public class TestSpiderJob {
 
         Request request = new Request("http://www.163.com").checkDuplicate(false);
 
-        spiderEngine
-                .addSpider(Spider.create().name("tony1").request(request))
+        spiderEngine.addSpider(Spider.create().name("tony1").request(request))
                 .httpd()
                 .run();
 

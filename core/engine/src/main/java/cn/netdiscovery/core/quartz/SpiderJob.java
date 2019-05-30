@@ -31,6 +31,15 @@ public class SpiderJob implements Job {
 
             log.info("spiderName="+spider.getName());
 
+            if (spider.getSpiderStatus() == Spider.SPIDER_STATUS_INIT
+                    || spider.getSpiderStatus() == Spider.SPIDER_STATUS_STOPPED) {
+
+                spider.run();
+            } else if (spider.getSpiderStatus() == Spider.SPIDER_STATUS_PAUSE) {
+
+                spider.resume();
+            }
+
             Stream.of(requests)
                     .forEach(request -> {
 
