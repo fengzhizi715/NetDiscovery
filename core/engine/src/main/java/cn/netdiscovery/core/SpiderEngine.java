@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
 import static cn.netdiscovery.core.config.Constant.PROXY_POOL_JOB_NAME;
@@ -521,21 +522,33 @@ public class SpiderEngine {
     /**
      * 给 Spider 发起定时任务
      * @param spiderName
-     * @param url
      * @param cron cron表达式
+     * @param urls
      */
-    public SpiderJobBean addSpiderJob(String spiderName, String url, String cron) {
+    public SpiderJobBean addSpiderJob(String spiderName, String cron, String... urls) {
 
-        return spiders.get(spiderName)!=null ? addSpiderJob(spiderName,new Request(url,spiderName),cron) : null;
+        if (Preconditions.isNotBlank(urls) && spiders.get(spiderName)!=null) {
+
+            Request[] requests = new Request[urls.length];
+
+            for (int i=0;i<urls.length;i++) {
+
+                requests[i] = new Request(urls[i],spiderName);
+            }
+
+            return  addSpiderJob(spiderName,cron,requests);
+        }
+
+        return null;
     }
 
     /**
      * 给 Spider 发起定时任务
      * @param spiderName
-     * @param request
      * @param cron cron表达式
+     * @param requests
      */
-    public SpiderJobBean addSpiderJob(String spiderName, Request request, String cron) {
+    public SpiderJobBean addSpiderJob(String spiderName, String cron, Request... requests) {
 
         Spider spider = spiders.get(spiderName);
 
@@ -548,10 +561,10 @@ public class SpiderEngine {
             jobBean.setTriggerName(TRIGGER_NAME);
             jobBean.setTriggerGroupName(TRIGGER_GROUP_NAME);
             jobBean.setCron(cron);
-            jobBean.setUrl(request.getUrl());
+            jobBean.setRequests(requests);
 
             jobs.put(jobName, jobBean);
-            QuartzManager.addJob(jobBean, SpiderJob.class, cron, spider, request);
+            QuartzManager.addJob(jobBean, SpiderJob.class, cron, spider, requests);
 
             return jobBean;
         }

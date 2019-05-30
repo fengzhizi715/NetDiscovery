@@ -72,9 +72,9 @@ public class QuartzManager {
      * @param jobClass
      * @param cron
      * @param spider
-     * @param request
+     * @param requests
      */
-    public static void addJob(SpiderJobBean jobBean, Class<SpiderJob> jobClass, String cron, Spider spider, Request request) {
+    public static void addJob(SpiderJobBean jobBean, Class<SpiderJob> jobClass, String cron, Spider spider, Request... requests) {
 
         try {
             Scheduler sched = schedulerFactory.getScheduler();
@@ -82,7 +82,7 @@ public class QuartzManager {
             JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobBean.getJobName(), jobBean.getJobGroupName()).build();
 
             jobDetail.getJobDataMap().put("spider", spider);
-            jobDetail.getJobDataMap().put("request", request);
+            jobDetail.getJobDataMap().put("requests", requests);
 
             // 触发器
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();

@@ -2,11 +2,14 @@ package cn.netdiscovery.core.quartz;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
+import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import java.util.stream.Stream;
 
 /**
  * Created by tony on 2019-05-11.
@@ -22,14 +25,16 @@ public class SpiderJob implements Job {
 
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         Spider spider = (Spider) dataMap.get("spider");
-        Request request = (Request) dataMap.get("request");
+        Request[] requests = (Request[]) dataMap.get("requests");
 
-        if (spider!=null && request!=null) {
+        if (spider!=null && Preconditions.isNotBlank(requests)) {
 
             log.info("spiderName="+spider.getName());
-            log.info("request="+request.toString());
 
-            spider.getQueue().pushToRunninSpider(request,spider);
+            Stream.of(requests)
+                    .forEach(request -> {
+                        spider.getQueue().pushToRunninSpider(request,spider);
+                    });
         }
     }
 }

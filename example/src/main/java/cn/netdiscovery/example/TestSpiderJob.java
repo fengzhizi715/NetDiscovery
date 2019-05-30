@@ -3,6 +3,7 @@ package cn.netdiscovery.example;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
 import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.pipeline.ConsolePipeline;
 
 /**
  * Created by tony on 2019-05-12.
@@ -20,6 +21,6 @@ public class TestSpiderJob {
                 .httpd()
                 .run();
 
-        spiderEngine.addSpiderJob("tony1",request,"0 * * * * ?");
+        spiderEngine.addSpiderJob("tony1","0 * * * * ?" ,request);
     }
 }
