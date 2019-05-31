@@ -59,7 +59,7 @@ repositories {
 }
 ```
 
-# 下载
+# [下载](https://github.com/fengzhizi715/NetDiscovery/blob/master/Download.md)
 
 # 详细功能查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
