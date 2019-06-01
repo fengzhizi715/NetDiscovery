@@ -10,6 +10,8 @@ include 'core:engine'
 findProject(':core:engine')?.name = 'engine'
 include 'core:monitor'
 findProject(':core:monitor')?.name = 'monitor'
+include 'core:agent'
+findProject(':core:agent')?.name = 'agent'
 
 include 'downloader'
 include 'downloader:httpclient'
