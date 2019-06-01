@@ -224,6 +224,7 @@ public class SpiderEngine {
      */
     public SpiderEngine httpd(int port) {
 
+        defaultHttpdPort = port;
         server = VertxUtils.getVertx().createHttpServer();
 
         Router router = Router.router(VertxUtils.getVertx());
