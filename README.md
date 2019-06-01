@@ -12,10 +12,10 @@
 * 模块化设计，便于扩展：支持多种消息队列、多种网络框架，也支持自己实现。
 * 支持分布式
 * 多线程、异步化：底层使用 RxJava 的多线程机制
-* 支持 Request 添加到正在运行爬虫的Queue中
+* 支持 Request 添加到正在运行爬虫的 Queue 中
 * 支持 Kotlin 协程
 * 支持 JS 渲染
-* Request 支持自定义header信息
+* Request 支持自定义 header 信息
 * Request 支持 debug 功能：在调试时可以使用 RxCache，从而避免多次请求同一个网页。
 * 支持失败重试的机制
 * 多纬度控制爬取速度（Pipeline、Request、Download、Domain）等等
@@ -67,6 +67,11 @@ repositories {
 
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
 
+# 基于本人的开源项目
+
+* [RxCache](https://github.com/fengzhizi715/RxCache)
+* [ProxyPool](https://github.com/fengzhizi715/ProxyPool)
+
 # TODO List:
 
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
@@ -82,6 +87,7 @@ repositories {
 * [bdqfork](https://github.com/bdqfork)
 * [homchou](https://github.com/homchou)
 * [sinkinka](https://github.com/sinkinka)
+
 
 # Contributing:
 
