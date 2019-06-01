@@ -20,6 +20,9 @@ dependencies {
 
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 
+    implementation "io.vertx:vertx-core:${libs.vertx}"
+    implementation "io.vertx:vertx-web:${libs.vertx}"
+
     implementation 'org.apache.zookeeper:zookeeper:3.4.14'
     implementation 'org.apache.curator:curator-framework:2.13.0'
 

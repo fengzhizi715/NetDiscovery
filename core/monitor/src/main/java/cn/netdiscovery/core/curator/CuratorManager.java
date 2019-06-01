@@ -1,7 +1,15 @@
 package cn.netdiscovery.core.curator;
 
 import cn.netdiscovery.core.config.Configuration;
+import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.vertx.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
+import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerResponse;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -10,6 +18,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +33,8 @@ public class CuratorManager implements Watcher {
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
     private Map<String,SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
-
+    private Vertx vertx;
+    private HttpServer server;
     private ServerOfflineProcess serverOfflineProcess;
 
     public CuratorManager() {
@@ -55,6 +65,8 @@ public class CuratorManager implements Watcher {
                     stateMap.put(node,SpiderEngineState.ONLINE);
                 });
             }
+
+            vertx = Vertx.vertx();
         }
     }
 
@@ -117,6 +129,48 @@ public class CuratorManager implements Watcher {
         while (true){
 
         }
+    }
+
+    public CuratorManager httpd() {
+
+        server = vertx.createHttpServer();
+
+        Router router = Router.router(VertxUtils.getVertx());
+        router.route().handler(BodyHandler.create());
+
+        router.route("/netdiscovery/monitor").handler(routingContext -> {
+
+            // 所有的请求都会调用这个处理器处理
+            HttpServerResponse response = routingContext.response();
+            response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+            List<MonitorBean> list = new ArrayList<>();
+
+            stateMap.forEach((str,state)->{
+
+                String ipAddr = str.replace("/netdiscovery/","");
+                String[] addresses =ipAddr.split("-");
+                if (Preconditions.isNotBlank(addresses) && addresses.length>2) {
+
+                    MonitorBean bean = new MonitorBean();
+                    bean.setIp(addresses[0]);
+                    bean.setPort(addresses[1]);
+                    bean.setState(state.name());
+                    list.add(bean);
+                }
+            });
+
+            MonitorResponse monitorResponse = new MonitorResponse();
+            monitorResponse.setCode(Constant.OK_STATUS_CODE);
+            monitorResponse.setMessage(Constant.SUCCESS);
+            monitorResponse.setData(list);
+
+            // 写入响应并结束处理
+            response.end(SerializableUtils.toJson(monitorResponse));
+        });
+
+        server.requestHandler(router::accept).listen(8888);
+        return this;
     }
 
     /**
