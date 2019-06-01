@@ -6,7 +6,6 @@ import cn.netdiscovery.core.curator.domain.SpiderEngineState;
 import cn.netdiscovery.core.curator.domain.bean.MonitorBean;
 import cn.netdiscovery.core.curator.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import cn.netdiscovery.core.vertx.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -36,6 +35,7 @@ public class CuratorManager implements Watcher {
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
     private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
+    private int defaultHttpdPort = 8888;
     private Vertx vertx;
     private HttpServer server;
     private ServerOfflineProcess serverOfflineProcess;
@@ -136,9 +136,14 @@ public class CuratorManager implements Watcher {
 
     public CuratorManager httpd() {
 
+        return httpd(defaultHttpdPort);
+    }
+
+    public CuratorManager httpd(int port) {
+
         server = vertx.createHttpServer();
 
-        Router router = Router.router(VertxUtils.getVertx());
+        Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
 
         router.route("/netdiscovery/monitor").handler(routingContext -> {
@@ -158,7 +163,7 @@ public class CuratorManager implements Watcher {
                     MonitorBean bean = new MonitorBean();
                     bean.setIp(addresses[0]);
                     bean.setPort(addresses[1]);
-                    bean.setState(state.name());
+                    bean.setState(state.getState());
                     list.add(bean);
                 }
             });

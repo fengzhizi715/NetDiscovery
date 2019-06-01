@@ -13,4 +13,8 @@ public enum SpiderEngineState {
     SpiderEngineState(String state) {
         this.state = state;
     }
+
+    public String getState() {
+        return state;
+    }
 }
