@@ -1,16 +1,29 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
-group 'cn.netdiscovery'
+mainClassName = 'cn.netdiscovery.agent.Agent'
+
+group 'com.cv4j.netdiscovery'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
+    jcenter()
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation "io.vertx:vertx-core:${libs.vertx}"
+}
+
+shadowJar {
+    mainClassName = 'cn.netdiscovery.agent.Agent'
+    classifier = 'fat'
 }

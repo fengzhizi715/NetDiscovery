@@ -1,6 +1,5 @@
 rootProject.name = 'netdiscovery'
 
-include 'agent'
 include 'example'
 
 include 'core'
