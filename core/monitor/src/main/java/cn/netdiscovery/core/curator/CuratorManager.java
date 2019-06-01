@@ -110,7 +110,7 @@ public class CuratorManager implements Watcher {
                             log.info("SpiderEngine 节点【{}】下线了！", initZNode);
                             stateMap.put(initZNode,SpiderEngineState.OFFLINE);
 
-                            // 如果有下线的处理，则处理(例如发邮件、短信等)
+                            // 如果有下线的处理，则处理(例如发邮件、短信、重启等)
                             if (serverOfflineProcess!=null) {
                                 serverOfflineProcess.process();
                             }
@@ -118,7 +118,7 @@ public class CuratorManager implements Watcher {
                     }
                 }else {
                     // SpiderEngine 集群正常运行;
-                    // 宕机/下线了，当时马上重启了，总的爬虫未发生变化
+                    // 宕机/下线了，当时马上重启了，总数未发生变化
                 }
             }
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class CuratorManager implements Watcher {
 
                 String ipAddr = str.replace("/netdiscovery/","");
                 String[] addresses =ipAddr.split("-");
-                if (Preconditions.isNotBlank(addresses) && addresses.length>2) {
+                if (Preconditions.isNotBlank(addresses) && addresses.length>=2) {
 
                     MonitorBean bean = new MonitorBean();
                     bean.setIp(addresses[0]);
