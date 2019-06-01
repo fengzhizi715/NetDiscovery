@@ -1,5 +1,6 @@
-package cn.netdiscovery.core.curator;
+package cn.netdiscovery.core.curator.domain.response;
 
+import cn.netdiscovery.core.curator.domain.bean.MonitorBean;
 import cn.netdiscovery.core.domain.response.HttpResponse;
 
 import java.util.List;

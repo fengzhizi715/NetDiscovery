@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.curator;
+package cn.netdiscovery.core.curator.domain;
 
 /**
  * Created by tony on 2019-06-01.

@@ -2,6 +2,9 @@ package cn.netdiscovery.core.curator;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.curator.domain.SpiderEngineState;
+import cn.netdiscovery.core.curator.domain.bean.MonitorBean;
+import cn.netdiscovery.core.curator.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import cn.netdiscovery.core.vertx.VertxUtils;
 import com.safframework.tony.common.utils.Preconditions;
@@ -32,7 +35,7 @@ public class CuratorManager implements Watcher {
     private CuratorFramework client;
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
-    private Map<String,SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
+    private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
     private Vertx vertx;
     private HttpServer server;
     private ServerOfflineProcess serverOfflineProcess;

@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.curator;
+package cn.netdiscovery.core.curator.domain.bean;
 
 import lombok.Data;
 
