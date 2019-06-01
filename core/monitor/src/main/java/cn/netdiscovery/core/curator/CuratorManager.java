@@ -35,7 +35,7 @@ public class CuratorManager implements Watcher {
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
     private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
-    private int defaultHttpdPort = 8888;
+    private int defaultHttpdPort = 8316;
     private Vertx vertx;
     private HttpServer server;
     private ServerOfflineProcess serverOfflineProcess;
@@ -177,7 +177,7 @@ public class CuratorManager implements Watcher {
             response.end(SerializableUtils.toJson(monitorResponse));
         });
 
-        server.requestHandler(router::accept).listen(8888);
+        server.requestHandler(router::accept).listen(port);
         return this;
     }
 
