@@ -10,7 +10,9 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tony on 2019-05-21.
@@ -20,10 +22,8 @@ public class CuratorManager implements Watcher {
 
     private CuratorFramework client;
 
-    /**
-     * 用于存储指定 zNode 下所有子 zNode 的名字
-     */
-    private List<String> allZnodes;
+    private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
+    private Map<String,SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
 
     private ServerOfflineProcess serverOfflineProcess;
 
@@ -43,9 +43,17 @@ public class CuratorManager implements Watcher {
             client.start();
 
             try {
-                allZnodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
+                znodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+
+            if (Preconditions.isNotBlank(znodes)) {
+
+                znodes.forEach(node->{
+
+                    stateMap.put(node,SpiderEngineState.ONLINE);
+                });
             }
         }
     }
@@ -71,19 +79,21 @@ public class CuratorManager implements Watcher {
             //根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
             //哪个容器中元素多，就循环遍历哪个容器。
             if (Preconditions.isNotBlank(newZodeInfos)) {
-                if (newZodeInfos.size()>allZnodes.size()){
+                if (newZodeInfos.size()>znodes.size()){
                     //明确显示新增了哪个 SpiderEngine 节点
                     for (String nowZNode:newZodeInfos) {
-                        if (!allZnodes.contains(nowZNode)){
+                        if (!znodes.contains(nowZNode)){
                             log.info("新增 SpiderEngine 节点{}", nowZNode);
+                            stateMap.put(nowZNode,SpiderEngineState.ONLINE);
                         }
                     }
-                }else if (newZodeInfos.size()<allZnodes.size()){
+                }else if (newZodeInfos.size()<znodes.size()){
                     // 宕机/下线
                     // 明确显示哪个 SpiderEngine 节点宕机/下线了
-                    for (String initZNode : allZnodes) {
+                    for (String initZNode : znodes) {
                         if (!newZodeInfos.contains(initZNode)) {
                             log.info("SpiderEngine 节点【{}】下线了！", initZNode);
+                            stateMap.put(initZNode,SpiderEngineState.OFFLINE);
 
                             // 如果有下线的处理，则处理(例如发邮件、短信等)
                             if (serverOfflineProcess!=null) {
@@ -100,7 +110,7 @@ public class CuratorManager implements Watcher {
             e.printStackTrace();
         }
 
-        allZnodes = newZodeInfos;
+        znodes = newZodeInfos;
     }
 
     public void start(){
