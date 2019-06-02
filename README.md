@@ -66,6 +66,7 @@ repositories {
 # 案例:
 
 * [user-agent-list](https://github.com/fengzhizi715/user-agent-list):抓取常用浏览器的user agent
+* [FXHParser](https://github.com/fengzhizi715/FXHParser):抓取非小号数字货币
 
 # 基于本人的开源项目
 
