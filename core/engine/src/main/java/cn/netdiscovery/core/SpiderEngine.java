@@ -43,6 +43,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -472,9 +473,17 @@ public class SpiderEngine {
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
             CuratorFramework client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
             client.start();
+
             try {
+                String path = "/netdiscovery";
+                Stat stat = client.checkExists().forPath(path);
+
+                if (stat==null) {
+                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+                }
+
                 String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + defaultHttpdPort + "-" + System.currentTimeMillis();
-                String nowSpiderEngineZNode = "/netdiscovery/" + ipAddr;
+                String nowSpiderEngineZNode = path + "/" + ipAddr;
                 client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
             } catch (UnknownHostException e) {
                 e.printStackTrace();

@@ -17,8 +17,10 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +58,14 @@ public class CuratorManager implements Watcher {
             client.start();
 
             try {
-                znodes = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
+                String path = "/netdiscovery";
+                Stat stat = client.checkExists().forPath(path);
+
+                if (stat==null) {
+                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+                }
+
+                znodes = client.getChildren().usingWatcher(this).forPath(path);
             } catch (Exception e) {
                 e.printStackTrace();
             }
