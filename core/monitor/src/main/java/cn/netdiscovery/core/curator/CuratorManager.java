@@ -41,6 +41,7 @@ public class CuratorManager implements Watcher {
     private Vertx vertx;
     private HttpServer server;
     private ServerOfflineProcess serverOfflineProcess;
+    private String zkPath;
 
     public CuratorManager() {
 
@@ -58,14 +59,18 @@ public class CuratorManager implements Watcher {
             client.start();
 
             try {
-                String path = "/netdiscovery";
-                Stat stat = client.checkExists().forPath(path);
-
-                if (stat==null) {
-                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+                zkPath = Configuration.getConfig("spiderEngine.config.zkPath");
+                if (Preconditions.isBlank(zkPath)) {
+                    zkPath = "/netdiscovery";
                 }
 
-                znodes = client.getChildren().usingWatcher(this).forPath(path);
+                Stat stat = client.checkExists().forPath(zkPath);
+
+                if (stat==null) {
+                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(zkPath);
+                }
+
+                znodes = client.getChildren().usingWatcher(this).forPath(zkPath);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -99,7 +104,7 @@ public class CuratorManager implements Watcher {
 
         List<String> newZodeInfos = null;
         try {
-            newZodeInfos = client.getChildren().usingWatcher(this).forPath("/netdiscovery");
+            newZodeInfos = client.getChildren().usingWatcher(this).forPath(zkPath);
             //根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
             //哪个容器中元素多，就循环遍历哪个容器。
             if (Preconditions.isNotBlank(newZodeInfos)) {
@@ -165,7 +170,7 @@ public class CuratorManager implements Watcher {
 
             stateMap.forEach((str,state)->{
 
-                String ipAddr = str.replace("/netdiscovery/","");
+                String ipAddr = str.replace(zkPath+"/","");
                 String[] addresses =ipAddr.split("-");
                 if (Preconditions.isNotBlank(addresses) && addresses.length>=2) {
 
