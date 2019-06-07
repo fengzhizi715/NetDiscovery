@@ -574,6 +574,7 @@ public class SpiderEngine {
             jobBean.setRequests(requests);
 
             Stream.of(requests)
+                    .filter(request -> request.isCheckDuplicate() == true)
                     .forEach(request -> {
                         request.checkDuplicate(false);
                     });
