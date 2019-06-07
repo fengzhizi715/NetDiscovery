@@ -41,4 +41,5 @@ spiderEngine:
     useMonitor: false
     useZk: true
     zkStr: "localhost:2181"
+    zkPath: "/netdiscovery"
 

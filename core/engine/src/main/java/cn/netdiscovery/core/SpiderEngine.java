@@ -82,6 +82,8 @@ public class SpiderEngine {
 
     private String zkStr;
 
+    private String zkPath;
+
     private RegisterConsumer registerConsumer;
 
     private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
@@ -144,10 +146,12 @@ public class SpiderEngine {
             useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"));
             zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
             useZk = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useZk"));
+            zkPath = Configuration.getConfig("spiderEngine.config.zkPath");
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
             useZk = false;
+            zkPath = "/netdiscovery";
         }
     }
 
@@ -475,15 +479,18 @@ public class SpiderEngine {
             client.start();
 
             try {
-                String path = "/netdiscovery";
-                Stat stat = client.checkExists().forPath(path);
+                if (Preconditions.isBlank(zkPath)) {
+                    zkPath = "/netdiscovery";
+                }
+
+                Stat stat = client.checkExists().forPath(zkPath);
 
                 if (stat==null) {
-                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(zkPath);
                 }
 
                 String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + defaultHttpdPort + "-" + System.currentTimeMillis();
-                String nowSpiderEngineZNode = path + "/" + ipAddr;
+                String nowSpiderEngineZNode = zkPath + "/" + ipAddr;
                 client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
