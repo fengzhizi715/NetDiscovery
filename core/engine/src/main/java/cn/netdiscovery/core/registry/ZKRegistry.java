@@ -1,5 +1,6 @@
 package cn.netdiscovery.core.registry;
 
+import cn.netdiscovery.core.config.Constant;
 import com.safframework.tony.common.utils.Preconditions;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -25,12 +26,12 @@ public class ZKRegistry implements Registry {
 
         try {
             if (Preconditions.isBlank(path)) {
-                path = "/netdiscovery";
+                path = Constant.DEFAULT_PATH;
             }
 
             Stat stat = client.checkExists().forPath(path);
 
-            if (stat==null) {
+            if (stat==null) { // 如果父目录不存在，则事先创建父目录
                 client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
             }
 

@@ -53,4 +53,7 @@ public class Constant {
     public static final String JOB_GROUP_NAME = "netdiscovery";
 
     public static final String TRIGGER_GROUP_NAME = "netdiscovery";
+
+
+    public static final String DEFAULT_PATH = "/netdiscovery";
 }
