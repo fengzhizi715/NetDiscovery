@@ -13,6 +13,7 @@ import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
+import cn.netdiscovery.core.registry.Registry;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
@@ -38,12 +39,6 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.curator.RetryPolicy;
-import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.data.Stat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,13 +73,13 @@ public class SpiderEngine {
 
     private boolean useMonitor = false;
 
-    private boolean useZk = false;
-
     private String zkStr;
 
     private String zkPath;
 
     private RegisterConsumer registerConsumer;
+
+    private Registry registry;
 
     private int defaultHttpdPort = 8715; // SpiderEngine 默认的端口号
 
@@ -145,12 +140,10 @@ public class SpiderEngine {
             defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
             useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"));
             zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
-            useZk = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useZk"));
             zkPath = Configuration.getConfig("spiderEngine.config.zkPath");
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
-            useZk = false;
             zkPath = "/netdiscovery";
         }
     }
@@ -174,6 +167,12 @@ public class SpiderEngine {
     public SpiderEngine setUseMonitor(boolean useMonitor) {
 
         this.useMonitor = useMonitor;
+        return this;
+    }
+
+    public SpiderEngine setRegistry(Registry registry) {
+
+        this.registry = registry;
         return this;
     }
 
@@ -436,7 +435,9 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            registerZK();
+            if (registry!=null) {
+                registry.register(zkStr,zkPath,defaultHttpdPort);
+            }
 
             if (registerConsumer!=null) {
                 registerConsumer.process();
@@ -463,40 +464,6 @@ public class SpiderEngine {
                 stopSpiders();
                 QuartzManager.shutdownJobs();
             }));
-        }
-    }
-
-    /**
-     * 将当前 SpiderEngine 注册到 zookeeper 指定的目录 /netdiscovery 下
-     */
-    private void registerZK() {
-
-        if (Preconditions.isNotBlank(zkStr) && useZk) {
-            log.info("zkStr: {}", zkStr);
-
-            RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
-            CuratorFramework client = CuratorFrameworkFactory.newClient(zkStr, retryPolicy);
-            client.start();
-
-            try {
-                if (Preconditions.isBlank(zkPath)) {
-                    zkPath = "/netdiscovery";
-                }
-
-                Stat stat = client.checkExists().forPath(zkPath);
-
-                if (stat==null) {
-                    client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(zkPath);
-                }
-
-                String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + defaultHttpdPort + "-" + System.currentTimeMillis();
-                String nowSpiderEngineZNode = zkPath + "/" + ipAddr;
-                client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 

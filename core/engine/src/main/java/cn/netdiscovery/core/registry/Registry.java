@@ -5,5 +5,5 @@ package cn.netdiscovery.core.registry;
  */
 public interface Registry {
 
-    void register(String connectString,String path,int port) throws Exception;
+    void register(String connectString,String path,int port);
 }

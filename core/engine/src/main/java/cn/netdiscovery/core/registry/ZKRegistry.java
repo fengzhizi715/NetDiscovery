@@ -13,12 +13,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
+ * 将当前 SpiderEngine 注册到 zookeeper 指定的目录 /netdiscovery 下
  * Created by tony on 2019-06-09.
  */
 public class ZKRegistry implements Registry {
 
     @Override
-    public void register(String connectString, String path,int port) throws Exception {
+    public void register(String connectString, String path,int port) {
 
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
         CuratorFramework client = CuratorFrameworkFactory.newClient(connectString, retryPolicy);
