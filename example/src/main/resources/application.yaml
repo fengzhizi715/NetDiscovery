@@ -39,7 +39,9 @@ spiderEngine:
   config:
     port: 8715
     useMonitor: false
-    useZk: true
-    zkStr: "localhost:2181"
-    zkPath: "/netdiscovery"
+
+  registry:
+    zookeeper:
+      zkStr: "localhost:2181"
+      zkPath: "/netdiscovery"
 

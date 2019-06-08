@@ -45,7 +45,7 @@ public class CuratorManager implements Watcher {
 
     public CuratorManager() {
 
-        this(Configuration.getConfig("spiderEngine.config.zkStr"));
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"));
     }
 
     public CuratorManager(String zkStr) {
