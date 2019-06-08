@@ -14,6 +14,7 @@ import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.registry.Registry;
+import cn.netdiscovery.core.registry.ZKRegistry;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
@@ -72,10 +73,6 @@ public class SpiderEngine {
     private HttpServer server;
 
     private boolean useMonitor = false;
-
-    private String zkStr;
-
-    private String zkPath;
 
     private RegisterConsumer registerConsumer;
 
@@ -139,12 +136,9 @@ public class SpiderEngine {
         try {
             defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
             useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"));
-            zkStr = Configuration.getConfig("spiderEngine.config.zkStr");
-            zkPath = Configuration.getConfig("spiderEngine.config.zkPath");
         } catch (ClassCastException e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
-            zkPath = "/netdiscovery";
         }
     }
 
@@ -436,7 +430,9 @@ public class SpiderEngine {
         if (Preconditions.isNotBlank(spiders)) {
 
             if (registry!=null) {
-                registry.register(zkStr,zkPath,defaultHttpdPort);
+                if (registry instanceof ZKRegistry) {
+                    registry.register(((ZKRegistry) registry).getZkStr(),((ZKRegistry) registry).getZkPath(),defaultHttpdPort);
+                }
             }
 
             if (registerConsumer!=null) {
