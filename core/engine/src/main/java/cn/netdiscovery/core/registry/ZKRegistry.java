@@ -26,12 +26,17 @@ public class ZKRegistry implements Registry {
 
     public ZKRegistry() {
 
-        zkStr = Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr");
-        zkPath = Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath");
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
+    }
+
+    public ZKRegistry(String zkStr,String zkPath) {
+
+        this.zkStr = zkStr;
+        this.zkPath = zkPath;
     }
 
     @Override
-    public void register(String connectString, String path,int port) {
+    public void register(String connectString, String path, int port) {
 
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
         CuratorFramework client = CuratorFrameworkFactory.newClient(connectString, retryPolicy);
