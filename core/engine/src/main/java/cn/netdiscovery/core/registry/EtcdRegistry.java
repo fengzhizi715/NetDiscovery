@@ -42,9 +42,9 @@ public class EtcdRegistry extends Registry {
     }
 
     @Override
-    public void register(String connectString, String path, int port) {
+    public void register(Provider provider, int port) {
 
-        Client client = Client.builder().endpoints(connectString).build();
+        Client client = Client.builder().endpoints(provider.getConnectString()).build();
         this.lease = client.getLeaseClient();
         this.kv = client.getKVClient();
         try {
@@ -57,7 +57,7 @@ public class EtcdRegistry extends Registry {
 
         try {
             String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + port + "-" + System.currentTimeMillis();
-            String strKey = MessageFormat.format("/{0}/{1}", path, ipAddr);
+            String strKey = MessageFormat.format("/{0}/{1}", provider.getPath(), ipAddr);
             ByteSequence key = ByteSequence.from(strKey, StandardCharsets.UTF_8);
             String weight = "50";
             ByteSequence val = ByteSequence.from(weight, StandardCharsets.UTF_8);

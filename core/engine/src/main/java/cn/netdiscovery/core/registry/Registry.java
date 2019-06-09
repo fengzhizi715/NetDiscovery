@@ -10,5 +10,5 @@ public abstract class Registry {
 
     protected Provider provider;
 
-    public abstract void register(String connectString,String path,int port);
+    public abstract void register(Provider provider,int port);
 }

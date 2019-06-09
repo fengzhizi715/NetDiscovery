@@ -32,25 +32,25 @@ public class ZKRegistry extends Registry {
     }
 
     @Override
-    public void register(String connectString, String path, int port) {
+    public void register(Provider provider, int port) {
 
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000,3);
-        CuratorFramework client = CuratorFrameworkFactory.newClient(connectString, retryPolicy);
+        CuratorFramework client = CuratorFrameworkFactory.newClient(provider.getConnectString(), retryPolicy);
         client.start();
 
         try {
-            if (Preconditions.isBlank(path)) {
-                path = Constant.DEFAULT_PATH;
+            if (Preconditions.isBlank(provider.getPath())) {
+                provider.setPath(Constant.DEFAULT_PATH);
             }
 
-            Stat stat = client.checkExists().forPath(path);
+            Stat stat = client.checkExists().forPath(provider.getPath());
 
             if (stat==null) { // 如果父目录不存在，则事先创建父目录
-                client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(path);
+                client.create().creatingParentContainersIfNeeded().withMode(CreateMode.PERSISTENT).forPath(provider.getPath());
             }
 
             String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + port + "-" + System.currentTimeMillis();
-            String nowSpiderEngineZNode = path + "/" + ipAddr;
+            String nowSpiderEngineZNode = provider.getPath() + "/" + ipAddr;
             client.create().withMode(CreateMode.EPHEMERAL).forPath(nowSpiderEngineZNode,nowSpiderEngineZNode.getBytes());
         } catch (UnknownHostException e) {
             e.printStackTrace();
