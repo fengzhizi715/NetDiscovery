@@ -23,13 +23,11 @@ import java.util.concurrent.Executors;
  */
 @Getter
 @Slf4j
-public class EtcdRegistry implements Registry {
+public class EtcdRegistry extends Registry {
 
     private Lease lease;
     private KV kv;
     private long leaseId;
-    private String etcdStr;
-    private String etcdPath;
 
     public EtcdRegistry() {
 
@@ -38,8 +36,9 @@ public class EtcdRegistry implements Registry {
 
     public EtcdRegistry(String etcdStr,String etcdPath) {
 
-        this.etcdStr = etcdStr;
-        this.etcdPath = etcdPath;
+        provider = new Provider();
+        provider.setConnectString(etcdStr);
+        provider.setPath(etcdPath);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class EtcdRegistry implements Registry {
     }
 
     /**
-     * 发送心跳到 ETCD, 表明该host是活着的
+     * 发送心跳到 etcd, 表明该host是活着的
      */
     private void keepAlive() {
         Executors.newSingleThreadExecutor().submit(

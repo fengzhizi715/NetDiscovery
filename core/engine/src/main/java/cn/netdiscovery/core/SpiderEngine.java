@@ -430,14 +430,9 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            if (registry!=null) {
-                if (registry instanceof ZKRegistry) {
-                    registry.register(((ZKRegistry) registry).getZkStr(),((ZKRegistry) registry).getZkPath(),defaultHttpdPort);
-                }
+            if (registry!=null && registry.getProvider()!=null) {
 
-                if (registry instanceof EtcdRegistry) {
-                    registry.register(((EtcdRegistry) registry).getEtcdStr(),((EtcdRegistry) registry).getEtcdPath(),defaultHttpdPort);
-                }
+                registry.register(registry.getProvider().getConnectString(),registry.getProvider().getPath(),defaultHttpdPort);
             }
 
             if (registerConsumer!=null) {

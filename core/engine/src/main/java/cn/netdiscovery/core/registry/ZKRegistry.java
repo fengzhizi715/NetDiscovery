@@ -3,7 +3,6 @@ package cn.netdiscovery.core.registry;
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import com.safframework.tony.common.utils.Preconditions;
-import lombok.Getter;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -18,11 +17,7 @@ import java.net.UnknownHostException;
  * 将当前 SpiderEngine 注册到 zookeeper 指定的目录 /netdiscovery 下
  * Created by tony on 2019-06-09.
  */
-@Getter
-public class ZKRegistry implements Registry {
-
-    private String zkStr;
-    private String zkPath;
+public class ZKRegistry extends Registry {
 
     public ZKRegistry() {
 
@@ -31,8 +26,9 @@ public class ZKRegistry implements Registry {
 
     public ZKRegistry(String zkStr,String zkPath) {
 
-        this.zkStr = zkStr;
-        this.zkPath = zkPath;
+        provider = new Provider();
+        provider.setConnectString(zkStr);
+        provider.setPath(zkPath);
     }
 
     @Override
