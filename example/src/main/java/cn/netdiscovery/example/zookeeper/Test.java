@@ -2,6 +2,7 @@ package cn.netdiscovery.example.zookeeper;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
+import cn.netdiscovery.core.registry.EtcdRegistry;
 import cn.netdiscovery.core.registry.ZKRegistry;
 
 /**
@@ -17,7 +18,7 @@ public class Test {
                 .addSpider(Spider.create().name("tony1").url("http://www.163.com"))
                 .addSpider(Spider.create().name("tony2").url("http://www.126.com"))
                 .addSpider(Spider.create().name("tony3").url("https://www.baidu.com"))
-                .setRegistry(new ZKRegistry())
+                .setRegistry(new EtcdRegistry())
                 .httpd()
                 .run();
     }

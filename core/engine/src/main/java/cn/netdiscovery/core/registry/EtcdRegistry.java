@@ -1,5 +1,6 @@
 package cn.netdiscovery.core.registry;
 
+import cn.netdiscovery.core.config.Configuration;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
 import io.etcd.jetcd.KV;
@@ -7,6 +8,7 @@ import io.etcd.jetcd.Lease;
 import io.etcd.jetcd.lease.LeaseKeepAliveResponse;
 import io.etcd.jetcd.options.PutOption;
 import io.grpc.stub.StreamObserver;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
@@ -19,12 +21,26 @@ import java.util.concurrent.Executors;
 /**
  * Created by tony on 2019-06-09.
  */
+@Getter
 @Slf4j
 public class EtcdRegistry implements Registry {
 
     private Lease lease;
     private KV kv;
     private long leaseId;
+    private String etcdStr;
+    private String etcdPath;
+
+    public EtcdRegistry() {
+
+        this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"), Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
+    }
+
+    public EtcdRegistry(String etcdStr,String etcdPath) {
+
+        this.etcdStr = etcdStr;
+        this.etcdPath = etcdPath;
+    }
 
     @Override
     public void register(String connectString, String path, int port) {
@@ -42,7 +58,7 @@ public class EtcdRegistry implements Registry {
 
         try {
             String ipAddr = InetAddress.getLocalHost().getHostAddress() + "-" + port + "-" + System.currentTimeMillis();
-            String strKey = MessageFormat.format("/{0}/{1}/{2}:{3}", path, ipAddr);
+            String strKey = MessageFormat.format("/{0}/{1}", path, ipAddr);
             ByteSequence key = ByteSequence.from(strKey, StandardCharsets.UTF_8);
             String weight = "50";
             ByteSequence val = ByteSequence.from(weight, StandardCharsets.UTF_8);

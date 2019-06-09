@@ -13,6 +13,7 @@ import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
+import cn.netdiscovery.core.registry.EtcdRegistry;
 import cn.netdiscovery.core.registry.Registry;
 import cn.netdiscovery.core.registry.ZKRegistry;
 import cn.netdiscovery.core.utils.BooleanUtils;
@@ -432,6 +433,10 @@ public class SpiderEngine {
             if (registry!=null) {
                 if (registry instanceof ZKRegistry) {
                     registry.register(((ZKRegistry) registry).getZkStr(),((ZKRegistry) registry).getZkPath(),defaultHttpdPort);
+                }
+
+                if (registry instanceof EtcdRegistry) {
+                    registry.register(((EtcdRegistry) registry).getEtcdStr(),((EtcdRegistry) registry).getEtcdPath(),defaultHttpdPort);
                 }
             }
 
