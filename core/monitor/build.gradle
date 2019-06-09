@@ -26,6 +26,8 @@ dependencies {
     implementation 'org.apache.zookeeper:zookeeper:3.4.14'
     implementation 'org.apache.curator:curator-framework:2.13.0'
 
+    implementation "io.etcd:jetcd-core:0.3.0"
+
     implementation project(":core:core")
 }
 

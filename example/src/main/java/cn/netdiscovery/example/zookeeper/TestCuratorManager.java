@@ -1,6 +1,6 @@
 package cn.netdiscovery.example.zookeeper;
 
-import cn.netdiscovery.core.curator.CuratorManager;
+import cn.netdiscovery.core.watch.curator.CuratorManager;
 
 /**
  * Created by tony on 2019-05-25.

@@ -1,7 +1,7 @@
-package cn.netdiscovery.core.curator.domain.response;
+package cn.netdiscovery.core.watch.curator.domain.response;
 
-import cn.netdiscovery.core.curator.domain.bean.MonitorBean;
 import cn.netdiscovery.core.domain.response.HttpResponse;
+import cn.netdiscovery.core.watch.curator.domain.bean.MonitorBean;
 
 import java.util.List;
 

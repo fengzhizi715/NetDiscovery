@@ -1,11 +1,11 @@
-package cn.netdiscovery.core.curator;
+package cn.netdiscovery.core.watch.curator;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.curator.domain.SpiderEngineState;
-import cn.netdiscovery.core.curator.domain.bean.MonitorBean;
-import cn.netdiscovery.core.curator.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.watch.curator.domain.SpiderEngineState;
+import cn.netdiscovery.core.watch.curator.domain.bean.MonitorBean;
+import cn.netdiscovery.core.watch.curator.domain.response.MonitorResponse;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -59,7 +59,7 @@ public class CuratorManager implements Watcher {
             client.start();
 
             try {
-                zkPath = Configuration.getConfig("spiderEngine.config.zkPath");
+                zkPath = Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath");
                 if (Preconditions.isBlank(zkPath)) {
                     zkPath = "/netdiscovery";
                 }
@@ -79,7 +79,7 @@ public class CuratorManager implements Watcher {
 
                 znodes.forEach(node->{
 
-                    stateMap.put(node,SpiderEngineState.ONLINE);
+                    stateMap.put(node, SpiderEngineState.ONLINE);
                 });
             }
 
@@ -113,7 +113,7 @@ public class CuratorManager implements Watcher {
                     for (String nowZNode:newZodeInfos) {
                         if (!znodes.contains(nowZNode)){
                             log.info("新增 SpiderEngine 节点{}", nowZNode);
-                            stateMap.put(nowZNode,SpiderEngineState.ONLINE);
+                            stateMap.put(nowZNode, SpiderEngineState.ONLINE);
                         }
                     }
                 }else if (newZodeInfos.size()<znodes.size()){
@@ -122,7 +122,7 @@ public class CuratorManager implements Watcher {
                     for (String initZNode : znodes) {
                         if (!newZodeInfos.contains(initZNode)) {
                             log.info("SpiderEngine 节点【{}】下线了！", initZNode);
-                            stateMap.put(initZNode,SpiderEngineState.OFFLINE);
+                            stateMap.put(initZNode, SpiderEngineState.OFFLINE);
 
                             // 如果有下线的处理，则处理(例如发邮件、短信、重启等)
                             if (serverOfflineProcess!=null) {
