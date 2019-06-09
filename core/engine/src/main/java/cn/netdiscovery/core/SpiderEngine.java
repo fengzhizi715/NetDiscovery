@@ -14,7 +14,6 @@ import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.registry.Registry;
-import cn.netdiscovery.core.registry.ZKRegistry;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.SerializableUtils;
@@ -54,11 +53,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import static cn.netdiscovery.core.config.Constant.JOB_GROUP_NAME;
-import static cn.netdiscovery.core.config.Constant.PROXY_POOL_JOB_NAME;
-import static cn.netdiscovery.core.config.Constant.SPIDER_JOB_NAME;
-import static cn.netdiscovery.core.config.Constant.TRIGGER_GROUP_NAME;
-import static cn.netdiscovery.core.config.Constant.TRIGGER_NAME;
+import static cn.netdiscovery.core.config.Constant.*;
 
 /**
  * 可以管理多个Spider的容器
@@ -429,13 +424,13 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            if (registry!=null) {
-                if (registry instanceof ZKRegistry) {
-                    registry.register(((ZKRegistry) registry).getZkStr(),((ZKRegistry) registry).getZkPath(),defaultHttpdPort);
-                }
+            if (registry!=null && registry.getProvider()!=null) {
+
+                registry.register(registry.getProvider(), defaultHttpdPort);
             }
 
             if (registerConsumer!=null) {
+
                 registerConsumer.process();
             }
 

@@ -1,9 +1,14 @@
 package cn.netdiscovery.core.registry;
 
+import lombok.Getter;
+
 /**
  * Created by tony on 2019-06-08.
  */
-public interface Registry {
+@Getter
+public abstract class Registry {
 
-    void register(String connectString,String path,int port);
+    protected Provider provider;
+
+    public abstract void register(Provider provider,int port);
 }
