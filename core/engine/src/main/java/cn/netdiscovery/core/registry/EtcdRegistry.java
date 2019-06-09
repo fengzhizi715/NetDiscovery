@@ -21,7 +21,6 @@ import java.util.concurrent.Executors;
 /**
  * Created by tony on 2019-06-09.
  */
-@Getter
 @Slf4j
 public class EtcdRegistry extends Registry {
 
@@ -34,7 +33,7 @@ public class EtcdRegistry extends Registry {
         this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"), Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
     }
 
-    public EtcdRegistry(String etcdStr,String etcdPath) {
+    public EtcdRegistry(String etcdStr, String etcdPath) {
 
         provider = new Provider();
         provider.setConnectString(etcdStr);
