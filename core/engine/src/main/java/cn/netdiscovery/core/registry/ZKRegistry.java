@@ -26,7 +26,7 @@ public class ZKRegistry implements Registry {
 
     public ZKRegistry() {
 
-        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"), Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
     }
 
     public ZKRegistry(String zkStr,String zkPath) {
