@@ -356,8 +356,7 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(jobsResponse));
             });
 
-            // 是否使用 agent
-            if (useMonitor) {
+            if (useMonitor) { // 是否使用 agent
 
                 // The web server handler
                 router.route().handler(StaticHandler.create().setCachingEnabled(false));
@@ -502,7 +501,9 @@ public class SpiderEngine {
      */
     public SpiderJobBean addSpiderJob(String spiderName, String cron, String... urls) {
 
-        if (Preconditions.isNotBlank(urls) && spiders.get(spiderName)!=null) {
+        if (Preconditions.isNotBlank(urls)
+                && spiders.get(spiderName)!=null
+                && Preconditions.isNotBlank(cron)) {
 
             Request[] requests = new Request[urls.length];
 
