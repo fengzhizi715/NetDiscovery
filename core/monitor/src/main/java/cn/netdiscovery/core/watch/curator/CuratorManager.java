@@ -2,10 +2,10 @@ package cn.netdiscovery.core.watch.curator;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.SpiderEngineState;
+import cn.netdiscovery.core.domain.bean.MonitorBean;
+import cn.netdiscovery.core.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import cn.netdiscovery.core.watch.curator.domain.SpiderEngineState;
-import cn.netdiscovery.core.watch.curator.domain.bean.MonitorBean;
-import cn.netdiscovery.core.watch.curator.domain.response.MonitorResponse;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
