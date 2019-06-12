@@ -40,7 +40,7 @@ public class ZKRegistry extends Registry {
 
         try {
             if (Preconditions.isBlank(provider.getPath())) {
-                provider.setPath(Constant.DEFAULT_PATH);
+                provider.setPath(Constant.DEFAULT_REGISTRY_PATH);
             }
 
             Stat stat = client.checkExists().forPath(provider.getPath());
