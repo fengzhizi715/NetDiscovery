@@ -61,7 +61,7 @@ public class CuratorManager implements Watcher {
             try {
                 zkPath = Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath");
                 if (Preconditions.isBlank(zkPath)) {
-                    zkPath = "/netdiscovery";
+                    zkPath = Constant.DEFAULT_REGISTRY_PATH;
                 }
 
                 Stat stat = client.checkExists().forPath(zkPath);
