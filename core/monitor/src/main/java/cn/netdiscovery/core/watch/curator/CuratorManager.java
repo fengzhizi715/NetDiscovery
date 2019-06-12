@@ -45,10 +45,10 @@ public class CuratorManager implements Watcher {
 
     public CuratorManager() {
 
-        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"));
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
     }
 
-    public CuratorManager(String zkStr) {
+    public CuratorManager(String zkStr,String zkPath) {
 
         if (Preconditions.isNotBlank(zkStr)) {
             log.info("zkStr: {}", zkStr);
@@ -59,9 +59,10 @@ public class CuratorManager implements Watcher {
             client.start();
 
             try {
-                zkPath = Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath");
                 if (Preconditions.isBlank(zkPath)) {
                     zkPath = Constant.DEFAULT_REGISTRY_PATH;
+                } else {
+                    this.zkPath = zkPath;
                 }
 
                 Stat stat = client.checkExists().forPath(zkPath);

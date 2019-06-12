@@ -22,16 +22,23 @@ import java.util.concurrent.CountDownLatch;
 public class EtcdManager {
 
     private Client client;
+    private String prefixPath;
 
     public EtcdManager() {
 
-        this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"));
+        this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"),Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
     }
 
-    public EtcdManager(String etcdStr) {
+    public EtcdManager(String etcdStr,String etcdPath) {
 
         if (Preconditions.isNotBlank(etcdStr)) {
             client = Client.builder().endpoints(etcdStr).build();
+        }
+
+        if (Preconditions.isBlank(etcdPath)) {
+            prefixPath = Constant.DEFAULT_REGISTRY_PATH;
+        } else {
+            prefixPath = etcdPath;
         }
     }
 
@@ -39,11 +46,6 @@ public class EtcdManager {
 
         CountDownLatch latch = new CountDownLatch(Integer.MAX_VALUE);
         Watch.Watcher watcher = null;
-
-        String prefixPath = Configuration.getConfig("spiderEngine.registry.etcd.etcdPath");
-        if (Preconditions.isBlank(prefixPath)) {
-            prefixPath = Constant.DEFAULT_REGISTRY_PATH;
-        }
 
         try {
             ByteSequence watchKey = ByteSequence.from("/"+prefixPath, StandardCharsets.UTF_8);
