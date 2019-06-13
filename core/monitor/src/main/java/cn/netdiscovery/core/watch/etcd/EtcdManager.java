@@ -10,6 +10,7 @@ import io.etcd.jetcd.Client;
 import io.etcd.jetcd.Watch;
 import io.etcd.jetcd.options.WatchOption;
 import io.etcd.jetcd.watch.WatchEvent;
+import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
@@ -41,6 +42,8 @@ public class EtcdManager extends AbstractWatchManager {
         } else {
             this.path = etcdPath;
         }
+
+        vertx = Vertx.vertx();
     }
 
     public void process() {
