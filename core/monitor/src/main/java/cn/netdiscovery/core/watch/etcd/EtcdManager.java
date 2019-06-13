@@ -46,7 +46,8 @@ public class EtcdManager extends AbstractWatchManager {
         vertx = Vertx.vertx();
     }
 
-    public void process() {
+    @Override
+    public void start() {
 
         if (client!=null) {
 
@@ -98,5 +99,4 @@ public class EtcdManager extends AbstractWatchManager {
             }
         }
     }
-
 }

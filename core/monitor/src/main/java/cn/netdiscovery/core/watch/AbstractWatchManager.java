@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by tony on 2019-06-13.
  */
-public class AbstractWatchManager {
+public abstract class AbstractWatchManager {
 
     protected Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
     protected int defaultHttpdPort = 8316;
@@ -76,4 +76,6 @@ public class AbstractWatchManager {
         server.requestHandler(router::accept).listen(port);
         return this;
     }
+
+    public abstract void start();
 }

@@ -10,7 +10,6 @@ public class TestEtcdManager {
     public static void main(String[] args) {
 
         EtcdManager etcdManager = new EtcdManager();
-        etcdManager.httpd();
-        etcdManager.process();
+        etcdManager.httpd().start();
     }
 }

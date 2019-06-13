@@ -3,16 +3,10 @@ package cn.netdiscovery.core.watch.curator;
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.SpiderEngineState;
-import cn.netdiscovery.core.domain.bean.MonitorBean;
-import cn.netdiscovery.core.domain.response.MonitorResponse;
-import cn.netdiscovery.core.utils.SerializableUtils;
 import cn.netdiscovery.core.watch.AbstractWatchManager;
 import cn.netdiscovery.core.watch.ServerOfflineProcess;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -23,7 +17,6 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -136,6 +129,7 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
         znodes = newZodeInfos;
     }
 
+    @Override
     public void start(){
         while (true){
 
