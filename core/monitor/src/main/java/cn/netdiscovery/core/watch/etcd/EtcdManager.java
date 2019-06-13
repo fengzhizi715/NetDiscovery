@@ -2,6 +2,7 @@ package cn.netdiscovery.core.watch.etcd;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.SpiderEngineState;
 import com.safframework.tony.common.utils.Preconditions;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
@@ -11,6 +12,8 @@ import io.etcd.jetcd.watch.WatchEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
@@ -23,6 +26,7 @@ public class EtcdManager {
 
     private Client client;
     private String prefixPath;
+    private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
 
     public EtcdManager() {
 

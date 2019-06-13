@@ -6,6 +6,7 @@ import cn.netdiscovery.core.domain.SpiderEngineState;
 import cn.netdiscovery.core.domain.bean.MonitorBean;
 import cn.netdiscovery.core.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.watch.ServerOfflineProcess;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -194,14 +195,5 @@ public class CuratorManager implements Watcher {
 
         server.requestHandler(router::accept).listen(port);
         return this;
-    }
-
-    /**
-     * SpiderEngine 节点下线的处理
-     */
-    @FunctionalInterface
-    public interface ServerOfflineProcess  {
-
-        void process();
     }
 }
