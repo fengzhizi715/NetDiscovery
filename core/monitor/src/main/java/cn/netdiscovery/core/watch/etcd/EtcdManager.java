@@ -44,33 +44,51 @@ public class EtcdManager {
 
     public void process() {
 
-        CountDownLatch latch = new CountDownLatch(Integer.MAX_VALUE);
-        Watch.Watcher watcher = null;
+        if (client!=null) {
 
-        try {
-            ByteSequence watchKey = ByteSequence.from("/"+prefixPath, StandardCharsets.UTF_8);
-            WatchOption watchOpts = WatchOption.newBuilder().withRevision(0).withPrefix(ByteSequence.from(("/"+prefixPath).getBytes())).build();
+            CountDownLatch latch = new CountDownLatch(Integer.MAX_VALUE);
+            Watch.Watcher watcher = null;
 
-            watcher = client.getWatchClient().watch(watchKey, watchOpts, response -> {
-                        for (WatchEvent event : response.getEvents()) {
-                            log.info("type={}, key={}, value={}",
-                                    event.getEventType().toString(),
-                                    Optional.ofNullable(event.getKeyValue().getKey())
-                                            .map(bs -> bs.toString(StandardCharsets.UTF_8))
-                                            .orElse(""),
-                                    Optional.ofNullable(event.getKeyValue().getValue())
-                                            .map(bs -> bs.toString(StandardCharsets.UTF_8))
-                                            .orElse(""));
+            try {
+                ByteSequence watchKey = ByteSequence.from("/"+prefixPath, StandardCharsets.UTF_8);
+                WatchOption watchOpts = WatchOption.newBuilder().withRevision(0).withPrefix(ByteSequence.from(("/"+prefixPath).getBytes())).build();
+
+                watcher = client.getWatchClient().watch(watchKey, watchOpts, response -> {
+                            for (WatchEvent event : response.getEvents()) {
+
+                                String key = Optional.ofNullable(event.getKeyValue().getKey()).map(bs -> bs.toString(StandardCharsets.UTF_8)).orElse("");
+                                String value = Optional.ofNullable(event.getKeyValue().getValue()).map(bs -> bs.toString(StandardCharsets.UTF_8)).orElse("");
+
+                                log.info("type={}, key={}, value={}", event.getEventType().toString(),key,value);
+
+                                switch (event.getEventType()) {
+
+                                    case PUT: {
+                                        log.info("新增 SpiderEngine 节点{}", key.replace("/"+prefixPath+"/",""));
+
+                                        break;
+                                    }
+
+                                    case DELETE: {
+                                        log.info("SpiderEngine 节点【{}】下线了！", key.replace("/"+prefixPath+"/",""));
+
+                                        break;
+                                    }
+
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            latch.countDown();
                         }
+                );
 
-                        latch.countDown();
-                    }
-            );
-
-            latch.await();
-        } catch (Exception e) {
-            if (watcher != null) {
-                watcher.close();
+                latch.await();
+            } catch (Exception e) {
+                if (watcher != null) {
+                    watcher.close();
+                }
             }
         }
     }
