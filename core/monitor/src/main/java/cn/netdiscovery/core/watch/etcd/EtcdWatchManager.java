@@ -66,24 +66,27 @@ public class EtcdWatchManager extends AbstractWatchManager {
 
                                 log.info("type={}, key={}, value={}", event.getEventType().toString(),key,value);
 
-                                switch (event.getEventType()) {
+                                if (Preconditions.isNotBlank(key)) {
 
-                                    case PUT: {
-                                        String node = key.replace("/"+path+"/","");
-                                        log.info("新增 SpiderEngine 节点{}", node);
-                                        stateMap.put(node, SpiderEngineState.ONLINE);
-                                        break;
+                                    switch (event.getEventType()) {
+
+                                        case PUT: {
+                                            String node = key.replace("/"+path+"/","");
+                                            log.info("新增 SpiderEngine 节点{}", node);
+                                            stateMap.put(node, SpiderEngineState.ONLINE);
+                                            break;
+                                        }
+
+                                        case DELETE: {
+                                            String node = key.replace("/"+path+"/","");
+                                            log.info("SpiderEngine 节点【{}】下线了！", node);
+                                            stateMap.put(node, SpiderEngineState.OFFLINE);
+                                            break;
+                                        }
+
+                                        default:
+                                            break;
                                     }
-
-                                    case DELETE: {
-                                        String node = key.replace("/"+path+"/","");
-                                        log.info("SpiderEngine 节点【{}】下线了！", node);
-                                        stateMap.put(node, SpiderEngineState.OFFLINE);
-                                        break;
-                                    }
-
-                                    default:
-                                        break;
                                 }
                             }
 
