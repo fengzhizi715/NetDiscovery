@@ -6,6 +6,7 @@ import cn.netdiscovery.core.domain.SpiderEngineState;
 import cn.netdiscovery.core.domain.bean.MonitorBean;
 import cn.netdiscovery.core.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
+import cn.netdiscovery.core.watch.AbstractWatchManager;
 import cn.netdiscovery.core.watch.ServerOfflineProcess;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
@@ -32,16 +33,12 @@ import java.util.Map;
  * Created by tony on 2019-05-21.
  */
 @Slf4j
-public class CuratorManager implements Watcher {
+public class CuratorManager extends AbstractWatchManager implements Watcher {
 
     private CuratorFramework client;
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
-    private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
-    private int defaultHttpdPort = 8316;
-    private Vertx vertx;
-    private HttpServer server;
-    private ServerOfflineProcess serverOfflineProcess;
+
     private String zkPath;
 
     public CuratorManager() {

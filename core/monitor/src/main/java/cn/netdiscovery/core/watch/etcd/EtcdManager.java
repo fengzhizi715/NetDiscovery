@@ -3,6 +3,7 @@ package cn.netdiscovery.core.watch.etcd;
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.SpiderEngineState;
+import cn.netdiscovery.core.watch.AbstractWatchManager;
 import com.safframework.tony.common.utils.Preconditions;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
@@ -22,11 +23,10 @@ import java.util.concurrent.CountDownLatch;
  * Created by tony on 2019-06-09.
  */
 @Slf4j
-public class EtcdManager {
+public class EtcdManager extends AbstractWatchManager {
 
     private Client client;
     private String prefixPath;
-    private Map<String, SpiderEngineState> stateMap = new HashMap<>(); // 存储各个节点的状态
 
     public EtcdManager() {
 
