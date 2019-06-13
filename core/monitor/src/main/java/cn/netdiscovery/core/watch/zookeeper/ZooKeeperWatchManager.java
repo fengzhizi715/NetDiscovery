@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.watch.curator;
+package cn.netdiscovery.core.watch.zookeeper;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
@@ -23,18 +23,18 @@ import java.util.List;
  * Created by tony on 2019-05-21.
  */
 @Slf4j
-public class CuratorManager extends AbstractWatchManager implements Watcher {
+public class ZooKeeperWatchManager extends AbstractWatchManager implements Watcher {
 
     private CuratorFramework client;
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
 
-    public CuratorManager() {
+    public ZooKeeperWatchManager() {
 
         this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.path"));
     }
 
-    public CuratorManager(String zkStr,String zkPath) {
+    public ZooKeeperWatchManager(String zkStr, String zkPath) {
 
         if (Preconditions.isNotBlank(zkStr)) {
             log.info("zkStr: {}", zkStr);
@@ -74,7 +74,7 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
         }
     }
 
-    public CuratorManager serverOfflineProcess(ServerOfflineProcess serverOfflineProcess) {
+    public ZooKeeperWatchManager serverOfflineProcess(ServerOfflineProcess serverOfflineProcess) {
         this.serverOfflineProcess = serverOfflineProcess;
         return this;
     }

@@ -22,16 +22,16 @@ import java.util.concurrent.CountDownLatch;
  * Created by tony on 2019-06-09.
  */
 @Slf4j
-public class EtcdManager extends AbstractWatchManager {
+public class EtcdWatchManager extends AbstractWatchManager {
 
     private Client client;
 
-    public EtcdManager() {
+    public EtcdWatchManager() {
 
         this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"),Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
     }
 
-    public EtcdManager(String etcdStr,String etcdPath) {
+    public EtcdWatchManager(String etcdStr, String etcdPath) {
 
         if (Preconditions.isNotBlank(etcdStr)) {
             client = Client.builder().endpoints(etcdStr).build();
