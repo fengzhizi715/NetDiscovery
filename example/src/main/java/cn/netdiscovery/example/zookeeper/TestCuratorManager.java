@@ -10,6 +10,7 @@ public class TestCuratorManager {
     public static void main(String[] args) {
 
         CuratorManager curatorManager = new CuratorManager();
-        curatorManager.httpd().start();
+        curatorManager.httpd();
+        curatorManager.start();
     }
 }

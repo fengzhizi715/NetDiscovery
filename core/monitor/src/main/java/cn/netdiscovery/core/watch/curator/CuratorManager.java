@@ -10,7 +10,6 @@ import cn.netdiscovery.core.watch.AbstractWatchManager;
 import cn.netdiscovery.core.watch.ServerOfflineProcess;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -25,9 +24,7 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by tony on 2019-05-21.
@@ -39,11 +36,9 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
 
     private List<String> znodes; // 用于存储指定 zNode 下所有子 zNode 的名字
 
-    private String zkPath;
-
     public CuratorManager() {
 
-        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.path"));
     }
 
     public CuratorManager(String zkStr,String zkPath) {
@@ -58,9 +53,9 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
 
             try {
                 if (Preconditions.isBlank(zkPath)) {
-                    zkPath = Constant.DEFAULT_REGISTRY_PATH;
+                    this.path = Constant.DEFAULT_REGISTRY_PATH;
                 } else {
-                    this.zkPath = zkPath;
+                    this.path = zkPath;
                 }
 
                 Stat stat = client.checkExists().forPath(zkPath);
@@ -103,7 +98,7 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
 
         List<String> newZodeInfos = null;
         try {
-            newZodeInfos = client.getChildren().usingWatcher(this).forPath(zkPath);
+            newZodeInfos = client.getChildren().usingWatcher(this).forPath(path);
             //根据初始化容器的长度与最新的容器的长度进行比对，就可以推导出当前 SpiderEngine 集群的状态：新增，宕机/下线，变更...
             //哪个容器中元素多，就循环遍历哪个容器。
             if (Preconditions.isNotBlank(newZodeInfos)) {
@@ -147,50 +142,4 @@ public class CuratorManager extends AbstractWatchManager implements Watcher {
         }
     }
 
-    public CuratorManager httpd() {
-
-        return httpd(defaultHttpdPort);
-    }
-
-    public CuratorManager httpd(int port) {
-
-        server = vertx.createHttpServer();
-
-        Router router = Router.router(vertx);
-        router.route().handler(BodyHandler.create());
-
-        router.route("/netdiscovery/monitor").handler(routingContext -> {
-
-            // 所有的请求都会调用这个处理器处理
-            HttpServerResponse response = routingContext.response();
-            response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
-
-            List<MonitorBean> list = new ArrayList<>();
-
-            stateMap.forEach((str,state)->{
-
-                String ipAddr = str.replace(zkPath+"/","");
-                String[] addresses =ipAddr.split("-");
-                if (Preconditions.isNotBlank(addresses) && addresses.length>=2) {
-
-                    MonitorBean bean = new MonitorBean();
-                    bean.setIp(addresses[0]);
-                    bean.setPort(addresses[1]);
-                    bean.setState(state.getState());
-                    list.add(bean);
-                }
-            });
-
-            MonitorResponse monitorResponse = new MonitorResponse();
-            monitorResponse.setCode(Constant.OK_STATUS_CODE);
-            monitorResponse.setMessage(Constant.SUCCESS);
-            monitorResponse.setData(list);
-
-            // 写入响应并结束处理
-            response.end(SerializableUtils.toJson(monitorResponse));
-        });
-
-        server.requestHandler(router::accept).listen(port);
-        return this;
-    }
 }

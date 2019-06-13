@@ -13,8 +13,6 @@ import io.etcd.jetcd.watch.WatchEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
@@ -26,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
 public class EtcdManager extends AbstractWatchManager {
 
     private Client client;
-    private String prefixPath;
 
     public EtcdManager() {
 
@@ -40,9 +37,9 @@ public class EtcdManager extends AbstractWatchManager {
         }
 
         if (Preconditions.isBlank(etcdPath)) {
-            prefixPath = Constant.DEFAULT_REGISTRY_PATH;
+            this.path = Constant.DEFAULT_REGISTRY_PATH;
         } else {
-            prefixPath = etcdPath;
+            this.path = etcdPath;
         }
     }
 
@@ -54,8 +51,8 @@ public class EtcdManager extends AbstractWatchManager {
             Watch.Watcher watcher = null;
 
             try {
-                ByteSequence watchKey = ByteSequence.from("/"+prefixPath, StandardCharsets.UTF_8);
-                WatchOption watchOpts = WatchOption.newBuilder().withRevision(0).withPrefix(ByteSequence.from(("/"+prefixPath).getBytes())).build();
+                ByteSequence watchKey = ByteSequence.from("/"+path, StandardCharsets.UTF_8);
+                WatchOption watchOpts = WatchOption.newBuilder().withRevision(0).withPrefix(ByteSequence.from(("/"+path).getBytes())).build();
 
                 watcher = client.getWatchClient().watch(watchKey, watchOpts, response -> {
                             for (WatchEvent event : response.getEvents()) {
@@ -68,14 +65,14 @@ public class EtcdManager extends AbstractWatchManager {
                                 switch (event.getEventType()) {
 
                                     case PUT: {
-                                        String node = key.replace("/"+prefixPath+"/","");
+                                        String node = key.replace("/"+path+"/","");
                                         log.info("新增 SpiderEngine 节点{}", node);
                                         stateMap.put(node, SpiderEngineState.ONLINE);
                                         break;
                                     }
 
                                     case DELETE: {
-                                        String node = key.replace("/"+prefixPath+"/","");
+                                        String node = key.replace("/"+path+"/","");
                                         log.info("SpiderEngine 节点【{}】下线了！", node);
                                         stateMap.put(node, SpiderEngineState.OFFLINE);
                                         break;
