@@ -81,6 +81,12 @@ public class EtcdWatchManager extends AbstractWatchManager {
                                             String node = key.replace("/"+path+"/","");
                                             log.info("SpiderEngine 节点【{}】下线了！", node);
                                             stateMap.put(node, SpiderEngineState.OFFLINE);
+
+                                            // 如果有下线的处理，则处理(例如发邮件、短信、重启等)
+                                            if (serverOfflineProcess!=null) {
+                                                serverOfflineProcess.process();
+                                            }
+
                                             break;
                                         }
 

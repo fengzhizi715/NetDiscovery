@@ -29,6 +29,10 @@ public abstract class AbstractWatchManager {
     protected ServerOfflineProcess serverOfflineProcess;
     protected String path;
 
+    public AbstractWatchManager serverOfflineProcess(ServerOfflineProcess serverOfflineProcess) {
+        this.serverOfflineProcess = serverOfflineProcess;
+        return this;
+    }
 
     public AbstractWatchManager httpd() {
 

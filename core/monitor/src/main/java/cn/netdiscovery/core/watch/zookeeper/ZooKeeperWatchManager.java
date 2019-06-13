@@ -4,7 +4,6 @@ import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.SpiderEngineState;
 import cn.netdiscovery.core.watch.AbstractWatchManager;
-import cn.netdiscovery.core.watch.ServerOfflineProcess;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
@@ -72,11 +71,6 @@ public class ZooKeeperWatchManager extends AbstractWatchManager implements Watch
 
             vertx = Vertx.vertx();
         }
-    }
-
-    public ZooKeeperWatchManager serverOfflineProcess(ServerOfflineProcess serverOfflineProcess) {
-        this.serverOfflineProcess = serverOfflineProcess;
-        return this;
     }
 
     /**
