@@ -68,14 +68,16 @@ public class EtcdManager {
                                 switch (event.getEventType()) {
 
                                     case PUT: {
-                                        log.info("新增 SpiderEngine 节点{}", key.replace("/"+prefixPath+"/",""));
-
+                                        String node = key.replace("/"+prefixPath+"/","");
+                                        log.info("新增 SpiderEngine 节点{}", node);
+                                        stateMap.put(node, SpiderEngineState.ONLINE);
                                         break;
                                     }
 
                                     case DELETE: {
-                                        log.info("SpiderEngine 节点【{}】下线了！", key.replace("/"+prefixPath+"/",""));
-
+                                        String node = key.replace("/"+prefixPath+"/","");
+                                        log.info("SpiderEngine 节点【{}】下线了！", node);
+                                        stateMap.put(node, SpiderEngineState.OFFLINE);
                                         break;
                                     }
 
