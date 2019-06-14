@@ -30,7 +30,7 @@ public class ZooKeeperWatchManager extends AbstractWatchManager implements Watch
 
     public ZooKeeperWatchManager() {
 
-        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.path"));
+        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"),Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
     }
 
     public ZooKeeperWatchManager(String zkStr, String zkPath) {
