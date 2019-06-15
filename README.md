@@ -59,9 +59,9 @@ repositories {
 }
 ```
 
-在 NetDiscovery 中，Spider 可以单独运行，也可以交给 SpiderEngine 来控制。
+在 NetDiscovery 中，Spider 可以单独运行，Spider 也可以交给 SpiderEngine 来控制。
 
-SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后对 SpiderEngine 进行监控。
+SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor 对 SpiderEngine 进行监控。
 
 ![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/SpiderEngine_Cluster.png)
 
