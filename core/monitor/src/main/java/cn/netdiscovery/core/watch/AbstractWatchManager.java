@@ -7,15 +7,14 @@ import cn.netdiscovery.core.domain.response.MonitorResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.CorsHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tony on 2019-06-13.
@@ -44,6 +43,18 @@ public abstract class AbstractWatchManager {
         server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
+
+        Set<String> allowedHeaders = new HashSet<>();
+        allowedHeaders.add("x-requested-with");
+        allowedHeaders.add("Access-Control-Allow-Origin");
+        allowedHeaders.add("origin");
+        allowedHeaders.add("Content-Type");
+        allowedHeaders.add("accept");
+        allowedHeaders.add("X-PINGARUNER");
+
+        Set<HttpMethod> allowedMethods = new HashSet<>();
+        router.route().handler(CorsHandler.create("*").allowedHeaders(allowedHeaders).allowedMethods(allowedMethods));
+
         router.route().handler(BodyHandler.create());
 
         router.route("/netdiscovery/monitor").handler(routingContext -> {
