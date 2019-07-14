@@ -29,6 +29,8 @@ include 'queue:kafka'
 findProject(':queue:kafka')?.name = 'kafka'
 include 'queue:rabbitmq'
 findProject(':queue:rabbitmq')?.name = 'rabbitmq'
+include 'queue:rocketmq'
+findProject(':queue:rocketmq')?.name = 'rocketmq'
 
 include 'pipeline'
 include 'pipeline:couchbase'
