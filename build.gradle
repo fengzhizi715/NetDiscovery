@@ -12,7 +12,7 @@ ext {
 
             okhttp                    : "3.11.0",
 
-            lettuce                   : "5.1.3.RELEASE",
+            lettuce                   : "5.1.7.RELEASE",
 
             htmlunit                  : "2.31",
 
