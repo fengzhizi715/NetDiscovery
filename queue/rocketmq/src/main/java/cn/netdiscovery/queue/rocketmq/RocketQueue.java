@@ -40,18 +40,24 @@ public class RocketQueue extends AbstractQueue {
     public Request poll(String spiderName) {
 
         Request request = null;
-        try {
-            MessageExt messageExt = consumer.getConsumer().viewMessage(spiderName, producer.getMessageId());
-            byte[] body = messageExt.getBody();
-            request = deserialize(body);
-        } catch (RemotingException e) {
-            e.printStackTrace();
-        } catch (MQBrokerException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (MQClientException e) {
-            e.printStackTrace();
+
+        String msgId = producer.getMessageId();
+
+        if (msgId!=null) {
+
+            try {
+                MessageExt messageExt = consumer.getConsumer().viewMessage(spiderName, producer.getMessageId());
+                byte[] body = messageExt.getBody();
+                request = deserialize(body);
+            } catch (RemotingException e) {
+                e.printStackTrace();
+            } catch (MQBrokerException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (MQClientException e) {
+                e.printStackTrace();
+            }
         }
 
         return request;
