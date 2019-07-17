@@ -10,6 +10,8 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+import java.util.LinkedList;
+
 /**
  * Created by tony on 2019-07-16.
  */
@@ -20,12 +22,16 @@ public class Producer {
     @Getter
     private String tags;
 
+    @Getter
+    private LinkedList<String> msgs;
+
     public Producer(String producerName,String nameServerAddress,int retryTimes,String tags) {
 
         this.producer = new DefaultMQProducer(producerName);
         this.producer.setNamesrvAddr(nameServerAddress);
         this.producer.setRetryTimesWhenSendAsyncFailed(retryTimes);
         this.tags = tags;
+        this.msgs = new LinkedList<>();
     }
 
     public void start() {
@@ -37,13 +43,13 @@ public class Producer {
         }
     }
 
-    public SendResult send(Request request) {
+    public void send(Request request) {
 
         Message msg = new Message(request.getSpiderName(), tags, SerializableUtils.toJson(request).getBytes());
 
         try {
             SendResult sendResult = producer.send(msg);
-            return sendResult;
+            msgs.add(sendResult.getMsgId());
         } catch (MQClientException e) {
             e.printStackTrace();
         } catch (RemotingException e) {
@@ -53,7 +59,18 @@ public class Producer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        return null;
+    public String getMessageId() {
+
+        String msgId = null;
+
+        if (msgs.size()>0) {
+
+            msgId = msgs.get(0);
+            msgs.removeFirst();
+        }
+
+        return msgId;
     }
 }
