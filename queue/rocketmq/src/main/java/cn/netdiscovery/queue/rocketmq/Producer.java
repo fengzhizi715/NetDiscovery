@@ -10,7 +10,9 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by tony on 2019-07-16.
@@ -23,7 +25,7 @@ public class Producer {
     private String tags;
 
     @Getter
-    private LinkedList<String> msgs;
+    private List<String> msgs;
 
     public Producer(String producerName,String nameServerAddress,int retryTimes,String tags) {
 
@@ -31,7 +33,7 @@ public class Producer {
         this.producer.setNamesrvAddr(nameServerAddress);
         this.producer.setRetryTimesWhenSendAsyncFailed(retryTimes);
         this.tags = tags;
-        this.msgs = new LinkedList<>();
+        this.msgs = Collections.synchronizedList(new LinkedList<String>());
     }
 
     public void start() {
@@ -68,7 +70,7 @@ public class Producer {
         if (msgs.size()>0) {
 
             msgId = msgs.get(0);
-            msgs.removeFirst();
+            msgs.remove(0);
         }
 
         return msgId;
