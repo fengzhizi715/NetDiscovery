@@ -3,7 +3,7 @@ package cn.netdiscovery.core.domain.response;
 import lombok.Data;
 
 /**
- * 返回的HttpResponse
+ * 对外暴露接口返回的 HttpResponse
  * Created by tony on 2018/1/26.
  */
 @Data

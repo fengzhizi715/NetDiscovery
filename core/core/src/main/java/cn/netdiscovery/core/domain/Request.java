@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * 爬虫网络请求的封装
  * Created by tony on 2017/12/23.
  */
 @Getter

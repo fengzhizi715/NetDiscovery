@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 /**
+ * 对各个网络框架返回的 response 的封装
  * Created by tony on 2018/1/20.
  */
 @Data
