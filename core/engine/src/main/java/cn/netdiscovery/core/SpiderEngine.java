@@ -229,6 +229,7 @@ public class SpiderEngine {
 
                 final Spider spider = entry.getValue();
 
+                // 根据爬虫的名称获取爬虫的信息
                 router.route("/netdiscovery/spider/" + spider.getName()).handler(routingContext -> {
 
                     HttpServerResponse response = routingContext.response();
@@ -252,6 +253,7 @@ public class SpiderEngine {
                     response.end(SerializableUtils.toJson(spiderResponse));
                 });
 
+                // 修改爬虫的状态
                 router.post("/netdiscovery/spider/" + spider.getName() + "/status").handler(routingContext -> {
 
                     HttpServerResponse response = routingContext.response();
@@ -300,6 +302,7 @@ public class SpiderEngine {
                 });
             }
 
+            // 显示容器下所有爬虫的信息
             router.route("/netdiscovery/spiders/").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
@@ -334,6 +337,7 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(spidersResponse));
             });
 
+            // 显示所有爬虫的定时任务
             router.route("/netdiscovery/jobs/").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
