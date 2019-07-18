@@ -371,7 +371,7 @@ public class SpiderEngine {
                     String url = json.getString("url");
 
                     Spider spider = spiders.get(spiderName);
-                    spider.getQueue().pushToRunninSpider(new Request(url,spiderName),spider);
+                    spider.getQueue().pushToRunninSpider(url,spider);
 
                     response.end();
                 }
