@@ -374,6 +374,9 @@ public class SpiderEngine {
                     spider.getQueue().pushToRunninSpider(url,spider);
 
                     response.end();
+                } else {
+
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Bad));
                 }
 
             });

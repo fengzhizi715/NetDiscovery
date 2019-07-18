@@ -1,5 +1,6 @@
 package cn.netdiscovery.core.domain.response;
 
+import cn.netdiscovery.core.constants.ResponseCode;
 import lombok.Data;
 
 /**
@@ -14,4 +15,34 @@ public class HttpResponse<T> {
     private String message;
 
     private T data;
+
+    public HttpResponse() {
+    }
+
+    public HttpResponse(ResponseCode code, String message) {
+        this.code = code.getCode();
+        this.message = message;
+    }
+
+
+    public HttpResponse(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public HttpResponse(T data) {
+        this(ResponseCode.Ok);
+        this.data = data;
+    }
+
+    public HttpResponse(ResponseCode code) {
+        this.code = code.getCode();
+        this.message = code.getMessage();
+    }
+
+
+    public static HttpResponse Ok = new HttpResponse(ResponseCode.Ok);
+    public static HttpResponse Bad = new HttpResponse(ResponseCode.BadRequest);
+    public static HttpResponse NotFound = new HttpResponse(ResponseCode.NotFound);
+
 }
