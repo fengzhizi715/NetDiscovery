@@ -356,6 +356,28 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(jobsResponse));
             });
 
+            // 添加新的任务到某个爬虫中
+            router.post("/netdiscovery/spider/:spiderName/push").handler(routingContext -> {
+
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                String spiderName = routingContext.pathParam("spiderName");
+
+                if (Preconditions.isNotBlank(spiderName) && spiders.get(spiderName)!=null) {
+
+                    JsonObject json = routingContext.getBodyAsJson();
+
+                    String url = json.getString("url");
+
+                    Spider spider = spiders.get(spiderName);
+                    spider.getQueue().pushToRunninSpider(new Request(url,spiderName),spider);
+
+                    response.end();
+                }
+
+            });
+
             if (useMonitor) { // 是否使用 agent
 
                 // The web server handler
