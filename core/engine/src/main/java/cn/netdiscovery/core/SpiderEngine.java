@@ -2,6 +2,7 @@ package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.constants.ResponseCode;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
@@ -373,10 +374,10 @@ public class SpiderEngine {
                     Spider spider = spiders.get(spiderName);
                     spider.getQueue().pushToRunninSpider(url,spider);
 
-                    response.end();
+                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")));
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Bad));
+                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
                 }
 
             });
