@@ -57,7 +57,7 @@ import java.util.stream.Stream;
 import static cn.netdiscovery.core.config.Constant.*;
 
 /**
- * 可以管理多个Spider的容器
+ * 可以管理多个 Spider 的容器
  * Created by tony on 2018/1/2.
  */
 @Slf4j
@@ -226,21 +226,58 @@ public class SpiderEngine {
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
+            // 显示容器下所有爬虫的信息
+            router.route("/netdiscovery/spiders/").handler(routingContext -> {
 
-                final Spider spider = entry.getValue();
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
 
-                // 根据爬虫的名称获取爬虫的信息
-                router.route("/netdiscovery/spider/" + spider.getName()).handler(routingContext -> {
+                List<SpiderBean> list = new ArrayList<>();
 
-                    HttpServerResponse response = routingContext.response();
-                    response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                Spider spider = null;
+                SpiderBean entity = null;
 
-                    SpiderBean entity = new SpiderBean();
+                for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
+
+                    spider = entry.getValue();
+
+                    entity = new SpiderBean();
                     entity.setSpiderName(spider.getName());
                     entity.setSpiderStatus(spider.getSpiderStatus());
                     entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
                     entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
+                    entity.setConsumedRequestSize(entity.getTotalRequestSize()-entity.getLeftRequestSize());
+                    entity.setQueueType(spider.getQueue().getClass().getSimpleName());
+                    entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
+                    list.add(entity);
+                }
+
+                SpidersResponse spidersResponse = new SpidersResponse();
+                spidersResponse.setCode(Constant.OK_STATUS_CODE);
+                spidersResponse.setMessage(Constant.SUCCESS);
+                spidersResponse.setData(list);
+
+                // 写入响应并结束处理
+                response.end(SerializableUtils.toJson(spidersResponse));
+            });
+
+            // 根据爬虫的名称获取爬虫的信息
+            router.route("/netdiscovery/spider/:spiderName/detail").handler(routingContext -> {
+
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                String spiderName = routingContext.pathParam("spiderName");
+
+                if (Preconditions.isNotBlank(spiderName) && spiders.get(spiderName)!=null) {
+
+                    Spider spider = spiders.get(spiderName);
+
+                    SpiderBean entity = new SpiderBean();
+                    entity.setSpiderName(spiderName);
+                    entity.setSpiderStatus(spider.getSpiderStatus());
+                    entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spiderName));
+                    entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spiderName));
                     entity.setConsumedRequestSize(entity.getTotalRequestSize()-entity.getLeftRequestSize());
                     entity.setQueueType(spider.getQueue().getClass().getSimpleName());
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
@@ -252,17 +289,26 @@ public class SpiderEngine {
 
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderResponse));
-                });
+                } else {
 
-                // 修改爬虫的状态
-                router.post("/netdiscovery/spider/" + spider.getName() + "/status").handler(routingContext -> {
+                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
+                }
+            });
 
-                    HttpServerResponse response = routingContext.response();
-                    response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+            // 修改爬虫的状态
+            router.post("/netdiscovery/spider/:spiderName/status").handler(routingContext -> {
+
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                String spiderName = routingContext.pathParam("spiderName");
+
+                if (Preconditions.isNotBlank(spiderName) && spiders.get(spiderName)!=null) {
 
                     JsonObject json = routingContext.getBodyAsJson();
-
                     SpiderStatusResponse spiderStatusResponse = null;
+
+                    Spider spider = spiders.get(spiderName);
 
                     if (json != null) {
 
@@ -300,61 +346,11 @@ public class SpiderEngine {
 
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderStatusResponse));
-                });
-            }
+                } else {
 
-            // 显示容器下所有爬虫的信息
-            router.route("/netdiscovery/spiders/").handler(routingContext -> {
-
-                HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
-
-                List<SpiderBean> list = new ArrayList<>();
-
-                Spider spider = null;
-                SpiderBean entity = null;
-
-                for (Map.Entry<String, Spider> entry : spiders.entrySet()) {
-
-                    spider = entry.getValue();
-
-                    entity = new SpiderBean();
-                    entity.setSpiderName(spider.getName());
-                    entity.setSpiderStatus(spider.getSpiderStatus());
-                    entity.setLeftRequestSize(spider.getQueue().getLeftRequests(spider.getName()));
-                    entity.setTotalRequestSize(spider.getQueue().getTotalRequests(spider.getName()));
-                    entity.setConsumedRequestSize(entity.getTotalRequestSize()-entity.getLeftRequestSize());
-                    entity.setQueueType(spider.getQueue().getClass().getSimpleName());
-                    entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
-                    list.add(entity);
+                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
                 }
 
-                SpidersResponse spidersResponse = new SpidersResponse();
-                spidersResponse.setCode(Constant.OK_STATUS_CODE);
-                spidersResponse.setMessage(Constant.SUCCESS);
-                spidersResponse.setData(list);
-
-                // 写入响应并结束处理
-                response.end(SerializableUtils.toJson(spidersResponse));
-            });
-
-            // 显示所有爬虫的定时任务
-            router.route("/netdiscovery/jobs/").handler(routingContext -> {
-
-                HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
-
-                List<SpiderJobBean> list = new ArrayList<>();
-
-                list.addAll(jobs.values());
-
-                JobsResponse jobsResponse = new JobsResponse();
-                jobsResponse.setCode(Constant.OK_STATUS_CODE);
-                jobsResponse.setMessage(Constant.SUCCESS);
-                jobsResponse.setData(list);
-
-                // 写入响应并结束处理
-                response.end(SerializableUtils.toJson(jobsResponse));
             });
 
             // 添加新的任务到某个爬虫中
@@ -380,6 +376,25 @@ public class SpiderEngine {
                     response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
                 }
 
+            });
+
+            // 显示所有爬虫的定时任务
+            router.route("/netdiscovery/jobs/").handler(routingContext -> {
+
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+
+                List<SpiderJobBean> list = new ArrayList<>();
+
+                list.addAll(jobs.values());
+
+                JobsResponse jobsResponse = new JobsResponse();
+                jobsResponse.setCode(Constant.OK_STATUS_CODE);
+                jobsResponse.setMessage(Constant.SUCCESS);
+                jobsResponse.setData(list);
+
+                // 写入响应并结束处理
+                response.end(SerializableUtils.toJson(jobsResponse));
             });
 
             if (useMonitor) { // 是否使用 agent
