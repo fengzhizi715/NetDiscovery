@@ -85,10 +85,12 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 2. 整合 RocketMQ
 3. 完善协程的模块
 4. SpiderEngine 提供rpc接口
-5. 完善 wiki，增加各个模式的使用说明
-6. 各个模块能够从配置文件中获取爬虫相应的配置
-7. 增强 HtmlUnit 模块
-8. 增加 chromium 的支持
+5. 支持 Consul
+6. 支持 RxJava 3.x 
+7. 完善 wiki，增加各个模式的使用说明
+8. 各个模块能够从配置文件中获取爬虫相应的配置
+9. 增强 HtmlUnit 模块
+10. 增加 chromium 的支持
 
 
 # Contributors:
