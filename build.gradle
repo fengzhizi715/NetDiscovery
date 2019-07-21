@@ -4,6 +4,8 @@ ext {
 
             rxjava                    : "2.2.8",
 
+            gson                      : "2.8.5",
+
             kotlinx_coroutines        : "1.2.0",
 
             disruptor                 : "3.4.2",
@@ -61,7 +63,7 @@ tasks.withType(JavaCompile) {
 
 buildscript {
     ext.kotlin_version = '1.3.40'
-    ext.netdiscovery_version = '1.3.0'
+    ext.netdiscovery_version = '1.3.1'
 
     repositories {
         jcenter()

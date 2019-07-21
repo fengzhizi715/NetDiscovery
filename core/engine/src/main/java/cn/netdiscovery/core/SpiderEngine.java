@@ -261,7 +261,7 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(spidersResponse));
             });
 
-            // 根据爬虫的名称获取爬虫的信息
+            // 根据爬虫的名称获取爬虫的详情
             router.route("/netdiscovery/spider/:spiderName/detail").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
@@ -295,7 +295,7 @@ public class SpiderEngine {
                 }
             });
 
-            // 修改爬虫的状态
+            // 修改单个爬虫的状态
             router.post("/netdiscovery/spider/:spiderName/status").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
@@ -353,7 +353,7 @@ public class SpiderEngine {
 
             });
 
-            // 添加新的任务到某个爬虫中
+            // 添加新的url任务到某个正在运行中的爬虫
             router.post("/netdiscovery/spider/:spiderName/push").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();

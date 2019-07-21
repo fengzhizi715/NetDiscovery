@@ -9,7 +9,7 @@
 # 功能特点：
 
 * 轻量级爬虫
-* 模块化设计，便于扩展：支持多种消息队列、多种网络框架，也支持自己实现。
+* 模块化设计，便于扩展：支持多种消息队列(disruptor、redis、kafka、rabitmq)、多种网络框架(http client、okhttp3、selenium等)，也支持自己实现。
 * 支持分布式
 * 多线程、异步化：底层使用 RxJava 2 的多线程机制
 * 支持 Request 添加到正在运行爬虫的 Queue 中
@@ -83,8 +83,8 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 2. 整合 RocketMQ
-3. SpiderEngine 提供http/rpc接口，用于构建爬虫的任务
-4. 完善协程的模块
+3. 完善协程的模块
+4. SpiderEngine 提供rpc接口
 5. 完善 wiki，增加各个模式的使用说明
 6. 各个模块能够从配置文件中获取爬虫相应的配置
 7. 增强 HtmlUnit 模块
