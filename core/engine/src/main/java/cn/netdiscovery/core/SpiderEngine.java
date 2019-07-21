@@ -582,9 +582,7 @@ public class SpiderEngine {
 
             Stream.of(requests)
                     .filter(request -> request.isCheckDuplicate())
-                    .forEach(request -> {
-                        request.checkDuplicate(false);
-                    });
+                    .forEach(request -> request.checkDuplicate(false));
 
             jobs.put(jobName, jobBean);
             QuartzManager.addJob(jobBean, SpiderJob.class, cron, spider, requests);
