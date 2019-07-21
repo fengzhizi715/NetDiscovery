@@ -19,7 +19,7 @@ dependencies {
 
     implementation "org.projectlombok:lombok:${libs.lombok}"
     implementation 'org.apache.rocketmq:rocketmq-client:4.3.0'
-    implementation project(":core:core")
+    implementation "com.google.code.gson:gson:${libs.gson}"
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation project(":core:core")
 }

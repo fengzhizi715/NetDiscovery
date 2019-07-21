@@ -21,7 +21,7 @@ dependencies {
     implementation "io.lettuce:lettuce-core:${libs.lettuce}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation 'commons-codec:commons-codec:1.12'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "com.google.code.gson:gson:${libs.gson}"
     implementation project(":core:core")
 }
 
