@@ -3,7 +3,6 @@ package cn.netdiscovery.example.etcd;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
 import cn.netdiscovery.core.registry.EtcdRegistry;
-import cn.netdiscovery.core.registry.ZKRegistry;
 
 /**
  * Created by tony on 2019-06-09.
