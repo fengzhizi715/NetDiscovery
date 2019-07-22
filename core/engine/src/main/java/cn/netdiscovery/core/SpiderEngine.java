@@ -230,7 +230,7 @@ public class SpiderEngine {
             router.route("/netdiscovery/spiders/").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
                 List<SpiderBean> list = new ArrayList<>();
 
@@ -253,8 +253,8 @@ public class SpiderEngine {
                 }
 
                 SpidersResponse spidersResponse = new SpidersResponse();
-                spidersResponse.setCode(Constant.OK_STATUS_CODE);
-                spidersResponse.setMessage(Constant.SUCCESS);
+                spidersResponse.setCode(OK_STATUS_CODE);
+                spidersResponse.setMessage(SUCCESS);
                 spidersResponse.setData(list);
 
                 // 写入响应并结束处理
@@ -265,7 +265,7 @@ public class SpiderEngine {
             router.route("/netdiscovery/spider/:spiderName/detail").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
                 String spiderName = routingContext.pathParam("spiderName");
 
@@ -283,8 +283,8 @@ public class SpiderEngine {
                     entity.setDownloaderType(spider.getDownloader().getClass().getSimpleName());
 
                     SpiderResponse spiderResponse = new SpiderResponse();
-                    spiderResponse.setCode(Constant.OK_STATUS_CODE);
-                    spiderResponse.setMessage(Constant.SUCCESS);
+                    spiderResponse.setCode(OK_STATUS_CODE);
+                    spiderResponse.setMessage(SUCCESS);
                     spiderResponse.setData(entity);
 
                     // 写入响应并结束处理
@@ -299,7 +299,7 @@ public class SpiderEngine {
             router.post("/netdiscovery/spider/:spiderName/status").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
                 String spiderName = routingContext.pathParam("spiderName");
 
@@ -341,8 +341,8 @@ public class SpiderEngine {
                         }
                     }
 
-                    spiderStatusResponse.setCode(Constant.OK_STATUS_CODE);
-                    spiderStatusResponse.setMessage(Constant.SUCCESS);
+                    spiderStatusResponse.setCode(OK_STATUS_CODE);
+                    spiderStatusResponse.setMessage(SUCCESS);
 
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderStatusResponse));
@@ -357,7 +357,7 @@ public class SpiderEngine {
             router.post("/netdiscovery/spider/:spiderName/push").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
                 String spiderName = routingContext.pathParam("spiderName");
 
@@ -382,15 +382,15 @@ public class SpiderEngine {
             router.route("/netdiscovery/jobs/").handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
-                response.putHeader(Constant.CONTENT_TYPE, Constant.CONTENT_TYPE_JSON);
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
                 List<SpiderJobBean> list = new ArrayList<>();
 
                 list.addAll(jobs.values());
 
                 JobsResponse jobsResponse = new JobsResponse();
-                jobsResponse.setCode(Constant.OK_STATUS_CODE);
-                jobsResponse.setMessage(Constant.SUCCESS);
+                jobsResponse.setCode(OK_STATUS_CODE);
+                jobsResponse.setMessage(SUCCESS);
                 jobsResponse.setData(list);
 
                 // 写入响应并结束处理

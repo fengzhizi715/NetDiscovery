@@ -16,6 +16,10 @@ public class HttpResponse<T> {
 
     private T data;
 
+    public static HttpResponse Ok = new HttpResponse(ResponseCode.Ok);
+    public static HttpResponse Bad = new HttpResponse(ResponseCode.BadRequest);
+    public static HttpResponse NotFound = new HttpResponse(ResponseCode.NotFound);
+
     public HttpResponse() {
     }
 
@@ -39,10 +43,4 @@ public class HttpResponse<T> {
         this.code = code.getCode();
         this.message = code.getMessage();
     }
-
-
-    public static HttpResponse Ok = new HttpResponse(ResponseCode.Ok);
-    public static HttpResponse Bad = new HttpResponse(ResponseCode.BadRequest);
-    public static HttpResponse NotFound = new HttpResponse(ResponseCode.NotFound);
-
 }
