@@ -7,13 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by tony on 2019-07-16.
