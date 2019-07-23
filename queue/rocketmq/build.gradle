@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.novoda.bintray-release'
 }
 
 group 'cn.netdiscovery'
@@ -23,4 +24,13 @@ dependencies {
     implementation "com.google.code.gson:gson:${libs.gson}"
 
     implementation project(":core:core")
+}
+
+publish{
+    userOrg = 'fengzhizi715'
+    groupId = 'cn.netdiscovery'
+    artifactId = 'netdiscovery-queue-rocketmq'
+    publishVersion = "$netdiscovery_version"
+    desc = 'this is a universal crawler library'
+    website = 'https://github.com/fengzhizi715/NetDiscovery'
 }
