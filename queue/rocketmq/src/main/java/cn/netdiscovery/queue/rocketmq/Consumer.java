@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by tony on 2019-07-17.
@@ -25,7 +26,7 @@ public class Consumer {
     @Getter
     private DefaultMQPushConsumer consumer;
 
-    private Map<String,List<MessageExt>> map;
+    private Map<String, ConcurrentLinkedQueue<MessageExt>> map;
 
     public Consumer(String consumerName,String nameServerAddress) {
 
@@ -45,16 +46,20 @@ public class Consumer {
                 public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                                                                 ConsumeConcurrentlyContext context) {
 
-                    if (Preconditions.isNotBlank(msgs)) {
-                        List<MessageExt> messages= map.get(topic);
-                        if (Preconditions.isNotBlank(messages)) {
-                            messages.addAll(msgs);
-                        } else {
-                            List<MessageExt> list = Collections.synchronizedList(new LinkedList<>());
-                            list.addAll(msgs);
-                            map.put(topic,list);
+                    synchronized (this) {
+                        if (Preconditions.isNotBlank(msgs)) {
+
+                            ConcurrentLinkedQueue<MessageExt> messages = map.get(topic);
+                            if (Preconditions.isNotBlank(messages)) {
+                                messages.addAll(msgs);
+                            } else {
+                                ConcurrentLinkedQueue<MessageExt> queue = new ConcurrentLinkedQueue<MessageExt>();
+                                queue.addAll(msgs);
+                                map.put(topic,queue);
+                            }
                         }
                     }
+
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
             });
@@ -70,11 +75,10 @@ public class Consumer {
 
         MessageExt result = null;
 
-        List<MessageExt> messages= map.get(topic);
-        if (Preconditions.isNotBlank(messages)) {
+        ConcurrentLinkedQueue<MessageExt> messages= map.get(topic);
 
-            result = messages.get(0);
-            messages.remove(0);
+        if (messages!=null && !messages.isEmpty()) {
+            result = messages.poll();
         }
 
         return result;

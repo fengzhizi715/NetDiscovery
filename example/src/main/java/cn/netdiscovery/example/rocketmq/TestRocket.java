@@ -18,11 +18,12 @@ public class TestRocket {
 
         RocketQueue queue = new RocketQueue(producer,consumer);
 
-        Request request = new Request("https://www.baidu.com").checkDuplicate(false);
+        Request request1 = new Request("https://www.baidu.com").checkDuplicate(false);
+        Request request2 = new Request("https://www.163.com").checkDuplicate(false);
 
         Spider.create(queue)
                 .name("tony")
-                .request(request)
+                .request(request1,request2)
                 .run();
     }
 }

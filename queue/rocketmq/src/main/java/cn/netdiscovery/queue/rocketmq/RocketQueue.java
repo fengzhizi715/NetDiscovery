@@ -3,10 +3,7 @@ package cn.netdiscovery.queue.rocketmq;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import org.apache.rocketmq.client.exception.MQBrokerException;
-import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.remoting.exception.RemotingException;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
