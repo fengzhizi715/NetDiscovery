@@ -419,7 +419,7 @@ public class SpiderEngine {
                             HttpResponse<Buffer> result = ar.result();
                             ctx.response()
                                     .setStatusCode(result.statusCode())
-                                    .putHeader(Constant.CONTENT_TYPE, CONTENT_TYPE_JSON)
+                                    .putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
                                     .end(result.body());
                         } else {
                             ctx.fail(ar.cause());

@@ -41,23 +41,12 @@ public class RocketQueue extends AbstractQueue {
 
         Request request = null;
 
-        String msgId = producer.getMessageId();
+        MessageExt messageExt = consumer.getMessage(spiderName);
 
-        if (msgId!=null) {
+        if (messageExt!=null) {
 
-            try {
-                MessageExt messageExt = consumer.getConsumer().viewMessage(spiderName, producer.getMessageId());
-                byte[] body = messageExt.getBody();
-                request = deserialize(body);
-            } catch (RemotingException e) {
-                e.printStackTrace();
-            } catch (MQBrokerException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (MQClientException e) {
-                e.printStackTrace();
-            }
+            byte[] body = messageExt.getBody();
+            request = deserialize(body);
         }
 
         return request;
@@ -66,7 +55,7 @@ public class RocketQueue extends AbstractQueue {
     @Override
     public int getLeftRequests(String spiderName) {
 
-        return producer.getMsgs().size();
+        return 0;
     }
 
     private Request deserialize(byte[] data) {

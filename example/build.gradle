@@ -28,6 +28,7 @@ dependencies {
     implementation project(":queue:redis")
     implementation project(":queue:kafka")
     implementation project(":queue:rabbitmq")
+    implementation project(":queue:rocketmq")
     implementation project(":kotlin:dsl")
     implementation project(":kotlin:coroutines")
 

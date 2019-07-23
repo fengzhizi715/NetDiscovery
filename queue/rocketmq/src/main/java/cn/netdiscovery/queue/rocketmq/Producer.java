@@ -3,6 +3,7 @@ package cn.netdiscovery.queue.rocketmq;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * Created by tony on 2019-07-16.
  */
+@Slf4j
 public class Producer {
 
     private DefaultMQProducer producer;
@@ -24,16 +26,12 @@ public class Producer {
     @Getter
     private String tags;
 
-    @Getter
-    private List<String> msgs;
-
     public Producer(String producerName,String nameServerAddress,int retryTimes,String tags) {
 
         this.producer = new DefaultMQProducer(producerName);
         this.producer.setNamesrvAddr(nameServerAddress);
         this.producer.setRetryTimesWhenSendAsyncFailed(retryTimes);
         this.tags = tags;
-        this.msgs = Collections.synchronizedList(new LinkedList<String>());
     }
 
     public void start() {
@@ -50,8 +48,7 @@ public class Producer {
         Message msg = new Message(request.getSpiderName(), tags, SerializableUtils.toJson(request).getBytes());
 
         try {
-            SendResult sendResult = producer.send(msg);
-            msgs.add(sendResult.getMsgId());
+            producer.send(msg);
         } catch (MQClientException e) {
             e.printStackTrace();
         } catch (RemotingException e) {
@@ -61,18 +58,5 @@ public class Producer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getMessageId() {
-
-        String msgId = null;
-
-        if (msgs.size()>0) {
-
-            msgId = msgs.get(0);
-            msgs.remove(0);
-        }
-
-        return msgId;
     }
 }
