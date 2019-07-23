@@ -9,7 +9,7 @@
 # 功能特点：
 
 * 轻量级爬虫
-* 模块化设计，便于扩展：支持多种消息队列(disruptor、redis、kafka、rabitmq)、多种网络框架(http client、okhttp3、selenium等)，也支持自己实现。
+* 模块化设计，便于扩展：支持多种消息队列(Disruptor、Redis、Kafka、RabitMQ、RocketMQ)、多种网络框架(Http Client、Okhttp3、Selenium等)，也支持自己实现。
 * 支持分布式
 * 多线程、异步化：底层使用 RxJava 2 的多线程机制
 * 支持 Request 添加到正在运行爬虫的 Queue 中
