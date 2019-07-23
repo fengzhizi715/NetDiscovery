@@ -5,6 +5,8 @@ import cn.netdiscovery.core.queue.AbstractQueue;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import org.apache.rocketmq.common.message.MessageExt;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -52,7 +54,15 @@ public class RocketQueue extends AbstractQueue {
     @Override
     public int getLeftRequests(String spiderName) {
 
-        return 0;
+        Map<String, ConcurrentLinkedQueue<MessageExt>> map = consumer.getMap();
+        int count = 0;
+
+        for (String key : map.keySet()) {
+
+            count += map.get(key).size();
+        }
+
+        return count;
     }
 
     private Request deserialize(byte[] data) {

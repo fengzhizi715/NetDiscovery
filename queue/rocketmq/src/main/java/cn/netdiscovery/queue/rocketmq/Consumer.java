@@ -24,6 +24,7 @@ public class Consumer {
     @Getter
     private DefaultMQPushConsumer consumer;
 
+    @Getter
     private Map<String, ConcurrentLinkedQueue<MessageExt>> map;
 
     public Consumer(String consumerName,String nameServerAddress) {
