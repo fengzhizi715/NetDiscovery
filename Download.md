@@ -94,6 +94,12 @@ netdiscovery-queue-redis
 implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.3.2'
 ```
 
+netdiscovery-queue-rocketmq
+
+```groovy
+implementation 'cn.netdiscovery:netdiscovery-queue-rocketmq:1.3.2'
+```
+
 ## kotlin
 
 netdiscovery-kotlin-coroutines
