@@ -84,6 +84,7 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 1. 整合[cv4j](https://github.com/imageprocessor/cv4j)以及 Tesseract，实现 OCR 识别的功能
 2. 完善协程的模块
 3. SpiderEngine 提供rpc接口
+*  增加 admin 模块
 4. 支持 Consul
 5. 支持 RxJava 3.x 
 6. 完善 wiki，增加各个模式的使用说明
