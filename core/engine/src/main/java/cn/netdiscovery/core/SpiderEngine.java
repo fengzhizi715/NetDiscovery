@@ -462,6 +462,14 @@ public class SpiderEngine {
      */
     public void run() {
 
+        log.info("\r\n" +
+                "   _   _      _   ____  _\n" +
+                "  | \\ | | ___| |_|  _ \\(_)___  ___ _____   _____ _ __ _   _\n" +
+                "  |  \\| |/ _ \\ __| | | | / __|/ __/ _ \\ \\ / / _ \\ '__| | | |\n" +
+                "  | |\\  |  __/ |_| |_| | \\__ \\ (_| (_) \\ V /  __/ |  | |_| |\n" +
+                "  |_| \\_|\\___|\\__|____/|_|___/\\___\\___/ \\_/ \\___|_|   \\__, |\n" +
+                "                                                      |___/");
+
         if (Preconditions.isNotBlank(spiders)) {
 
             if (registry!=null && registry.getProvider()!=null) {
