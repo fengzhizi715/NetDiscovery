@@ -66,6 +66,8 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 ![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/SpiderEngine_Cluster.png)
 
+![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/launch.png)
+
 # 详细功能查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
 # [下载](https://github.com/fengzhizi715/NetDiscovery/blob/master/Download.md)
