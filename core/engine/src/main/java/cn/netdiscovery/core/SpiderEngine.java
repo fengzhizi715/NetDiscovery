@@ -397,6 +397,14 @@ public class SpiderEngine {
                 response.end(SerializableUtils.toJson(jobsResponse));
             });
 
+            router.route("/netdiscovery/health/").handler(routingContext -> {
+
+                HttpServerResponse response = routingContext.response();
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
+
+                response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
+            });
+
             if (useMonitor) { // 是否使用 agent
 
                 // The web server handler
