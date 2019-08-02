@@ -65,7 +65,7 @@ repositories {
 
 SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor 对 SpiderEngine 进行监控。
 
-![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/SpiderEngine_Cluster.png)
+![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/SpiderEngine+Etcd_ZK.png)
 
 
 
