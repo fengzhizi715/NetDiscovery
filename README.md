@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/703e0ba9760b4affaf39188dbbdd2811)](https://app.codacy.com/app/fengzhizi715/NetDiscovery?utm_source=github.com&utm_medium=referral&utm_content=fengzhizi715/NetDiscovery&utm_campaign=Badge_Grade_Dashboard)
 
+![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/launch.png)
 
 # 功能特点：
 
@@ -66,7 +67,7 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 ![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/SpiderEngine_Cluster.png)
 
-![](https://github.com/fengzhizi715/NetDiscovery/blob/master/images/launch.png)
+
 
 # 详细功能查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
