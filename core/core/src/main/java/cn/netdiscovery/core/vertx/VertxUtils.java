@@ -1,5 +1,6 @@
 package cn.netdiscovery.core.vertx;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -38,5 +39,13 @@ public class VertxUtils {
 
     public static <T> MessageConsumer<T> consumer(String address, Handler<Message<T>> handler) {
         return vertx.eventBus().consumer(address,handler);
+    }
+
+    public static void deployVerticle(String name, DeploymentOptions options) {
+        vertx.deployVerticle(name, options);
+    }
+
+    public static void undeploy(String deploymentID) {
+        vertx.undeploy(deploymentID);
     }
 }
