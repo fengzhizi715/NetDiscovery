@@ -195,7 +195,7 @@ public class SpiderEngine {
 
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
-     * 如果要使用此方法，须放在run()之前
+     * 如果要使用此方法，必须要放在run()之前
      *
      * @param port
      */
@@ -209,6 +209,7 @@ public class SpiderEngine {
 
         RouterHandler routerHandler = new RouterHandler(spiders,jobs,router,useMonitor);
         routerHandler.route();
+
         server.requestHandler(router::accept).listen(port);
 
         return this;
