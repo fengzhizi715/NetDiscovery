@@ -40,7 +40,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     var name = "spider" // 爬虫的名字，默认使用spider
 
-    private var parser: Parser? = null
+    private var parser: Parser?=null
 
     private val pipelines = LinkedList<Pipeline>()
 

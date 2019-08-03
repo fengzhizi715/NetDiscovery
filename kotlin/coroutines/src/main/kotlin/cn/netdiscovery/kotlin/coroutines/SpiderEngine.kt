@@ -51,12 +51,11 @@ class SpiderEngine private constructor(@field:Getter
                     .parallelStream()
                     .forEach {
 
-                        str ->
-                        this.javaClass.getResourceAsStream(str)?.use {
+                        str -> this.javaClass.getResourceAsStream(str)?.use {
 
-                            val inputString = IOUtils.inputStream2String(it)
-                            if (Preconditions.isNotBlank(inputString)) {
-                                val ss = inputString.split("\r\n".toRegex()).dropLastWhile { str.isEmpty() }.toTypedArray()
+                          IOUtils.inputStream2String(it)?.let {
+
+                                val ss = it.split("\r\n".toRegex()).dropLastWhile { str.isEmpty() }.toTypedArray()
                                 if (ss.isNotEmpty()) {
 
                                     Arrays.asList(*ss).forEach {
