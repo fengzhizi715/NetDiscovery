@@ -13,9 +13,13 @@ class RequestWrapper {
 
     var url: String? = null
 
+    var userAgent:String? = null
+
     var spiderName: String? = null
 
     var httpMethod: HttpMethod = HttpMethod.GET
+
+    var checkDuplicate = true
 
     var sleepTime: Long = 0
 
@@ -72,8 +76,10 @@ fun request(init: RequestWrapper.() -> Unit): Request {
 private fun configRequest(wrap: RequestWrapper): Request {
 
     val request =  Request(wrap.url)
+            .ua(wrap.userAgent)
             .spiderName(wrap.spiderName)
             .httpMethod(wrap.httpMethod)
+            .checkDuplicate(wrap.checkDuplicate)
             .sleep(wrap.sleepTime)
             .downloadDelay(wrap.downloadDelay)
             .domainDelay(wrap.domainDelay)
