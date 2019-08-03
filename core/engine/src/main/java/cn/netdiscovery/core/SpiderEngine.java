@@ -21,9 +21,12 @@ import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.micrometer.MicrometerMetricsOptions;
+import io.vertx.micrometer.VertxPrometheusOptions;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -119,6 +122,11 @@ public class SpiderEngine {
             defaultHttpdPort = 8715;
             useMonitor = false;
         }
+
+        VertxUtils.configVertx(new VertxOptions().setMetricsOptions(
+                new MicrometerMetricsOptions()
+                        .setPrometheusOptions(new VertxPrometheusOptions().setEnabled(true))
+                        .setEnabled(true)));
     }
 
     public static SpiderEngine create() {

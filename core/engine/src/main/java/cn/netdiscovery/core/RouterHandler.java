@@ -18,6 +18,7 @@ import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.micrometer.PrometheusScrapingHandler;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -57,6 +58,8 @@ public class RouterHandler {
 
             response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
         });
+
+        router.route("/netdiscovery/metrics").handler(PrometheusScrapingHandler.create());
 
         if (Preconditions.isNotBlank(spiders)) {
 

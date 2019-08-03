@@ -27,6 +27,9 @@ dependencies {
         exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
     })
 
+    implementation "io.vertx:vertx-micrometer-metrics:${libs.vertx}"
+    implementation "io.micrometer:micrometer-registry-prometheus:1.2.0"
+
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "ch.qos.logback:logback-classic:${libs.logback}"
     implementation "ch.qos.logback:logback-core:${libs.logback}"
