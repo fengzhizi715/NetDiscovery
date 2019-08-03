@@ -9,7 +9,7 @@ import cn.netdiscovery.kotlin.dsl.spiderEngine
 object TestDSL4SpiderEngine {
 
     @JvmStatic
-    fun main(args: Array<String>) {
+    fun main() {
 
         val spiderEngine = spiderEngine {
 

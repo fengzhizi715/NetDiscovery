@@ -6,7 +6,7 @@ import cn.netdiscovery.kotlin.coroutines.SpiderEngine
 /**
  * Created by tony on 2018/8/14.
  */
-fun main(args: Array<String>) {
+fun main() {
 
     val spiderEngine = SpiderEngine.create()
 

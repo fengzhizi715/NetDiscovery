@@ -5,7 +5,7 @@ import cn.netdiscovery.kotlin.coroutines.Spider
 /**
  * Created by tony on 2018/8/14.
  */
-fun main(args: Array<String>) {
+fun main() {
 
     Spider.create()
             .name("tony")

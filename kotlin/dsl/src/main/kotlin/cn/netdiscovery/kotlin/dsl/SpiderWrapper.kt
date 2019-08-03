@@ -22,7 +22,6 @@ class SpiderWrapper {
     var pipelines:List<Pipeline>? = null
 
     var urls:List<String>? = null
-
 }
 
 fun spider(init: SpiderWrapper.() -> Unit):Spider {
@@ -43,8 +42,7 @@ internal fun configSpider(wrap:SpiderWrapper):Spider {
         spider.url(it)
     }
 
-    spider.downloader(wrap.downloader)
-            .parser(wrap.parser)
+    spider.downloader(wrap.downloader).parser(wrap.parser)
 
     wrap.pipelines?.let {
 

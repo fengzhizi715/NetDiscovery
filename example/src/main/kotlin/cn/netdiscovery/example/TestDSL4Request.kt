@@ -12,7 +12,7 @@ import io.vertx.core.http.HttpMethod
 object TestDSL4Request {
 
     @JvmStatic
-    fun main(args: Array<String>) {
+    fun main() {
 
         val request = request {
 
