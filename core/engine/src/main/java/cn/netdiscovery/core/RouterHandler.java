@@ -26,7 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static cn.netdiscovery.core.config.Constant.*;
+import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE;
+import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE_JSON;
+import static cn.netdiscovery.core.config.Constant.OK_STATUS_CODE;
+import static cn.netdiscovery.core.config.Constant.SUCCESS;
 
 /**
  * SpiderEngine 对外提供的http接口
