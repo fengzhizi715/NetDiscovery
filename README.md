@@ -16,8 +16,8 @@
 * 支持 Request 添加到正在运行爬虫的 Queue 中
 * 支持 Kotlin 协程
 * 支持 JS 渲染
-* Request 支持自定义 header 信息
-* Request 支持 debug 功能：在调试时可以使用 RxCache，从而避免多次请求同一个网页。
+* 支持 Request 自定义 header 信息
+* 支持 debug 功能：在调试时 Request 可以打开 debug 的开关，使用 RxCache 存储请求的结果，从而避免多次请求同一个网页。
 * 支持失败重试的机制
 * 多纬度控制爬取速度（Pipeline、Request、Download、Domain）等等
 * 支持代理池、User Agent 池、Cookies 池
