@@ -26,11 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.netdiscovery.core.config.Constant.*;
-import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE_JSON;
 
 /**
  * SpiderEngine 对外提供的http接口
- * 
+ *
  * Created by tony on 2019-08-03.
  */
 public class RouterHandler {
@@ -49,6 +48,15 @@ public class RouterHandler {
     }
 
     public void route() {
+
+        // 检测 SpiderEngine 的健康状况
+        router.route("/netdiscovery/health/").handler(routingContext -> {
+
+            HttpServerResponse response = routingContext.response();
+            response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
+
+            response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
+        });
 
         if (Preconditions.isNotBlank(spiders)) {
 
@@ -221,14 +229,6 @@ public class RouterHandler {
 
                 // 写入响应并结束处理
                 response.end(SerializableUtils.toJson(jobsResponse));
-            });
-
-            router.route("/netdiscovery/health/").handler(routingContext -> {
-
-                HttpServerResponse response = routingContext.response();
-                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
-
-                response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
             });
 
             if (useMonitor) { // 是否使用 agent
