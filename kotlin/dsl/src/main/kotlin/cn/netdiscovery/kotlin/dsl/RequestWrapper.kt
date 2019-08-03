@@ -21,6 +21,10 @@ class RequestWrapper {
 
     var checkDuplicate = true
 
+    var saveCookie = false
+
+    var debug = false
+
     var sleepTime: Long = 0
 
     var downloadDelay: Long = 0
@@ -80,6 +84,8 @@ private fun configRequest(wrap: RequestWrapper): Request {
             .spiderName(wrap.spiderName)
             .httpMethod(wrap.httpMethod)
             .checkDuplicate(wrap.checkDuplicate)
+            .saveCookie(wrap.saveCookie)
+            .debug(wrap.debug)
             .sleep(wrap.sleepTime)
             .downloadDelay(wrap.downloadDelay)
             .domainDelay(wrap.domainDelay)

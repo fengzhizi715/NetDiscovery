@@ -107,9 +107,8 @@ public class Request implements Serializable {
 
     public Request ua(String userAgent) {
 
+        this.userAgent = userAgent;
         if (Preconditions.isNotBlank(userAgent)) {
-
-            this.userAgent = userAgent;
             header.put("User-Agent", userAgent);
         }
 
@@ -121,9 +120,8 @@ public class Request implements Serializable {
      */
     private void autoUA() {
 
+        this.userAgent = UserAgent.getUserAgent();
         if (Preconditions.isNotBlank(userAgent)) {
-
-            this.userAgent = UserAgent.getUserAgent();
             header.put("User-Agent", userAgent);
         }
     }
