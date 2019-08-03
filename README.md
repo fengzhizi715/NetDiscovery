@@ -69,6 +69,12 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 
 
+# Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/fengzhizi715/NetDiscovery.svg)](https://starchart.cc/fengzhizi715/NetDiscovery)
+
+
+
 # 详细功能查看[wiki](https://github.com/fengzhizi715/NetDiscovery/wiki)
 
 # [下载](https://github.com/fengzhizi715/NetDiscovery/blob/master/Download.md)
@@ -82,6 +88,7 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 * [RxCache](https://github.com/fengzhizi715/RxCache)
 * [ProxyPool](https://github.com/fengzhizi715/ProxyPool)
+
 
 # TODO List:
 
@@ -107,7 +114,6 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 # Contributing:
 
 [Pull requests](https://help.github.com/categories/collaborating-with-issues-and-pull-requests/) are welcome
-
 
 
 # 联系方式:
