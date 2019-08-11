@@ -29,7 +29,12 @@ dependencies {
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation "io.vertx:vertx-web:${libs.vertx}"
+    implementation "io.vertx:vertx-web-client:${libs.vertx}"
     implementation "io.vertx:vertx-lang-kotlin-coroutines:${libs.vertx}"
+
+    implementation "io.vertx:vertx-micrometer-metrics:${libs.vertx}"
+    implementation "io.micrometer:micrometer-registry-prometheus:1.2.0"
+
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation "com.alibaba:fastjson:${libs.fastjson}"
