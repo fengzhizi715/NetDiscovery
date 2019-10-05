@@ -7,20 +7,20 @@
 netdiscovery-core-core
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core-core:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-core-core:<latest-version>'
 
 ```
 
 netdiscovery-core-engine
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core-engine:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-core-engine:<latest-version>'
 ```
 
 netdiscovery-core-engine-monitor
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-core-engine-monitor:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-core-engine-monitor:<latest-version>'
 ```
 
 ## downloader
@@ -28,25 +28,25 @@ implementation 'cn.netdiscovery:netdiscovery-core-engine-monitor:1.3.2'
 netdiscovery-downloader-htmlunit
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-htmlunit:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-downloader-htmlunit:<latest-version>'
 ```
 
 netdiscovery-downloader-httpclient
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-httpclient:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-downloader-httpclient:<latest-version>'
 ```
 
 netdiscovery-downloader-okhttp
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-okhttp:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-downloader-okhttp:<latest-version>'
 ```
 
 netdiscovery-downloader-selenium
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:<latest-version>'
 ```
 
 ## pipeline
@@ -54,25 +54,25 @@ implementation 'cn.netdiscovery:netdiscovery-downloader-selenium:1.3.2'
 netdiscovery-pipeline-couchbase
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-couchbase:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-couchbase:<latest-version>'
 ```
 
 netdiscovery-pipeline-elasticsearch
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-elasticsearch:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-elasticsearch:<latest-version>'
 ```
 
 netdiscovery-pipeline-mongo
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-mongo:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-mongo:<latest-version>'
 ```
 
 netdiscovery-pipeline-redis
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:<latest-version>'
 ```
 
 ## queue
@@ -80,24 +80,24 @@ implementation 'cn.netdiscovery:netdiscovery-pipeline-redis:1.3.2'
 netdiscovery-queue-kafka
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-kafka:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-queue-kafka:<latest-version>'
 ```
 
 netdiscovery-queue-rabbitmq
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-queue-rabbitmq:<latest-version>'
 ```
 netdiscovery-queue-redis
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-redis:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-queue-redis:<latest-version>'
 ```
 
 netdiscovery-queue-rocketmq
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-queue-rocketmq:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-queue-rocketmq:<latest-version>'
 ```
 
 ## kotlin
@@ -105,11 +105,11 @@ implementation 'cn.netdiscovery:netdiscovery-queue-rocketmq:1.3.2'
 netdiscovery-kotlin-coroutines
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-kotlin-coroutines:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-kotlin-coroutines:<latest-version>'
 ```
 
 netdiscovery-kotlin-dsl
 
 ```groovy
-implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:1.3.2'
+implementation 'cn.netdiscovery:netdiscovery-kotlin-dsl:<latest-version>'
 ```
