@@ -179,15 +179,17 @@ class SpiderEngine private constructor(@field:Getter
     fun httpd(port: Int = defaultHttpdPort): SpiderEngine {
 
         defaultHttpdPort = port
-        server = VertxUtils.getVertx().createHttpServer()
 
-        val router = Router.router(VertxUtils.getVertx())
-        router.route().handler(BodyHandler.create())
+        server = VertxUtils.getVertx().createHttpServer()?.apply {
 
-        val routerHandler = RouterHandler(spiders, jobs, router, useMonitor)
-        routerHandler.route()
+            val router = Router.router(VertxUtils.getVertx())
+            router.route().handler(BodyHandler.create())
 
-        server!!.requestHandler(Handler<HttpServerRequest> { router.accept(it) }).listen(port)
+            val routerHandler = RouterHandler(spiders, jobs, router, useMonitor)
+            routerHandler.route()
+
+            requestHandler{ router.accept(it) }.listen(port)
+        }
 
         return this
     }
