@@ -9,34 +9,29 @@ import io.vertx.core.http.HttpMethod
 /**
  * Created by tony on 2018/9/18.
  */
-object TestDSL4Request {
+fun main() {
 
-    @JvmStatic
-    fun main() {
+    val request = request {
 
-        val request = request {
+        url = "https://www.baidu.com/"
 
-            url = "https://www.baidu.com/"
+        httpMethod = HttpMethod.GET
 
-            httpMethod = HttpMethod.GET
+        spiderName = "tony"
 
-            spiderName = "tony"
+        downloadDelay = 2000
 
-            downloadDelay = 2000
+        header {
 
-            header {
-
-                "111" to "2222"
-                "333" to "44444"
-            }
-
-            extras {
-
-                "tt" to "qqq"
-            }
+            "111" to "2222"
+            "333" to "44444"
         }
 
-        Spider.create().name("tony").request(request).pipeline(DebugPipeline()).run()
+        extras {
+
+            "tt" to "qqq"
+        }
     }
 
+    Spider.create().name("tony").request(request).pipeline(DebugPipeline()).run()
 }

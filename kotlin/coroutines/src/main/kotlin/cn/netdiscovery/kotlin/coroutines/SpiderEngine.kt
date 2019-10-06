@@ -1,6 +1,5 @@
 package cn.netdiscovery.kotlin.coroutines
 
-import cn.netdiscovery.core.Spider
 import cn.netdiscovery.core.config.Configuration
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.config.Constant.*
@@ -287,64 +286,6 @@ class SpiderEngine private constructor(@field:Getter
     }
 
     /**
-     * 给 Spider 发起定时任务
-     * @param spiderName
-     * @param cron cron表达式
-     * @param urls
-     */
-    fun addSpiderJob(spiderName: String, cron: String, vararg urls: String): SpiderJobBean? {
-
-        if (Preconditions.isNotBlank(urls)
-                && spiders[spiderName] != null
-                && Preconditions.isNotBlank(cron)) {
-
-            val requests = arrayOfNulls<Request>(urls.size)
-
-            for (i in urls.indices) {
-
-                requests[i] = Request(urls[i], spiderName).checkDuplicate(false)
-            }
-
-            return addSpiderJob(spiderName, cron, requests)
-        }
-
-        return null
-    }
-
-    /**
-     * 给 Spider 发起定时任务
-     * @param spiderName
-     * @param cron cron表达式
-     * @param requests
-     */
-    fun addSpiderJob(spiderName: String, cron: String, requests: Array<Request?>): SpiderJobBean? {
-
-        return spiders[spiderName]?.let {
-
-            val jobName = SPIDER_JOB_NAME + count.incrementAndGet()
-
-            val jobBean = SpiderJobBean().apply {
-                this.jobName = jobName
-                this.jobGroupName = JOB_GROUP_NAME
-                this.triggerName = TRIGGER_NAME
-                this.triggerGroupName = TRIGGER_GROUP_NAME
-                this.cron = cron
-                this.requests = requests
-            }
-
-            Stream.of(*requests)
-                    .filter { it!=null }
-                    .filter { request -> request!!.isCheckDuplicate }
-                    .forEach { request -> request!!.checkDuplicate(false) }
-
-            jobs[jobName] = jobBean
-            QuartzManager.addJob(jobBean, SpiderJob::class.java, cron, it, *requests)
-
-            jobBean
-        }?:null
-    }
-
-    /**
      * 给 ProxyPool 发起定时任务
      * @param proxyMap
      * @param cron cron表达式
@@ -380,8 +321,10 @@ class SpiderEngine private constructor(@field:Getter
 
     companion object {
 
+        @JvmStatic
         fun create() = SpiderEngine()
 
+        @JvmStatic
         fun create(queue: Queue) = SpiderEngine(queue)
     }
 }
