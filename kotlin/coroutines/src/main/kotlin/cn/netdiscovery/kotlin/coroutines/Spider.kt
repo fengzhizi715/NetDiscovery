@@ -1,18 +1,26 @@
 package cn.netdiscovery.kotlin.coroutines
 
+import cn.netdiscovery.core.config.Configuration
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.domain.Page
 import cn.netdiscovery.core.domain.Request
 import cn.netdiscovery.core.domain.Response
 import cn.netdiscovery.core.downloader.Downloader
+import cn.netdiscovery.core.downloader.file.FileDownloader
+import cn.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader
 import cn.netdiscovery.core.downloader.vertx.VertxDownloader
 import cn.netdiscovery.core.exception.SpiderException
 import cn.netdiscovery.core.parser.Parser
 import cn.netdiscovery.core.parser.selector.Html
 import cn.netdiscovery.core.parser.selector.Json
+import cn.netdiscovery.core.pipeline.ConsolePipeline
 import cn.netdiscovery.core.pipeline.Pipeline
+import cn.netdiscovery.core.pipeline.PrintRequestPipeline
 import cn.netdiscovery.core.queue.DefaultQueue
 import cn.netdiscovery.core.queue.Queue
+import cn.netdiscovery.core.queue.disruptor.DisruptorQueue
+import cn.netdiscovery.core.utils.BooleanUtils
+import cn.netdiscovery.core.utils.NumberUtils
 import cn.netdiscovery.core.utils.RetryWithDelay
 import cn.netdiscovery.core.utils.SpiderUtils
 import com.cv4j.proxy.ProxyPool
@@ -34,7 +42,7 @@ import java.util.concurrent.locks.ReentrantLock
  * Created by tony on 2018/8/8.
  */
 
-class Spider private constructor(queue: Queue? = DefaultQueue()) {
+class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
     protected var stat = AtomicInteger(SPIDER_STATUS_INIT)
 
@@ -44,33 +52,124 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private val pipelines = LinkedList<Pipeline>()
 
-    var queue: Queue
-
     private var autoProxy = false
 
     private var initialDelay: Long = 0
 
+    private var maxRetries = 3 // 重试次数
+
+    private var retryDelayMillis: Long = 1000 // 重试等待的时间
+
+    private var sleepTime: Long = 30000  // 默认30s
+
+    private var requestSleepTime: Long = 0 // 默认0s
+
+    private var autoSleepTime = false
+
+    private var downloadDelay: Long = 0  // 默认0s
+
+    private var autoDownloadDelay = false
+
+    private var pipelineDelay: Long = 0  // 默认0s
+
+    private var autoPipelineDelay = false
+
+    private var domainDelay: Long = 0  // 默认0s
+
+    private var autoDomainDelay = false
+
+    @Volatile
     private var pause: Boolean = false
+
     private lateinit var pauseCountDown: CountDownLatch
     private val newRequestLock = ReentrantLock()
     private val newRequestCondition = newRequestLock.newCondition()
 
     private val compositeDisposable = CompositeDisposable()
 
-    var downloader: Downloader
+    lateinit var downloader: Downloader
 
     val spiderStatus: Int
         get() = stat.get()
 
     init {
 
-        if (queue != null) {
-            this.queue = queue
-        } else {
-            this.queue = DefaultQueue()
+        try {
+            val queueType = Configuration.getConfig("spider.queue.type")
+
+            if (Preconditions.isNotBlank(queueType)) {
+
+                when (queueType) {
+
+                    Constant.QUEUE_TYPE_DEFAULT   -> this.queue = DefaultQueue()
+
+                    Constant.QUEUE_TYPE_DISRUPTOR -> this.queue = DisruptorQueue()
+
+                    else                          -> this.queue = DefaultQueue()
+                }
+            }
+        } catch (e: ClassCastException) {
+            println(e.message)
         }
 
-        downloader = VertxDownloader()
+        initSpiderConfig()
+    }
+
+    /**
+     * 从 application.yaml 或 application.properties 中获取配置，并依据这些配置来初始化爬虫
+     */
+    private fun initSpiderConfig() {
+
+        try {
+            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"), false)
+            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"))
+            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"))
+            retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"))
+
+            requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"))
+            autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"), false)
+            downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"))
+            autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"), false)
+            domainDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.domainDelay"))
+            autoDomainDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDomainDelay"), false)
+
+            pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"))
+            autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"), false)
+
+            val downloaderType = Configuration.getConfig("spider.downloader.type")
+
+            if (Preconditions.isNotBlank(downloaderType)) {
+
+                when (downloaderType) {
+
+                    Constant.DOWNLOAD_TYPE_VERTX          -> this.downloader = VertxDownloader()
+
+                    Constant.DOWNLOAD_TYPE_URL_CONNECTION -> this.downloader = UrlConnectionDownloader()
+
+                    Constant.DOWNLOAD_TYPE_FILE           -> this.downloader = FileDownloader()
+
+                    else                                  -> this.downloader = VertxDownloader()
+                }
+            }
+
+            val usePrintRequestPipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.usePrintRequestPipeline"), true)
+
+            if (usePrintRequestPipeline) {
+                // 默认使用 PrintRequestPipeline
+                this.pipelines.add(PrintRequestPipeline())
+            }
+
+            val useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"), true)
+
+            if (useConsolePipeline) {
+                // 默认使用 ConsolePipeline
+                this.pipelines.add(ConsolePipeline())
+            }
+
+        } catch (e: ClassCastException) {
+            println(e.message)
+        }
+
     }
 
     fun name(name: String): Spider {
@@ -378,8 +477,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         if (!this.resultItems.isSkip && Preconditions.isNotBlank(pipelines)) {
 
-                            pipelines.stream()
-                                    .forEach { pipeline -> pipeline.process(resultItems) }
+                            pipelines.stream().forEach { pipeline -> pipeline.process(resultItems) }
                         }
 
                     }?.apply {
@@ -421,9 +519,7 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
     private fun stopSpider(downloader: Downloader?) {
 
-        if (downloader != null) {
-            IOUtils.closeQuietly(downloader)
-        }
+        IOUtils.closeQuietly(downloader)
 
         stop()
     }
@@ -481,9 +577,9 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
         val SPIDER_STATUS_STOPPED = 4
 
         @JvmStatic
-        fun create(): Spider = Spider()
+        fun create() = Spider()
 
         @JvmStatic
-        fun create(queue: Queue?): Spider = if (queue != null) Spider(queue) else Spider()
+        fun create(queue: Queue?) = if (queue != null) Spider(queue) else Spider()
     }
 }
