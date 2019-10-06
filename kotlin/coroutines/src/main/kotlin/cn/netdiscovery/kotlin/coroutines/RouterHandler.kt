@@ -56,7 +56,6 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     spider = value
 
                     entity = SpiderBean().apply {
-
                         spiderName = spider.name
                         spiderStatus = spider.spiderStatus
                         leftRequestSize = spider.queue.getLeftRequests(spider.name)
@@ -70,7 +69,6 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                 }
 
                 val spidersResponse = SpidersResponse().apply {
-
                     code = OK_STATUS_CODE
                     message = SUCCESS
                     data = list
@@ -92,19 +90,21 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                     val spider = spiders[spiderName]!!
 
-                    val entity = SpiderBean()
-                    entity.spiderName = spiderName
-                    entity.spiderStatus = spider.getSpiderStatus()
-                    entity.leftRequestSize = spider.getQueue().getLeftRequests(spiderName)
-                    entity.totalRequestSize = spider.getQueue().getTotalRequests(spiderName)
-                    entity.consumedRequestSize = entity.totalRequestSize - entity.leftRequestSize
-                    entity.queueType = spider.getQueue().javaClass.simpleName
-                    entity.downloaderType = spider.getDownloader().javaClass.simpleName
+                    val entity = SpiderBean().apply {
+                        this.spiderName = spiderName
+                        spiderStatus = spider.spiderStatus
+                        leftRequestSize = spider.queue.getLeftRequests(spiderName)
+                        totalRequestSize = spider.queue.getTotalRequests(spiderName)
+                        consumedRequestSize = totalRequestSize - leftRequestSize
+                        queueType = spider.queue.javaClass.simpleName
+                        downloaderType = spider.downloader.javaClass.simpleName
+                    }
 
-                    val spiderResponse = SpiderResponse()
-                    spiderResponse.code = OK_STATUS_CODE
-                    spiderResponse.message = SUCCESS
-                    spiderResponse.data = entity
+                    val spiderResponse = SpiderResponse().apply {
+                        code = OK_STATUS_CODE
+                        message = SUCCESS
+                        data = entity
+                    }
 
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderResponse))
@@ -157,8 +157,10 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                         }
                     }
 
-                    spiderStatusResponse!!.code = OK_STATUS_CODE
-                    spiderStatusResponse.message = SUCCESS
+                    spiderStatusResponse?.apply {
+                        code = OK_STATUS_CODE
+                        message = SUCCESS
+                    }
 
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderStatusResponse))
@@ -204,10 +206,11 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                 list.addAll(jobs.values)
 
-                val jobsResponse = JobsResponse()
-                jobsResponse.code = OK_STATUS_CODE
-                jobsResponse.message = SUCCESS
-                jobsResponse.data = list
+                val jobsResponse = JobsResponse().apply {
+                    code = OK_STATUS_CODE
+                    message = SUCCESS
+                    data = list
+                }
 
                 // 写入响应并结束处理
                 response.end(SerializableUtils.toJson(jobsResponse))
