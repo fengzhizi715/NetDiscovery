@@ -28,9 +28,11 @@ import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.rx2.await
+import org.apache.commons.lang3.RandomUtils
 import java.nio.charset.Charset
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -192,8 +194,24 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
             Arrays.asList(*urls)
                     .stream()
                     .forEach {
-
-                        queue.push(Request(it, name).charset(charset.name()))
+                        val request = Request(it, name)
+                        request.charset(charset.name())
+                        if (autoSleepTime) {
+                            request.autoSleepTime()
+                        } else {
+                            request.sleep(requestSleepTime)
+                        }
+                        if (autoDownloadDelay) {
+                            request.autoDownloadDelay()
+                        } else {
+                            request.downloadDelay(downloadDelay)
+                        }
+                        if (autoDomainDelay) {
+                            request.autoDomainDelay()
+                        } else {
+                            request.domainDelay(domainDelay)
+                        }
+                        queue.push(request)
                     }
 
             signalNewRequest()
@@ -210,7 +228,25 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
             Arrays.asList(*urls)
                     .stream()
-                    .forEach { queue.push(Request(it, name)) }
+                    .forEach {
+                        val request = Request(it, name)
+                        if (autoSleepTime) {
+                            request.autoSleepTime()
+                        } else {
+                            request.sleep(requestSleepTime)
+                        }
+                        if (autoDownloadDelay) {
+                            request.autoDownloadDelay()
+                        } else {
+                            request.downloadDelay(downloadDelay)
+                        }
+                        if (autoDomainDelay) {
+                            request.autoDomainDelay()
+                        } else {
+                            request.domainDelay(domainDelay)
+                        }
+                        queue.push(request)
+                    }
 
             signalNewRequest()
         }
@@ -225,8 +261,24 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach {
-
-                queue.push(Request(it, name).charset(charset.name()))
+                val request = Request(it, name)
+                request.charset(charset.name())
+                if (autoSleepTime) {
+                    request.autoSleepTime()
+                } else {
+                    request.sleep(requestSleepTime)
+                }
+                if (autoDownloadDelay) {
+                    request.autoDownloadDelay()
+                } else {
+                    request.downloadDelay(downloadDelay)
+                }
+                if (autoDomainDelay) {
+                    request.autoDomainDelay()
+                } else {
+                    request.domainDelay(domainDelay)
+                }
+                queue.push(request)
             }
 
             signalNewRequest()
@@ -241,7 +293,25 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach { queue.push(Request(it, name)) }
+            urls.forEach {
+                val request = Request(it, name)
+                if (autoSleepTime) {
+                    request.autoSleepTime()
+                } else {
+                    request.sleep(requestSleepTime)
+                }
+                if (autoDownloadDelay) {
+                    request.autoDownloadDelay()
+                } else {
+                    request.downloadDelay(downloadDelay)
+                }
+                if (autoDomainDelay) {
+                    request.autoDomainDelay()
+                } else {
+                    request.domainDelay(domainDelay)
+                }
+                queue.push(request)
+            }
 
             signalNewRequest()
         }
@@ -292,12 +362,72 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                                 val request = Request(url)
                                 request.checkDuplicate(false)
                                 request.spiderName(name)
-                                request.sleep(period)
+                                request.sleep(period) // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
                                 request.charset(charset)
+                                if (autoDownloadDelay) {
+                                    request.autoDownloadDelay()
+                                } else {
+                                    request.downloadDelay(downloadDelay)
+                                }
+                                if (autoDomainDelay) {
+                                    request.autoDomainDelay()
+                                } else {
+                                    request.domainDelay(domainDelay)
+                                }
                                 queue.push(request)
+
                                 signalNewRequest()
                             }
                         })
+
+        return this
+    }
+
+    /**
+     * 可以重复提交request，用于实现定时任务，使用该方法时需要跟initialDelay一起配合使用。
+     * @param period
+     * @param request
+     * @return
+     */
+    fun repeatRequest(period: Long, request: Request?): Spider {
+
+        checkIfRunning()
+
+        if (request != null) {
+
+            compositeDisposable
+                    .add(Flowable.interval(period, TimeUnit.MILLISECONDS)
+                            .onBackpressureBuffer()
+                            .subscribe {
+                                if (!pause) {
+
+                                    if (request.sleepTime == 0L || request.sleepTime != period) {
+                                        request.sleep(period) // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
+                                    }
+
+                                    if (request.downloadDelay == 0L) {
+                                        if (autoDownloadDelay) {
+                                            request.autoDownloadDelay()
+                                        } else {
+                                            request.downloadDelay(downloadDelay)
+                                        }
+                                    }
+
+                                    if (request.domainDelay == 0L) {
+                                        if (autoDomainDelay) {
+                                            request.autoDomainDelay()
+                                        } else {
+                                            request.domainDelay(domainDelay)
+                                        }
+                                    }
+
+                                    request.spiderName(name)
+                                    queue.push(request)
+
+                                    signalNewRequest()
+                                }
+                            })
+        }
 
         return this
     }
@@ -308,6 +438,39 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
         if (initialDelay > 0) {
             this.initialDelay = initialDelay
+        }
+
+        return this
+    }
+
+    fun maxRetries(maxRetries: Int): Spider {
+
+        checkIfRunning()
+
+        if (maxRetries > 0) {
+            this.maxRetries = maxRetries
+        }
+
+        return this
+    }
+
+    fun retryDelayMillis(retryDelayMillis: Long): Spider {
+
+        checkIfRunning()
+
+        if (retryDelayMillis > 0) {
+            this.retryDelayMillis = retryDelayMillis
+        }
+
+        return this
+    }
+
+    fun sleepTime(sleepTime: Long): Spider {
+
+        checkIfRunning()
+
+        if (sleepTime > 0) {
+            this.sleepTime = sleepTime
         }
 
         return this
@@ -340,6 +503,14 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         checkIfRunning()
 
         if (pipeline != null) {
+
+            if (pipeline.pipelineDelay == 0L) {
+                if (autoPipelineDelay) {
+                    pipelineDelay = RandomUtils.nextLong(1000, 6000)
+                }
+                pipeline.pipelineDelay = pipelineDelay
+            }
+
             this.pipelines.add(pipeline)
         }
 
@@ -395,10 +566,17 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
             initialDelay()
 
+            if (downloader == null) { // 如果downloader为空，则使用默认的VertxDownloader
+
+                downloader = VertxDownloader()
+            }
+
+            println("Spider $name started!")
+
             while (spiderStatus != SPIDER_STATUS_STOPPED) {
 
                 //暂停抓取
-                if (pause) {
+                if (pause && pauseCountDown != null) {
                     try {
                         this@Spider.pauseCountDown.await()
                     } catch (e: InterruptedException) {
