@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.example
+package cn.netdiscovery.example
 
 import cn.netdiscovery.core.Spider
 import cn.netdiscovery.core.pipeline.debug.DebugPipeline

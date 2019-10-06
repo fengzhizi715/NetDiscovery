@@ -1,4 +1,4 @@
-package com.cv4j.netdiscovery.example
+package cn.netdiscovery.example
 
 import cn.netdiscovery.core.pipeline.ConsolePipeline
 import cn.netdiscovery.kotlin.dsl.spider
@@ -7,21 +7,16 @@ import cn.netdiscovery.kotlin.dsl.spider
 /**
  * Created by tony on 2018/5/27.
  */
-object TestDSL4Spider {
+fun main() {
 
-    @JvmStatic
-    fun main() {
+    val spider = spider {
 
-        val spider = spider {
+        name = "tony"
 
-            name = "tony"
+        urls = listOf("http://www.163.com/","https://www.baidu.com/")
 
-            urls = listOf("http://www.163.com/","https://www.baidu.com/")
-
-            pipelines = listOf(ConsolePipeline())
-        }
-
-        spider.run()
+        pipelines = listOf(ConsolePipeline())
     }
 
+    spider.run()
 }
