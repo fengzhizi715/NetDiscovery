@@ -366,7 +366,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         return this
     }
 
-    private fun waitNewRequest() {
+    fun waitNewRequest() {
         newRequestLock.lock()
         
         try {
@@ -377,7 +377,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         }
     }
 
-    private fun signalNewRequest() {
+    fun signalNewRequest() {
         newRequestLock.lock()
 
         try {
@@ -487,6 +487,8 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                         request.afterRequest?.let {
                             it.process(this)
                         }
+
+                        signalNewRequest()
                     }
                 }
             }

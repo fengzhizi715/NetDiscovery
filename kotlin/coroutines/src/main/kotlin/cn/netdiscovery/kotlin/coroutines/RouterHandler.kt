@@ -170,30 +170,30 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
             }
 
-//            // 添加新的url任务到某个正在运行中的爬虫
-//            router.post("/netdiscovery/spider/:spiderName/push").handler { routingContext ->
-//
-//                val response = routingContext.response()
-//                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
-//
-//                val spiderName = routingContext.pathParam("spiderName")
-//
-//                if (Preconditions.isNotBlank(spiderName) && spiders[spiderName] != null) {
-//
-//                    val json = routingContext.bodyAsJson
-//
-//                    val url = json.getString("url")
-//
-//                    val spider = spiders[spiderName]!!
-//                    spider.queue.pushToRunninSpider(url, spider)
-//
-//                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")))
-//                } else {
-//
-//                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
-//                }
-//
-//            }
+            // 添加新的url任务到某个正在运行中的爬虫
+            router.post("/netdiscovery/spider/:spiderName/push").handler { routingContext ->
+
+                val response = routingContext.response()
+                response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
+
+                val spiderName = routingContext.pathParam("spiderName")
+
+                if (Preconditions.isNotBlank(spiderName) && spiders[spiderName] != null) {
+
+                    val json = routingContext.bodyAsJson
+
+                    val url = json.getString("url")
+
+                    val spider = spiders[spiderName]!!
+                    spider.queue.pushToRunninSpider(url, spider)
+
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")))
+                } else {
+
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
+                }
+
+            }
 
             // 显示所有爬虫的定时任务
             router.route("/netdiscovery/jobs/").handler { routingContext ->
