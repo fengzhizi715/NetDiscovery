@@ -85,7 +85,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                 if (Preconditions.isNotBlank(spiderName) && spiders[spiderName] != null) {
 
-                    val spider = spiders[spiderName]
+                    val spider = spiders[spiderName]!!
 
                     val entity = SpiderBean()
                     entity.spiderName = spiderName
@@ -105,7 +105,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     response.end(SerializableUtils.toJson(spiderResponse))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
                 }
             }
 
@@ -122,7 +122,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     val json = routingContext.bodyAsJson
                     var spiderStatusResponse: SpiderStatusResponse? = null
 
-                    val spider = spiders[spiderName]
+                    val spider = spiders[spiderName]!!
 
                     if (json != null) {
 
@@ -159,7 +159,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     response.end(SerializableUtils.toJson(spiderStatusResponse))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
                 }
 
             }
@@ -178,13 +178,13 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                     val url = json.getString("url")
 
-                    val spider = spiders[spiderName]
+                    val spider = spiders[spiderName]!!
                     spider.getQueue().pushToRunninSpider(url, spider)
 
                     response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
                 }
 
             }
@@ -225,10 +225,11 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                 val get = client.get(8081, localhost!!.hostAddress, "/netdiscovery/dashboard/")
                 router.get("/dashboard").handler { ctx ->
-                    get.send{ ar ->
+                    get.send { ar ->
                         if (ar.succeeded()) {
                             val result = ar.result()
-                            (ctx.response().statusCode = result.statusCode())
+                            ctx.response()
+                                    .setStatusCode(result.statusCode())
                                     .putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
                                     .end(result.body())
                         } else {

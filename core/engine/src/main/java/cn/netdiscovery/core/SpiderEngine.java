@@ -19,6 +19,8 @@ import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.vertx.core.VertxOptions;
@@ -289,7 +291,20 @@ public class SpiderEngine {
                         }
                     })
                     .sequential()
-                    .subscribe();
+                    .subscribe(new Consumer<Spider>() {
+                        @Override
+                        public void accept(Spider spider) throws Exception {
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            log.error("SpiderEngine is error",throwable);
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                        }
+                    });
 
             Runtime.getRuntime().addShutdownHook(new Thread(()-> {
                 log.info("stop all spiders");
