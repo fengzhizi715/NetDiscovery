@@ -370,9 +370,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
                         page
                     }?.apply {
 
-                        if (parser != null) {
-
-                            parser!!.process(this)
+                        parser?.let {
+                            it.process(this)
                         }
 
                     }?.apply {
@@ -387,9 +386,8 @@ class Spider private constructor(queue: Queue? = DefaultQueue()) {
 
                         println(url)
 
-                        if (request.afterRequest != null) {
-
-                            request.afterRequest.process(this)
+                        request.afterRequest?.let {
+                            it.process(this)
                         }
                     }
                 }
