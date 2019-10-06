@@ -229,9 +229,9 @@ class SpiderEngine private constructor(@field:Getter
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
-            if (registry != null && registry!!.provider != null) {
+            registry?.takeIf { it.provider!=null }?.let {
 
-                registry!!.register(registry!!.provider, defaultHttpdPort)
+                it.register(it.provider,defaultHttpdPort)
             }
 
             registerConsumer?.let {
@@ -241,13 +241,13 @@ class SpiderEngine private constructor(@field:Getter
             Flowable.fromIterable(spiders.values)
                     .parallel(spiders.values.size)
                     .runOn(Schedulers.io())
-                    .map { spider ->
-                        spider.run()
+                    .map {
+                        it.run()
 
-                        spider
+                        it
                     }
                     .sequential()
-                    .subscribe({ }, { throwable -> throwable.printStackTrace() }, { })
+                    .subscribe({ }, { it.printStackTrace() }, { })
 
             Runtime.getRuntime().addShutdownHook(Thread {
                 println("stop all spiders")
@@ -262,10 +262,7 @@ class SpiderEngine private constructor(@field:Getter
      *
      * @param name
      */
-    fun getSpider(name: String): Spider? {
-
-        return spiders[name]
-    }
+    fun getSpider(name: String) = spiders[name]
 
     /**
      * 停止某个爬虫程序
@@ -274,9 +271,7 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun stopSpider(name: String) {
 
-        val spider = spiders[name]
-
-        spider?.stop()
+        spiders[name]?.stop()
     }
 
     /**
@@ -286,7 +281,7 @@ class SpiderEngine private constructor(@field:Getter
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach { (s, spider) -> spider.stop() }
+            spiders.forEach { _, spider -> spider.stop() }
         }
     }
 
