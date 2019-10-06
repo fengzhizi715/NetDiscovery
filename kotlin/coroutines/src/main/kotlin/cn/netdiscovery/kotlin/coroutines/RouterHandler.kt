@@ -55,21 +55,26 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                     spider = value
 
-                    entity = SpiderBean()
-                    entity.spiderName = spider.name
-                    entity.spiderStatus = spider.spiderStatus
-                    entity.leftRequestSize = spider.queue.getLeftRequests(spider.name)
-                    entity.totalRequestSize = spider.queue.getTotalRequests(spider.name)
-                    entity.consumedRequestSize = entity.totalRequestSize - entity.leftRequestSize
-                    entity.queueType = spider.queue.javaClass.simpleName
-                    entity.downloaderType = spider.downloader.javaClass.simpleName
+                    entity = SpiderBean().apply {
+
+                        spiderName = spider.name
+                        spiderStatus = spider.spiderStatus
+                        leftRequestSize = spider.queue.getLeftRequests(spider.name)
+                        totalRequestSize = spider.queue.getTotalRequests(spider.name)
+                        consumedRequestSize = this.totalRequestSize - this.leftRequestSize
+                        queueType = spider.queue.javaClass.simpleName
+                        downloaderType = spider.downloader.javaClass.simpleName
+                    }
+
                     list.add(entity)
                 }
 
-                val spidersResponse = SpidersResponse()
-                spidersResponse.code = OK_STATUS_CODE
-                spidersResponse.message = SUCCESS
-                spidersResponse.data = list
+                val spidersResponse = SpidersResponse().apply {
+
+                    code = OK_STATUS_CODE
+                    message = SUCCESS
+                    data = list
+                }
 
                 // 写入响应并结束处理
                 response.end(SerializableUtils.toJson(spidersResponse))
@@ -134,17 +139,17 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
 
                             Spider.SPIDER_STATUS_PAUSE -> {
                                 spider.pause()
-                                spiderStatusResponse.data = String.format("SpiderEngine pause Spider %s success", spider.getName())
+                                spiderStatusResponse.data = String.format("SpiderEngine pause Spider %s success", spider.name)
                             }
 
                             Spider.SPIDER_STATUS_RESUME -> {
                                 spider.resume()
-                                spiderStatusResponse.data = String.format("SpiderEngine resume Spider %s success", spider.getName())
+                                spiderStatusResponse.data = String.format("SpiderEngine resume Spider %s success", spider.name)
                             }
 
                             Spider.SPIDER_STATUS_STOPPED -> {
                                 spider.forceStop()
-                                spiderStatusResponse.data = String.format("SpiderEngine stop Spider %s success", spider.getName())
+                                spiderStatusResponse.data = String.format("SpiderEngine stop Spider %s success", spider.name)
                             }
 
                             else -> {
@@ -179,7 +184,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     val url = json.getString("url")
 
                     val spider = spiders[spiderName]!!
-                    spider.getQueue().pushToRunninSpider(url, spider)
+                    spider.queue.pushToRunninSpider(url, spider)
 
                     response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")))
                 } else {

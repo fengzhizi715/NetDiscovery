@@ -1,6 +1,5 @@
 package cn.netdiscovery.kotlin.coroutines
 
-import cn.netdiscovery.core.RouterHandler
 import cn.netdiscovery.core.Spider
 import cn.netdiscovery.core.config.Configuration
 import cn.netdiscovery.core.config.Constant
@@ -23,10 +22,8 @@ import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
-import io.vertx.core.Handler
 import io.vertx.core.VertxOptions
 import io.vertx.core.http.HttpServer
-import io.vertx.core.http.HttpServerRequest
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.micrometer.MicrometerMetricsOptions
@@ -84,9 +81,11 @@ class SpiderEngine private constructor(@field:Getter
                                 val inputString = IOUtils.inputStream2String(it) // it 无须关闭，inputStream2String()方法里已经做了关闭流的操作
                                 if (Preconditions.isNotBlank(inputString)) {
                                     val ss = inputString.split("\r\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                                    if (ss.size > 0) {
+                                    if (ss.isNotEmpty()) {
 
-                                        Arrays.asList(*ss).forEach { ua -> UserAgent.uas.add(ua) }
+                                        Arrays.asList(*ss).forEach {
+                                            UserAgent.uas.add(it)
+                                        }
                                     }
                                 }
                             }
@@ -320,18 +319,18 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun addSpiderJob(spiderName: String, cron: String, requests: Array<Request?>): SpiderJobBean? {
 
-        val spider = spiders[spiderName]
+        return spiders[spiderName]?.let {
 
-        if (spider != null) {
             val jobName = SPIDER_JOB_NAME + count.incrementAndGet()
 
-            val jobBean = SpiderJobBean()
-            jobBean.jobName = jobName
-            jobBean.jobGroupName = JOB_GROUP_NAME
-            jobBean.triggerName = TRIGGER_NAME
-            jobBean.triggerGroupName = TRIGGER_GROUP_NAME
-            jobBean.cron = cron
-            jobBean.requests = requests
+            val jobBean = SpiderJobBean().apply {
+                this.jobName = jobName
+                this.jobGroupName = JOB_GROUP_NAME
+                this.triggerName = TRIGGER_NAME
+                this.triggerGroupName = TRIGGER_GROUP_NAME
+                this.cron = cron
+                this.requests = requests
+            }
 
             Stream.of(*requests)
                     .filter { it!=null }
@@ -339,12 +338,10 @@ class SpiderEngine private constructor(@field:Getter
                     .forEach { request -> request!!.checkDuplicate(false) }
 
             jobs[jobName] = jobBean
-            QuartzManager.addJob(jobBean, SpiderJob::class.java, cron, spider, *requests)
+            QuartzManager.addJob(jobBean, SpiderJob::class.java, cron, it, *requests)
 
-            return jobBean
-        }
-
-        return null
+            jobBean
+        }?:null
     }
 
     /**
