@@ -366,8 +366,8 @@ class SpiderEngine private constructor(@field:Getter
         if (proxyMap == null) return
 
         ProxyPool.proxyMap = proxyMap
-        val proxyManager = ProxyManager.get()
-        proxyManager.start()
+
+        ProxyManager.get()?.start()
     }
 
     /**
@@ -381,14 +381,8 @@ class SpiderEngine private constructor(@field:Getter
 
     companion object {
 
-        fun create(): SpiderEngine {
+        fun create() = SpiderEngine()
 
-            return SpiderEngine()
-        }
-
-        fun create(queue: Queue): SpiderEngine {
-
-            return SpiderEngine(queue)
-        }
+        fun create(queue: Queue) = SpiderEngine(queue)
     }
 }
