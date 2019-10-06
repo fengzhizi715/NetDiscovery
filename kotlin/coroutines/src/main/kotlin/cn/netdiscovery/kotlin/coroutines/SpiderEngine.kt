@@ -140,9 +140,12 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun addSpider(spider: Spider?): SpiderEngine {
 
-        if (spider != null && !spiders.containsKey(spider.name)) {
+        spider?.let {
 
-            spiders[spider.name] = spider
+            if (!spiders.containsKey(it.name)) {
+
+                spiders[it.name] = it
+            }
         }
         return this
     }
@@ -157,9 +160,10 @@ class SpiderEngine private constructor(@field:Getter
 
         if (!spiders.containsKey(name)) {
 
-            val spider = Spider.create(this.queue).name(name)
-            spiders[name] = spider
-            return spider
+            return Spider.create(this.queue).name(name).apply {
+
+                spiders[name] = this
+            }
         }
 
         return null
@@ -204,9 +208,8 @@ class SpiderEngine private constructor(@field:Getter
      */
     fun closeHttpServer() {
 
-        if (server != null) {
-
-            server!!.close()
+        server?.let {
+            it.close()
         }
     }
 
