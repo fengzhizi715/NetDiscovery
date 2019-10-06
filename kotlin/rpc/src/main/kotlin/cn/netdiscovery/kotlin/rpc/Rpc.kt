@@ -219,7 +219,7 @@ object ServiceProxyFactory {
      * @return Async RPC proxy object implements T
      */
     @JvmStatic
-    fun <T : Any> getAsyncHttpServiceProxy(vertx: Vertx, endpoint: String, name: String, requestBuilder: RequestBuilder, clazz: Class<T>): T = getAsyncHttpServiceProxy(vertx, endpoint, name, requestBuilder, clazz)
+    fun <T : Any> getAsyncHttpServiceProxy(vertx: Vertx, endpoint: String, name: String, requestBuilder: RequestBuilder, clazz: Class<T>): T = cn.netdiscovery.kotlin.rpc.getAsyncHttpServiceProxy(vertx, endpoint, name, requestBuilder, clazz)
 
     /**
      * Dynamically create the async service proxy object for the given interface
