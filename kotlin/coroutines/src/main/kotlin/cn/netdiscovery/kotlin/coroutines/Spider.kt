@@ -520,17 +520,17 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     fun pipeline(pipeline: Pipeline?): Spider {
 
         checkIfRunning()
+        
+        pipeline?.let {
 
-        if (pipeline != null) {
-
-            if (pipeline.pipelineDelay == 0L) {
+            if (it.pipelineDelay == 0L) {
                 if (autoPipelineDelay) {
                     pipelineDelay = RandomUtils.nextLong(1000, 6000)
                 }
-                pipeline.pipelineDelay = pipelineDelay
+                it.pipelineDelay = pipelineDelay
             }
 
-            this.pipelines.add(pipeline)
+            this.pipelines.add(it)
         }
 
         return this
