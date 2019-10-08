@@ -415,27 +415,32 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                             .subscribe {
                                 if (!pause) {
 
-                                    if (request.sleepTime == 0L || request.sleepTime != period) {
-                                        request.sleep(period) // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
-                                    }
+                                    request.apply {
 
-                                    if (request.downloadDelay == 0L) {
-                                        if (autoDownloadDelay) {
-                                            request.autoDownloadDelay()
-                                        } else {
-                                            request.downloadDelay(downloadDelay)
+                                        if (sleepTime == 0L || sleepTime != period) {
+                                            sleep(period) // 使用 repeatRequest() 时，autoSleepTime 属性可以不必关注
                                         }
-                                    }
 
-                                    if (request.domainDelay == 0L) {
-                                        if (autoDomainDelay) {
-                                            request.autoDomainDelay()
-                                        } else {
-                                            request.domainDelay(domainDelay)
+                                        if (downloadDelay == 0L) {
+                                            if (autoDownloadDelay) {
+                                                autoDownloadDelay()
+                                            } else {
+                                                downloadDelay(downloadDelay)
+                                            }
                                         }
+
+                                        if (domainDelay == 0L) {
+                                            if (autoDomainDelay) {
+                                                autoDomainDelay()
+                                            } else {
+                                                domainDelay(domainDelay)
+                                            }
+                                        }
+
+                                        spiderName(name)
                                     }
 
-                                    request.spiderName(name)
+
                                     queue.push(request)
 
                                     signalNewRequest()
@@ -494,8 +499,8 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
         checkIfRunning()
 
-        if (downloader != null) {
-            this.downloader = downloader
+        downloader?.let {
+            this.downloader = it
         }
 
         return this
@@ -505,8 +510,8 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
         checkIfRunning()
 
-        if (parser != null) {
-            this.parser = parser
+        parser?.let {
+            this.parser = it
         }
 
         return this
