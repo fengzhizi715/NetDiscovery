@@ -10,6 +10,7 @@ import cn.netdiscovery.core.domain.response.SpiderStatusResponse
 import cn.netdiscovery.core.domain.response.SpidersResponse
 import cn.netdiscovery.core.utils.SerializableUtils
 import cn.netdiscovery.core.vertx.VertxUtils
+import cn.netdiscovery.kotlin.coroutines.ext.pushToRunninSpider
 import com.safframework.tony.common.utils.Preconditions
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.client.WebClient

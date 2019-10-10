@@ -1,7 +1,8 @@
-package cn.netdiscovery.kotlin.coroutines
+package cn.netdiscovery.kotlin.coroutines.ext
 
 import cn.netdiscovery.core.domain.Request
 import cn.netdiscovery.core.queue.Queue
+import cn.netdiscovery.kotlin.coroutines.Spider
 
 /**
  * Created by tony on 2019-10-07.

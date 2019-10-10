@@ -61,4 +61,6 @@ dependencies {
     implementation 'tony-common:tony-common-utils:1.2.6'
     implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+
+    implementation 'com.safframework.bytekit:bytekit-core:1.2.6'
 }

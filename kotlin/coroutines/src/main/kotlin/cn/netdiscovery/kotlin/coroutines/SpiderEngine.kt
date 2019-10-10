@@ -3,11 +3,9 @@ package cn.netdiscovery.kotlin.coroutines
 import cn.netdiscovery.core.config.Configuration
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.config.Constant.*
-import cn.netdiscovery.core.domain.Request
 import cn.netdiscovery.core.domain.bean.SpiderJobBean
 import cn.netdiscovery.core.quartz.ProxyPoolJob
 import cn.netdiscovery.core.quartz.QuartzManager
-import cn.netdiscovery.core.quartz.SpiderJob
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.registry.Registry
 import cn.netdiscovery.core.utils.BooleanUtils
@@ -33,7 +31,6 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.stream.Stream
 
 /**
  * Created by tony on 2018/8/8.
