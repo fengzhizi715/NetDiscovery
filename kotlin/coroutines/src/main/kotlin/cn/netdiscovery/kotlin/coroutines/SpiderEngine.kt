@@ -298,13 +298,14 @@ class SpiderEngine private constructor(@field:Getter
     /**
      * 需要在启动 SpiderEngine 之前，启动 ProxyPool
      */
-    fun startProxyPool(proxyMap: Map<String, Class<*>>?) {
+    fun startProxyPool(proxyMap: Map<String, Class<*>>) {
 
-        if (proxyMap == null) return
+        if (Preconditions.isNotBlank(proxyMap)) {
 
-        ProxyPool.proxyMap = proxyMap
+            ProxyPool.proxyMap = proxyMap
 
-        ProxyManager.get()?.start()
+            ProxyManager.get()?.start()
+        }
     }
 
     /**

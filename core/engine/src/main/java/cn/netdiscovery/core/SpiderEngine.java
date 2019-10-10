@@ -427,11 +427,12 @@ public class SpiderEngine {
      */
     public void startProxyPool(Map<String, Class> proxyMap) {
 
-        if (proxyMap == null) return;
+        if (Preconditions.isNotBlank(proxyMap)) {
 
-        ProxyPool.proxyMap = proxyMap;
-        ProxyManager proxyManager = ProxyManager.get();
-        proxyManager.start();
+            ProxyPool.proxyMap = proxyMap;
+            ProxyManager proxyManager = ProxyManager.get();
+            proxyManager.start();
+        }
     }
 
     /**
