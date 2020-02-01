@@ -38,7 +38,7 @@ findProject(':pipeline:couchbase')?.name = 'couchbase'
 include 'pipeline:elasticsearch'
 findProject(':pipeline:elasticsearch')?.name = 'elasticsearch'
 include 'pipeline:redis'
-findProject(':pipeline:redis')?.name = 'redis'
+findProject(':pipeline:redis')?.name = 'pipeline-redis'
 include 'pipeline:mongo'
 findProject(':pipeline:mongo')?.name = 'mongo'
 
