@@ -19,11 +19,11 @@ class SeleniumWrapper {
 
     fun addAction(block: ActionWrapper.() -> Unit) {
 
-        val actionWrapper = ActionWrapper()
-        actionWrapper.block()
-
-        actionWrapper?.action?.let {
-            actions.add(it)
+        ActionWrapper().apply {
+            block()
+            action?.let {
+                actions.add(it)
+            }
         }
     }
 
