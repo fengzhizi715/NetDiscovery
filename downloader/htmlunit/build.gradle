@@ -24,6 +24,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
     implementation "io.vertx:vertx-web:${libs.vertx}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
+    implementation "org.projectlombok:lombok:${libs.lombok}"
 
     implementation project(":core:core")
 }

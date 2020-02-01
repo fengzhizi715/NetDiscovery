@@ -1,4 +1,4 @@
-package cn.netdiscovery.kotlin.coroutines.ext
+package cn.netdiscovery.kotlin.coroutines.extension
 
 import cn.netdiscovery.core.domain.Request
 import cn.netdiscovery.core.queue.Queue

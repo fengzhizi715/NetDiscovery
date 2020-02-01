@@ -45,7 +45,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
-    protected var stat = AtomicInteger(SPIDER_STATUS_INIT)
+    private var stat = AtomicInteger(SPIDER_STATUS_INIT)
 
     var name = "spider" // 爬虫的名字，默认使用spider
 

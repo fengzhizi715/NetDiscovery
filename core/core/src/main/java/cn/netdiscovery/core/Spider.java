@@ -63,7 +63,7 @@ public class Spider {
     public final static int SPIDER_STATUS_RESUME = 3;
     public final static int SPIDER_STATUS_STOPPED = 4;
 
-    protected AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
+    private AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
     @Getter
     private String name = "spider";// 爬虫的名字，默认使用spider
