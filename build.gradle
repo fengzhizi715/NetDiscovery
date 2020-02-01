@@ -32,7 +32,7 @@ ext {
 
             tony_common_utils         : "1.2.8",
 
-            fastjson                  : "1.2.61",
+            fastjson                  : "1.2.62",
 
             rxcache                   : "1.4.6",
 
