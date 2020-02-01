@@ -37,7 +37,7 @@ dependencies {
     implementation "ch.qos.logback:logback-access:${libs.logback}"
     implementation "org.projectlombok:lombok:${libs.lombok}"
 
-    implementation 'com.google.guava:guava:23.6-jre'
+    implementation "com.google.guava:guava:${libs.guava}"
     implementation ("us.codecraft:xsoup:0.3.1",{
         exclude group: 'org.jsoup', module: 'jsoup'
     })

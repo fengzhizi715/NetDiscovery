@@ -20,6 +20,8 @@ ext {
 
             selenium_java             : "3.14.0",
 
+            guava                     : "28.2-jre",
+
             phantomjsdriver           : "1.4.4",
 
             commons_pool2             : "2.6.0",
