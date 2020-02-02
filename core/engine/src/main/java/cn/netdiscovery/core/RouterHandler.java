@@ -1,5 +1,6 @@
 package cn.netdiscovery.core;
 
+import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.constants.ResponseCode;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
@@ -54,7 +55,7 @@ public class RouterHandler {
     public void route() {
 
         // 检测 SpiderEngine 的健康状况
-        router.route("/netdiscovery/health/").handler(routingContext -> {
+        router.route(Constant.ROUTER_HEALTH).handler(routingContext -> {
 
             HttpServerResponse response = routingContext.response();
             response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -62,12 +63,12 @@ public class RouterHandler {
             response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
         });
 
-        router.route("/netdiscovery/metrics").handler(PrometheusScrapingHandler.create());
+        router.route(Constant.ROUTER_METRICS).handler(PrometheusScrapingHandler.create());
 
         if (Preconditions.isNotBlank(spiders)) {
 
             // 显示容器下所有爬虫的信息
-            router.route("/netdiscovery/spiders/").handler(routingContext -> {
+            router.route(Constant.ROUTER_SPIDERS).handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -102,7 +103,7 @@ public class RouterHandler {
             });
 
             // 根据爬虫的名称获取爬虫的详情
-            router.route("/netdiscovery/spider/:spiderName/detail").handler(routingContext -> {
+            router.route(Constant.ROUTER_SPIDER_DETAIL).handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -136,7 +137,7 @@ public class RouterHandler {
             });
 
             // 修改单个爬虫的状态
-            router.post("/netdiscovery/spider/:spiderName/status").handler(routingContext -> {
+            router.post(Constant.ROUTER_SPIDER_STATUS).handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -194,7 +195,7 @@ public class RouterHandler {
             });
 
             // 添加新的url任务到某个正在运行中的爬虫
-            router.post("/netdiscovery/spider/:spiderName/push").handler(routingContext -> {
+            router.post(Constant.ROUTER_SPIDER_PUSH).handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -219,7 +220,7 @@ public class RouterHandler {
             });
 
             // 显示所有爬虫的定时任务
-            router.route("/netdiscovery/jobs/").handler(routingContext -> {
+            router.route(Constant.ROUTER_JOBS).handler(routingContext -> {
 
                 HttpServerResponse response = routingContext.response();
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
