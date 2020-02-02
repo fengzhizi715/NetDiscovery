@@ -105,12 +105,14 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                     Constant.QUEUE_TYPE_DEFAULT   -> this.queue = DefaultQueue()
 
                     Constant.QUEUE_TYPE_DISRUPTOR -> this.queue = DisruptorQueue()
-
-                    else                          -> this.queue = DefaultQueue()
                 }
             }
         } catch (e: ClassCastException) {
             println(e.message)
+        }
+
+        if (queue == null) {
+            queue = DefaultQueue()
         }
 
         initSpiderConfig()
@@ -148,8 +150,6 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                     Constant.DOWNLOAD_TYPE_URL_CONNECTION -> this.downloader = UrlConnectionDownloader()
 
                     Constant.DOWNLOAD_TYPE_FILE           -> this.downloader = FileDownloader()
-
-                    else                                  -> this.downloader = VertxDownloader()
                 }
             }
 
