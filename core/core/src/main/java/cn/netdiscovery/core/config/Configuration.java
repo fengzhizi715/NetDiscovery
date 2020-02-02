@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 解析 yml、properties
  * Created by tony on 2019-01-15.
  */
 public class Configuration {
