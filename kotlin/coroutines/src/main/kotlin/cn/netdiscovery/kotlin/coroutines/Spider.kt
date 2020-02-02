@@ -193,27 +193,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
             Arrays.asList(*urls)
                     .stream()
                     .forEach {
-                        val request = Request(it, name).apply {
-
-                            charset(charset.name())
-                            if (autoSleepTime) {
-                                autoSleepTime()
-                            } else {
-                                sleep(requestSleepTime)
-                            }
-                            if (autoDownloadDelay) {
-                                autoDownloadDelay()
-                            } else {
-                                downloadDelay(downloadDelay)
-                            }
-                            if (autoDomainDelay) {
-                                autoDomainDelay()
-                            } else {
-                                domainDelay(domainDelay)
-                            }
-                        }
-
-                        queue.push(request)
+                        pushToQueue(it,charset)
                     }
 
             signalNewRequest()
@@ -231,26 +211,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
             Arrays.asList(*urls)
                     .stream()
                     .forEach {
-                        val request = Request(it, name).apply {
-
-                            if (autoSleepTime) {
-                                autoSleepTime()
-                            } else {
-                                sleep(requestSleepTime)
-                            }
-                            if (autoDownloadDelay) {
-                                autoDownloadDelay()
-                            } else {
-                                downloadDelay(downloadDelay)
-                            }
-                            if (autoDomainDelay) {
-                                autoDomainDelay()
-                            } else {
-                                domainDelay(domainDelay)
-                            }
-                        }
-
-                        queue.push(request)
+                        pushToQueue(it,null)
                     }
 
             signalNewRequest()
@@ -266,27 +227,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach {
-                val request = Request(it, name).apply {
-
-                    charset(charset.name())
-                    if (autoSleepTime) {
-                        autoSleepTime()
-                    } else {
-                        sleep(requestSleepTime)
-                    }
-                    if (autoDownloadDelay) {
-                        autoDownloadDelay()
-                    } else {
-                        downloadDelay(downloadDelay)
-                    }
-                    if (autoDomainDelay) {
-                        autoDomainDelay()
-                    } else {
-                        domainDelay(domainDelay)
-                    }
-                }
-
-                queue.push(request)
+                pushToQueue(it,charset)
             }
 
             signalNewRequest()
@@ -302,32 +243,36 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         if (Preconditions.isNotBlank(urls)) {
 
             urls.forEach {
-                val request = Request(it, name).apply {
-
-                    if (autoSleepTime) {
-                        autoSleepTime()
-                    } else {
-                        sleep(requestSleepTime)
-                    }
-                    if (autoDownloadDelay) {
-                        autoDownloadDelay()
-                    } else {
-                        downloadDelay(downloadDelay)
-                    }
-                    if (autoDomainDelay) {
-                        autoDomainDelay()
-                    } else {
-                        domainDelay(domainDelay)
-                    }
-                }
-
-                queue.push(request)
+                pushToQueue(it,null)
             }
 
             signalNewRequest()
         }
 
         return this
+    }
+
+    private fun pushToQueue(url: String, charset: Charset?) {
+        val request = Request(url, name)
+        if (charset != null) {
+            request.charset(charset.name())
+        }
+        if (autoSleepTime) {
+            request.autoSleepTime()
+        } else {
+            request.sleep(requestSleepTime)
+        }
+        if (autoDownloadDelay) {
+            request.autoDownloadDelay()
+        } else {
+            request.downloadDelay(downloadDelay)
+        }
+        if (autoDomainDelay) {
+            request.autoDomainDelay()
+        } else {
+            request.domainDelay(domainDelay)
+        }
+        queue.push(request)
     }
 
     fun request(vararg requests: Request): Spider {

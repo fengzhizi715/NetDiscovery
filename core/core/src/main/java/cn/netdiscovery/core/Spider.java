@@ -247,26 +247,7 @@ public class Spider {
 
             Arrays.asList(urls)
                     .stream()
-                    .forEach(url -> {
-                        Request request = new Request(url, name);
-                        request.charset(charset.name());
-                        if (autoSleepTime) {
-                            request.autoSleepTime();
-                        } else {
-                            request.sleep(requestSleepTime);
-                        }
-                        if (autoDownloadDelay) {
-                            request.autoDownloadDelay();
-                        } else {
-                            request.downloadDelay(downloadDelay);
-                        }
-                        if (autoDomainDelay) {
-                            request.autoDomainDelay();
-                        } else {
-                            request.domainDelay(domainDelay);
-                        }
-                        queue.push(request);
-                    });
+                    .forEach(url -> pushToQueue(url,charset));
 
             signalNewRequest();
         }
@@ -282,25 +263,7 @@ public class Spider {
 
             Arrays.asList(urls)
                     .stream()
-                    .forEach(url -> {
-                        Request request = new Request(url, name);
-                        if (autoSleepTime) {
-                            request.autoSleepTime();
-                        } else {
-                            request.sleep(requestSleepTime);
-                        }
-                        if (autoDownloadDelay) {
-                            request.autoDownloadDelay();
-                        } else {
-                            request.downloadDelay(downloadDelay);
-                        }
-                        if (autoDomainDelay) {
-                            request.autoDomainDelay();
-                        } else {
-                            request.domainDelay(domainDelay);
-                        }
-                        queue.push(request);
-                    });
+                    .forEach(url -> pushToQueue(url,null));
 
             signalNewRequest();
         }
@@ -314,26 +277,7 @@ public class Spider {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach(url -> {
-                Request request = new Request(url, name);
-                request.charset(charset.name());
-                if (autoSleepTime) {
-                    request.autoSleepTime();
-                } else {
-                    request.sleep(requestSleepTime);
-                }
-                if (autoDownloadDelay) {
-                    request.autoDownloadDelay();
-                } else {
-                    request.downloadDelay(downloadDelay);
-                }
-                if (autoDomainDelay) {
-                    request.autoDomainDelay();
-                } else {
-                    request.domainDelay(domainDelay);
-                }
-                queue.push(request);
-            });
+            urls.forEach(url -> pushToQueue(url,charset));
 
             signalNewRequest();
         }
@@ -347,30 +291,35 @@ public class Spider {
 
         if (Preconditions.isNotBlank(urls)) {
 
-            urls.forEach(url -> {
-                Request request = new Request(url, name);
-                if (autoSleepTime) {
-                    request.autoSleepTime();
-                } else {
-                    request.sleep(requestSleepTime);
-                }
-                if (autoDownloadDelay) {
-                    request.autoDownloadDelay();
-                } else {
-                    request.downloadDelay(downloadDelay);
-                }
-                if (autoDomainDelay) {
-                    request.autoDomainDelay();
-                } else {
-                    request.domainDelay(domainDelay);
-                }
-                queue.push(request);
-            });
+            urls.forEach(url -> pushToQueue(url,null));
 
             signalNewRequest();
         }
 
         return this;
+    }
+
+    private void pushToQueue(String url,Charset charset) {
+        Request request = new Request(url, name);
+        if (charset!=null) {
+            request.charset(charset.name());
+        }
+        if (autoSleepTime) {
+            request.autoSleepTime();
+        } else {
+            request.sleep(requestSleepTime);
+        }
+        if (autoDownloadDelay) {
+            request.autoDownloadDelay();
+        } else {
+            request.downloadDelay(downloadDelay);
+        }
+        if (autoDomainDelay) {
+            request.autoDomainDelay();
+        } else {
+            request.domainDelay(domainDelay);
+        }
+        queue.push(request);
     }
 
     public Spider request(Request... requests) {
