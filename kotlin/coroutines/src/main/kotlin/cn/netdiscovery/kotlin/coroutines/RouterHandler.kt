@@ -28,7 +28,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
     fun route() {
 
         // 检测 SpiderEngine 的健康状况
-        router.route("/netdiscovery/health/").handler { routingContext ->
+        router.route(ROUTER_HEALTH).handler { routingContext ->
 
             val response = routingContext.response()
             response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
@@ -36,12 +36,12 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
             response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok))
         }
 
-        router.route("/netdiscovery/metrics").handler(PrometheusScrapingHandler.create())
+        router.route(ROUTER_METRICS).handler(PrometheusScrapingHandler.create())
 
         if (Preconditions.isNotBlank(spiders)) {
 
             // 显示容器下所有爬虫的信息
-            router.route("/netdiscovery/spiders/").handler { routingContext ->
+            router.route(ROUTER_SPIDERS).handler { routingContext ->
 
                 val response = routingContext.response()
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
@@ -79,7 +79,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
             }
 
             // 根据爬虫的名称获取爬虫的详情
-            router.route("/netdiscovery/spider/:spiderName/detail").handler { routingContext ->
+            router.route(ROUTER_SPIDER_DETAIL).handler { routingContext ->
 
                 val response = routingContext.response()
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
@@ -115,7 +115,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
             }
 
             // 修改单个爬虫的状态
-            router.post("/netdiscovery/spider/:spiderName/status").handler { routingContext ->
+            router.post(ROUTER_SPIDER_STATUS).handler { routingContext ->
 
                 val response = routingContext.response()
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
@@ -172,7 +172,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
             }
 
             // 添加新的url任务到某个正在运行中的爬虫
-            router.post("/netdiscovery/spider/:spiderName/push").handler { routingContext ->
+            router.post(ROUTER_SPIDER_PUSH).handler { routingContext ->
 
                 val response = routingContext.response()
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
@@ -197,7 +197,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
             }
 
             // 显示所有爬虫的定时任务
-            router.route("/netdiscovery/jobs/").handler { routingContext ->
+            router.route(ROUTER_JOBS).handler { routingContext ->
 
                 val response = routingContext.response()
                 response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON)
