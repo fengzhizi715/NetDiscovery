@@ -92,16 +92,15 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 # TODO List:
 
-1. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
-2. 完善协程的模块
+1. 各个模块能够从配置文件中获取爬虫相应的配置
+2. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
 3. SpiderEngine 提供rpc接口
 4. 增加 admin 模块
-5. 支持 Consul
-6. 支持 RxJava 3.x 
-7. 完善 wiki，增加各个模式的使用说明
-8. 各个模块能够从配置文件中获取爬虫相应的配置
-9. 增强 HtmlUnit 模块
-10. 增加 chromium 的支持
+5. 支持 RxJava 3.x 
+6. 完善 wiki，增加各个模式的使用说明
+7. 支持 Consul
+8. 增强 HtmlUnit 模块
+9. 增加 chromium 的支持
 
 
 # Contributors:
