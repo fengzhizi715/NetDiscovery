@@ -24,6 +24,7 @@ dependencies {
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation "com.safframework.rxcache:rxcache-core:${libs.rxcache}"
+    implementation "org.projectlombok:lombok:${libs.lombok}"
 
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation project(":core:core")
