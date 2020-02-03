@@ -151,9 +151,6 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                                 spider.forceStop()
                                 spiderStatusResponse.data = String.format("SpiderEngine stop Spider %s success", spider.name)
                             }
-
-                            else -> {
-                            }
                         }
                     }
 

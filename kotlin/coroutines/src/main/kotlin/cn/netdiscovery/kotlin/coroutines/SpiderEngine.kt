@@ -278,7 +278,7 @@ class SpiderEngine private constructor(@field:Getter
 
         if (Preconditions.isNotBlank(spiders)) {
 
-            spiders.forEach { _, spider -> spider.stop() }
+            spiders.forEach { (_, spider) -> spider.stop() }
         }
     }
 

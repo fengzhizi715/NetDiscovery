@@ -170,7 +170,6 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
         } catch (e: ClassCastException) {
             println(e.message)
         }
-
     }
 
     fun name(name: String): Spider {
@@ -554,10 +553,8 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                 val request = queue.poll(name)
 
                 if (request == null) {
-
                     waitNewRequest()
                 } else {
-
                     if (request.sleepTime > 0) {
 
                         delay(request.sleepTime)
