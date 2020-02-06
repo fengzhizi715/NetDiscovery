@@ -50,3 +50,5 @@ findProject(':kotlin:coroutines')?.name = 'coroutines'
 include 'kotlin:rpc'
 findProject(':kotlin:rpc')?.name = 'rpc'
 
+include 'imageprocess'
+
