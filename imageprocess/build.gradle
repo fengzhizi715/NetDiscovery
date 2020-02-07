@@ -13,4 +13,8 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation project(":core:core")
+    implementation 'org.bytedeco.javacpp-presets:opencv:4.0.1-1.4.4'
+    implementation 'org.bytedeco.javacpp-presets:tesseract:4.0.0-1.4.4'
 }
