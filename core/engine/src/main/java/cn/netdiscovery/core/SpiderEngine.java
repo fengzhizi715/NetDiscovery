@@ -23,6 +23,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.vertx.core.Verticle;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
@@ -433,6 +434,11 @@ public class SpiderEngine {
             ProxyManager proxyManager = ProxyManager.get();
             proxyManager.start();
         }
+    }
+
+    public void deployVerticle(Verticle verticle) {
+
+        VertxUtils.deployVerticle(verticle);
     }
 
     /**
