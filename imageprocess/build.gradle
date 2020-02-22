@@ -20,6 +20,9 @@ dependencies {
     implementation project(":core:core")
     implementation 'org.bytedeco.javacpp-presets:opencv:4.0.1-1.4.4'
     implementation 'org.bytedeco.javacpp-presets:tesseract:4.0.0-1.4.4'
+    implementation 'org.bytedeco.javacpp-presets:leptonica:1.77.0-1.4.4'
+
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 }
