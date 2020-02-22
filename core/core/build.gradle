@@ -48,6 +48,8 @@ dependencies {
     implementation "com.lmax:disruptor:${libs.disruptor}"
 
     implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
+
+    implementation 'com.github.bdqfork:festival-context:0.4.0'
 }
 
 publish{

@@ -7,7 +7,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -17,4 +20,6 @@ dependencies {
     implementation project(":core:core")
     implementation 'org.bytedeco.javacpp-presets:opencv:4.0.1-1.4.4'
     implementation 'org.bytedeco.javacpp-presets:tesseract:4.0.0-1.4.4'
+
+    implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
 }
