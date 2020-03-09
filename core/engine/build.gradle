@@ -43,6 +43,8 @@ dependencies {
 
     implementation "io.etcd:jetcd-core:0.3.0"
 
+    implementation "com.github.bdqfork:hamal-context:0.1.1"
+
     implementation project(":core:core")
 }
 
