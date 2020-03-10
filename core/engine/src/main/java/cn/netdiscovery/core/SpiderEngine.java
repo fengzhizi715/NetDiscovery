@@ -158,6 +158,10 @@ public class SpiderEngine {
         return this;
     }
 
+    public boolean getUseMonitor() {
+        return useMonitor;
+    }
+
     public SpiderEngine setRegistry(Registry registry) {
 
         this.registry = registry;
@@ -321,8 +325,11 @@ public class SpiderEngine {
      * @param name
      */
     public Spider getSpider(String name) {
-
         return spiders.get(name);
+    }
+
+    public Map<String, Spider> getSpiders() {
+        return spiders;
     }
 
     /**
@@ -408,6 +415,10 @@ public class SpiderEngine {
         }
 
         return null;
+    }
+
+    public Map<String, SpiderJobBean> getJobs() {
+        return jobs;
     }
 
     /**

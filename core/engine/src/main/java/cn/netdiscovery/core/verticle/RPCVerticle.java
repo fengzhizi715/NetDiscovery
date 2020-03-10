@@ -7,7 +7,6 @@ import com.github.bdqfork.context.ContextManager;
 import com.github.bdqfork.rpc.annotation.Application;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
-import io.vertx.ext.web.Router;
 
 import java.util.Map;
 
@@ -25,7 +24,7 @@ public class RPCVerticle extends AbstractVerticle {
     private Map<String, SpiderJobBean> jobs;
     private boolean useMonitor;
 
-    public RPCVerticle(Map<String, Spider> spiders, Map<String, SpiderJobBean> jobs, Router router, boolean useMonitor) {
+    public RPCVerticle(Map<String, Spider> spiders, Map<String, SpiderJobBean> jobs, boolean useMonitor) {
 
         this.spiders = spiders;
         this.jobs = jobs;

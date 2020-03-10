@@ -4,6 +4,7 @@ import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.verticle.service.RPCService;
+import com.github.bdqfork.rpc.annotation.Service;
 import com.safframework.tony.common.utils.Preconditions;
 
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @date: 2020-03-10 11:31
  * @version: V1.0 <描述当前版本功能>
  */
+@Service(serviceInterface = RPCService.class)
 public class RPCServiceImpl implements RPCService {
 
     private Map<String, Spider> spiders;
