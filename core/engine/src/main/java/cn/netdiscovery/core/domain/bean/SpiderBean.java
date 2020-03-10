@@ -2,11 +2,13 @@ package cn.netdiscovery.core.domain.bean;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by tony on 2018/1/15.
  */
 @Data
-public class SpiderBean {
+public class SpiderBean implements Serializable {
 
     private String spiderName;
     private int spiderStatus;
