@@ -23,9 +23,10 @@
 * 支持代理池、User Agent 池、Cookies 池
 * 支持爬虫的深度抓取：能够在 Pipeline 中发起深度抓取
 * 支持 URL 去重：使用布隆过滤器
-* Spider 的监控、SpiderEngine 的监控 (基于Etcd、Zookeeper)
+* 支持 Spider 的监控、SpiderEngine 的监控 (基于Etcd、Zookeeper)
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
 * SpiderEngine 整合 Quartz
+* SpiderEngine 提供 http/rpc 接口
 
 
 # 最新版本
@@ -94,13 +95,12 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 1. 各个模块能够从配置文件中获取爬虫相应的配置
 2. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
-3. SpiderEngine 提供rpc接口
-4. 增加 admin 模块
-5. 支持 RxJava 3.x 
-6. 完善 wiki，增加各个模式的使用说明
-7. 支持 Consul
-8. 增强 HtmlUnit 模块
-9. 增加 chromium 的支持
+3. 增加 admin 模块
+4. 支持 Consul
+5. 增强 HtmlUnit 模块
+6. 增加 chromium 的支持
+7. 完善 wiki，增加各个模式的使用说明
+8. 支持 RxJava 3.x 
 
 
 # Contributors:
