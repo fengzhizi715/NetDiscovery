@@ -47,8 +47,6 @@ include 'kotlin:dsl'
 findProject(':kotlin:dsl')?.name = 'dsl'
 include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
-include 'kotlin:rpc'
-findProject(':kotlin:rpc')?.name = 'rpc'
 
 include 'imageprocess'
 

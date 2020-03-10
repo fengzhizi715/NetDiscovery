@@ -36,7 +36,6 @@ dependencies {
     implementation project(":queue:rocketmq")
     implementation project(":kotlin:dsl")
     implementation project(":kotlin:coroutines")
-    implementation project(":kotlin:rpc")
 
     implementation('org.elasticsearch.client:transport:6.5.4',
             { exclude group: 'org.apache.httpcomponents', module: 'httpcore' })
@@ -75,7 +74,7 @@ dependencies {
 
     implementation "com.esotericsoftware:kryo:5.0.0-RC4"
 
-    implementation 'com.github.bdqfork:festival-context:0.5.0'
+    implementation "com.github.bdqfork:hamal-context:0.1.1"
 }
 
 compileKotlin {
