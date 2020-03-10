@@ -93,7 +93,7 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 # TODO List:
 
-1. 各个模块能够从配置文件中获取爬虫相应的配置
+1. 引入 Vert.x Config 替换现有的配置方式
 2. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
 3. 增加 admin 模块
 4. 支持 Consul

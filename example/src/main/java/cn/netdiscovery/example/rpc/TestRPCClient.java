@@ -1,7 +1,7 @@
 package cn.netdiscovery.example.rpc;
 
 import cn.netdiscovery.core.domain.bean.SpiderBean;
-import cn.netdiscovery.core.verticle.service.RPCService;
+import cn.netdiscovery.core.service.RPCService;
 import com.github.bdqfork.context.ContextManager;
 import com.github.bdqfork.rpc.annotation.Application;
 import com.github.bdqfork.rpc.config.ReferenceConfig;

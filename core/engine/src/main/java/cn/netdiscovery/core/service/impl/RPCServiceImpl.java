@@ -1,9 +1,9 @@
-package cn.netdiscovery.core.verticle.service.impl;
+package cn.netdiscovery.core.service.impl;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
-import cn.netdiscovery.core.verticle.service.RPCService;
+import cn.netdiscovery.core.service.RPCService;
 import com.github.bdqfork.rpc.annotation.Service;
 import com.safframework.tony.common.utils.Preconditions;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @FileName: cn.netdiscovery.core.verticle.service.impl.RPCServiceImpl
+ * @FileName: cn.netdiscovery.core.service.impl.RPCServiceImpl
  * @author: Tony Shen
  * @date: 2020-03-10 11:31
  * @version: V1.0 <描述当前版本功能>

@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.verticle.service;
+package cn.netdiscovery.core.service;
 
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * SpiderEngine 对外提供的 rpc 接口
- * @FileName: cn.netdiscovery.core.verticle.service.RPCService
+ * @FileName: cn.netdiscovery.core.service.RPCService
  * @author: Tony Shen
  * @date: 2020-03-10 11:18
  * @version: V1.0 <描述当前版本功能>

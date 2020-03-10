@@ -2,7 +2,7 @@ package cn.netdiscovery.core.verticle;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
-import cn.netdiscovery.core.verticle.service.impl.RPCServiceImpl;
+import cn.netdiscovery.core.service.impl.RPCServiceImpl;
 import com.github.bdqfork.context.ContextManager;
 import com.github.bdqfork.rpc.annotation.Application;
 import io.vertx.core.AbstractVerticle;
