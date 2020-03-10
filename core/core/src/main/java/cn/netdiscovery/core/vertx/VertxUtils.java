@@ -38,12 +38,12 @@ public class VertxUtils {
         return vertx.eventBus().consumer(address,handler);
     }
 
-    public static void deployVerticle(String name, DeploymentOptions options) {
-        vertx.deployVerticle(name, options);
-    }
-
     public static void deployVerticle(Verticle verticle) {
         vertx.deployVerticle(verticle);
+    }
+
+    public static void deployVerticle(Verticle verticle, DeploymentOptions options) {
+        vertx.deployVerticle(verticle, options);
     }
 
     public static void undeploy(String deploymentID) {

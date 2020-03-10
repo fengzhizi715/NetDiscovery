@@ -72,8 +72,6 @@ dependencies {
 
     implementation 'com.safframework.bytekit:bytekit-core:1.2.6'
 
-    implementation "com.esotericsoftware:kryo:5.0.0-RC4"
-
     implementation "com.github.bdqfork:hamal-context:0.1.1"
 }
 
