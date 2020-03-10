@@ -11,7 +11,7 @@ import io.vertx.core.Future;
 import java.util.Map;
 
 /**
- * SpiderEngine 对外提供的 rpc 接口
+ * 使用 Verticle 加载对外暴露的 RPC 接口
  * @FileName: cn.netdiscovery.core.verticle.RPCVerticle
  * @author: Tony Shen
  * @date: 2020-03-09 19:17
