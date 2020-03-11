@@ -40,7 +40,7 @@ public class TestRPCService {
         engine.addSpider(Spider.create().name("tony").url("https://www.jianshu.com/"));
 
         engine.setUseMonitor(true);
-        engine.deployVerticle(new RPCVerticle(engine.getSpiders(),engine.getJobs(),engine.getUseMonitor()));
+        engine.deployVerticle(new RPCVerticle(engine.getSpiders(),engine.getJobs()));
         engine.httpd(8081);
         engine.run();
     }

@@ -46,7 +46,7 @@ import java.util.stream.Stream;
 import static cn.netdiscovery.core.config.Constant.*;
 
 /**
- * 可以管理多个 Spider 的容器
+ * 可以管理多个 Spider 的容器(引擎)
  * Created by tony on 2018/1/2.
  */
 @Slf4j
@@ -67,8 +67,10 @@ public class SpiderEngine {
 
     private AtomicInteger count = new AtomicInteger(0);
 
+    @Getter
     private Map<String, Spider> spiders = new ConcurrentHashMap<>();
 
+    @Getter
     private Map<String, SpiderJobBean> jobs = new ConcurrentHashMap<>();
 
     private SpiderEngine() {
@@ -151,10 +153,6 @@ public class SpiderEngine {
 
         this.useMonitor = useMonitor;
         return this;
-    }
-
-    public boolean getUseMonitor() {
-        return useMonitor;
     }
 
     public SpiderEngine setRegistry(Registry registry) {
@@ -323,10 +321,6 @@ public class SpiderEngine {
         return spiders.get(name);
     }
 
-    public Map<String, Spider> getSpiders() {
-        return spiders;
-    }
-
     /**
      * 停止某个爬虫程序
      *
@@ -410,10 +404,6 @@ public class SpiderEngine {
         }
 
         return null;
-    }
-
-    public Map<String, SpiderJobBean> getJobs() {
-        return jobs;
     }
 
     /**

@@ -22,13 +22,10 @@ public class RPCServiceImpl implements RPCService {
 
     private Map<String, Spider> spiders;
     private Map<String, SpiderJobBean> jobs;
-    private boolean useMonitor;
 
-    public RPCServiceImpl(Map<String, Spider> spiders,Map<String, SpiderJobBean> jobs,boolean useMonitor) {
-
+    public RPCServiceImpl(Map<String, Spider> spiders,Map<String, SpiderJobBean> jobs) {
         this.spiders = spiders;
         this.jobs = jobs;
-        this.useMonitor = useMonitor;
     }
 
     @Override

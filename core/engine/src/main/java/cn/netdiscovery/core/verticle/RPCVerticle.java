@@ -22,19 +22,17 @@ public class RPCVerticle extends AbstractVerticle {
 
     private Map<String, Spider> spiders;
     private Map<String, SpiderJobBean> jobs;
-    private boolean useMonitor;
 
-    public RPCVerticle(Map<String, Spider> spiders, Map<String, SpiderJobBean> jobs, boolean useMonitor) {
+    public RPCVerticle(Map<String, Spider> spiders, Map<String, SpiderJobBean> jobs) {
 
         this.spiders = spiders;
         this.jobs = jobs;
-        this.useMonitor = useMonitor;
     }
 
     @Override
     public void start(Future<Void> future) {
         ContextManager contextManager = ContextManager.build(RPCVerticle.class);
-        contextManager.registerService(new RPCServiceImpl(spiders,jobs,useMonitor));
+        contextManager.registerService(new RPCServiceImpl(spiders,jobs));
         contextManager.open();
     }
 }
