@@ -12,7 +12,7 @@ import cn.netdiscovery.core.registry.Registry;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.UserAgent;
-import cn.netdiscovery.core.vertx.VertxUtils;
+import cn.netdiscovery.core.vertx.VertxManager;
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
@@ -125,7 +125,7 @@ public class SpiderEngine {
             useMonitor = false;
         }
 
-        VertxUtils.configVertx(new VertxOptions().setMetricsOptions(
+        VertxManager.configVertx(new VertxOptions().setMetricsOptions(
                 new MicrometerMetricsOptions()
                         .setPrometheusOptions(new VertxPrometheusOptions().setEnabled(true))
                         .setEnabled(true)));
@@ -216,9 +216,9 @@ public class SpiderEngine {
     public SpiderEngine httpd(int port) {
 
         defaultHttpdPort = port;
-        server = VertxUtils.getVertx().createHttpServer();
+        server = VertxManager.getVertx().createHttpServer();
 
-        Router router = Router.router(VertxUtils.getVertx());
+        Router router = Router.router(VertxManager.getVertx());
         router.route().handler(BodyHandler.create());
 
         RouterHandler routerHandler = new RouterHandler(spiders,jobs,router,useMonitor);
@@ -444,7 +444,7 @@ public class SpiderEngine {
 
     public void deployVerticle(Verticle verticle) {
 
-        VertxUtils.deployVerticle(verticle);
+        VertxManager.deployVerticle(verticle);
     }
 
     /**

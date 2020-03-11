@@ -8,7 +8,7 @@ import io.vertx.core.eventbus.MessageConsumer;
 /**
  * Created by tony on 2017/12/28.
  */
-public class VertxUtils {
+public class VertxManager {
 
     private static Vertx vertx;
 

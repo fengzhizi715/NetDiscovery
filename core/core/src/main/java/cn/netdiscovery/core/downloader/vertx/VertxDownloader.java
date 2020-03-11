@@ -10,7 +10,7 @@ import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
 import cn.netdiscovery.core.utils.BooleanUtils;
 import cn.netdiscovery.core.utils.NumberUtils;
-import cn.netdiscovery.core.vertx.VertxUtils;
+import cn.netdiscovery.core.vertx.VertxManager;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Maybe;
@@ -38,7 +38,7 @@ public class VertxDownloader implements Downloader {
 
     public VertxDownloader() {
 
-        this.vertx = new io.vertx.reactivex.core.Vertx(VertxUtils.getVertx());
+        this.vertx = new io.vertx.reactivex.core.Vertx(VertxManager.getVertx());
     }
 
     public Maybe<Response> download(Request request) {

@@ -9,7 +9,7 @@ import cn.netdiscovery.core.domain.response.SpiderResponse
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse
 import cn.netdiscovery.core.domain.response.SpidersResponse
 import cn.netdiscovery.core.utils.SerializableUtils
-import cn.netdiscovery.core.vertx.VertxUtils
+import cn.netdiscovery.core.vertx.VertxManager
 import cn.netdiscovery.kotlin.coroutines.extension.pushToRunninSpider
 import com.safframework.tony.common.utils.Preconditions
 import io.vertx.ext.web.Router
@@ -219,7 +219,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                 router.route().handler(StaticHandler.create().setCachingEnabled(false))
 
                 // The proxy handler
-                val client = WebClient.create(VertxUtils.getVertx())
+                val client = WebClient.create(VertxManager.getVertx())
 
                 var localhost: InetAddress? = null
                 try {

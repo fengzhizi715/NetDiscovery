@@ -11,7 +11,7 @@ import cn.netdiscovery.core.registry.Registry
 import cn.netdiscovery.core.utils.BooleanUtils
 import cn.netdiscovery.core.utils.NumberUtils
 import cn.netdiscovery.core.utils.UserAgent
-import cn.netdiscovery.core.vertx.VertxUtils
+import cn.netdiscovery.core.vertx.VertxManager
 import com.cv4j.proxy.ProxyManager
 import com.cv4j.proxy.ProxyPool
 import com.cv4j.proxy.domain.Proxy
@@ -103,7 +103,7 @@ class SpiderEngine private constructor(@field:Getter
             useMonitor = false
         }
 
-        VertxUtils.configVertx(VertxOptions().setMetricsOptions(
+        VertxManager.configVertx(VertxOptions().setMetricsOptions(
                 MicrometerMetricsOptions()
                         .setPrometheusOptions(VertxPrometheusOptions().setEnabled(true))
                         .setEnabled(true)))
@@ -175,9 +175,9 @@ class SpiderEngine private constructor(@field:Getter
 
         defaultHttpdPort = port
 
-        server = VertxUtils.getVertx().createHttpServer()?.apply {
+        server = VertxManager.getVertx().createHttpServer()?.apply {
 
-            val router = Router.router(VertxUtils.getVertx())
+            val router = Router.router(VertxManager.getVertx())
             router.route().handler(BodyHandler.create())
 
             val routerHandler = RouterHandler(spiders, jobs, router, useMonitor)

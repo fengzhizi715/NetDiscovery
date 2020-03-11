@@ -9,7 +9,7 @@ import cn.netdiscovery.core.domain.response.SpiderResponse;
 import cn.netdiscovery.core.domain.response.SpiderStatusResponse;
 import cn.netdiscovery.core.domain.response.SpidersResponse;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import cn.netdiscovery.core.vertx.VertxUtils;
+import cn.netdiscovery.core.vertx.VertxManager;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerResponse;
@@ -244,7 +244,7 @@ public class RouterHandler {
                 router.route().handler(StaticHandler.create().setCachingEnabled(false));
 
                 // The proxy handler
-                WebClient client = WebClient.create(VertxUtils.getVertx());
+                WebClient client = WebClient.create(VertxManager.getVertx());
 
                 InetAddress localhost = null;
                 try {
