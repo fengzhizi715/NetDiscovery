@@ -31,6 +31,7 @@ import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE;
 import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE_JSON;
 import static cn.netdiscovery.core.config.Constant.OK_STATUS_CODE;
 import static cn.netdiscovery.core.config.Constant.SUCCESS;
+import static cn.netdiscovery.core.domain.response.HttpResponse.Ok;
 
 /**
  * SpiderEngine 对外提供的 http 接口
@@ -60,7 +61,7 @@ public class RouterHandler {
             HttpServerResponse response = routingContext.response();
             response.putHeader(CONTENT_TYPE, CONTENT_TYPE_JSON);
 
-            response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.Ok));
+            response.end(SerializableUtils.toJson(Ok));
         });
 
         router.route(Constant.ROUTER_METRICS).handler(PrometheusScrapingHandler.create());

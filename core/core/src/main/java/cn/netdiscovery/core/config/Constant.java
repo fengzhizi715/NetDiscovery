@@ -6,7 +6,7 @@ package cn.netdiscovery.core.config;
 public class Constant {
 
     // 存放 ua 的文件
-    public static final String[] uaList = new String[]{
+    public static final String[] uaFiles = new String[]{
             "/ua/Baiduspider.txt",
             "/ua/Chrome.txt",
             "/ua/Edge.txt",

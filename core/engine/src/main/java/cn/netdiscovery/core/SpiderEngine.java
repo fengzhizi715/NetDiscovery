@@ -1,7 +1,6 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
-import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.quartz.ProxyPoolJob;
@@ -44,6 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static cn.netdiscovery.core.config.Constant.*;
+import static com.cv4j.proxy.config.Constant.setUas;
 
 /**
  * 可以管理多个 Spider 的容器(引擎)
@@ -90,7 +90,7 @@ public class SpiderEngine {
      */
     private void initSpiderEngine() {
 
-        String[] uaList = Constant.uaList;
+        String[] uaList = uaFiles;
 
         if (Preconditions.isNotBlank(uaList)) {
 
@@ -116,7 +116,7 @@ public class SpiderEngine {
                         }
                     });
 
-            com.cv4j.proxy.config.Constant.setUas(UserAgent.uas); // 让代理池也能够共享ua
+            setUas(UserAgent.uas); // 让代理池也能够共享ua
         }
 
         try {
