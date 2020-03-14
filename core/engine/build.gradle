@@ -45,6 +45,8 @@ dependencies {
 
     implementation "com.github.bdqfork:hamal-context:0.1.1"
 
+    implementation "com.typesafe:config:1.4.0"
+
     implementation project(":core:core")
 }
 

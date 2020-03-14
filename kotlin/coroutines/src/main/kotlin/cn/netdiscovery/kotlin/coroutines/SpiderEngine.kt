@@ -64,7 +64,7 @@ class SpiderEngine private constructor(@field:Getter
      */
     private fun initSpiderEngine() {
 
-        val uaList = Constant.uaList
+        val uaList = Constant.uaFiles
 
         if (Preconditions.isNotBlank(uaList)) {
 

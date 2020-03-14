@@ -1,6 +1,7 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Configuration;
+import cn.netdiscovery.core.config.SpiderEngineConfig;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.quartz.ProxyPoolJob;
@@ -89,6 +90,9 @@ public class SpiderEngine {
      * 初始化爬虫引擎，加载ua列表
      */
     private void initSpiderEngine() {
+
+        SpiderEngineConfig spiderEngineConfig = SpiderEngineConfig.getInsatance();
+        log.info("isUseMonitor = "+spiderEngineConfig.isUseMonitor() + ", port = "+spiderEngineConfig.getPort());
 
         String[] uaList = uaFiles;
 
