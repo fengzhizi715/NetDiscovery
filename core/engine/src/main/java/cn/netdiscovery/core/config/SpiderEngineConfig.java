@@ -13,19 +13,28 @@ public class SpiderEngineConfig {
 
     private int port;
     private boolean useMonitor;
-
-    private static class Holder {
-        private static final SpiderEngineConfig instance = new SpiderEngineConfig();
-    }
+    private String zkStr;
+    private String zkPath;
 
     private SpiderEngineConfig() {
-        Config conf = ConfigFactory.load().getConfig("spiderEngine.config");
-        port = conf.getInt("port");
-        useMonitor = conf.getBoolean("useMonitor");
-    }
 
-    public static final SpiderEngineConfig getInsatance() {
-        return SpiderEngineConfig.Holder.instance;
+        try {
+            Config config = ConfigFactory.load().getConfig("spiderEngine.config");
+            port = config.getInt("port");
+            useMonitor = config.getBoolean("useMonitor");
+        } catch (Exception e) {
+            port = 8715;
+            useMonitor = false;
+        }
+
+        try {
+            Config zkConfig = ConfigFactory.load().getConfig("spiderEngine.registry.zookeeper");
+            zkStr = zkConfig.getString("zkStr");
+            zkPath = zkConfig.getString("zkPath");
+        } catch (Exception e) {
+            zkStr = "localhost:2181";
+            zkPath = "/netdiscovery";
+        }
     }
 
     public int getPort() {
@@ -34,5 +43,21 @@ public class SpiderEngineConfig {
 
     public boolean isUseMonitor() {
         return useMonitor;
+    }
+
+    public String getZkStr() {
+        return zkStr;
+    }
+
+    public String getZkPath() {
+        return zkPath;
+    }
+
+    public static final SpiderEngineConfig getInsatance() {
+        return SpiderEngineConfig.Holder.instance;
+    }
+
+    private static class Holder {
+        private static final SpiderEngineConfig instance = new SpiderEngineConfig();
     }
 }

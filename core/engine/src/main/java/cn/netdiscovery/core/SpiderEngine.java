@@ -116,13 +116,8 @@ public class SpiderEngine {
             setUas(UserAgent.uas); // 让代理池也能够共享ua
         }
 
-        try {
-            defaultHttpdPort = SpiderEngineConfig.getInsatance().getPort();
-            useMonitor = SpiderEngineConfig.getInsatance().isUseMonitor();
-        } catch (Exception e) {
-            defaultHttpdPort = 8715;
-            useMonitor = false;
-        }
+        defaultHttpdPort = SpiderEngineConfig.getInsatance().getPort();
+        useMonitor = SpiderEngineConfig.getInsatance().isUseMonitor();
 
         VertxManager.configVertx(new VertxOptions().setMetricsOptions(
                 new MicrometerMetricsOptions()

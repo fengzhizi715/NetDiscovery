@@ -1,7 +1,7 @@
 package cn.netdiscovery.core.registry;
 
-import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.config.SpiderEngineConfig;
 import com.safframework.tony.common.utils.Preconditions;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -21,7 +21,7 @@ public class ZKRegistry extends Registry {
 
     public ZKRegistry() {
 
-        this(Configuration.getConfig("spiderEngine.registry.zookeeper.zkStr"), Configuration.getConfig("spiderEngine.registry.zookeeper.zkPath"));
+        this(SpiderEngineConfig.getInsatance().getZkStr(), SpiderEngineConfig.getInsatance().getZkPath());
     }
 
     public ZKRegistry(String zkStr,String zkPath) {
