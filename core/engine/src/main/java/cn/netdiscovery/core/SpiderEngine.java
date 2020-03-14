@@ -1,6 +1,5 @@
 package cn.netdiscovery.core;
 
-import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.SpiderEngineConfig;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
@@ -9,8 +8,6 @@ import cn.netdiscovery.core.quartz.QuartzManager;
 import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.registry.Registry;
-import cn.netdiscovery.core.utils.BooleanUtils;
-import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.utils.UserAgent;
 import cn.netdiscovery.core.vertx.VertxManager;
 import com.cv4j.proxy.ProxyManager;
@@ -90,10 +87,6 @@ public class SpiderEngine {
      * 初始化爬虫引擎，加载ua列表
      */
     private void initSpiderEngine() {
-
-        SpiderEngineConfig spiderEngineConfig = SpiderEngineConfig.getInsatance();
-        log.info("isUseMonitor = "+spiderEngineConfig.isUseMonitor() + ", port = "+spiderEngineConfig.getPort());
-
         String[] uaList = uaFiles;
 
         if (Preconditions.isNotBlank(uaList)) {
@@ -124,9 +117,9 @@ public class SpiderEngine {
         }
 
         try {
-            defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"));
-            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"));
-        } catch (ClassCastException e) {
+            defaultHttpdPort = SpiderEngineConfig.getInsatance().getPort();
+            useMonitor = SpiderEngineConfig.getInsatance().isUseMonitor();
+        } catch (Exception e) {
             defaultHttpdPort = 8715;
             useMonitor = false;
         }
