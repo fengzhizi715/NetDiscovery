@@ -56,7 +56,6 @@ public class CookiesPool {
     public void removeCookieGroup(String domain) {
 
         checkCache();
-
         RxCacheManager.getInsatance().getRxCache().remove(domain);
     }
 
@@ -66,7 +65,6 @@ public class CookiesPool {
     private void checkCache() {
 
         if (RxCacheManager.getInsatance().getRxCache()==null || !RxCacheManager.getInsatance().getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
-
             RxCacheManager.getInsatance().config(new RxCache.Builder());
         }
     }
@@ -84,18 +82,12 @@ public class CookiesPool {
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
             if (cookiesGroup ==null) {
-
                 cookiesGroup = new CookiesGroup(request.getUrlParser().getHost());
-
                 httpCookieList.addAll(HttpCookie.parse(cookie));
-
                 cookiesGroup.putAllCookies(httpCookieList);
-
                 CookiesPool.getInsatance().addCookieGroup(cookiesGroup);
             } else {
-
                 httpCookieList.addAll(HttpCookie.parse(cookie));
-
                 cookiesGroup.putAllCookies(httpCookieList);
             }
         }
@@ -109,12 +101,10 @@ public class CookiesPool {
     public void saveCookie(Request request, List<String> cookies) {
 
         if (Preconditions.isNotBlank(cookies)) {
-
             CookiesGroup cookiesGroup = CookiesPool.getInsatance().getCookieGroup(request.getUrlParser().getHost());
             List<HttpCookie> httpCookieList = new ArrayList<>();
 
             if (cookiesGroup ==null) {
-
                 cookiesGroup = new CookiesGroup(request.getUrlParser().getHost());
 
                 for (String cookieStr:cookies) {
@@ -123,17 +113,13 @@ public class CookiesPool {
                 }
 
                 cookiesGroup.putAllCookies(httpCookieList);
-
                 CookiesPool.getInsatance().addCookieGroup(cookiesGroup);
             } else {
-
                 for (String cookieStr:cookies) {
 
                     httpCookieList.addAll(HttpCookie.parse(cookieStr));
                 }
-
                 cookiesGroup.putAllCookies(httpCookieList);
-
             }
         }
     }

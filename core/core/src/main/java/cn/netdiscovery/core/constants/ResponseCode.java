@@ -11,7 +11,6 @@ public enum ResponseCode {
     BadRequest(400, "请求参数有误"),
     NotFound(404, "数据不存在"),
     InternalServerError(500, "网络异常，请稍后再试"),
-
     SpiderNotFound(1001,"爬虫不在容器中");
 
     private int code;

@@ -61,5 +61,4 @@ public class Page implements Serializable {
     public int hashCode() {
         return url.hashCode();
     }
-
 }

@@ -28,7 +28,6 @@ public class HttpResponse<T> {
         this.message = message;
     }
 
-
     public HttpResponse(int code, String message) {
         this.code = code;
         this.message = message;
