@@ -57,7 +57,7 @@ NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前
 
 ```groovy
 repositories {
-    mavenCentral()2
+    mavenCentral()
     jcenter()
 }
 ```
