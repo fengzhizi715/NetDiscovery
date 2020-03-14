@@ -1,6 +1,6 @@
 package cn.netdiscovery.core.registry;
 
-import cn.netdiscovery.core.config.Configuration;
+import cn.netdiscovery.core.config.SpiderEngineConfig;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
 import io.etcd.jetcd.KV;
@@ -29,7 +29,7 @@ public class EtcdRegistry extends Registry {
 
     public EtcdRegistry() {
 
-        this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"), Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
+        this(SpiderEngineConfig.getInsatance().getEtcdStr(), SpiderEngineConfig.getInsatance().getEtcdPath());
     }
 
     public EtcdRegistry(String etcdStr, String etcdPath) {

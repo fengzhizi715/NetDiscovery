@@ -15,6 +15,8 @@ public class SpiderEngineConfig {
     private boolean useMonitor;
     private String zkStr;
     private String zkPath;
+    private String etcdStr;
+    private String etcdPath;
 
     private SpiderEngineConfig() {
 
@@ -35,6 +37,15 @@ public class SpiderEngineConfig {
             zkStr = "localhost:2181";
             zkPath = "/netdiscovery";
         }
+
+        try {
+            Config etcdConfig = ConfigFactory.load().getConfig("spiderEngine.registry.etcd");
+            etcdStr = etcdConfig.getString("etcdStr");
+            etcdPath = etcdConfig.getString("zkPath");
+        } catch (Exception e) {
+            etcdStr = "http://127.0.0.1:2379";
+            etcdPath = "/netdiscovery";
+        }
     }
 
     public int getPort() {
@@ -51,6 +62,14 @@ public class SpiderEngineConfig {
 
     public String getZkPath() {
         return zkPath;
+    }
+
+    public String getEtcdStr() {
+        return etcdStr;
+    }
+
+    public String getEtcdPath() {
+        return etcdPath;
     }
 
     public static final SpiderEngineConfig getInsatance() {
