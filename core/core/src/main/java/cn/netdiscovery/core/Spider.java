@@ -111,7 +111,7 @@ public class Spider {
     private Spider() {
 
         try {
-            String queueType = Configuration.getConfig("spider.queue.type");
+            String queueType = SpiderConfig.getInsatance().getQueueType();
 
             if (Preconditions.isNotBlank(queueType)) {
 

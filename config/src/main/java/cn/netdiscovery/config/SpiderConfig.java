@@ -27,6 +27,8 @@ public class SpiderConfig {
     private int domainDelay;
     private boolean autoDomainDelay;
 
+    private String queueType;
+
     private SpiderConfig() {
 
         try {
@@ -61,6 +63,13 @@ public class SpiderConfig {
             autoDownloadDelay = true;
             domainDelay = 0;
             autoDomainDelay = true;
+        }
+
+        try {
+            Config requestConfig = ConfigFactory.load().getConfig("spider.queue");
+            queueType = requestConfig.getString("type");
+        } catch (Exception e) {
+            queueType = "default";
         }
     }
 
