@@ -50,6 +50,8 @@ dependencies {
     implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
 
     implementation 'com.github.bdqfork:festival-context:0.5.0'
+
+    implementation project(":config")
 }
 
 publish{

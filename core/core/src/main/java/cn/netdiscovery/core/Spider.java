@@ -1,5 +1,6 @@
 package cn.netdiscovery.core;
 
+import cn.netdiscovery.config.SpiderConfig;
 import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.Page;
@@ -157,10 +158,10 @@ public class Spider {
     private void initSpiderConfig() {
 
         try {
-            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"),false);
-            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"));
-            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"));
-            retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"));
+            autoProxy = SpiderConfig.getInsatance().isAutoProxy();
+            initialDelay = SpiderConfig.getInsatance().getInitialDelay();
+            maxRetries = SpiderConfig.getInsatance().getMaxRetries();
+            retryDelayMillis = SpiderConfig.getInsatance().getRetryDelayMillis();
 
             requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"));
             autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"),false);
@@ -195,14 +196,14 @@ public class Spider {
                 }
             }
 
-            boolean usePrintRequestPipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.usePrintRequestPipeline"),true);
+            boolean usePrintRequestPipeline = SpiderConfig.getInsatance().isUsePrintRequestPipeline();
 
             if (usePrintRequestPipeline) {
                 // 默认使用 PrintRequestPipeline
                 this.pipelines.add(new PrintRequestPipeline());
             }
 
-            boolean useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"),true);
+            boolean useConsolePipeline = SpiderConfig.getInsatance().isUseConsolePipeline();
 
             if (useConsolePipeline) {
                 // 默认使用 ConsolePipeline
