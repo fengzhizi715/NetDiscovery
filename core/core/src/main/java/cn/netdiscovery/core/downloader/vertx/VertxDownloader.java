@@ -1,15 +1,13 @@
 package cn.netdiscovery.core.downloader.vertx;
 
+import cn.netdiscovery.config.SpiderConfig;
 import cn.netdiscovery.core.cache.RxCacheManager;
-import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.cookies.CookiesPool;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
-import cn.netdiscovery.core.utils.BooleanUtils;
-import cn.netdiscovery.core.utils.NumberUtils;
 import cn.netdiscovery.core.vertx.VertxManager;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;
@@ -153,12 +151,12 @@ public class VertxDownloader implements Downloader {
     private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
-        options.setKeepAlive(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.keepAlive",String.class),true))
-                .setReuseAddress(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.reuseAddress",String.class),true))
-                .setFollowRedirects(BooleanUtils.toBoolean(Configuration.getConfig("spider.downloader.vertx.options.followRedirects",String.class),true))
-                .setConnectTimeout(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.connectTimeout",String.class),10000))
-                .setIdleTimeout(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.idleTimeout",String.class),10))
-                .setMaxWaitQueueSize(NumberUtils.toInt(Configuration.getConfig("spider.downloader.vertx.options.maxWaitQueueSize",String.class),10));
+        options.setKeepAlive(SpiderConfig.getInsatance().isKeepAlive())
+                .setReuseAddress(SpiderConfig.getInsatance().isReuseAddress())
+                .setFollowRedirects(SpiderConfig.getInsatance().isFollowRedirects())
+                .setConnectTimeout(SpiderConfig.getInsatance().getConnectTimeout())
+                .setIdleTimeout(SpiderConfig.getInsatance().getIdleTimeout())
+                .setMaxWaitQueueSize(SpiderConfig.getInsatance().getMaxWaitQueueSize());
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());

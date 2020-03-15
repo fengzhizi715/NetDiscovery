@@ -1,7 +1,6 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.config.SpiderConfig;
-import cn.netdiscovery.core.config.Configuration;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.Page;
 import cn.netdiscovery.core.domain.Request;
@@ -20,7 +19,9 @@ import cn.netdiscovery.core.pipeline.PrintRequestPipeline;
 import cn.netdiscovery.core.queue.DefaultQueue;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue;
-import cn.netdiscovery.core.utils.*;
+import cn.netdiscovery.core.utils.RetryWithDelay;
+import cn.netdiscovery.core.utils.SpiderUtils;
+import cn.netdiscovery.core.utils.Throttle;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.IOUtils;
@@ -167,7 +168,7 @@ public class Spider {
             pipelineDelay = SpiderConfig.getInsatance().getPipelineDelay();
             autoPipelineDelay = SpiderConfig.getInsatance().isAutoPipelineDelay();
 
-            String downloaderType = Configuration.getConfig("spider.downloader.type");
+            String downloaderType = SpiderConfig.getInsatance().getDownloaderType();
 
             if (Preconditions.isNotBlank(downloaderType)) {
 
@@ -189,17 +190,14 @@ public class Spider {
             boolean usePrintRequestPipeline = SpiderConfig.getInsatance().isUsePrintRequestPipeline();
 
             if (usePrintRequestPipeline) {
-                // 默认使用 PrintRequestPipeline
-                this.pipelines.add(new PrintRequestPipeline());
+                this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
             }
 
             boolean useConsolePipeline = SpiderConfig.getInsatance().isUseConsolePipeline();
 
             if (useConsolePipeline) {
-                // 默认使用 ConsolePipeline
-                this.pipelines.add(new ConsolePipeline());
+                this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
             }
-
         } catch (ClassCastException e) {
             log.error(e.getMessage());
         }

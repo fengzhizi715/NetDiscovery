@@ -32,6 +32,14 @@ public class SpiderConfig {
     private int pipelineDelay;
     private boolean autoPipelineDelay;
 
+    private String downloaderType;
+    private boolean keepAlive;
+    private boolean reuseAddress;
+    private boolean followRedirects;
+    private int connectTimeout;
+    private int idleTimeout;
+    private int maxWaitQueueSize;
+
     private SpiderConfig() {
 
         try {
@@ -82,6 +90,25 @@ public class SpiderConfig {
         } catch (Exception e) {
             pipelineDelay = 0;
             autoPipelineDelay = false;
+        }
+
+        try {
+            Config downloaderConfig = ConfigFactory.load().getConfig("spider.downloader");
+            downloaderType = downloaderConfig.getString("type");
+            Config optionConfig = downloaderConfig.getConfig("vertx.options");
+            keepAlive = optionConfig.getBoolean("keepAlive");
+            reuseAddress = optionConfig.getBoolean("reuseAddress");
+            followRedirects = optionConfig.getBoolean("followRedirects");
+            connectTimeout = optionConfig.getInt("connectTimeout");
+            idleTimeout = optionConfig.getInt("idleTimeout");
+            maxWaitQueueSize = optionConfig.getInt("maxWaitQueueSize");
+        } catch (Exception e) {
+            keepAlive = true;
+            reuseAddress = true;
+            followRedirects = true;
+            connectTimeout = 10000;
+            idleTimeout = 10;
+            maxWaitQueueSize = 10;
         }
     }
 
