@@ -163,12 +163,12 @@ public class Spider {
             maxRetries = SpiderConfig.getInsatance().getMaxRetries();
             retryDelayMillis = SpiderConfig.getInsatance().getRetryDelayMillis();
 
-            requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"));
-            autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"),false);
-            downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"));
-            autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"),false);
-            domainDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.domainDelay"));
-            autoDomainDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDomainDelay"),false);
+            requestSleepTime = SpiderConfig.getInsatance().getSleepTime();
+            autoSleepTime = SpiderConfig.getInsatance().isAutoSleepTime();
+            downloadDelay = SpiderConfig.getInsatance().getDownloadDelay();
+            autoDownloadDelay = SpiderConfig.getInsatance().isAutoDownloadDelay();
+            domainDelay = SpiderConfig.getInsatance().getDomainDelay();
+            autoDomainDelay = SpiderConfig.getInsatance().isAutoDomainDelay();
 
             pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
             autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"),false);
