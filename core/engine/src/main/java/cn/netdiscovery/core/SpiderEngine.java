@@ -79,7 +79,6 @@ public class SpiderEngine {
     private SpiderEngine(Queue queue) {
 
         this.queue = queue;
-
         initSpiderEngine();
     }
 
@@ -188,8 +187,9 @@ public class SpiderEngine {
 
     /**
      * 对各个爬虫的状态进行监测，并返回json格式。
-     * 如果要使用此方法，须放在run()之前
-     * 采用默认的端口号
+     * 如果要使用此方法，须放在run()之前。采用默认的端口号
+     * httpd() 必须要使用
+     * 
      * @return
      */
     public SpiderEngine httpd() {
@@ -236,7 +236,6 @@ public class SpiderEngine {
     public void closeHttpServer() {
 
         if (server != null) {
-
             server.close();
         }
     }
@@ -323,7 +322,6 @@ public class SpiderEngine {
         Spider spider = spiders.get(name);
 
         if (spider != null) {
-
             spider.stop();
         }
     }
@@ -334,7 +332,6 @@ public class SpiderEngine {
     public void stopSpiders() {
 
         if (Preconditions.isNotBlank(spiders)) {
-
             spiders.forEach((s, spider) -> spider.stop());
         }
     }
@@ -407,7 +404,6 @@ public class SpiderEngine {
     public void addProxyPoolJob(Map<String, Class> proxyMap, String cron) {
 
         String jobName = PROXY_POOL_JOB_NAME + count.incrementAndGet();
-
         QuartzManager.addJob(jobName, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, ProxyPoolJob.class, cron, proxyMap);
     }
 
@@ -417,7 +413,6 @@ public class SpiderEngine {
     public void startProxyPool(Map<String, Class> proxyMap) {
 
         if (Preconditions.isNotBlank(proxyMap)) {
-
             ProxyPool.proxyMap = proxyMap;
             ProxyManager proxyManager = ProxyManager.get();
             proxyManager.start();
@@ -425,7 +420,6 @@ public class SpiderEngine {
     }
 
     public void deployVerticle(Verticle verticle) {
-
         VertxManager.deployVerticle(verticle);
     }
 
@@ -434,7 +428,6 @@ public class SpiderEngine {
      */
     @FunctionalInterface
     public interface RegisterConsumer {
-
         void process();
     }
 }
