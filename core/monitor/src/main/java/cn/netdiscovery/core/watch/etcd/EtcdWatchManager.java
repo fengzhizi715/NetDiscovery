@@ -1,6 +1,6 @@
 package cn.netdiscovery.core.watch.etcd;
 
-import cn.netdiscovery.core.config.Configuration;
+import cn.netdiscovery.config.SpiderEngineConfig;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.domain.SpiderEngineState;
 import cn.netdiscovery.core.watch.AbstractWatchManager;
@@ -28,7 +28,7 @@ public class EtcdWatchManager extends AbstractWatchManager {
 
     public EtcdWatchManager() {
 
-        this(Configuration.getConfig("spiderEngine.registry.etcd.etcdStr"),Configuration.getConfig("spiderEngine.registry.etcd.etcdPath"));
+        this(SpiderEngineConfig.getInsatance().getEtcdStr(),SpiderEngineConfig.getInsatance().getEtcdPath());
     }
 
     public EtcdWatchManager(String etcdStr, String etcdPath) {

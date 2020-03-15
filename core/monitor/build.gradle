@@ -31,6 +31,7 @@ dependencies {
     implementation "io.etcd:jetcd-core:0.3.0"
 
     implementation project(":core:core")
+    implementation project(":config")
 }
 
 publish{
