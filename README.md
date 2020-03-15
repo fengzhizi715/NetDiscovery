@@ -93,14 +93,13 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 # TODO List:
 
-1. 逐步引入 HOCON 替换现有的配置方式
-2. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
-3. 增加 admin 模块
-4. 支持 Consul
-5. 增强 HtmlUnit 模块
-6. 增加 chromium 的支持
-7. 完善 wiki，增加各个模式的使用说明
-8. 支持 RxJava 3.x 
+1. 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
+2. 增加 admin 模块
+3. 支持 Consul
+4. 增强 HtmlUnit 模块
+5. 增加 chromium 的支持
+6. 完善 wiki，增加各个模式的使用说明
+7. 支持 RxJava 3.x 
 
 
 # Contributors:
