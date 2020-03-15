@@ -1,10 +1,10 @@
-package cn.netdiscovery.core.config;
+package cn.netdiscovery.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 /**
- * @FileName: cn.netdiscovery.core.config.SpiderEngineConfig
+ * @FileName: cn.netdiscovery.config.SpiderEngineConfig
  * @author: Tony Shen
  * @date: 2020-03-14 20:58
  * @version: V1.0 <描述当前版本功能>

@@ -1,6 +1,6 @@
 package cn.netdiscovery.core.registry;
 
-import cn.netdiscovery.core.config.SpiderEngineConfig;
+import cn.netdiscovery.config.SpiderEngineConfig;
 import io.etcd.jetcd.ByteSequence;
 import io.etcd.jetcd.Client;
 import io.etcd.jetcd.KV;
