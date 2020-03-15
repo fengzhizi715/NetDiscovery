@@ -1,6 +1,6 @@
 package cn.netdiscovery.kotlin.coroutines
 
-import cn.netdiscovery.core.config.Configuration
+import cn.netdiscovery.config.SpiderConfig
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.domain.Page
 import cn.netdiscovery.core.domain.Request
@@ -19,8 +19,6 @@ import cn.netdiscovery.core.pipeline.PrintRequestPipeline
 import cn.netdiscovery.core.queue.DefaultQueue
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue
-import cn.netdiscovery.core.utils.BooleanUtils
-import cn.netdiscovery.core.utils.NumberUtils
 import cn.netdiscovery.core.utils.RetryWithDelay
 import cn.netdiscovery.core.utils.SpiderUtils
 import com.cv4j.proxy.ProxyPool
@@ -96,14 +94,12 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     init {
 
         try {
-            val queueType = Configuration.getConfig("spider.queue.type")
+            val queueType = SpiderConfig.getInsatance().queueType
 
             if (Preconditions.isNotBlank(queueType)) {
 
                 when (queueType) {
-
                     Constant.QUEUE_TYPE_DEFAULT   -> this.queue = DefaultQueue()
-
                     Constant.QUEUE_TYPE_DISRUPTOR -> this.queue = DisruptorQueue()
                 }
             }
@@ -124,49 +120,42 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     private fun initSpiderConfig() {
 
         try {
-            autoProxy = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.autoProxy"), false)
-            initialDelay = NumberUtils.toLong(Configuration.getConfig("spider.config.initialDelay"))
-            maxRetries = NumberUtils.toInt(Configuration.getConfig("spider.config.maxRetries"))
-            retryDelayMillis = NumberUtils.toLong(Configuration.getConfig("spider.config.maxRetries"))
+            autoProxy = SpiderConfig.getInsatance().isAutoProxy
+            initialDelay = SpiderConfig.getInsatance().initialDelay
+            maxRetries = SpiderConfig.getInsatance().maxRetries
+            retryDelayMillis = SpiderConfig.getInsatance().retryDelayMillis
 
-            requestSleepTime = NumberUtils.toLong(Configuration.getConfig("spider.request.sleepTime"))
-            autoSleepTime = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoSleepTime"), false)
-            downloadDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.downloadDelay"))
-            autoDownloadDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDownloadDelay"), false)
-            domainDelay = NumberUtils.toLong(Configuration.getConfig("spider.request.domainDelay"))
-            autoDomainDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.request.autoDomainDelay"), false)
+            requestSleepTime = SpiderConfig.getInsatance().sleepTime
+            autoSleepTime = SpiderConfig.getInsatance().isAutoSleepTime
+            downloadDelay = SpiderConfig.getInsatance().downloadDelay
+            autoDownloadDelay = SpiderConfig.getInsatance().isAutoDownloadDelay
+            domainDelay = SpiderConfig.getInsatance().domainDelay
+            autoDomainDelay = SpiderConfig.getInsatance().isAutoDomainDelay
 
-            pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"))
-            autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"), false)
+            pipelineDelay = SpiderConfig.getInsatance().pipelineDelay
+            autoPipelineDelay = SpiderConfig.getInsatance().isAutoPipelineDelay
 
-            val downloaderType = Configuration.getConfig("spider.downloader.type")
+            val downloaderType = SpiderConfig.getInsatance().downloaderType
 
             if (Preconditions.isNotBlank(downloaderType)) {
-
                 when (downloaderType) {
-
                     Constant.DOWNLOAD_TYPE_VERTX          -> this.downloader = VertxDownloader()
-
                     Constant.DOWNLOAD_TYPE_URL_CONNECTION -> this.downloader = UrlConnectionDownloader()
-
                     Constant.DOWNLOAD_TYPE_FILE           -> this.downloader = FileDownloader()
                 }
             }
 
-            val usePrintRequestPipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.usePrintRequestPipeline"), true)
+            val usePrintRequestPipeline = SpiderConfig.getInsatance().isUsePrintRequestPipeline
 
             if (usePrintRequestPipeline) {
-                // 默认使用 PrintRequestPipeline
-                this.pipelines.add(PrintRequestPipeline())
+                this.pipelines.add(PrintRequestPipeline()) // 默认使用 PrintRequestPipeline
             }
 
-            val useConsolePipeline = BooleanUtils.toBoolean(Configuration.getConfig("spider.config.useConsolePipeline"), true)
+            val useConsolePipeline = SpiderConfig.getInsatance().isUseConsolePipeline
 
             if (useConsolePipeline) {
-                // 默认使用 ConsolePipeline
-                this.pipelines.add(ConsolePipeline())
+                this.pipelines.add(ConsolePipeline())  // 默认使用 ConsolePipeline
             }
-
         } catch (e: ClassCastException) {
             println(e.message)
         }

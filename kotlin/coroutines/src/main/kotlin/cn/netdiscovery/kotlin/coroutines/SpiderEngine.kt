@@ -1,6 +1,6 @@
 package cn.netdiscovery.kotlin.coroutines
 
-import cn.netdiscovery.core.config.Configuration
+import cn.netdiscovery.config.SpiderEngineConfig
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.config.Constant.*
 import cn.netdiscovery.core.domain.bean.SpiderJobBean
@@ -8,8 +8,6 @@ import cn.netdiscovery.core.quartz.ProxyPoolJob
 import cn.netdiscovery.core.quartz.QuartzManager
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.registry.Registry
-import cn.netdiscovery.core.utils.BooleanUtils
-import cn.netdiscovery.core.utils.NumberUtils
 import cn.netdiscovery.core.utils.UserAgent
 import cn.netdiscovery.core.vertx.VertxManager
 import com.cv4j.proxy.ProxyManager
@@ -96,8 +94,8 @@ class SpiderEngine private constructor(@field:Getter
         }
 
         try {
-            defaultHttpdPort = NumberUtils.toInt(Configuration.getConfig("spiderEngine.config.port"))
-            useMonitor = BooleanUtils.toBoolean(Configuration.getConfig("spiderEngine.config.useMonitor"))
+            defaultHttpdPort = SpiderEngineConfig.getInsatance().port
+            useMonitor = SpiderEngineConfig.getInsatance().isUseMonitor
         } catch (e: ClassCastException) {
             defaultHttpdPort = 8715
             useMonitor = false

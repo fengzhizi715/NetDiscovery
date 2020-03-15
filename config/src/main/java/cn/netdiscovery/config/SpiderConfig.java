@@ -14,22 +14,22 @@ import lombok.Getter;
 public class SpiderConfig {
 
     private boolean autoProxy;
-    private int initialDelay;
+    private long initialDelay;
     private int maxRetries;
-    private int retryDelayMillis;
+    private long retryDelayMillis;
     private boolean usePrintRequestPipeline;
     private boolean useConsolePipeline;
 
-    private int sleepTime;
+    private long sleepTime;
     private boolean autoSleepTime;
-    private int  downloadDelay;
+    private long  downloadDelay;
     private boolean autoDownloadDelay;
-    private int domainDelay;
+    private long domainDelay;
     private boolean autoDomainDelay;
 
     private String queueType;
 
-    private int pipelineDelay;
+    private long pipelineDelay;
     private boolean autoPipelineDelay;
 
     private String downloaderType;
@@ -45,9 +45,9 @@ public class SpiderConfig {
         try {
             Config config = ConfigFactory.load().getConfig("spider.config");
             autoProxy = config.getBoolean("autoProxy");
-            initialDelay = config.getInt("initialDelay");
+            initialDelay = config.getLong("initialDelay");
             maxRetries = config.getInt("maxRetries");
-            retryDelayMillis = config.getInt("retryDelayMillis");
+            retryDelayMillis = config.getLong("retryDelayMillis");
             usePrintRequestPipeline = config.getBoolean("usePrintRequestPipeline");
             useConsolePipeline = config.getBoolean("useConsolePipeline");
         } catch (Exception e) {
@@ -61,11 +61,11 @@ public class SpiderConfig {
 
         try {
             Config requestConfig = ConfigFactory.load().getConfig("spider.request");
-            sleepTime = requestConfig.getInt("sleepTime");
+            sleepTime = requestConfig.getLong("sleepTime");
             autoSleepTime = requestConfig.getBoolean("autoSleepTime");
-            downloadDelay = requestConfig.getInt("downloadDelay");
+            downloadDelay = requestConfig.getLong("downloadDelay");
             autoDownloadDelay = requestConfig.getBoolean("autoDownloadDelay");
-            domainDelay = requestConfig.getInt("domainDelay");
+            domainDelay = requestConfig.getLong("domainDelay");
             autoDomainDelay = requestConfig.getBoolean("autoDomainDelay");
         } catch (Exception e) {
             sleepTime = 0;
@@ -85,7 +85,7 @@ public class SpiderConfig {
 
         try {
             Config pipelineConfig = ConfigFactory.load().getConfig("spider.pipeline");
-            pipelineDelay = pipelineConfig.getInt("pipelineDelay");
+            pipelineDelay = pipelineConfig.getLong("pipelineDelay");
             autoPipelineDelay = pipelineConfig.getBoolean("autoPipelineDelay");
         } catch (Exception e) {
             pipelineDelay = 0;
