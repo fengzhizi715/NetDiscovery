@@ -112,19 +112,14 @@ public class Spider {
 
         try {
             String queueType = SpiderConfig.getInsatance().getQueueType();
-
             if (Preconditions.isNotBlank(queueType)) {
-
                 switch (queueType) {
-
                     case Constant.QUEUE_TYPE_DEFAULT:
                         this.queue = new DefaultQueue();
                         break;
-
                     case Constant.QUEUE_TYPE_DISRUPTOR:
                         this.queue = new DisruptorQueue();
                         break;
-
                     default:
                         break;
                 }
@@ -134,7 +129,6 @@ public class Spider {
         }
 
         if (this.queue == null) {
-
             this.queue = new DefaultQueue();
         }
 
@@ -170,27 +164,23 @@ public class Spider {
             domainDelay = SpiderConfig.getInsatance().getDomainDelay();
             autoDomainDelay = SpiderConfig.getInsatance().isAutoDomainDelay();
 
-            pipelineDelay = NumberUtils.toLong(Configuration.getConfig("spider.pipeline.pipelineDelay"));
-            autoPipelineDelay = BooleanUtils.toBoolean(Configuration.getConfig("spider.pipeline.autoPipelineDelay"),false);
+            pipelineDelay = SpiderConfig.getInsatance().getPipelineDelay();
+            autoPipelineDelay = SpiderConfig.getInsatance().isAutoPipelineDelay();
 
             String downloaderType = Configuration.getConfig("spider.downloader.type");
 
             if (Preconditions.isNotBlank(downloaderType)) {
 
                 switch (downloaderType) {
-
                     case Constant.DOWNLOAD_TYPE_VERTX:
                         this.downloader = new VertxDownloader();
                         break;
-
                     case Constant.DOWNLOAD_TYPE_URL_CONNECTION:
                         this.downloader = new UrlConnectionDownloader();
                         break;
-
                     case Constant.DOWNLOAD_TYPE_FILE:
                         this.downloader = new FileDownloader();
                         break;
-
                     default:
                         break;
                 }

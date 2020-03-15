@@ -29,6 +29,9 @@ public class SpiderConfig {
 
     private String queueType;
 
+    private int pipelineDelay;
+    private boolean autoPipelineDelay;
+
     private SpiderConfig() {
 
         try {
@@ -66,10 +69,19 @@ public class SpiderConfig {
         }
 
         try {
-            Config requestConfig = ConfigFactory.load().getConfig("spider.queue");
-            queueType = requestConfig.getString("type");
+            Config queueConfig = ConfigFactory.load().getConfig("spider.queue");
+            queueType = queueConfig.getString("type");
         } catch (Exception e) {
             queueType = "default";
+        }
+
+        try {
+            Config pipelineConfig = ConfigFactory.load().getConfig("spider.pipeline");
+            pipelineDelay = pipelineConfig.getInt("pipelineDelay");
+            autoPipelineDelay = pipelineConfig.getBoolean("autoPipelineDelay");
+        } catch (Exception e) {
+            pipelineDelay = 0;
+            autoPipelineDelay = false;
         }
     }
 
