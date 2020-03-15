@@ -7,6 +7,8 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+def libs = rootProject.ext.libraries // 库
+
 repositories {
     mavenCentral()
 }
@@ -14,5 +16,6 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
+    implementation "org.projectlombok:lombok:${libs.lombok}"
     implementation "com.typesafe:config:1.4.0"
 }

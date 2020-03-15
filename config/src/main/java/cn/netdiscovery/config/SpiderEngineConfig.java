@@ -2,6 +2,7 @@ package cn.netdiscovery.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import lombok.Getter;
 
 /**
  * @FileName: cn.netdiscovery.config.SpiderEngineConfig
@@ -9,6 +10,7 @@ import com.typesafe.config.ConfigFactory;
  * @date: 2020-03-14 20:58
  * @version: V1.0 <描述当前版本功能>
  */
+@Getter
 public class SpiderEngineConfig {
 
     private int port;
@@ -46,30 +48,6 @@ public class SpiderEngineConfig {
             etcdStr = "http://127.0.0.1:2379";
             etcdPath = "/netdiscovery";
         }
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public boolean isUseMonitor() {
-        return useMonitor;
-    }
-
-    public String getZkStr() {
-        return zkStr;
-    }
-
-    public String getZkPath() {
-        return zkPath;
-    }
-
-    public String getEtcdStr() {
-        return etcdStr;
-    }
-
-    public String getEtcdPath() {
-        return etcdPath;
     }
 
     public static final SpiderEngineConfig getInsatance() {

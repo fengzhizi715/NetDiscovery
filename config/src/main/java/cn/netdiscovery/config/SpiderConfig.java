@@ -2,6 +2,7 @@ package cn.netdiscovery.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import lombok.Getter;
 
 /**
  * @FileName: cn.netdiscovery.config.SpiderConfig
@@ -9,14 +10,22 @@ import com.typesafe.config.ConfigFactory;
  * @date: 2020-03-15 12:19
  * @version: V1.0 <描述当前版本功能>
  */
+@Getter
 public class SpiderConfig {
 
     private boolean autoProxy;
     private int initialDelay;
     private int maxRetries;
     private int retryDelayMillis;
-    private boolean  usePrintRequestPipeline;
+    private boolean usePrintRequestPipeline;
     private boolean useConsolePipeline;
+
+    private int sleepTime;
+    private boolean autoSleepTime;
+    private int  downloadDelay;
+    private boolean autoDownloadDelay;
+    private int domainDelay;
+    private boolean autoDomainDelay;
 
     private SpiderConfig() {
 
@@ -36,30 +45,23 @@ public class SpiderConfig {
             usePrintRequestPipeline = true;
             useConsolePipeline = false;
         }
-    }
 
-    public boolean isAutoProxy() {
-        return autoProxy;
-    }
-
-    public int getInitialDelay() {
-        return initialDelay;
-    }
-
-    public int getMaxRetries() {
-        return maxRetries;
-    }
-
-    public int getRetryDelayMillis() {
-        return retryDelayMillis;
-    }
-
-    public boolean isUsePrintRequestPipeline() {
-        return usePrintRequestPipeline;
-    }
-
-    public boolean isUseConsolePipeline() {
-        return useConsolePipeline;
+        try {
+            Config requestConfig = ConfigFactory.load().getConfig("spider.request");
+            sleepTime = requestConfig.getInt("sleepTime");
+            autoSleepTime = requestConfig.getBoolean("autoSleepTime");
+            downloadDelay = requestConfig.getInt("downloadDelay");
+            autoDownloadDelay = requestConfig.getBoolean("autoDownloadDelay");
+            domainDelay = requestConfig.getInt("domainDelay");
+            autoDomainDelay = requestConfig.getBoolean("autoDomainDelay");
+        } catch (Exception e) {
+            sleepTime = 0;
+            autoSleepTime = true;
+            downloadDelay = 0;
+            autoDownloadDelay = true;
+            domainDelay = 0;
+            autoDomainDelay = true;
+        }
     }
 
     public static final SpiderConfig getInsatance() {
