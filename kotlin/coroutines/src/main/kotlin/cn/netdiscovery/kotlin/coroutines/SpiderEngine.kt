@@ -215,14 +215,15 @@ class SpiderEngine private constructor(@field:Getter
      *
      */
     fun run() {
-
         println("\r\n" +
                 "   _   _      _   ____  _\n" +
                 "  | \\ | | ___| |_|  _ \\(_)___  ___ _____   _____ _ __ _   _\n" +
                 "  |  \\| |/ _ \\ __| | | | / __|/ __/ _ \\ \\ / / _ \\ '__| | | |\n" +
                 "  | |\\  |  __/ |_| |_| | \\__ \\ (_| (_) \\ V /  __/ |  | |_| |\n" +
                 "  |_| \\_|\\___|\\__|____/|_|___/\\___\\___/ \\_/ \\___|_|   \\__, |\n" +
-                "                                                      |___/")
+                "                                                      |___/\n"+
+                "  NetDiscovery is running ...\n"+
+                "  Author: Tony Shen，Email: fengzhizi715@126.com");
 
         if (Preconditions.isNotBlank<Map<String, Spider>>(spiders)) {
 
