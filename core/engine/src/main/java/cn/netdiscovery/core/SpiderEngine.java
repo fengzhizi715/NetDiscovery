@@ -9,6 +9,7 @@ import cn.netdiscovery.core.quartz.SpiderJob;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.registry.Registry;
 import cn.netdiscovery.core.utils.UserAgent;
+import cn.netdiscovery.core.vertx.RegisterConsumer;
 import cn.netdiscovery.core.vertx.VertxManager;
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
@@ -44,7 +45,7 @@ import static cn.netdiscovery.core.config.Constant.*;
 import static com.cv4j.proxy.config.Constant.setUas;
 
 /**
- * 可以管理多个 Spider 的容器(引擎)
+ * 可以管理多个 Spider 的引擎(容器)
  * Created by tony on 2018/1/2.
  */
 @Slf4j
@@ -255,14 +256,11 @@ public class SpiderEngine {
                 "                                                      |___/");
 
         if (Preconditions.isNotBlank(spiders)) {
-
             if (registry!=null && registry.getProvider()!=null) {
-
                 registry.register(registry.getProvider(), defaultHttpdPort);
             }
 
             if (registerConsumer!=null) {
-
                 registerConsumer.process();
             }
 
@@ -419,15 +417,11 @@ public class SpiderEngine {
         }
     }
 
+    /**
+     * 部署 Vert.x 的 Verticle，便于爬虫引擎的扩展
+     * @param verticle
+     */
     public void deployVerticle(Verticle verticle) {
         VertxManager.deployVerticle(verticle);
-    }
-
-    /**
-     * 注册 Vert.x eventBus 的消费者
-     */
-    @FunctionalInterface
-    public interface RegisterConsumer {
-        void process();
     }
 }
