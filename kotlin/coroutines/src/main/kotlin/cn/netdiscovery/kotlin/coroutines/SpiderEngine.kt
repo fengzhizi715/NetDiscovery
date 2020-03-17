@@ -9,6 +9,7 @@ import cn.netdiscovery.core.quartz.QuartzManager
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.registry.Registry
 import cn.netdiscovery.core.utils.UserAgent
+import cn.netdiscovery.core.vertx.RegisterConsumer
 import cn.netdiscovery.core.vertx.VertxManager
 import com.cv4j.proxy.ProxyManager
 import com.cv4j.proxy.ProxyPool
@@ -17,6 +18,7 @@ import com.safframework.tony.common.utils.IOUtils
 import com.safframework.tony.common.utils.Preconditions
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
+import io.vertx.core.Verticle
 import io.vertx.core.VertxOptions
 import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
@@ -307,12 +309,11 @@ class SpiderEngine private constructor(@field:Getter
     }
 
     /**
-     * 注册 Vert.x eventBus 的消费者
+     * 部署 Vert.x 的 Verticle，便于爬虫引擎的扩展
+     * @param verticle
      */
-    @FunctionalInterface
-    interface RegisterConsumer {
-
-        fun process()
+    fun deployVerticle(verticle: Verticle) {
+        VertxManager.deployVerticle(verticle)
     }
 
     companion object {
