@@ -1,6 +1,7 @@
-package cn.netdiscovery.core.utils;
+package cn.netdiscovery.core.rxjava;
 
 import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.utils.SpiderUtils;
 import com.cv4j.proxy.ProxyPool;
 import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;

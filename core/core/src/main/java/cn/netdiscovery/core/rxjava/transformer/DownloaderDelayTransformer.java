@@ -1,4 +1,4 @@
-package cn.netdiscovery.core.transformer;
+package cn.netdiscovery.core.rxjava.transformer;
 
 import cn.netdiscovery.core.domain.Request;
 import io.reactivex.Maybe;

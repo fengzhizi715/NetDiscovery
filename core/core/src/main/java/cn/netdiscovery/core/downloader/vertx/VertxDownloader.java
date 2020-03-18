@@ -7,7 +7,7 @@ import cn.netdiscovery.core.cookies.CookiesPool;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
-import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
+import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;
 import cn.netdiscovery.core.vertx.VertxManager;
 import com.safframework.rxcache.domain.Record;
 import com.safframework.tony.common.utils.Preconditions;

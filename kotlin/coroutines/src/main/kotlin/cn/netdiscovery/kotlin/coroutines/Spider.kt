@@ -19,7 +19,7 @@ import cn.netdiscovery.core.pipeline.PrintRequestPipeline
 import cn.netdiscovery.core.queue.DefaultQueue
 import cn.netdiscovery.core.queue.Queue
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue
-import cn.netdiscovery.core.utils.RetryWithDelay
+import cn.netdiscovery.core.rxjava.RetryWithDelay
 import cn.netdiscovery.core.utils.SpiderUtils
 import com.cv4j.proxy.ProxyPool
 import com.safframework.tony.common.utils.IOUtils
@@ -567,7 +567,13 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
                     // request正在处理
                     val download = downloader.download(request)
-                            .retryWhen(RetryWithDelay<Response>(3,1000,request))
+                            .retryWhen(
+                                RetryWithDelay<Response>(
+                                    3,
+                                    1000,
+                                    request
+                                )
+                            )
                             .await()
 
                     download?.run {

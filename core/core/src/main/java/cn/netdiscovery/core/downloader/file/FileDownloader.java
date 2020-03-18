@@ -3,7 +3,7 @@ package cn.netdiscovery.core.downloader.file;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
-import cn.netdiscovery.core.transformer.DownloaderDelayTransformer;
+import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;
 import com.safframework.tony.common.utils.IOUtils;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;

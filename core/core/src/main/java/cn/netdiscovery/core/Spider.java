@@ -19,7 +19,7 @@ import cn.netdiscovery.core.pipeline.PrintRequestPipeline;
 import cn.netdiscovery.core.queue.DefaultQueue;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue;
-import cn.netdiscovery.core.utils.RetryWithDelay;
+import cn.netdiscovery.core.rxjava.RetryWithDelay;
 import cn.netdiscovery.core.utils.SpiderUtils;
 import cn.netdiscovery.core.utils.Throttle;
 import com.cv4j.proxy.ProxyPool;
