@@ -40,7 +40,7 @@ dependencies {
     implementation "com.alibaba:fastjson:${libs.fastjson}"
     implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
 
-    implementation project(":config")
+    compile project(":config")
 }
 
 compileKotlin {
