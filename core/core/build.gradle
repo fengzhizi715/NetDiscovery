@@ -51,7 +51,7 @@ dependencies {
 
     implementation 'com.github.bdqfork:festival-context:0.5.0'
 
-    implementation project(":config")
+    compile project(":config")
 }
 
 publish{
