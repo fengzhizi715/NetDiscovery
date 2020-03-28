@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'java-library'
     id 'kotlin'
     id 'com.novoda.bintray-release'
 }
@@ -40,7 +41,7 @@ dependencies {
     implementation "com.alibaba:fastjson:${libs.fastjson}"
     implementation "org.apache.commons:commons-lang3:${libs.commons_lang3}"
 
-    compile project(":config")
+    api project(":config")
 }
 
 compileKotlin {
