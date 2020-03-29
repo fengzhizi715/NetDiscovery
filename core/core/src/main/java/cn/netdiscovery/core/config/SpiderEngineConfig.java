@@ -1,4 +1,4 @@
-package cn.netdiscovery.config;
+package cn.netdiscovery.core.config;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;

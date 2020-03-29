@@ -1,7 +1,7 @@
 package cn.netdiscovery.core.registry;
 
-import cn.netdiscovery.config.SpiderEngineConfig;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.config.SpiderEngineConfig;
 import com.safframework.tony.common.utils.Preconditions;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;

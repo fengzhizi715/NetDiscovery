@@ -1,7 +1,7 @@
 package cn.netdiscovery.core;
 
-import cn.netdiscovery.config.SpiderConfig;
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.config.SpiderConfig;
 import cn.netdiscovery.core.domain.Page;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.Response;

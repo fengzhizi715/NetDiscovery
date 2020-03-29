@@ -49,5 +49,4 @@ include 'kotlin:coroutines'
 findProject(':kotlin:coroutines')?.name = 'coroutines'
 
 include 'imageprocess'
-include 'config'
 

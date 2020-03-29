@@ -1,8 +1,8 @@
 package cn.netdiscovery.kotlin.coroutines
 
-import cn.netdiscovery.config.SpiderEngineConfig
 import cn.netdiscovery.core.config.Constant
 import cn.netdiscovery.core.config.Constant.*
+import cn.netdiscovery.core.config.SpiderEngineConfig
 import cn.netdiscovery.core.domain.bean.SpiderJobBean
 import cn.netdiscovery.core.quartz.ProxyPoolJob
 import cn.netdiscovery.core.quartz.QuartzManager
