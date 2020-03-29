@@ -93,7 +93,6 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 
 # TODO List:
 
-* core 模块拆分
 * 整合 OpenCV 以及 Tesseract，实现 OCR 识别的功能
 * 增加 admin 模块
 * 支持 Consul
