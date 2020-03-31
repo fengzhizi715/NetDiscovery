@@ -21,7 +21,7 @@ public class ZKRegistry extends Registry {
 
     public ZKRegistry() {
 
-        this(SpiderEngineConfig.getInsatance().getZkStr(), SpiderEngineConfig.getInsatance().getZkPath());
+        this(SpiderEngineConfig.getInstance().getZkStr(), SpiderEngineConfig.getInstance().getZkPath());
     }
 
     public ZKRegistry(String zkStr,String zkPath) {

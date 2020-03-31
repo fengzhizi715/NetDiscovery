@@ -96,8 +96,8 @@ class SpiderEngine private constructor(@field:Getter
         }
 
         try {
-            defaultHttpdPort = SpiderEngineConfig.getInsatance().port
-            useMonitor = SpiderEngineConfig.getInsatance().isUseMonitor
+            defaultHttpdPort = SpiderEngineConfig.getInstance().port
+            useMonitor = SpiderEngineConfig.getInstance().isUseMonitor
         } catch (e: ClassCastException) {
             defaultHttpdPort = 8715
             useMonitor = false

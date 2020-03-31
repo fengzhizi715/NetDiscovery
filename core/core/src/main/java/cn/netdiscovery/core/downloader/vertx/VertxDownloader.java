@@ -151,12 +151,12 @@ public class VertxDownloader implements Downloader {
     private WebClientOptions initWebClientOptions(Request request) {
 
         WebClientOptions options = new WebClientOptions();
-        options.setKeepAlive(SpiderConfig.getInsatance().isKeepAlive())
-                .setReuseAddress(SpiderConfig.getInsatance().isReuseAddress())
-                .setFollowRedirects(SpiderConfig.getInsatance().isFollowRedirects())
-                .setConnectTimeout(SpiderConfig.getInsatance().getConnectTimeout())
-                .setIdleTimeout(SpiderConfig.getInsatance().getIdleTimeout())
-                .setMaxWaitQueueSize(SpiderConfig.getInsatance().getMaxWaitQueueSize());
+        options.setKeepAlive(SpiderConfig.getInstance().isKeepAlive())
+                .setReuseAddress(SpiderConfig.getInstance().isReuseAddress())
+                .setFollowRedirects(SpiderConfig.getInstance().isFollowRedirects())
+                .setConnectTimeout(SpiderConfig.getInstance().getConnectTimeout())
+                .setIdleTimeout(SpiderConfig.getInstance().getIdleTimeout())
+                .setMaxWaitQueueSize(SpiderConfig.getInstance().getMaxWaitQueueSize());
 
         if (Preconditions.isNotBlank(request.getUserAgent())) {
             options.setUserAgent(request.getUserAgent());

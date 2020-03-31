@@ -29,7 +29,7 @@ public class EtcdRegistry extends Registry {
 
     public EtcdRegistry() {
 
-        this(SpiderEngineConfig.getInsatance().getEtcdStr(), SpiderEngineConfig.getInsatance().getEtcdPath());
+        this(SpiderEngineConfig.getInstance().getEtcdStr(), SpiderEngineConfig.getInstance().getEtcdPath());
     }
 
     public EtcdRegistry(String etcdStr, String etcdPath) {

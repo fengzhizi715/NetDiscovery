@@ -112,7 +112,7 @@ public class SpiderConfig {
         }
     }
 
-    public static final SpiderConfig getInsatance() {
+    public static final SpiderConfig getInstance() {
         return SpiderConfig.Holder.instance;
     }
 

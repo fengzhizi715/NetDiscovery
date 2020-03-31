@@ -50,7 +50,7 @@ public class SpiderEngineConfig {
         }
     }
 
-    public static final SpiderEngineConfig getInsatance() {
+    public static final SpiderEngineConfig getInstance() {
         return SpiderEngineConfig.Holder.instance;
     }
 

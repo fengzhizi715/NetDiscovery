@@ -94,7 +94,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     init {
 
         try {
-            val queueType = SpiderConfig.getInsatance().queueType
+            val queueType = SpiderConfig.getInstance().queueType
 
             if (Preconditions.isNotBlank(queueType)) {
 
@@ -120,22 +120,22 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     private fun initSpiderConfig() {
 
         try {
-            autoProxy = SpiderConfig.getInsatance().isAutoProxy
-            initialDelay = SpiderConfig.getInsatance().initialDelay
-            maxRetries = SpiderConfig.getInsatance().maxRetries
-            retryDelayMillis = SpiderConfig.getInsatance().retryDelayMillis
+            autoProxy = SpiderConfig.getInstance().isAutoProxy
+            initialDelay = SpiderConfig.getInstance().initialDelay
+            maxRetries = SpiderConfig.getInstance().maxRetries
+            retryDelayMillis = SpiderConfig.getInstance().retryDelayMillis
 
-            requestSleepTime = SpiderConfig.getInsatance().sleepTime
-            autoSleepTime = SpiderConfig.getInsatance().isAutoSleepTime
-            downloadDelay = SpiderConfig.getInsatance().downloadDelay
-            autoDownloadDelay = SpiderConfig.getInsatance().isAutoDownloadDelay
-            domainDelay = SpiderConfig.getInsatance().domainDelay
-            autoDomainDelay = SpiderConfig.getInsatance().isAutoDomainDelay
+            requestSleepTime = SpiderConfig.getInstance().sleepTime
+            autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime
+            downloadDelay = SpiderConfig.getInstance().downloadDelay
+            autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay
+            domainDelay = SpiderConfig.getInstance().domainDelay
+            autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay
 
-            pipelineDelay = SpiderConfig.getInsatance().pipelineDelay
-            autoPipelineDelay = SpiderConfig.getInsatance().isAutoPipelineDelay
+            pipelineDelay = SpiderConfig.getInstance().pipelineDelay
+            autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay
 
-            val downloaderType = SpiderConfig.getInsatance().downloaderType
+            val downloaderType = SpiderConfig.getInstance().downloaderType
 
             if (Preconditions.isNotBlank(downloaderType)) {
                 when (downloaderType) {
@@ -145,13 +145,13 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                 }
             }
 
-            val usePrintRequestPipeline = SpiderConfig.getInsatance().isUsePrintRequestPipeline
+            val usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline
 
             if (usePrintRequestPipeline) {
                 this.pipelines.add(PrintRequestPipeline()) // 默认使用 PrintRequestPipeline
             }
 
-            val useConsolePipeline = SpiderConfig.getInsatance().isUseConsolePipeline
+            val useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline
 
             if (useConsolePipeline) {
                 this.pipelines.add(ConsolePipeline())  // 默认使用 ConsolePipeline

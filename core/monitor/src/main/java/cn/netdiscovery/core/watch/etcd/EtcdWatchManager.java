@@ -28,7 +28,7 @@ public class EtcdWatchManager extends AbstractWatchManager {
 
     public EtcdWatchManager() {
 
-        this(SpiderEngineConfig.getInsatance().getEtcdStr(), SpiderEngineConfig.getInsatance().getEtcdPath());
+        this(SpiderEngineConfig.getInstance().getEtcdStr(), SpiderEngineConfig.getInstance().getEtcdPath());
     }
 
     public EtcdWatchManager(String etcdStr, String etcdPath) {
