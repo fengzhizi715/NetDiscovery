@@ -185,31 +185,24 @@ public class Spider {
             }
         }
 
-        boolean usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline();
-
-        if (usePrintRequestPipeline) {
+        if (SpiderConfig.getInstance().isUsePrintRequestPipeline()) {
             this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
         }
 
-        boolean useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline();
-
-        if (useConsolePipeline) {
+        if (SpiderConfig.getInstance().isUseConsolePipeline()) {
             this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
         }
     }
 
     public static Spider create() {
-
         return new Spider();
     }
 
     public static Spider create(Queue queue) {
-
         return queue != null ? new Spider(queue) : new Spider();
     }
 
     public Spider name(String name) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(name)) {
@@ -220,7 +213,6 @@ public class Spider {
     }
 
     public Spider url(Charset charset, String... urls) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(urls)) {
@@ -236,7 +228,6 @@ public class Spider {
     }
 
     public Spider url(String... urls) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(urls)) {
@@ -252,7 +243,6 @@ public class Spider {
     }
 
     public Spider url(Charset charset, List<String> urls) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(urls)) {
@@ -266,7 +256,6 @@ public class Spider {
     }
 
     public Spider url(List<String> urls) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(urls)) {
@@ -303,7 +292,6 @@ public class Spider {
     }
 
     public Spider request(Request... requests) {
-
         checkIfRunning();
 
         if (Preconditions.isNotBlank(requests)) {
@@ -341,7 +329,6 @@ public class Spider {
      * @return
      */
     public Spider repeatRequest(long period, String url, String charset) {
-
         checkIfRunning();
 
         compositeDisposable
@@ -385,7 +372,6 @@ public class Spider {
      * @return
      */
     public Spider repeatRequest(long period, Request request) {
-
         checkIfRunning();
 
         if (request!=null) {
@@ -433,7 +419,6 @@ public class Spider {
     }
 
     public Spider initialDelay(long initialDelay) {
-
         checkIfRunning();
 
         if (initialDelay > 0) {
@@ -444,7 +429,6 @@ public class Spider {
     }
 
     public Spider maxRetries(int maxRetries) {
-
         checkIfRunning();
 
         if (maxRetries > 0) {
@@ -455,7 +439,6 @@ public class Spider {
     }
 
     public Spider retryDelayMillis(long retryDelayMillis) {
-
         checkIfRunning();
 
         if (retryDelayMillis > 0) {
@@ -477,7 +460,6 @@ public class Spider {
     }
 
     public Spider downloader(Downloader downloader) {
-
         checkIfRunning();
 
         if (downloader != null) {
@@ -488,7 +470,6 @@ public class Spider {
     }
 
     public Spider parser(Parser parser) {
-
         checkIfRunning();
 
         if (parser != null) {
@@ -499,7 +480,6 @@ public class Spider {
     }
 
     public Spider pipeline(Pipeline pipeline) {
-
         checkIfRunning();
 
         if (pipeline != null) {
@@ -518,7 +498,6 @@ public class Spider {
     }
 
     public Spider clearPipeline() {
-
         checkIfRunning();
         this.pipelines.clear();
         return this;
@@ -541,7 +520,6 @@ public class Spider {
      * @return
      */
     public Spider autoProxy(boolean autoProxy) {
-
         checkIfRunning();
         this.autoProxy = autoProxy;
         return this;
@@ -570,7 +548,6 @@ public class Spider {
     }
 
     public void run() {
-
         checkRunningStat();
 
         initialDelay();
