@@ -148,58 +148,53 @@ public class Spider {
     }
 
     /**
-     * 从 application.yaml 或 application.properties 中获取配置，并依据这些配置来初始化爬虫
+     * 从 application.conf 中获取配置，并依据这些配置来初始化爬虫
      */
     private void initSpiderConfig() {
+        autoProxy = SpiderConfig.getInstance().isAutoProxy();
+        initialDelay = SpiderConfig.getInstance().getInitialDelay();
+        maxRetries = SpiderConfig.getInstance().getMaxRetries();
+        retryDelayMillis = SpiderConfig.getInstance().getRetryDelayMillis();
 
-        try {
-            autoProxy = SpiderConfig.getInstance().isAutoProxy();
-            initialDelay = SpiderConfig.getInstance().getInitialDelay();
-            maxRetries = SpiderConfig.getInstance().getMaxRetries();
-            retryDelayMillis = SpiderConfig.getInstance().getRetryDelayMillis();
+        requestSleepTime = SpiderConfig.getInstance().getSleepTime();
+        autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime();
+        downloadDelay = SpiderConfig.getInstance().getDownloadDelay();
+        autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay();
+        domainDelay = SpiderConfig.getInstance().getDomainDelay();
+        autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay();
 
-            requestSleepTime = SpiderConfig.getInstance().getSleepTime();
-            autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime();
-            downloadDelay = SpiderConfig.getInstance().getDownloadDelay();
-            autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay();
-            domainDelay = SpiderConfig.getInstance().getDomainDelay();
-            autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay();
+        pipelineDelay = SpiderConfig.getInstance().getPipelineDelay();
+        autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay();
 
-            pipelineDelay = SpiderConfig.getInstance().getPipelineDelay();
-            autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay();
+        String downloaderType = SpiderConfig.getInstance().getDownloaderType();
 
-            String downloaderType = SpiderConfig.getInstance().getDownloaderType();
+        if (Preconditions.isNotBlank(downloaderType)) {
 
-            if (Preconditions.isNotBlank(downloaderType)) {
-
-                switch (downloaderType) {
-                    case Constant.DOWNLOAD_TYPE_VERTX:
-                        this.downloader = new VertxDownloader();
-                        break;
-                    case Constant.DOWNLOAD_TYPE_URL_CONNECTION:
-                        this.downloader = new UrlConnectionDownloader();
-                        break;
-                    case Constant.DOWNLOAD_TYPE_FILE:
-                        this.downloader = new FileDownloader();
-                        break;
-                    default:
-                        break;
-                }
+            switch (downloaderType) {
+                case Constant.DOWNLOAD_TYPE_VERTX:
+                    this.downloader = new VertxDownloader();
+                    break;
+                case Constant.DOWNLOAD_TYPE_URL_CONNECTION:
+                    this.downloader = new UrlConnectionDownloader();
+                    break;
+                case Constant.DOWNLOAD_TYPE_FILE:
+                    this.downloader = new FileDownloader();
+                    break;
+                default:
+                    break;
             }
+        }
 
-            boolean usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline();
+        boolean usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline();
 
-            if (usePrintRequestPipeline) {
-                this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
-            }
+        if (usePrintRequestPipeline) {
+            this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
+        }
 
-            boolean useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline();
+        boolean useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline();
 
-            if (useConsolePipeline) {
-                this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
-            }
-        } catch (ClassCastException e) {
-            log.error(e.getMessage());
+        if (useConsolePipeline) {
+            this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
         }
     }
 

@@ -115,49 +115,44 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     }
 
     /**
-     * 从 application.yaml 或 application.properties 中获取配置，并依据这些配置来初始化爬虫
+     * 从 application.conf 中获取配置，并依据这些配置来初始化爬虫
      */
     private fun initSpiderConfig() {
+        autoProxy = SpiderConfig.getInstance().isAutoProxy
+        initialDelay = SpiderConfig.getInstance().initialDelay
+        maxRetries = SpiderConfig.getInstance().maxRetries
+        retryDelayMillis = SpiderConfig.getInstance().retryDelayMillis
 
-        try {
-            autoProxy = SpiderConfig.getInstance().isAutoProxy
-            initialDelay = SpiderConfig.getInstance().initialDelay
-            maxRetries = SpiderConfig.getInstance().maxRetries
-            retryDelayMillis = SpiderConfig.getInstance().retryDelayMillis
+        requestSleepTime = SpiderConfig.getInstance().sleepTime
+        autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime
+        downloadDelay = SpiderConfig.getInstance().downloadDelay
+        autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay
+        domainDelay = SpiderConfig.getInstance().domainDelay
+        autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay
 
-            requestSleepTime = SpiderConfig.getInstance().sleepTime
-            autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime
-            downloadDelay = SpiderConfig.getInstance().downloadDelay
-            autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay
-            domainDelay = SpiderConfig.getInstance().domainDelay
-            autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay
+        pipelineDelay = SpiderConfig.getInstance().pipelineDelay
+        autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay
 
-            pipelineDelay = SpiderConfig.getInstance().pipelineDelay
-            autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay
+        val downloaderType = SpiderConfig.getInstance().downloaderType
 
-            val downloaderType = SpiderConfig.getInstance().downloaderType
-
-            if (Preconditions.isNotBlank(downloaderType)) {
-                when (downloaderType) {
-                    Constant.DOWNLOAD_TYPE_VERTX          -> this.downloader = VertxDownloader()
-                    Constant.DOWNLOAD_TYPE_URL_CONNECTION -> this.downloader = UrlConnectionDownloader()
-                    Constant.DOWNLOAD_TYPE_FILE           -> this.downloader = FileDownloader()
-                }
+        if (Preconditions.isNotBlank(downloaderType)) {
+            when (downloaderType) {
+                Constant.DOWNLOAD_TYPE_VERTX          -> this.downloader = VertxDownloader()
+                Constant.DOWNLOAD_TYPE_URL_CONNECTION -> this.downloader = UrlConnectionDownloader()
+                Constant.DOWNLOAD_TYPE_FILE           -> this.downloader = FileDownloader()
             }
+        }
 
-            val usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline
+        val usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline
 
-            if (usePrintRequestPipeline) {
-                this.pipelines.add(PrintRequestPipeline()) // 默认使用 PrintRequestPipeline
-            }
+        if (usePrintRequestPipeline) {
+            this.pipelines.add(PrintRequestPipeline()) // 默认使用 PrintRequestPipeline
+        }
 
-            val useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline
+        val useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline
 
-            if (useConsolePipeline) {
-                this.pipelines.add(ConsolePipeline())  // 默认使用 ConsolePipeline
-            }
-        } catch (e: ClassCastException) {
-            println(e.message)
+        if (useConsolePipeline) {
+            this.pipelines.add(ConsolePipeline())  // 默认使用 ConsolePipeline
         }
     }
 
