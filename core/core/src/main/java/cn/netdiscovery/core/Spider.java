@@ -74,29 +74,17 @@ public class Spider {
     private Queue queue;
 
     private boolean autoProxy = false;
-
     private long initialDelay = 0;
-
     private int maxRetries = 3; // 重试次数
-
     private long retryDelayMillis = 1000; // 重试等待的时间
-
     private long sleepTime = 30000;  // 默认30s
-
     private long requestSleepTime = 0; // 默认0s
-
     private boolean autoSleepTime = false;
-
     private long downloadDelay = 0;  // 默认0s
-
     private boolean autoDownloadDelay = false;
-
     private long pipelineDelay = 0;  // 默认0s
-
     private boolean autoPipelineDelay = false;
-
     private long domainDelay = 0;  // 默认0s
-
     private boolean autoDomainDelay = false;
 
     private volatile boolean pause;
@@ -110,23 +98,18 @@ public class Spider {
     private Downloader downloader;
 
     private Spider() {
-
-        try {
-            String queueType = SpiderConfig.getInstance().getQueueType();
-            if (Preconditions.isNotBlank(queueType)) {
-                switch (queueType) {
-                    case Constant.QUEUE_TYPE_DEFAULT:
-                        this.queue = new DefaultQueue();
-                        break;
-                    case Constant.QUEUE_TYPE_DISRUPTOR:
-                        this.queue = new DisruptorQueue();
-                        break;
-                    default:
-                        break;
-                }
+        String queueType = SpiderConfig.getInstance().getQueueType();
+        if (Preconditions.isNotBlank(queueType)) {
+            switch (queueType) {
+                case Constant.QUEUE_TYPE_DEFAULT:
+                    this.queue = new DefaultQueue();
+                    break;
+                case Constant.QUEUE_TYPE_DISRUPTOR:
+                    this.queue = new DisruptorQueue();
+                    break;
+                default:
+                    break;
             }
-        } catch (ClassCastException e) {
-            log.error(e.getMessage());
         }
 
         if (this.queue == null) {
@@ -137,7 +120,6 @@ public class Spider {
     }
 
     private Spider(Queue queue) {
-
         if (queue != null) {
             this.queue = queue;
         } else {
@@ -169,7 +151,6 @@ public class Spider {
         String downloaderType = SpiderConfig.getInstance().getDownloaderType();
 
         if (Preconditions.isNotBlank(downloaderType)) {
-
             switch (downloaderType) {
                 case Constant.DOWNLOAD_TYPE_VERTX:
                     this.downloader = new VertxDownloader();
@@ -188,7 +169,6 @@ public class Spider {
         if (SpiderConfig.getInstance().isUsePrintRequestPipeline()) {
             this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
         }
-
         if (SpiderConfig.getInstance().isUseConsolePipeline()) {
             this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
         }
@@ -705,21 +685,17 @@ public class Spider {
     }
 
     private void checkIfRunning() {
-
         if (getSpiderStatus() == SPIDER_STATUS_RUNNING) {
             throw new SpiderException(String.format("Spider %s is already running!", name));
         }
     }
 
     private void checkRunningStat() {
-
         while (true) {
-
             int statNow = getSpiderStatus();
             if (statNow == SPIDER_STATUS_RUNNING) {
                 throw new SpiderException(String.format("Spider %s is already running!", name));
             }
-
             if (stat.compareAndSet(statNow, SPIDER_STATUS_RUNNING)) {
                 break;
             }
@@ -739,7 +715,6 @@ public class Spider {
     }
 
     public void stop() {
-
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
             log.info("Spider {} stop success!", name);
         }
@@ -750,7 +725,6 @@ public class Spider {
      * 爬虫需要停止时，需要使用该方法
      */
     public void forceStop() {
-
         compositeDisposable.clear();
 
         if (stat.compareAndSet(SPIDER_STATUS_RUNNING, SPIDER_STATUS_STOPPED)) { // 停止爬虫的状态
@@ -771,7 +745,6 @@ public class Spider {
      * 爬虫重新开始
      */
     public void resume() {
-
         if (stat.get() == SPIDER_STATUS_PAUSE
                 && this.pauseCountDown!=null) {
 
@@ -782,7 +755,6 @@ public class Spider {
     }
 
     private void initialDelay() {
-
         if (initialDelay > 0) {
 
             try {
