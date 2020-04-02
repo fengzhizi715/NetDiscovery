@@ -494,7 +494,6 @@ public class Spider {
      * @return
      */
     public Spider autoProxy() {
-
         return autoProxy(true);
     }
 
@@ -553,7 +552,6 @@ public class Spider {
         initialDelay();
 
         if (downloader == null) { // 如果downloader为空，则使用默认的VertxDownloader
-
             downloader = new VertxDownloader();
         }
 
@@ -576,12 +574,9 @@ public class Spider {
             final Request request = queue.poll(name);
 
             if (request == null) {
-
                 waitNewRequest();
             } else {
-
                 if (request.getSleepTime() > 0) {
-
                     try {
                         Thread.sleep(request.getSleepTime());
                     } catch (InterruptedException e) {
@@ -603,7 +598,6 @@ public class Spider {
 
                 // request请求之前的处理
                 if (request.getBeforeRequest() != null) {
-
                     request.getBeforeRequest().process(request);
                 }
 

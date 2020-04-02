@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.Executor;
 
 /**
+ * 爬虫运行时的 Transformer，便于 downloader、parser、pipeline 等过程使用单独的线程池运行
  * @FileName: cn.netdiscovery.core.rxjava.transformer.SpiderRunTransformer
  * @author: Tony Shen
  * @date: 2020-04-02 01:44
