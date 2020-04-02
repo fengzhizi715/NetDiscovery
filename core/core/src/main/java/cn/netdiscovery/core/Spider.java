@@ -93,6 +93,8 @@ public class Spider {
     private ReentrantLock newRequestLock = new ReentrantLock();
     private Condition newRequestCondition = newRequestLock.newCondition();
 
+    private ExecutorService downloadThreadPool;
+    private ExecutorService parseThreadPool;
     private ExecutorService pipeLineThreadPool;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -508,6 +510,16 @@ public class Spider {
         return this;
     }
 
+    public Spider downloadThreadPool(ExecutorService downloadThreadPool) {
+        this.downloadThreadPool = downloadThreadPool;
+        return this;
+    }
+
+    public Spider parseThreadPool(ExecutorService parseThreadPool) {
+        this.parseThreadPool = parseThreadPool;
+        return this;
+    }
+
     public Spider pipeLineThreadPool(ExecutorService pipeLineThreadPool) {
         this.pipeLineThreadPool = pipeLineThreadPool;
         return this;
@@ -629,6 +641,7 @@ public class Spider {
                                 return page;
                             }
                         })
+                        .compose(new SpiderRunTransformer(downloadThreadPool))
                         .map(new Function<Page, Page>() {
 
                             @Override
@@ -642,6 +655,7 @@ public class Spider {
                                 return page;
                             }
                         })
+                        .compose(new SpiderRunTransformer(parseThreadPool))
                         .map(new Function<Page, Page>() {
 
                             @Override
