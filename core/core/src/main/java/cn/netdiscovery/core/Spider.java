@@ -20,6 +20,7 @@ import cn.netdiscovery.core.queue.DefaultQueue;
 import cn.netdiscovery.core.queue.Queue;
 import cn.netdiscovery.core.queue.disruptor.DisruptorQueue;
 import cn.netdiscovery.core.rxjava.RetryWithDelay;
+import cn.netdiscovery.core.rxjava.transformer.SpiderRunTransformer;
 import cn.netdiscovery.core.utils.SpiderUtils;
 import cn.netdiscovery.core.utils.Throttle;
 import com.cv4j.proxy.ProxyPool;
@@ -31,7 +32,6 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
@@ -91,6 +92,8 @@ public class Spider {
     private CountDownLatch pauseCountDown;
     private ReentrantLock newRequestLock = new ReentrantLock();
     private Condition newRequestCondition = newRequestLock.newCondition();
+
+    private ExecutorService pipeLineThreadPool;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -505,6 +508,11 @@ public class Spider {
         return this;
     }
 
+    public Spider pipeLineThreadPool(ExecutorService pipeLineThreadPool) {
+        this.pipeLineThreadPool = pipeLineThreadPool;
+        return this;
+    }
+
     private void waitNewRequest() {
         newRequestLock.lock();
 
@@ -657,7 +665,7 @@ public class Spider {
                                 return page;
                             }
                         })
-                        .observeOn(Schedulers.io())
+                        .compose(new SpiderRunTransformer(pipeLineThreadPool))
                         .subscribe(new Consumer<Page>() {
 
                             @Override
