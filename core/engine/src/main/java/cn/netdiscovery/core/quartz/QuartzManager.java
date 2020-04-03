@@ -3,18 +3,8 @@ package cn.netdiscovery.core.quartz;
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
-import cn.netdiscovery.core.exception.SpiderException;
-
-import org.quartz.CronTrigger;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerFactory;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
+import cn.netdiscovery.core.exception.SpiderEngineException;
+import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.Map;
@@ -61,7 +51,7 @@ public class QuartzManager {
                 sched.start();
             }
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -102,7 +92,7 @@ public class QuartzManager {
                 sched.start();
             }
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -146,7 +136,7 @@ public class QuartzManager {
                 sched.start();
             }
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -184,7 +174,7 @@ public class QuartzManager {
                 sched.rescheduleJob(triggerKey, trigger);
             }
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -207,7 +197,7 @@ public class QuartzManager {
             sched.unscheduleJob(triggerKey);// 移除触发器
             sched.deleteJob(JobKey.jobKey(jobName, jobGroupName));// 删除任务
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -219,7 +209,7 @@ public class QuartzManager {
             Scheduler sched = schedulerFactory.getScheduler();
             sched.start();
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 
@@ -233,7 +223,7 @@ public class QuartzManager {
                 sched.shutdown();
             }
         } catch (Exception e) {
-            throw new SpiderException(e);
+            throw new SpiderEngineException(e);
         }
     }
 }
