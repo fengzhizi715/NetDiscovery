@@ -27,7 +27,7 @@ public class TestCookiesPoolWithDiskImpl {
 
         DiskImpl diskImpl = new DiskImpl(cacheDirectory); // 创建 RxCache 的 DiskImpl
 
-        RxCacheManager.getInsatance().config(new RxCache.Builder().persistence(diskImpl)); // 爬虫在使用之前，先配置 RxCache
+        RxCacheManager.getInstance().config(new RxCache.Builder().persistence(diskImpl)); // 爬虫在使用之前，先配置 RxCache
 
         SpiderEngine spiderEngine = SpiderEngine.create();
 

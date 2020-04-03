@@ -22,11 +22,11 @@ public interface Downloader extends Closeable {
      */
     default void save(String key, Response response) {
 
-        if (RxCacheManager.getInsatance().getRxCache()==null || !RxCacheManager.getInsatance().getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
+        if (RxCacheManager.getInstance().getRxCache()==null || !RxCacheManager.getInstance().getRxCache().test()) { // 如果cache为空或者cache不可用，则使用默认的配置
 
-            RxCacheManager.getInsatance().config(new RxCache.Builder());
+            RxCacheManager.getInstance().config(new RxCache.Builder());
         }
 
-        RxCacheManager.getInsatance().getRxCache().save(key,response);
+        RxCacheManager.getInstance().getRxCache().save(key,response);
     }
 }

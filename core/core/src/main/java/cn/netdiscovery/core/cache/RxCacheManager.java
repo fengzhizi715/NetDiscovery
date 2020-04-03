@@ -16,7 +16,7 @@ public class RxCacheManager {
     private RxCacheManager() {
     }
 
-    public static final RxCacheManager getInsatance() {
+    public static final RxCacheManager getInstance() {
         return RxCacheManager.Holder.instance;
     }
 
