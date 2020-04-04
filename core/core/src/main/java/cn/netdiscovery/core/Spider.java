@@ -32,6 +32,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
@@ -93,7 +94,6 @@ public class Spider {
     private ReentrantLock newRequestLock = new ReentrantLock();
     private Condition newRequestCondition = newRequestLock.newCondition();
 
-    private ExecutorService downloadThreadPool;
     private ExecutorService parseThreadPool;
     private ExecutorService pipeLineThreadPool;
 
@@ -509,11 +509,6 @@ public class Spider {
         return this;
     }
 
-    public Spider downloadThreadPool(ExecutorService downloadThreadPool) {
-        this.downloadThreadPool = downloadThreadPool;
-        return this;
-    }
-
     public Spider parseThreadPool(ExecutorService parseThreadPool) {
         this.parseThreadPool = parseThreadPool;
         return this;
@@ -631,11 +626,10 @@ public class Spider {
                                     page.putField(Constant.RESPONSE_RAW, response.getIs()); // 默认情况，保存InputStream
                                 }
 
-
                                 return page;
                             }
                         })
-                        .compose(new SpiderRunTransformer(downloadThreadPool))
+                        .compose(new SpiderRunTransformer(parseThreadPool))
                         .map(new Function<Page, Page>() {
 
                             @Override
@@ -649,7 +643,7 @@ public class Spider {
                                 return page;
                             }
                         })
-                        .compose(new SpiderRunTransformer(parseThreadPool))
+                        .compose(new SpiderRunTransformer(pipeLineThreadPool))
                         .map(new Function<Page, Page>() {
 
                             @Override
@@ -673,7 +667,7 @@ public class Spider {
                                 return page;
                             }
                         })
-                        .compose(new SpiderRunTransformer(pipeLineThreadPool))
+                        .observeOn(Schedulers.io())
                         .subscribe(new Consumer<Page>() {
 
                             @Override
