@@ -40,11 +40,7 @@ public class SpiderJob implements Job {
                 spider.resume();
             }
 
-            Stream.of(requests)
-                    .forEach(request -> {
-
-                        spider.getQueue().pushToRunninSpider(request,spider);
-                    });
+            Stream.of(requests).forEach(request -> spider.getQueue().pushToRunninSpider(request,spider));
         }
     }
 }

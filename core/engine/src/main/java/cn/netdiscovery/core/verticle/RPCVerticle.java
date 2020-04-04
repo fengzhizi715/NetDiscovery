@@ -5,7 +5,6 @@ import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.service.impl.RPCServiceImpl;
 import com.github.bdqfork.context.ContextManager;
 import com.github.bdqfork.rpc.annotation.Application;
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 
 import java.util.Map;
@@ -18,15 +17,10 @@ import java.util.Map;
  * @version: V1.0 <描述当前版本功能>
  */
 @Application(direct = true)
-public class RPCVerticle extends AbstractVerticle {
-
-    private Map<String, Spider> spiders;
-    private Map<String, SpiderJobBean> jobs;
+public class RPCVerticle extends AbstractRPCVerticle {
 
     public RPCVerticle(Map<String, Spider> spiders, Map<String, SpiderJobBean> jobs) {
-
-        this.spiders = spiders;
-        this.jobs = jobs;
+        super(spiders, jobs);
     }
 
     @Override

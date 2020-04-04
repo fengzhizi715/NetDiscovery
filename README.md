@@ -13,11 +13,12 @@
 * 模块化设计，便于扩展：支持多种消息队列(Disruptor、Redis、Kafka、RabitMQ、RocketMQ)、多种网络框架(Http Client、Okhttp3、Selenium等)，也支持自己实现。
 * 支持分布式
 * 多线程、异步化：底层使用 RxJava 2 的多线程机制
-* 支持 Request 添加到正在运行爬虫的 Queue 中
+* 支持线程池隔离：爬虫的 Parser、Pipeline 过程可以放在独立的线程池中进行处理
+* 支持 Request 动态添加到正在运行爬虫的 Queue 中
 * 支持 Kotlin 协程
 * 支持 JS 渲染
 * 支持 Request 自定义 header 信息
-* 支持 debug 功能：在调试时 Request 可以打开 debug 的开关，使用 RxCache 存储请求的结果，从而避免多次请求同一个网页。
+* 支持 debug 功能：在调试时 Request 可以打开 debug 的开关，使用 Local Cache(RxCache) 存储请求的结果，从而避免多次请求同一个网页。
 * 支持失败重试的机制
 * 多纬度控制爬取速度（Pipeline、Request、Download、Domain）等等
 * 支持代理池、User Agent 池、Cookies 池
