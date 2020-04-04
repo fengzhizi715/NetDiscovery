@@ -44,8 +44,7 @@ public class ImagePreprocessingService {
 
     public Observable<ByteBuffer> process(File file) {
 
-        Observable<Mat> image = convert(file);
-        return image
+        return convert(file)
                 .flatMap(this::detectText)
                 .flatMap(this::preprocess);
     }
@@ -58,7 +57,7 @@ public class ImagePreprocessingService {
             @Override
             public void subscribe(ObservableEmitter<Mat> emitter) throws Exception {
                 MatOfByte matOfByte = new MatOfByte(imageArray);
-                Mat imageMat = Imgcodecs.imdecode(new MatOfByte(imageArray), Imgcodecs.IMREAD_UNCHANGED);
+                Mat imageMat = Imgcodecs.imdecode(matOfByte, Imgcodecs.IMREAD_UNCHANGED);
                 matOfByte.release();
 
                 emitter.onNext(imageMat);
