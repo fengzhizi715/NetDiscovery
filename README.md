@@ -26,7 +26,7 @@
 * 支持 Spider 的监控、SpiderEngine 的监控 (基于Etcd、Zookeeper)
 * agent 模块能够对当前服务器的 CPU 和内存进行实时监控
 * SpiderEngine 整合 Quartz
-* SpiderEngine 提供 http/rpc 接口
+* SpiderEngine 提供 http、RPC 接口
 
 
 # 最新版本
