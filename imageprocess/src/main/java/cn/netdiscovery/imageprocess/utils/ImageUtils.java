@@ -1,9 +1,9 @@
-package cn.netdiscovery.imageprocess;
+package cn.netdiscovery.imageprocess.utils;
 
 import java.io.*;
 
 /**
- * @FileName: cn.netdiscovery.imageprocess.ImageUtils
+ * @FileName: cn.netdiscovery.imageprocess.utils.ImageUtils
  * @author: Tony Shen
  * @date: 2020-02-22 23:49
  * @version: V1.0 <描述当前版本功能>

@@ -25,6 +25,6 @@ public class SpiderRunTransformer implements MaybeTransformer {
     @Override
     public MaybeSource apply(Maybe upstream) {
 
-        return executor != null ? upstream.observeOn(Schedulers.from(executor)) : upstream.observeOn(Schedulers.io());
+        return executor != null ? upstream.observeOn(Schedulers.from(executor)) : upstream;
     }
 }
