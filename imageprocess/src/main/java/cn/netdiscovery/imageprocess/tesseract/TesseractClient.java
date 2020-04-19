@@ -31,4 +31,12 @@ public class TesseractClient {
         return pointer == null ? "" : pointer.getString();
     }
 
+    public void deallocate() {
+        tessBaseAPI.End();
+    }
+
+    public void release() {
+        tessBaseAPI.Clear();
+        tessBaseAPI.ClearAdaptiveClassifier();
+    }
 }
