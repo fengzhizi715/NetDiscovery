@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'com.github.johnrengelman.shadow'
 }
 
 mainClassName = 'cn.netdiscovery.agent.Agent'
@@ -24,6 +24,7 @@ dependencies {
 }
 
 shadowJar {
-    mainClassName = 'cn.netdiscovery.agent.Agent'
-    classifier = 'fat'
+    manifest {
+        attributes["Main-Class"] = "cn.netdiscovery.agent.Agent"
+    }
 }
