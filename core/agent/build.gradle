@@ -6,9 +6,6 @@ plugins {
 
 mainClassName = 'cn.netdiscovery.agent.Agent'
 
-group 'com.cv4j.netdiscovery'
-version '1.0-SNAPSHOT'
-
 sourceCompatibility = 1.8
 
 def libs = rootProject.ext.libraries // 库
