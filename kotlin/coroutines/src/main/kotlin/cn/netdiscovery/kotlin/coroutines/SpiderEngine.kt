@@ -25,7 +25,7 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.micrometer.MicrometerMetricsOptions
 import io.vertx.micrometer.VertxPrometheusOptions
-import lombok.Getter
+//import lombok.Getter
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.*
@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * Created by tony on 2018/8/8.
  */
-class SpiderEngine private constructor(@field:Getter
+class SpiderEngine private constructor(
                                        val queue: Queue? = null) {
 
     private var server: HttpServer? = null

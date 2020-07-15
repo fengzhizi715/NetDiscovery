@@ -31,6 +31,7 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus:1.2.0"
 
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation "ch.qos.logback:logback-classic:${libs.logback}"
     implementation "ch.qos.logback:logback-core:${libs.logback}"
     implementation "ch.qos.logback:logback-access:${libs.logback}"
