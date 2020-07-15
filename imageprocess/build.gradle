@@ -26,4 +26,5 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${libs.rxjava}"
 
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
+    implementation "org.projectlombok:lombok:${libs.lombok}"
 }
