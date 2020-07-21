@@ -1,7 +1,6 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.constants.ResponseCode;
 import cn.netdiscovery.core.domain.bean.SpiderBean;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.domain.response.JobsResponse;
@@ -27,10 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE;
-import static cn.netdiscovery.core.config.Constant.CONTENT_TYPE_JSON;
-import static cn.netdiscovery.core.config.Constant.OK_STATUS_CODE;
-import static cn.netdiscovery.core.config.Constant.SUCCESS;
+import static cn.netdiscovery.core.config.Constant.*;
 import static cn.netdiscovery.core.domain.response.HttpResponse.Ok;
 
 /**
@@ -189,7 +185,6 @@ public class RouterHandler {
                     // 写入响应并结束处理
                     response.end(SerializableUtils.toJson(spiderStatusResponse));
                 } else {
-
                     response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound));
                 }
 
@@ -214,7 +209,6 @@ public class RouterHandler {
 
                     response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")));
                 } else {
-
                     response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound));
                 }
 
