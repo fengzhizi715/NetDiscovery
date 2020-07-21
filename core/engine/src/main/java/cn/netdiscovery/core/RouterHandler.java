@@ -133,7 +133,7 @@ public class RouterHandler {
                     response.end(SerializableUtils.toJson(spiderResponse));
                 } else {
 
-                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound));
                 }
             });
 
@@ -190,7 +190,7 @@ public class RouterHandler {
                     response.end(SerializableUtils.toJson(spiderStatusResponse));
                 } else {
 
-                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound));
                 }
 
             });
@@ -215,7 +215,7 @@ public class RouterHandler {
                     response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")));
                 } else {
 
-                    response.end(SerializableUtils.toJson(new cn.netdiscovery.core.domain.response.HttpResponse(ResponseCode.SpiderNotFound)));
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound));
                 }
 
             });

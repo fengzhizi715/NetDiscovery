@@ -110,7 +110,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     response.end(SerializableUtils.toJson(spiderResponse))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound))
                 }
             }
 
@@ -163,7 +163,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     response.end(SerializableUtils.toJson(spiderStatusResponse))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound))
                 }
 
             }
@@ -188,7 +188,7 @@ class RouterHandler(private val spiders: Map<String, Spider>, private val jobs: 
                     response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse("待抓取的url已经放入queue中")))
                 } else {
 
-                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse<ResponseCode>(ResponseCode.SpiderNotFound)))
+                    response.end(SerializableUtils.toJson(cn.netdiscovery.core.domain.response.HttpResponse.SpiderNotFound))
                 }
 
             }
