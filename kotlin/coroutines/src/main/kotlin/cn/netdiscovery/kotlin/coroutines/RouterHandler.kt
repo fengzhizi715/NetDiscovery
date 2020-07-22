@@ -1,7 +1,6 @@
 package cn.netdiscovery.kotlin.coroutines
 
 import cn.netdiscovery.core.config.Constant.*
-import cn.netdiscovery.core.constants.ResponseCode
 import cn.netdiscovery.core.domain.bean.SpiderBean
 import cn.netdiscovery.core.domain.bean.SpiderJobBean
 import cn.netdiscovery.core.domain.response.JobsResponse

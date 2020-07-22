@@ -24,6 +24,7 @@ dependencies {
     implementation project(":core:core")
     implementation project(":core:engine")
     implementation project(":core:monitor")
+    implementation project(":downloader:okhttp")
     implementation project(":downloader:selenium")
     implementation project(":downloader:htmlunit")
     implementation project(":pipeline:couchbase")
