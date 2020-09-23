@@ -12,7 +12,7 @@ ext {
 
             httpclient                : "4.5.12",
 
-            okhttp                    : "4.8.0",
+            okhttp                    : "4.9.0",
 
             lettuce                   : "5.1.7.RELEASE",
 
