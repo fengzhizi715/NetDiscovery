@@ -2,7 +2,7 @@ ext {
     libraries = [
             vertx                     : "3.9.2",
 
-            rxjava                    : "2.2.18",
+            rxjava                    : "2.2.20",
 
             gson                      : "2.8.6",
 
@@ -64,7 +64,7 @@ tasks.withType(JavaCompile) {
 }
 
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.4.10'
     ext.netdiscovery_version = '1.4.5'
 
     repositories {

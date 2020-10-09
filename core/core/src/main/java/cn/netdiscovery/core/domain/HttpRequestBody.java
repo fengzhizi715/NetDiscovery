@@ -37,7 +37,7 @@ public class HttpRequestBody implements Serializable{
     }
 
     /**
-     * post body使用jsonObject时，传递一个jsonObject即可生成HttpRequestBody对象
+     * post body 使用 jsonObject 时，传递一个 jsonObject 即可生成 HttpRequestBody 对象
      * @param jsonObject
      * @return
      */
