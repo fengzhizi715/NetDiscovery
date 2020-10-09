@@ -73,7 +73,8 @@ dependencies {
 
     implementation 'com.safframework.bytekit:bytekit-core:1.2.6'
 
-    implementation "com.github.bdqfork:hamal-context:0.1.1"
+    implementation ("com.github.bdqfork:hamal-context:0.1.1",
+            { exclude group: 'io.netty', module: 'netty-all' })
 }
 
 compileKotlin {
