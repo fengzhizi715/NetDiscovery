@@ -1,15 +1,19 @@
 package cn.netdiscovery.core.queue;
 
+import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.filter.DuplicateFilter;
 import cn.netdiscovery.core.queue.filter.HashSetDuplicateFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by tony on 2018/1/3.
  */
-@Slf4j
 public abstract class AbstractQueue implements Queue {
+
+    private Logger log = LoggerFactory.getLogger(AbstractQueue.class);
 
     private DuplicateFilter filter = new HashSetDuplicateFilter();
 

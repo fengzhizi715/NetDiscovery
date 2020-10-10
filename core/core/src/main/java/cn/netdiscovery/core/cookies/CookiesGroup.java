@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Created by tony on 2018/2/1.
  */
-@Getter
 public class CookiesGroup implements Serializable {
 
     private static final long serialVersionUID = -4641596355459197507L;
@@ -21,6 +20,14 @@ public class CookiesGroup implements Serializable {
     public CookiesGroup(String domain) {
         this.domain = domain;
         this.cookies = new ArrayList<>();
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public List<HttpCookie> getCookies() {
+        return cookies;
     }
 
     public void putCookie(HttpCookie cookie) {
