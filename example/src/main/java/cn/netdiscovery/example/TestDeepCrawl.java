@@ -1,7 +1,6 @@
 package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
-import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 
 /**

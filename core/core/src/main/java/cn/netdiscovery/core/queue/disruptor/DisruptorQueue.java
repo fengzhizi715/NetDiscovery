@@ -2,15 +2,10 @@ package cn.netdiscovery.core.queue.disruptor;
 
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
-
-import com.lmax.disruptor.EventFactory;
-import com.lmax.disruptor.ExceptionHandler;
-import com.lmax.disruptor.RingBuffer;
-import com.lmax.disruptor.SequenceBarrier;
-import com.lmax.disruptor.WorkerPool;
-import com.lmax.disruptor.YieldingWaitStrategy;
+import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.ProducerType;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,8 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by tony on 2018/9/1.
  */
-@Slf4j
 public class DisruptorQueue extends AbstractQueue {
+
+    private static Logger log = LoggerFactory.getLogger(DisruptorQueue.class);
 
     private RingBuffer<RequestEvent> ringBuffer;
     private Producer producer = null;

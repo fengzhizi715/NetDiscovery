@@ -1,6 +1,5 @@
 package cn.netdiscovery.pipeline.mongodb;
 
-import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClient;

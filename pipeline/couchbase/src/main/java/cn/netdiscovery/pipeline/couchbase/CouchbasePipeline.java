@@ -1,6 +1,5 @@
 package cn.netdiscovery.pipeline.couchbase;
 
-import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.CouchbaseCluster;

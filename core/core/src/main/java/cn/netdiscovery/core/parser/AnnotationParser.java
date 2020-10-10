@@ -4,7 +4,8 @@ import cn.netdiscovery.core.domain.Page;
 import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.parser.annotation.ExtractBy;
 import com.safframework.tony.common.utils.Preconditions;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,8 +14,9 @@ import java.util.Collection;
 /**
  * Created by tony on 2018/2/4.
  */
-@Slf4j
 public abstract class AnnotationParser implements Parser {
+
+    private Logger log = LoggerFactory.getLogger(AnnotationParser.class);
 
     protected ResultItems resultItems = null;
 

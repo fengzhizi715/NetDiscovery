@@ -1,13 +1,15 @@
 package cn.netdiscovery.core.pipeline;
 
 import cn.netdiscovery.core.domain.ResultItems;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by tony on 2017/12/23.
  */
-@Slf4j
 public class ConsolePipeline extends Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(ConsolePipeline.class);
 
     public ConsolePipeline() {
         this(0);

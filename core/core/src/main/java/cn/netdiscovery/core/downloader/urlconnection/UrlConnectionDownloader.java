@@ -15,7 +15,8 @@ import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.functions.Function;
 import io.vertx.core.http.HttpMethod;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,8 +30,9 @@ import java.util.Map;
 /**
  * Created by tony on 2018/3/2.
  */
-@Slf4j
 public class UrlConnectionDownloader implements Downloader {
+
+    private Logger log = LoggerFactory.getLogger(UrlConnectionDownloader.class);
 
     private HttpURLConnection httpUrlConnection = null;
 

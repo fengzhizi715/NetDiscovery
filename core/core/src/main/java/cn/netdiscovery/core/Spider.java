@@ -33,9 +33,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -54,8 +54,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>
  * Created by tony on 2017/12/22.
  */
-@Slf4j
 public class Spider {
+
+    private Logger log = LoggerFactory.getLogger(Spider.class);
 
     public final static int SPIDER_STATUS_INIT = 0;
     public final static int SPIDER_STATUS_RUNNING = 1;
@@ -65,14 +66,12 @@ public class Spider {
 
     private AtomicInteger stat = new AtomicInteger(SPIDER_STATUS_INIT);
 
-    @Getter
     private String name = "spider";// 爬虫的名字，默认使用spider
 
     private Parser parser;
 
     private List<Pipeline> pipelines = new LinkedList<>();
 
-    @Getter
     private Queue queue;
 
     private boolean autoProxy = false;
@@ -98,8 +97,6 @@ public class Spider {
     private ExecutorService pipeLineThreadPool;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    @Getter
     private Downloader downloader;
 
     private Spider() {
@@ -541,6 +538,18 @@ public class Spider {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Queue getQueue() {
+        return queue;
+    }
+
+    public Downloader getDownloader() {
+        return downloader;
+    }
+
     public void run() {
         checkRunningStat();
 
@@ -649,7 +658,7 @@ public class Spider {
                             @Override
                             public Page apply(Page page) throws Exception {
 
-                                if (!page.getResultItems().isSkip() && Preconditions.isNotBlank(pipelines)) {
+                                if (!page.getResultItems().getSkip() && Preconditions.isNotBlank(pipelines)) {
 
                                     pipelines.stream()
                                             .forEach(pipeline -> {

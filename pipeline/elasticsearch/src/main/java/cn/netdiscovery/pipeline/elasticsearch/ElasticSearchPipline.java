@@ -1,6 +1,5 @@
 package cn.netdiscovery.pipeline.elasticsearch;
 
-import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexResponse;

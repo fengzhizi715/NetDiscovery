@@ -7,16 +7,18 @@ import com.cv4j.proxy.domain.Proxy;
 import com.safframework.tony.common.utils.Preconditions;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
-import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tony on 2018/8/13.
  */
-@Slf4j
 public class RetryWithDelay<T> implements Function<Flowable<Throwable>, Publisher<T>> {
+
+    private Logger log = LoggerFactory.getLogger(RetryWithDelay.class);
 
     private int retryCount = 0;
     private int maxRetries;

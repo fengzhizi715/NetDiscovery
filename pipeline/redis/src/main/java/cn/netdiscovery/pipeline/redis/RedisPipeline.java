@@ -1,6 +1,5 @@
 package cn.netdiscovery.pipeline.redis;
 
-import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
