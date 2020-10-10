@@ -3,15 +3,18 @@ package cn.netdiscovery.core.pipeline.debug;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 
 /**
  * Created by tony on 2018/2/5.
  */
-@Slf4j
+
 public class Printer {
+
+    private static Logger log = LoggerFactory.getLogger(Printer.class);
 
 //    private static final int JSON_INDENT = 3;
 

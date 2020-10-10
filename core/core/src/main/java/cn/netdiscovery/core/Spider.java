@@ -100,7 +100,7 @@ public class Spider {
     private Downloader downloader;
 
     private Spider() {
-        String queueType = SpiderConfig.getInstance().getQueueType();
+        String queueType = SpiderConfig.INSTANCE.getQueueType();
         if (Preconditions.isNotBlank(queueType)) {
             switch (queueType) {
                 case Constant.QUEUE_TYPE_DEFAULT:
@@ -135,22 +135,22 @@ public class Spider {
      * 从 application.conf 中获取配置，并依据这些配置来初始化爬虫
      */
     private void initSpiderConfig() {
-        autoProxy = SpiderConfig.getInstance().isAutoProxy();
-        initialDelay = SpiderConfig.getInstance().getInitialDelay();
-        maxRetries = SpiderConfig.getInstance().getMaxRetries();
-        retryDelayMillis = SpiderConfig.getInstance().getRetryDelayMillis();
+        autoProxy = SpiderConfig.INSTANCE.getAutoProxy();
+        initialDelay = SpiderConfig.INSTANCE.getInitialDelay();
+        maxRetries = SpiderConfig.INSTANCE.getMaxRetries();
+        retryDelayMillis = SpiderConfig.INSTANCE.getRetryDelayMillis();
 
-        requestSleepTime = SpiderConfig.getInstance().getSleepTime();
-        autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime();
-        downloadDelay = SpiderConfig.getInstance().getDownloadDelay();
-        autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay();
-        domainDelay = SpiderConfig.getInstance().getDomainDelay();
-        autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay();
+        requestSleepTime = SpiderConfig.INSTANCE.getSleepTime();
+        autoSleepTime = SpiderConfig.INSTANCE.getAutoSleepTime();
+        downloadDelay = SpiderConfig.INSTANCE.getDownloadDelay();
+        autoDownloadDelay = SpiderConfig.INSTANCE.getAutoDownloadDelay();
+        domainDelay = SpiderConfig.INSTANCE.getDomainDelay();
+        autoDomainDelay = SpiderConfig.INSTANCE.getAutoDomainDelay();
 
-        pipelineDelay = SpiderConfig.getInstance().getPipelineDelay();
-        autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay();
+        pipelineDelay = SpiderConfig.INSTANCE.getPipelineDelay();
+        autoPipelineDelay = SpiderConfig.INSTANCE.getAutoPipelineDelay();
 
-        String downloaderType = SpiderConfig.getInstance().getDownloaderType();
+        String downloaderType = SpiderConfig.INSTANCE.getDownloaderType();
 
         if (Preconditions.isNotBlank(downloaderType)) {
             switch (downloaderType) {
@@ -168,10 +168,10 @@ public class Spider {
             }
         }
 
-        if (SpiderConfig.getInstance().isUsePrintRequestPipeline()) {
+        if (SpiderConfig.INSTANCE.getUsePrintRequestPipeline()) {
             this.pipelines.add(new PrintRequestPipeline()); // 默认使用 PrintRequestPipeline
         }
-        if (SpiderConfig.getInstance().isUseConsolePipeline()) {
+        if (SpiderConfig.INSTANCE.getUseConsolePipeline()) {
             this.pipelines.add(new ConsolePipeline()); // 默认使用 ConsolePipeline
         }
     }

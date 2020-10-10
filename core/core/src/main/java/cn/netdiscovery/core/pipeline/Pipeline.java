@@ -14,8 +14,6 @@ import java.util.Map;
  */
 public abstract class Pipeline {
 
-    @Setter
-    @Getter
     private long pipelineDelay = 0;  // 默认0s
 
     public Pipeline() {
@@ -26,6 +24,14 @@ public abstract class Pipeline {
         if (pipelineDelay>0) {
             this.pipelineDelay = pipelineDelay;
         }
+    }
+
+    public long getPipelineDelay() {
+        return pipelineDelay;
+    }
+
+    public void setPipelineDelay(long pipelineDelay) {
+        this.pipelineDelay = pipelineDelay;
     }
 
     public abstract void process(ResultItems resultItems);

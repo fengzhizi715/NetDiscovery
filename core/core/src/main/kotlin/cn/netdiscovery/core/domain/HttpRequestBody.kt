@@ -38,6 +38,7 @@ class HttpRequestBody(body: ByteArray?, contentType: String?, encoding: String?)
          * @param jsonObject
          * @return
          */
+        @JvmStatic
         fun json(jsonObject: JsonObject): HttpRequestBody {
             return json(jsonObject.toString())
         }

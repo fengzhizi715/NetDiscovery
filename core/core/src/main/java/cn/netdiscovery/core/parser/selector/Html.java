@@ -1,10 +1,11 @@
 package cn.netdiscovery.core.parser.selector;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +16,9 @@ import java.util.List;
  * @author code4crafter@gmail.com <br>
  * @author tony
  */
-@Slf4j
 public class Html extends HtmlNode {
+
+    private Logger log = LoggerFactory.getLogger(Html.class);
 
 	/**
 	 * Disable jsoup html entity escape. It can be set just before any Html instance is created.
@@ -27,8 +29,11 @@ public class Html extends HtmlNode {
     /**
      * Store parsed document for better performance when only one text exist.
      */
-    @Getter
     private Document document;
+
+    public Document getDocument() {
+        return document;
+    }
 
     public Html(String text, String url) {
         try {
