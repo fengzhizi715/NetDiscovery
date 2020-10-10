@@ -10,11 +10,11 @@ import cn.netdiscovery.core.constants.ResponseCode
  * @date: 2020-10-10 16:37
  * @version: V1.0 <描述当前版本功能>
  */
-class HttpResponse<T> {
+open class HttpResponse<T> {
 
-    private var code = 0
-    private var message: String? = null
-    private var data: T? = null
+    var code = 0
+    var message: String? = null
+    var data: T? = null
 
     constructor() {}
 
@@ -38,10 +38,20 @@ class HttpResponse<T> {
     }
 
     companion object {
+
+        @JvmField
         var Ok: HttpResponse<*> = HttpResponse<Any?>(ResponseCode.Ok)
+
+        @JvmField
         var Bad: HttpResponse<*> = HttpResponse<Any?>(ResponseCode.BadRequest)
+
+        @JvmField
         var NotFound: HttpResponse<*> = HttpResponse<Any?>(ResponseCode.NotFound)
+
+        @JvmField
         var InternalServerError: HttpResponse<*> = HttpResponse<Any?>(ResponseCode.InternalServerError)
+
+        @JvmField
         var SpiderNotFound: HttpResponse<*> = HttpResponse<Any?>(ResponseCode.SpiderNotFound)
     }
 }

@@ -8,7 +8,8 @@ import io.etcd.jetcd.Lease;
 import io.etcd.jetcd.lease.LeaseKeepAliveResponse;
 import io.etcd.jetcd.options.PutOption;
 import io.grpc.stub.StreamObserver;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,8 +21,9 @@ import java.util.concurrent.Executors;
 /**
  * Created by tony on 2019-06-09.
  */
-@Slf4j
 public class EtcdRegistry extends Registry {
+
+    private Logger log = LoggerFactory.getLogger(EtcdRegistry.class);
 
     private Lease lease;
     private KV kv;
@@ -29,7 +31,7 @@ public class EtcdRegistry extends Registry {
 
     public EtcdRegistry() {
 
-        this(SpiderEngineConfig.getInstance().getEtcdStr(), SpiderEngineConfig.getInstance().getEtcdPath());
+        this(SpiderEngineConfig.INSTANCE.getEtcdStr(), SpiderEngineConfig.INSTANCE.getEtcdPath());
     }
 
     public EtcdRegistry(String etcdStr, String etcdPath) {

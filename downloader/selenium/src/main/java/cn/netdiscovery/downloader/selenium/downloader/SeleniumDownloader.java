@@ -1,6 +1,8 @@
 package cn.netdiscovery.downloader.selenium.downloader;
 
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;
 import cn.netdiscovery.downloader.selenium.action.SeleniumAction;

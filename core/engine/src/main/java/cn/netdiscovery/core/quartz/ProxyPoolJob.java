@@ -2,19 +2,21 @@ package cn.netdiscovery.core.quartz;
 
 import com.cv4j.proxy.ProxyManager;
 import com.cv4j.proxy.ProxyPool;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 /**
  * Created by tony on 2019-05-16.
  */
-@Slf4j
 public class ProxyPoolJob  implements Job {
+
+    private Logger log = LoggerFactory.getLogger(SpiderJob.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

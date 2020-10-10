@@ -2,7 +2,6 @@ package cn.netdiscovery.downloader.selenium.pool;
 
 import cn.netdiscovery.downloader.selenium.Browser;
 import com.cv4j.proxy.domain.Proxy;
-import lombok.Getter;
 
 import java.util.List;
 
@@ -12,13 +11,10 @@ import java.util.List;
 
 public class WebDriverPoolConfig {
 
-    @Getter
     private String path;
 
-    @Getter
     private Browser browser;
 
-    @Getter
     private List<Proxy> proxies;
 
     public WebDriverPoolConfig(String path) {
@@ -51,5 +47,17 @@ public class WebDriverPoolConfig {
         this.path = path;
         this.browser = browser;
         this.proxies = proxies;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Browser getBrowser() {
+        return browser;
+    }
+
+    public List<Proxy> getProxies() {
+        return proxies;
     }
 }

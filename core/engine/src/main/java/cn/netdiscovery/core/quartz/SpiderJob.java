@@ -1,20 +1,24 @@
 package cn.netdiscovery.core.quartz;
 
 import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.Stream;
 
 /**
  * Created by tony on 2019-05-11.
  */
-@Slf4j
 public class SpiderJob implements Job {
+
+    private Logger log = LoggerFactory.getLogger(SpiderJob.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

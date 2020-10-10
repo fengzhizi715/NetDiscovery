@@ -12,6 +12,8 @@ import io.etcd.jetcd.options.WatchOption;
 import io.etcd.jetcd.watch.WatchEvent;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -21,14 +23,15 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by tony on 2019-06-09.
  */
-@Slf4j
 public class EtcdWatchManager extends AbstractWatchManager {
+
+    private Logger log = LoggerFactory.getLogger(EtcdWatchManager.class);
 
     private Client client;
 
     public EtcdWatchManager() {
 
-        this(SpiderEngineConfig.getInstance().getEtcdStr(), SpiderEngineConfig.getInstance().getEtcdPath());
+        this(SpiderEngineConfig.INSTANCE.getEtcdStr(), SpiderEngineConfig.INSTANCE.getEtcdPath());
     }
 
     public EtcdWatchManager(String etcdStr, String etcdPath) {

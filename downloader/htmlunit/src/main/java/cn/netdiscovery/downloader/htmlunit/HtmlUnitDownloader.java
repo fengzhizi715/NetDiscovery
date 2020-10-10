@@ -1,6 +1,8 @@
 package cn.netdiscovery.downloader.htmlunit;
 
 import cn.netdiscovery.core.config.Constant;
+import cn.netdiscovery.core.domain.Request;
+import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;

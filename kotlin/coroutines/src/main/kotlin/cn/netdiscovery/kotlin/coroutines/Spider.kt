@@ -94,7 +94,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
     init {
 
         try {
-            val queueType = SpiderConfig.getInstance().queueType
+            val queueType = SpiderConfig.queueType
 
             if (Preconditions.isNotBlank(queueType)) {
 
@@ -118,22 +118,22 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
      * 从 application.conf 中获取配置，并依据这些配置来初始化爬虫
      */
     private fun initSpiderConfig() {
-        autoProxy = SpiderConfig.getInstance().isAutoProxy
-        initialDelay = SpiderConfig.getInstance().initialDelay
-        maxRetries = SpiderConfig.getInstance().maxRetries
-        retryDelayMillis = SpiderConfig.getInstance().retryDelayMillis
+        autoProxy = SpiderConfig.autoProxy
+        initialDelay = SpiderConfig.initialDelay
+        maxRetries = SpiderConfig.maxRetries
+        retryDelayMillis = SpiderConfig.retryDelayMillis
 
-        requestSleepTime = SpiderConfig.getInstance().sleepTime
-        autoSleepTime = SpiderConfig.getInstance().isAutoSleepTime
-        downloadDelay = SpiderConfig.getInstance().downloadDelay
-        autoDownloadDelay = SpiderConfig.getInstance().isAutoDownloadDelay
-        domainDelay = SpiderConfig.getInstance().domainDelay
-        autoDomainDelay = SpiderConfig.getInstance().isAutoDomainDelay
+        requestSleepTime = SpiderConfig.sleepTime
+        autoSleepTime = SpiderConfig.autoSleepTime
+        downloadDelay = SpiderConfig.downloadDelay
+        autoDownloadDelay = SpiderConfig.autoDownloadDelay
+        domainDelay = SpiderConfig.domainDelay
+        autoDomainDelay = SpiderConfig.autoDomainDelay
 
-        pipelineDelay = SpiderConfig.getInstance().pipelineDelay
-        autoPipelineDelay = SpiderConfig.getInstance().isAutoPipelineDelay
+        pipelineDelay = SpiderConfig.pipelineDelay
+        autoPipelineDelay = SpiderConfig.autoPipelineDelay
 
-        val downloaderType = SpiderConfig.getInstance().downloaderType
+        val downloaderType = SpiderConfig.downloaderType
 
         if (Preconditions.isNotBlank(downloaderType)) {
             when (downloaderType) {
@@ -143,13 +143,13 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
             }
         }
 
-        val usePrintRequestPipeline = SpiderConfig.getInstance().isUsePrintRequestPipeline
+        val usePrintRequestPipeline = SpiderConfig.usePrintRequestPipeline
 
         if (usePrintRequestPipeline) {
             this.pipelines.add(PrintRequestPipeline()) // 默认使用 PrintRequestPipeline
         }
 
-        val useConsolePipeline = SpiderConfig.getInstance().isUseConsolePipeline
+        val useConsolePipeline = SpiderConfig.useConsolePipeline
 
         if (useConsolePipeline) {
             this.pipelines.add(ConsolePipeline())  // 默认使用 ConsolePipeline
@@ -555,9 +555,8 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                     }
 
                     // request请求之前的处理
-                    if (request.beforeRequest != null) {
-
-                        request.beforeRequest.process(request)
+                    request.beforeRequest?.let {
+                        it.process(request)
                     }
 
                     // request正在处理
@@ -584,15 +583,15 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
                         } else if (SpiderUtils.isApplicationJSONType(contentType)) { // application/json
 
                             // 将json字符串转化成Json对象，放入Page的"RESPONSE_JSON"字段。之所以转换成Json对象，是因为Json提供了toObject()，可以转换成具体的class。
-                            page.putField(Constant.RESPONSE_JSON, Json(String(content)))
+                            page.putField(Constant.RESPONSE_JSON, Json(String(content!!)))
                         } else if (SpiderUtils.isApplicationJSONPType(contentType)) { // application/javascript
 
                             // 转换成字符串，放入Page的"RESPONSE_JSONP"字段。
                             // 由于是jsonp，需要开发者在Pipeline中自行去掉字符串前后的内容，这样就可以变成json字符串了。
-                            page.putField(Constant.RESPONSE_JSONP, String(content))
+                            page.putField(Constant.RESPONSE_JSONP, String(content!!))
                         } else {
 
-                            page.putField(Constant.RESPONSE_RAW, `is`) // 默认情况，保存InputStream
+                            page.putField(Constant.RESPONSE_RAW, `is`!!) // 默认情况，保存InputStream
                         }
 
                         page
@@ -604,7 +603,7 @@ class Spider private constructor(var queue: Queue = DefaultQueue()) {
 
                     }?.apply {
 
-                        if (!this.resultItems.isSkip && Preconditions.isNotBlank(pipelines)) {
+                        if (!this.resultItems.skip && Preconditions.isNotBlank(pipelines)) {
 
                             pipelines.stream().forEach { pipeline -> pipeline.process(resultItems) }
                         }

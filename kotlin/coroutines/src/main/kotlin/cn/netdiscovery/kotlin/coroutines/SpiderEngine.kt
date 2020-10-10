@@ -94,8 +94,8 @@ class SpiderEngine private constructor(val queue: Queue? = null) {
         }
 
         try {
-            defaultHttpdPort = SpiderEngineConfig.getInstance().port
-            useMonitor = SpiderEngineConfig.getInstance().isUseMonitor
+            defaultHttpdPort = SpiderEngineConfig.port
+            useMonitor = SpiderEngineConfig.useMonitor
         } catch (e: ClassCastException) {
             defaultHttpdPort = 8715
             useMonitor = false

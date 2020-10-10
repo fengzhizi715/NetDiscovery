@@ -1,6 +1,7 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.SpiderEngineConfig;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;
@@ -29,6 +30,8 @@ import io.vertx.micrometer.MicrometerMetricsOptions;
 import io.vertx.micrometer.VertxPrometheusOptions;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,10 +50,10 @@ import static com.cv4j.proxy.config.Constant.setUas;
  * 可以管理多个 Spider 的引擎(容器)
  * Created by tony on 2018/1/2.
  */
-@Slf4j
 public class SpiderEngine {
 
-    @Getter
+    private Logger log = LoggerFactory.getLogger(SpiderEngine.class);
+
     private Queue queue;
 
     private HttpServer server;
@@ -65,11 +68,21 @@ public class SpiderEngine {
 
     private AtomicInteger count = new AtomicInteger(0);
 
-    @Getter
     private Map<String, Spider> spiders = new ConcurrentHashMap<>();
 
-    @Getter
     private Map<String, SpiderJobBean> jobs = new ConcurrentHashMap<>();
+
+    public Queue getQueue() {
+        return queue;
+    }
+
+    public Map<String, Spider> getSpiders() {
+        return spiders;
+    }
+
+    public Map<String, SpiderJobBean> getJobs() {
+        return jobs;
+    }
 
     private SpiderEngine() {
 
@@ -115,8 +128,8 @@ public class SpiderEngine {
             setUas(UserAgent.uas); // 让代理池也能够共享ua
         }
 
-        defaultHttpdPort = SpiderEngineConfig.getInstance().getPort();
-        useMonitor = SpiderEngineConfig.getInstance().isUseMonitor();
+        defaultHttpdPort = SpiderEngineConfig.INSTANCE.getPort();
+        useMonitor = SpiderEngineConfig.INSTANCE.getUseMonitor();
 
         VertxManager.configVertx(new VertxOptions().setMetricsOptions(
                 new MicrometerMetricsOptions()
@@ -381,7 +394,7 @@ public class SpiderEngine {
             jobBean.setRequests(requests);
 
             Stream.of(requests)
-                    .filter(request -> request.isCheckDuplicate())
+                    .filter(request -> request.getCheckDuplicate())
                     .forEach(request -> request.checkDuplicate(false));
 
             jobs.put(jobName, jobBean);
