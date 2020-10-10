@@ -56,11 +56,24 @@ NetDiscovery 是基于 Vert.x、RxJava 2 等框架实现的爬虫框架。目前
 
 对于 Java 工程，如果使用 gradle 构建，由于默认没有使用 jcenter()，需要在相应 module 的 build.gradle 中配置
 
+## Gradle
+
 ```groovy
 repositories {
-    mavenCentral()
     jcenter()
 }
+```
+
+## Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>central</id>
+        <name>bintray</name>
+        <url>https://jcenter.bintray.com</url>
+    </repository>
+</repositories>
 ```
 
 在 NetDiscovery 中，Spider 可以单独运行，Spider 也可以交给 SpiderEngine 来控制。
