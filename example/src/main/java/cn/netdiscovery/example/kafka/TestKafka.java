@@ -1,6 +1,7 @@
 package cn.netdiscovery.example.kafka;
 
 import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.queue.kafka.KafkaQueue;
 import cn.netdiscovery.queue.kafka.KafkaQueueConfig;
 

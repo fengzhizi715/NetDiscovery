@@ -1,6 +1,7 @@
 package cn.netdiscovery.example.rocketmq;
 
 import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.queue.rocketmq.Consumer;
 import cn.netdiscovery.queue.rocketmq.Producer;
 import cn.netdiscovery.queue.rocketmq.RocketQueue;

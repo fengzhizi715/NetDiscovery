@@ -2,6 +2,7 @@ package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.downloader.vertx.VertxDownloader;
 
 /**

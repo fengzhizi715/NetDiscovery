@@ -2,15 +2,17 @@ package cn.netdiscovery.example.jd;
 
 import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by tony on 2018/6/12.
  */
-@Slf4j
 public class PricePipeline extends Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(PricePipeline.class);
 
     @Override
     public void process(ResultItems resultItems) {

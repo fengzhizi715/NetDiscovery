@@ -1,6 +1,7 @@
 package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.downloader.selenium.Browser;
 import cn.netdiscovery.downloader.selenium.downloader.SeleniumDownloader;
 import cn.netdiscovery.downloader.selenium.pool.WebDriverPool;

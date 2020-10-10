@@ -2,6 +2,7 @@ package cn.netdiscovery.example;
 
 import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
+import cn.netdiscovery.core.domain.Request;
 
 /**
  * Created by tony on 2019-05-12.
