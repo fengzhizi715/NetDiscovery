@@ -1,7 +1,6 @@
 package cn.netdiscovery.example.rabbit;
 
 import cn.netdiscovery.core.Spider;
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.queue.rabbitmq.RabbitQueue;
 import cn.netdiscovery.queue.rabbitmq.RabbitQueueConfig;
 

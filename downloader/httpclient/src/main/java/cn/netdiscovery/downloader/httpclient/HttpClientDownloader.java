@@ -3,7 +3,6 @@ package cn.netdiscovery.downloader.httpclient;
 import cn.netdiscovery.core.cache.RxCacheManager;
 import cn.netdiscovery.core.config.Constant;
 import cn.netdiscovery.core.cookies.CookiesPool;
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;

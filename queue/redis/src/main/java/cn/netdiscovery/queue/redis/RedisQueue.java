@@ -1,6 +1,5 @@
 package cn.netdiscovery.queue.redis;
 
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
 import cn.netdiscovery.core.queue.filter.DuplicateFilter;
 import cn.netdiscovery.core.utils.SerializableUtils;

@@ -1,6 +1,5 @@
 package cn.netdiscovery.example.jd;
 
-import cn.netdiscovery.core.domain.Page;
 import cn.netdiscovery.core.parser.Parser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

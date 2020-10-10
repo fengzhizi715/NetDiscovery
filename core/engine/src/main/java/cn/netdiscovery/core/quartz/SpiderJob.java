@@ -1,7 +1,6 @@
 package cn.netdiscovery.core.quartz;
 
 import cn.netdiscovery.core.Spider;
-import cn.netdiscovery.core.domain.Request;
 import com.safframework.tony.common.utils.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;

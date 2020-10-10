@@ -1,7 +1,6 @@
 package cn.netdiscovery.core.quartz;
 
 import cn.netdiscovery.core.Spider;
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.exception.SpiderEngineException;
 import org.quartz.*;

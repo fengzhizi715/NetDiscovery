@@ -1,7 +1,6 @@
 package cn.netdiscovery.core;
 
 import cn.netdiscovery.core.config.SpiderEngineConfig;
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.bean.SpiderJobBean;
 import cn.netdiscovery.core.quartz.ProxyPoolJob;
 import cn.netdiscovery.core.quartz.QuartzManager;

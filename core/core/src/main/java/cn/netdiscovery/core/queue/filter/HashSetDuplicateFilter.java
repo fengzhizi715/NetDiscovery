@@ -19,7 +19,7 @@ public class HashSetDuplicateFilter implements DuplicateFilter {
     @Override
     public boolean isDuplicate(Request request) {
 
-        if (request.isCheckDuplicate()) {
+        if (request.getCheckDuplicate()) {
 
             return !urls.add(request.getUrl());
         } else {

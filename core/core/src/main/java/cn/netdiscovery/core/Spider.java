@@ -614,7 +614,7 @@ public class Spider {
                             public Page apply(Response response) throws Exception {
 
                                 Page page = new Page();
-                                page.setRequest(request);
+                                page.addRequest(request);
                                 page.setUrl(request.getUrl());
                                 page.setStatusCode(response.getStatusCode());
 

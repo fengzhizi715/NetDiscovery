@@ -1,6 +1,5 @@
 package cn.netdiscovery.core.domain.bean;
 
-import cn.netdiscovery.core.domain.Request;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

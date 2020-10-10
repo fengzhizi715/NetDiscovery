@@ -1,6 +1,5 @@
 package cn.netdiscovery.queue.kafka;
 
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import org.apache.kafka.common.serialization.Serializer;
 

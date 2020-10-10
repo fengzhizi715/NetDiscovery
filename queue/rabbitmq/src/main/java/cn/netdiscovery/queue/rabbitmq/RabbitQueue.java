@@ -1,6 +1,5 @@
 package cn.netdiscovery.queue.rabbitmq;
 
-import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import com.rabbitmq.client.Channel;
