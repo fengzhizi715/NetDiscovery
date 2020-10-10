@@ -1,6 +1,5 @@
 package cn.netdiscovery.core.utils;
 
-import cn.netdiscovery.core.domain.HttpRequestBody;
 import com.cv4j.proxy.domain.Proxy;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

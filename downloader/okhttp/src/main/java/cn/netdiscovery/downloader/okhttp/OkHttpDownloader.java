@@ -2,8 +2,6 @@ package cn.netdiscovery.downloader.okhttp;
 
 import cn.netdiscovery.core.cache.RxCacheManager;
 import cn.netdiscovery.core.config.Constant;
-import cn.netdiscovery.core.domain.HttpRequestBody;
-import cn.netdiscovery.core.domain.Response;
 import cn.netdiscovery.core.downloader.Downloader;
 import cn.netdiscovery.core.rxjava.transformer.DownloaderDelayTransformer;
 import com.cv4j.proxy.domain.Proxy;
