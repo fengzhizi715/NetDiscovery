@@ -22,8 +22,6 @@ dependencies {
     implementation "io.lettuce:lettuce-core:${libs.lettuce}"
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation project(":core:core")
-
-    implementation "org.projectlombok:lombok:${libs.lombok}"
 }
 
 publish{

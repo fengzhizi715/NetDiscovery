@@ -1,7 +1,5 @@
 package cn.netdiscovery.core.cookies;
 
-import lombok.Getter;
-
 import java.io.Serializable;
 import java.net.HttpCookie;
 import java.util.ArrayList;

@@ -8,7 +8,6 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.lettuce.core.resource.ClientResources;
 import io.vertx.core.json.JsonObject;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

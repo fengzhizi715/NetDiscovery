@@ -4,8 +4,6 @@ import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.domain.ResultItems;
 import com.safframework.tony.common.utils.Preconditions;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Map;
 

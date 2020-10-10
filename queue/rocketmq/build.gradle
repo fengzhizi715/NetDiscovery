@@ -18,7 +18,6 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    implementation "org.projectlombok:lombok:${libs.lombok}"
     implementation 'org.apache.rocketmq:rocketmq-client:4.3.0'
     implementation "com.cv4j.proxy:proxypool:${libs.proxypool}"
     implementation "com.google.code.gson:gson:${libs.gson}"

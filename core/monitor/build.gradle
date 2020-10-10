@@ -23,8 +23,6 @@ dependencies {
     implementation "io.vertx:vertx-core:${libs.vertx}"
     implementation "io.vertx:vertx-web:${libs.vertx}"
 
-    implementation "org.projectlombok:lombok:${libs.lombok}"
-
     implementation 'org.apache.zookeeper:zookeeper:3.4.14'
     implementation 'org.apache.curator:curator-framework:2.13.0'
 

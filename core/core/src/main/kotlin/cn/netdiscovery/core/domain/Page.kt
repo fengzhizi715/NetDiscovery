@@ -1,8 +1,6 @@
 package cn.netdiscovery.core.domain
 
 import cn.netdiscovery.core.parser.selector.Html
-import lombok.Getter
-import lombok.Setter
 import java.io.Serializable
 
 /**

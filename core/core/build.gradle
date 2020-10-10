@@ -40,7 +40,6 @@ dependencies {
     compile "ch.qos.logback:logback-classic:${libs.logback}"
     compile "ch.qos.logback:logback-core:${libs.logback}"
     compile "ch.qos.logback:logback-access:${libs.logback}"
-    implementation "org.projectlombok:lombok:${libs.lombok}"
 
     implementation "org.apache.httpcomponents:httpclient:${libs.httpclient}"
     implementation "com.google.guava:guava:${libs.guava}"

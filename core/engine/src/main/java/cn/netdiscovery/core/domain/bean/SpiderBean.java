@@ -1,7 +1,5 @@
 package cn.netdiscovery.core.domain.bean;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**

@@ -1,7 +1,5 @@
 package cn.netdiscovery.core.registry;
 
-import lombok.Data;
-
 /**
  * Created by tony on 2019-06-09.
  */

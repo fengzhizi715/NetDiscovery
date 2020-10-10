@@ -19,7 +19,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation 'com.rabbitmq:amqp-client:5.5.1'
-    implementation "org.projectlombok:lombok:${libs.lombok}"
     implementation "com.google.code.gson:gson:${libs.gson}"
 
     implementation project(":core:core")

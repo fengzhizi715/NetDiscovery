@@ -2,8 +2,6 @@ package cn.netdiscovery.queue.rocketmq;
 
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;

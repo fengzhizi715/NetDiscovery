@@ -1,8 +1,6 @@
 package cn.netdiscovery.queue.rocketmq;
 
 import com.safframework.tony.common.utils.Preconditions;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;

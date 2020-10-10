@@ -1,6 +1,5 @@
 package cn.netdiscovery.queue.rabbitmq;
 
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Properties;

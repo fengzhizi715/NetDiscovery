@@ -1,10 +1,8 @@
 package cn.netdiscovery.core.queue;
 
-import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.filter.DuplicateFilter;
 import cn.netdiscovery.core.queue.filter.HashSetDuplicateFilter;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

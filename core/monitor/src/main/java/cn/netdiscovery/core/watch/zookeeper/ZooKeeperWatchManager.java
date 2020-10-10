@@ -7,7 +7,6 @@ import cn.netdiscovery.core.domain.SpiderEngineState;
 import cn.netdiscovery.core.watch.AbstractWatchManager;
 import com.safframework.tony.common.utils.Preconditions;
 import io.vertx.core.Vertx;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;

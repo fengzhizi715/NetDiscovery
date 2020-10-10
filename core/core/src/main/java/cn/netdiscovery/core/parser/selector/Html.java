@@ -1,6 +1,5 @@
 package cn.netdiscovery.core.parser.selector;
 
-import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
