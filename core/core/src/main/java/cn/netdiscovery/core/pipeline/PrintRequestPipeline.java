@@ -17,6 +17,8 @@ public class PrintRequestPipeline extends Pipeline {
 
         Request request = resultItems.getRequest();
 
-        log.info(request.toString());
+        if(request!=null) {
+            log.info(request.toString());
+        }
     }
 }
