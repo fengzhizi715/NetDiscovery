@@ -1,5 +1,6 @@
 package cn.netdiscovery.queue.redis;
 
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import com.safframework.tony.common.utils.Preconditions;
 import io.lettuce.core.RedisClient;

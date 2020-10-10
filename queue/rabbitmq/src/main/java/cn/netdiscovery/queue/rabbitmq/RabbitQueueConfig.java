@@ -9,13 +9,32 @@ import java.util.Properties;
  * @author bdq
  * @date 2018-12-28
  */
-@Getter
 public class RabbitQueueConfig {
     private Properties producerProperties;
     private Properties consumeProperties;
     private String producerExchange;
     private String consumerExchange;
     private List<String> queueNames;
+
+    public Properties getProducerProperties() {
+        return producerProperties;
+    }
+
+    public Properties getConsumeProperties() {
+        return consumeProperties;
+    }
+
+    public String getProducerExchange() {
+        return producerExchange;
+    }
+
+    public String getConsumerExchange() {
+        return consumerExchange;
+    }
+
+    public List<String> getQueueNames() {
+        return queueNames;
+    }
 
     public RabbitQueueConfig(RabbitQueueConfigBuilder builder) {
         producerProperties = builder.producerProperties;

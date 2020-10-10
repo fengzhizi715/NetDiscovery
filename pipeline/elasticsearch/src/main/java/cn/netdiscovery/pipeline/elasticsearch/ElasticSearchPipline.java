@@ -2,17 +2,20 @@ package cn.netdiscovery.pipeline.elasticsearch;
 
 import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
-import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.rest.RestStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author bdq
  * @date 2018-12-26
  */
-@Slf4j
 public class ElasticSearchPipline extends Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(ElasticSearchPipline.class);
+
     private TransportClient client;
     private String index;
     private String type;

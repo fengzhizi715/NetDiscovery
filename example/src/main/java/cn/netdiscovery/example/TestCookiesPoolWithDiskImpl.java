@@ -4,6 +4,7 @@ import cn.netdiscovery.core.Spider;
 import cn.netdiscovery.core.SpiderEngine;
 import cn.netdiscovery.core.cache.RxCacheManager;
 import cn.netdiscovery.core.cookies.CookiesPool;
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.downloader.urlconnection.UrlConnectionDownloader;
 import com.safframework.rxcache.RxCache;
 import com.safframework.rxcache.persistence.disk.impl.DiskImpl;

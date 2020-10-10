@@ -1,5 +1,6 @@
 package cn.netdiscovery.pipeline.redis;
 
+import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
@@ -8,12 +9,15 @@ import io.lettuce.core.api.reactive.RedisStringReactiveCommands;
 import io.lettuce.core.resource.ClientResources;
 import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by tony on 2018/3/22.
  */
-@Slf4j
 public class RedisPipeline extends Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(RedisPipeline.class);
 
     private RedisClient redisClient;
     private String key;

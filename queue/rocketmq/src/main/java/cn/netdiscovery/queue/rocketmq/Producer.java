@@ -1,5 +1,6 @@
 package cn.netdiscovery.queue.rocketmq;
 
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.utils.SerializableUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,20 +13,22 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 /**
  * Created by tony on 2019-07-16.
  */
-@Slf4j
 public class Producer {
 
     private DefaultMQProducer producer;
 
-    @Getter
     private String tags;
 
-    public Producer(String producerName,String nameServerAddress,int retryTimes,String tags) {
+    public Producer(String producerName, String nameServerAddress, int retryTimes, String tags) {
 
         this.producer = new DefaultMQProducer(producerName);
         this.producer.setNamesrvAddr(nameServerAddress);
         this.producer.setRetryTimesWhenSendAsyncFailed(retryTimes);
         this.tags = tags;
+    }
+
+    public String getTags() {
+        return tags;
     }
 
     public void start() {

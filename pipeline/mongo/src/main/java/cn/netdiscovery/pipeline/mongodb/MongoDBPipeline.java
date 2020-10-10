@@ -1,17 +1,20 @@
 package cn.netdiscovery.pipeline.mongodb;
 
+import cn.netdiscovery.core.domain.ResultItems;
 import cn.netdiscovery.core.pipeline.Pipeline;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClient;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 /**
  * Created by tony on 2018/1/25.
  */
-@Slf4j
 public class MongoDBPipeline extends Pipeline {
+
+    private Logger log = LoggerFactory.getLogger(MongoDBPipeline.class);
 
     private MongoClient mongoClient;
     private String collectionName;

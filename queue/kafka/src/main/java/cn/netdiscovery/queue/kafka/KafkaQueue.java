@@ -1,13 +1,15 @@
 package cn.netdiscovery.queue.kafka;
 
+import cn.netdiscovery.core.domain.Request;
 import cn.netdiscovery.core.queue.AbstractQueue;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +20,11 @@ import java.util.stream.Collectors;
 /**
  * Created by tony on 2018/1/28.
  */
-
-@Slf4j
 public class KafkaQueue extends AbstractQueue {
 
-    private KafkaProducer<String,Request> producer;
+    private Logger log = LoggerFactory.getLogger(KafkaQueue.class);
+
+    private KafkaProducer<String, Request> producer;
     private KafkaConsumer<String, Request> consumer;
     private long timeout = 1000;
     private int partition = 0;
