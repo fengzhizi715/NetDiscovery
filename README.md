@@ -115,6 +115,8 @@ SpiderEngine 可以在运行之前注册到 Etcd/Zookeeper，然后由 monitor �
 * 增加 chromium 的支持
 * 完善 wiki，增加各个模式的使用说明
 * 支持 RxJava 3.x 
+* 支持 Java 11
+* 支持 docker
 
 
 # Contributors:
