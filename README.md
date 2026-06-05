@@ -6,13 +6,13 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/703e0ba9760b4affaf39188dbbdd2811)](https://app.codacy.com/app/fengzhizi715/NetDiscovery?utm_source=github.com&utm_medium=referral&utm_content=fengzhizi715/NetDiscovery&utm_campaign=Badge_Grade_Dashboard)
 
 ![ipwo](images/ipwo.png)
-<font color= Blue size=10>IPWO爬虫代理资源为采集、跨境与测试项目提供支持(免费试用，流量不过期，爬虫使用保护账号不封号提升爬虫成功率)学习者务必遵循法律！</font>
+<strong>IPWO爬虫代理资源为采集、跨境与测试项目提供支持(免费试用，流量不过期，爬虫使用保护账号不封号提升爬虫成功率)学习者务必遵循法律！</strong>
 
-<font color= Blue size=10>顶级真实住宅 IP源于195 + 国家 / 地区精准定位，大幅降低被封禁风险，试用好用再来个优惠折扣码"feng"。</font>
-动态ip不过期，不限最低消耗
-静态ip福利价格9.9
+<strong>顶级真实住宅 IP源于195 + 国家 / 地区精准定位，大幅降低被封禁风险，试用好用再来个优惠折扣码"feng"。</strong>
+<strong>动态ip不过期，不限最低消耗</strong>
+<strong>静态ip福利价格9.9</strong>
 
-官网地址
+<strong>官网地址</strong>
 
 访问IPWO官网
 
